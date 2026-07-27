@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>have + 과거분사, 그리고 가정법 — 시간을 다루는 영어 문법</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* ============================================================
+   TOKENS — "칠판(slate)" 팔레트
+   fact(현실)=lemon / unreal(가정)=coral / structure(구조)=mint
+   ============================================================ */
+:root{
+  --slate:        #102A2C;
+  --slate-deep:   #0A1D1F;
+  --slate-panel:  #16383A;
+  --slate-line:   #27504F;
+  --chalk:        #EBF2EC;
+  --chalk-dim:    #9DB4B1;
+  --chalk-faint:  #6E8A88;
+  --lemon:        #F2C14E;
+  --coral:        #E8705F;
+  --mint:         #7FD1B9;
+
+  --ko: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --en: 'Newsreader', Georgia, serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --sidebar: 268px;
+  --maxw: 780px;
+  --r: 4px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--slate); color:var(--chalk);
+  font-family:var(--ko); font-weight:400; line-height:1.75;
+  -webkit-font-smoothing:antialiased; letter-spacing:-0.01em;
+}
+::selection{background:var(--lemon); color:var(--slate-deep);}
+
+/* ---------- 진행 바 ---------- */
+#progress{
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:var(--lemon); z-index:120; transition:width .1s linear;
+}
+
+/* ---------- 레이아웃 ---------- */
+.shell{display:flex; min-height:100vh;}
+
+nav.side{
+  width:var(--sidebar); flex:0 0 var(--sidebar);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  border-right:1px solid var(--slate-line);
+  padding:34px 22px 60px; background:var(--slate-deep);
+}
+nav.side .brand{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em;
+  color:var(--chalk-faint); text-transform:uppercase; margin-bottom:6px;
+}
+nav.side .brand-title{
+  font-family:var(--en); font-size:23px; line-height:1.2; font-weight:500;
+  color:var(--chalk); margin-bottom:28px;
+}
+nav.side .brand-title em{color:var(--lemon); font-style:italic;}
+.nav-part{
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em;
+  color:var(--mint); text-transform:uppercase;
+  margin:26px 0 10px; padding-bottom:7px; border-bottom:1px dashed var(--slate-line);
+}
+.nav-part:first-of-type{margin-top:0;}
+nav.side a{
+  display:block; color:var(--chalk-dim); text-decoration:none;
+  font-size:13.5px; padding:5px 0 5px 12px; border-left:2px solid transparent;
+  transition:color .15s, border-color .15s;
+}
+nav.side a:hover{color:var(--chalk);}
+nav.side a.on{color:var(--lemon); border-left-color:var(--lemon); font-weight:600;}
+nav.side a .num{font-family:var(--mono); font-size:10.5px; color:var(--chalk-faint); margin-right:7px;}
+nav.side a.on .num{color:var(--lemon);}
+
+main{flex:1 1 auto; min-width:0;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+/* ---------- 모바일 목차 ---------- */
+.mobile-bar{display:none;}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+header.hero{
+  border-bottom:1px solid var(--slate-line);
+  padding:78px 0 56px; position:relative; overflow:hidden;
+  background:
+    radial-gradient(1100px 420px at 18% -8%, rgba(242,193,78,.09), transparent 62%),
+    radial-gradient(760px 380px at 88% 8%, rgba(232,112,95,.08), transparent 60%),
+    repeating-linear-gradient(180deg, transparent 0 39px, rgba(157,180,177,.055) 39px 40px);
+}
+.hero .eyebrow{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.24em;
+  color:var(--chalk-faint); text-transform:uppercase; margin-bottom:20px;
+}
+.hero h1{
+  font-family:var(--en); font-weight:400; font-size:clamp(38px,6.4vw,66px);
+  line-height:1.04; letter-spacing:-.02em; margin:0 0 8px;
+}
+.hero h1 .pp{color:var(--lemon);}
+.hero h1 em{font-style:italic; color:var(--coral);}
+.hero .h1-ko{
+  font-family:var(--ko); font-size:clamp(17px,2.4vw,21px); font-weight:700;
+  color:var(--chalk); margin:18px 0 12px; letter-spacing:-.02em;
+}
+.hero .lede{color:var(--chalk-dim); font-size:15.5px; max-width:60ch; margin:0;}
+.hero .lede b{color:var(--chalk); font-weight:600;}
+
+/* ---------- 히어로 데모 (시그니처) ---------- */
+.thesis{
+  margin-top:44px; border:1px solid var(--slate-line);
+  background:rgba(10,29,31,.72); border-radius:var(--r); padding:22px 20px 24px;
+}
+.thesis-q{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--mint); margin-bottom:14px;
+}
+.switch{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.switch button{
+  font-family:var(--en); font-size:17px; color:var(--chalk-dim);
+  background:transparent; border:1px solid var(--slate-line);
+  border-radius:var(--r); padding:9px 15px; cursor:pointer;
+  transition:all .18s;
+}
+.switch button:hover{color:var(--chalk); border-color:var(--chalk-faint);}
+.switch button.on{background:var(--lemon); border-color:var(--lemon); color:var(--slate-deep); font-weight:600;}
+.thesis-read{
+  margin-top:20px; padding-top:18px; border-top:1px dashed var(--slate-line);
+  display:grid; gap:10px;
+}
+.thesis-read .row{display:flex; gap:12px; align-items:flex-start; font-size:14.5px;}
+.thesis-read .tag{
+  flex:0 0 62px; font-family:var(--mono); font-size:10px; letter-spacing:.1em;
+  color:var(--chalk-faint); text-transform:uppercase; padding-top:5px;
+}
+.thesis-read .val{color:var(--chalk-dim); flex:1 1 auto;}
+.thesis-read .val b{color:var(--chalk); font-weight:600;}
+.thesis-read .val.hi{color:var(--lemon); font-weight:600;}
+
+/* ---------- 시간 자(ruler) ---------- */
+.ruler{position:relative; height:96px; margin:6px 0 2px;}
+.ruler .axis{
+  position:absolute; left:0; right:0; top:52px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--slate-line) 6%, var(--slate-line) 94%, transparent);
+}
+.ruler .now{
+  position:absolute; left:50%; top:30px; bottom:22px; width:1px;
+  background:var(--chalk); opacity:.85;
+}
+.ruler .now::after{
+  content:'NOW'; position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; color:var(--chalk);
+}
+.ruler .zone{
+  position:absolute; bottom:0; font-family:var(--mono); font-size:9.5px;
+  letter-spacing:.16em; color:var(--chalk-faint); text-transform:uppercase;
+}
+.ruler .zone.past{left:0;}
+.ruler .zone.future{right:0;}
+.ruler .mk{position:absolute; top:52px; transition:all .45s cubic-bezier(.2,.7,.3,1);}
+.ruler .mk .dot{
+  position:absolute; left:-5px; top:-5px; width:10px; height:10px; border-radius:50%;
+  background:var(--lemon); box-shadow:0 0 0 4px rgba(242,193,78,.16);
+}
+.ruler .mk.unreal .dot{background:var(--coral); box-shadow:0 0 0 4px rgba(232,112,95,.16);}
+.ruler .mk .bar{
+  position:absolute; top:-2px; height:4px; border-radius:2px;
+  background:linear-gradient(90deg, rgba(242,193,78,.35), var(--lemon));
+}
+.ruler .mk.unreal .bar{background:linear-gradient(90deg, rgba(232,112,95,.3), var(--coral));}
+.ruler .mk .lab{
+  position:absolute; top:-30px; left:0; transform:translateX(-50%);
+  font-family:var(--mono); font-size:10px; color:var(--chalk); white-space:nowrap;
+}
+.ruler .mk .lab.right{left:100%;}
+.ruler .mk .sub{
+  position:absolute; top:14px; left:0; transform:translateX(-50%);
+  font-size:11.5px; color:var(--chalk-faint); white-space:nowrap;
+}
+
+/* ============================================================
+   본문 공통
+   ============================================================ */
+section{padding:64px 0 8px; border-top:1px solid var(--slate-line);}
+section:first-of-type{border-top:none;}
+.sec-num{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.2em;
+  color:var(--coral); text-transform:uppercase; margin-bottom:12px;
+}
+h2{
+  font-size:clamp(24px,3.6vw,32px); font-weight:800; letter-spacing:-.035em;
+  line-height:1.24; margin:0 0 14px;
+}
+h2 .en{font-family:var(--en); font-weight:400; font-style:italic; color:var(--lemon); letter-spacing:-.01em;}
+h3{
+  font-size:17.5px; font-weight:700; letter-spacing:-.025em; margin:38px 0 12px;
+  padding-left:12px; border-left:3px solid var(--mint);
+}
+h4{font-size:15px; font-weight:700; margin:26px 0 8px; color:var(--chalk);}
+p{margin:0 0 14px; font-size:15.5px; color:var(--chalk-dim);}
+p b, li b{color:var(--chalk); font-weight:600;}
+p .k, li .k{color:var(--lemon); font-weight:600;}
+p .u, li .u{color:var(--coral); font-weight:600;}
+ul,ol{margin:0 0 16px; padding-left:20px;}
+li{font-size:15px; color:var(--chalk-dim); margin-bottom:7px;}
+code{
+  font-family:var(--mono); font-size:.87em; background:rgba(127,209,185,.1);
+  color:var(--mint); padding:1px 5px; border-radius:3px;
+}
+a.inline{color:var(--lemon);}
+
+/* ---------- 공식 박스 ---------- */
+.formula{
+  font-family:var(--mono); font-size:15px; font-weight:500;
+  background:var(--slate-deep); border:1px solid var(--slate-line);
+  border-left:3px solid var(--lemon); border-radius:var(--r);
+  padding:16px 18px; margin:18px 0; color:var(--chalk); overflow-x:auto;
+  white-space:nowrap;
+}
+.formula.unreal{border-left-color:var(--coral);}
+.formula .s{color:var(--mint);}
+.formula .o{color:var(--chalk-faint);}
+.formula .plus{color:var(--chalk-faint); margin:0 6px;}
+.formula-ko{
+  font-family:var(--ko); font-size:13px; color:var(--chalk-faint);
+  margin:-10px 0 20px; padding-left:19px;
+}
+
+/* ---------- 예문 카드 ---------- */
+.ex{
+  border:1px solid var(--slate-line); border-radius:var(--r);
+  background:rgba(10,29,31,.5); padding:16px 18px; margin:14px 0;
+}
+.ex + .ex{margin-top:10px;}
+.ex .en{
+  font-family:var(--en); font-size:19px; line-height:1.45; color:var(--chalk);
+  margin-bottom:7px; letter-spacing:-.005em;
+}
+.ex .en u{text-decoration:none; color:var(--lemon); border-bottom:1.5px solid rgba(242,193,78,.45);}
+.ex .en u.u2{color:var(--coral); border-bottom-color:rgba(232,112,95,.45);}
+.ex .ko{font-size:14px; color:var(--chalk-dim);}
+.ex .note{
+  font-size:12.5px; color:var(--chalk-faint); margin-top:9px;
+  padding-top:9px; border-top:1px dashed var(--slate-line);
+}
+.ex .note b{color:var(--mint); font-weight:600;}
+.ex.bad{border-left:3px solid var(--coral);}
+.ex.good{border-left:3px solid var(--mint);}
+
+/* ---------- 콜아웃 ---------- */
+.callout{
+  border:1px solid var(--slate-line); border-radius:var(--r);
+  background:linear-gradient(180deg, rgba(127,209,185,.07), rgba(127,209,185,0));
+  padding:18px 20px; margin:24px 0;
+}
+.callout .ttl{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--mint); margin-bottom:10px;
+}
+.callout p:last-child{margin-bottom:0;}
+.callout.warn{background:linear-gradient(180deg, rgba(232,112,95,.09), rgba(232,112,95,0));}
+.callout.warn .ttl{color:var(--coral);}
+.callout.key{background:linear-gradient(180deg, rgba(242,193,78,.09), rgba(242,193,78,0));}
+.callout.key .ttl{color:var(--lemon);}
+
+/* ---------- 표 ---------- */
+.tw{overflow-x:auto; margin:20px 0; border:1px solid var(--slate-line); border-radius:var(--r);}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:520px;}
+th,td{padding:11px 13px; text-align:left; border-bottom:1px solid var(--slate-line); vertical-align:top;}
+th{
+  background:var(--slate-deep); font-family:var(--mono); font-size:10.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--chalk-faint); font-weight:500;
+}
+td{color:var(--chalk-dim);}
+tr:last-child td{border-bottom:none;}
+td.e{font-family:var(--en); font-size:16px; color:var(--chalk);}
+td.m{font-family:var(--mono); font-size:12.5px; color:var(--mint);}
+td strong{color:var(--chalk);}
+
+/* ---------- 탭 ---------- */
+.tabs{margin:22px 0;}
+.tabs .heads{display:flex; gap:4px; flex-wrap:wrap; border-bottom:1px solid var(--slate-line);}
+.tabs .heads button{
+  background:transparent; border:none; border-bottom:2px solid transparent;
+  color:var(--chalk-faint); font-family:var(--ko); font-size:13.5px; font-weight:600;
+  padding:9px 13px; cursor:pointer; transition:all .16s; letter-spacing:-.02em;
+}
+.tabs .heads button:hover{color:var(--chalk-dim);}
+.tabs .heads button.on{color:var(--lemon); border-bottom-color:var(--lemon);}
+.tabs .body{padding-top:18px;}
+.tabs .pane{display:none;}
+.tabs .pane.on{display:block; animation:fade .28s ease;}
+@keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+/* ---------- 위젯 공통 ---------- */
+.widget{
+  border:1px solid var(--slate-line); border-radius:var(--r);
+  background:var(--slate-deep); padding:20px; margin:26px 0;
+}
+.widget .wttl{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--lemon); margin-bottom:6px;
+}
+.widget .wsub{font-size:13px; color:var(--chalk-faint); margin-bottom:18px;}
+.btn{
+  font-family:var(--ko); font-size:13.5px; font-weight:600; letter-spacing:-.02em;
+  background:transparent; color:var(--chalk); border:1px solid var(--slate-line);
+  border-radius:var(--r); padding:9px 16px; cursor:pointer; transition:all .16s;
+}
+.btn:hover{border-color:var(--chalk-faint);}
+.btn.primary{background:var(--lemon); border-color:var(--lemon); color:var(--slate-deep);}
+.btn.primary:hover{filter:brightness(1.08);}
+.btn:focus-visible, .switch button:focus-visible, nav.side a:focus-visible,
+.tabs .heads button:focus-visible, .opt:focus-visible{
+  outline:2px solid var(--mint); outline-offset:2px;
+}
+
+/* ---------- 3단변화 드릴 ---------- */
+.drill-card{
+  border:1px dashed var(--slate-line); border-radius:var(--r);
+  padding:22px; text-align:center; margin-bottom:14px; background:rgba(22,56,58,.4);
+}
+.drill-card .base{font-family:var(--en); font-size:34px; color:var(--chalk); line-height:1.1;}
+.drill-card .meaning{font-size:13px; color:var(--chalk-faint); margin-top:4px;}
+.drill-card .answer{
+  margin-top:16px; font-family:var(--mono); font-size:16px; color:var(--lemon);
+  min-height:24px; letter-spacing:.02em;
+}
+.drill-card .answer .dim{color:var(--chalk-faint);}
+.drill-card .answer.hidden{color:var(--chalk-faint); font-size:13px; font-family:var(--ko);}
+.drill-actions{display:flex; gap:8px; flex-wrap:wrap;}
+.chipbar{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+.chip{
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+  background:transparent; border:1px solid var(--slate-line); color:var(--chalk-faint);
+  border-radius:20px; padding:5px 12px; cursor:pointer; transition:all .16s;
+}
+.chip:hover{color:var(--chalk-dim);}
+.chip.on{background:var(--mint); border-color:var(--mint); color:var(--slate-deep); font-weight:700;}
+
+/* ---------- 판별 미니게임 ---------- */
+.game-q{
+  font-family:var(--en); font-size:20px; color:var(--chalk); line-height:1.5;
+  margin-bottom:6px;
+}
+.game-q .blank{color:var(--lemon); border-bottom:1.5px solid var(--lemon); padding:0 14px;}
+.game-ko{font-size:13px; color:var(--chalk-faint); margin-bottom:18px;}
+.game-opts{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+.game-opts button{
+  flex:1 1 160px; font-family:var(--mono); font-size:13px;
+  background:rgba(22,56,58,.5); border:1px solid var(--slate-line); color:var(--chalk);
+  border-radius:var(--r); padding:12px; cursor:pointer; transition:all .16s;
+}
+.game-opts button:hover:not(:disabled){border-color:var(--chalk-faint);}
+.game-opts button.right{background:rgba(127,209,185,.16); border-color:var(--mint); color:var(--mint);}
+.game-opts button.wrong{background:rgba(232,112,95,.14); border-color:var(--coral); color:var(--coral);}
+.game-fb{
+  font-size:13.5px; color:var(--chalk-dim); min-height:44px;
+  padding:12px 14px; border-radius:var(--r); background:rgba(22,56,58,.45);
+  border-left:3px solid var(--slate-line);
+}
+.game-fb.ok{border-left-color:var(--mint);}
+.game-fb.no{border-left-color:var(--coral);}
+.game-fb b{color:var(--chalk);}
+.game-meta{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--mono); font-size:11px; color:var(--chalk-faint); margin-bottom:14px;
+}
+
+/* ---------- 거리 두기 시프터 ---------- */
+.shift-rows{display:grid; gap:10px; margin-bottom:18px;}
+.shift-row{
+  display:grid; grid-template-columns:96px 1fr; gap:14px; align-items:center;
+  border:1px solid var(--slate-line); border-radius:var(--r);
+  padding:14px 16px; opacity:.32; transition:all .4s cubic-bezier(.2,.7,.3,1);
+  transform:translateX(0);
+}
+.shift-row.on{opacity:1; border-color:var(--lemon); background:rgba(242,193,78,.06);}
+.shift-row.on.unreal{border-color:var(--coral); background:rgba(232,112,95,.06);}
+.shift-row .lv{
+  font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--chalk-faint); line-height:1.5;
+}
+.shift-row.on .lv{color:var(--lemon);}
+.shift-row.on.unreal .lv{color:var(--coral);}
+.shift-row .sent{font-family:var(--en); font-size:17.5px; color:var(--chalk); line-height:1.4;}
+.shift-row .sent em{font-style:normal; color:var(--lemon);}
+.shift-row.unreal .sent em{color:var(--coral);}
+.shift-row .tr{font-family:var(--ko); font-size:12.5px; color:var(--chalk-faint); margin-top:3px;}
+
+/* ---------- 가정법 변환기 ---------- */
+.tf-picker{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px;}
+.tf-stage{display:grid; gap:12px;}
+.tf-card{
+  border:1px solid var(--slate-line); border-left-width:3px; border-radius:var(--r);
+  padding:15px 17px; background:rgba(22,56,58,.35);
+}
+.tf-card.fact{border-left-color:var(--lemon);}
+.tf-card.unreal{border-left-color:var(--coral);}
+.tf-card .kind{
+  font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--chalk-faint); margin-bottom:8px;
+}
+.tf-card.fact .kind{color:var(--lemon);}
+.tf-card.unreal .kind{color:var(--coral);}
+.tf-card .sent{font-family:var(--en); font-size:19px; color:var(--chalk); line-height:1.45;}
+.tf-card .sent em{font-style:normal; text-decoration:underline; text-decoration-color:rgba(232,112,95,.5); text-underline-offset:3px;}
+.tf-card .tr{font-size:13.5px; color:var(--chalk-dim); margin-top:6px;}
+.tf-card .why{font-family:var(--mono); font-size:11.5px; color:var(--mint); margin-top:8px;}
+
+/* ---------- 퀴즈 ---------- */
+.quiz-item{
+  border:1px solid var(--slate-line); border-radius:var(--r);
+  padding:18px 20px; margin-bottom:12px; background:rgba(10,29,31,.55);
+}
+.quiz-item .qn{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
+  color:var(--chalk-faint); margin-bottom:9px;
+}
+.quiz-item .qt{font-family:var(--en); font-size:18.5px; color:var(--chalk); line-height:1.5; margin-bottom:4px;}
+.quiz-item .qt .blank{color:var(--lemon); letter-spacing:.1em;}
+.quiz-item .qk{font-size:13px; color:var(--chalk-faint); margin-bottom:14px;}
+.opts{display:grid; gap:7px;}
+.opt{
+  display:flex; gap:11px; align-items:flex-start; text-align:left; width:100%;
+  background:rgba(22,56,58,.4); border:1px solid var(--slate-line); border-radius:var(--r);
+  padding:11px 13px; cursor:pointer; transition:all .15s; color:var(--chalk-dim);
+}
+.opt:hover:not(.locked){border-color:var(--chalk-faint); color:var(--chalk);}
+.opt .mark{
+  font-family:var(--mono); font-size:11px; color:var(--chalk-faint);
+  border:1px solid var(--slate-line); border-radius:3px;
+  width:20px; height:20px; flex:0 0 20px; display:grid; place-items:center;
+}
+.opt .txt{font-family:var(--en); font-size:16.5px; line-height:1.35;}
+.opt.sel{border-color:var(--lemon);}
+.opt.sel .mark{border-color:var(--lemon); color:var(--lemon);}
+.opt.ok{background:rgba(127,209,185,.14); border-color:var(--mint); color:var(--chalk);}
+.opt.ok .mark{background:var(--mint); border-color:var(--mint); color:var(--slate-deep);}
+.opt.ng{background:rgba(232,112,95,.12); border-color:var(--coral);}
+.opt.ng .mark{background:var(--coral); border-color:var(--coral); color:var(--slate-deep);}
+.quiz-exp{
+  display:none; margin-top:13px; padding-top:13px; border-top:1px dashed var(--slate-line);
+  font-size:13.5px; color:var(--chalk-dim);
+}
+.quiz-exp.show{display:block;}
+.quiz-exp b{color:var(--mint);}
+.quiz-foot{
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  margin-top:20px; padding-top:20px; border-top:1px solid var(--slate-line);
+}
+.score{font-family:var(--mono); font-size:13px; color:var(--chalk-faint);}
+.score b{color:var(--lemon); font-size:18px;}
+
+/* ---------- 요약 그리드 ---------- */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin:22px 0;}
+.mini{
+  border:1px solid var(--slate-line); border-top:3px solid var(--mint);
+  border-radius:var(--r); padding:16px; background:rgba(10,29,31,.5);
+}
+.mini .m-form{font-family:var(--mono); font-size:12.5px; color:var(--lemon); margin-bottom:8px;}
+.mini .m-ko{font-size:13.5px; color:var(--chalk-dim); line-height:1.6;}
+.mini .m-ex{font-family:var(--en); font-size:15px; color:var(--chalk); margin-top:10px; line-height:1.4;}
+.mini.u{border-top-color:var(--coral);}
+.mini.u .m-form{color:var(--coral);}
+
+footer{
+  border-top:1px solid var(--slate-line); margin-top:70px; padding:36px 0 60px;
+  font-family:var(--mono); font-size:11px; color:var(--chalk-faint); letter-spacing:.08em;
+}
+footer .fq{font-family:var(--en); font-size:19px; font-style:italic; color:var(--chalk-dim); letter-spacing:0; margin-bottom:14px;}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:980px){
+  nav.side{display:none;}
+  .shell{display:block;}
+  .mobile-bar{
+    display:block; position:sticky; top:0; z-index:100;
+    background:var(--slate-deep); border-bottom:1px solid var(--slate-line);
+  }
+  .mobile-bar .mb-in{display:flex; align-items:center; gap:12px; padding:11px 18px;}
+  .mobile-bar .mb-t{font-family:var(--en); font-size:15px; color:var(--chalk); flex:1 1 auto;}
+  .mobile-bar .mb-t em{color:var(--lemon);}
+  .mobile-bar .mb-b{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    background:transparent; border:1px solid var(--slate-line); color:var(--chalk-dim);
+    border-radius:20px; padding:6px 13px; cursor:pointer;
+  }
+  .mobile-toc{display:none; border-top:1px solid var(--slate-line); padding:12px 18px 18px; max-height:62vh; overflow-y:auto;}
+  .mobile-toc.open{display:block;}
+  .mobile-toc a{display:block; color:var(--chalk-dim); text-decoration:none; font-size:14px; padding:7px 0;}
+  .mobile-toc a .num{font-family:var(--mono); font-size:10.5px; color:var(--chalk-faint); margin-right:8px;}
+  .mobile-toc .nav-part{margin:16px 0 6px;}
+  header.hero{padding:44px 0 40px;}
+  .wrap{padding:0 20px;}
+  section{padding:48px 0 6px;}
+  .shift-row{grid-template-columns:1fr; gap:6px;}
+  .ruler{height:118px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="mobile-bar">
+  <div class="mb-in">
+    <div class="mb-t">have + <em>p.p.</em> &amp; 가정법</div>
+    <button class="mb-b" id="tocBtn">목차</button>
+  </div>
+  <div class="mobile-toc" id="mobileToc"></div>
+</div>
+
+<div class="shell">
+
+  <!-- ================= SIDEBAR ================= -->
+  <nav class="side">
+    <div class="brand">Grammar of Time · 초급자용</div>
+    <div class="brand-title">have + <em>p.p.</em><br>그리고 가정법</div>
+    <div id="navList"></div>
+  </nav>
+
+  <main>
+
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Lecture 01 · 영어의 시간 감각</div>
+        <h1>I lost my key.<br><span class="pp">I have lost</span> my key.<br><em>If I hadn't lost it…</em></h1>
+        <div class="h1-ko">같은 열쇠, 세 개의 다른 시간. 영어는 이 차이를 문법으로 구별합니다.</div>
+        <p class="lede">
+          영어 문법에서 가장 많이 헤매는 두 곳이 <b>have + 과거분사</b>와 <b>가정법</b>입니다.
+          그런데 이 둘은 사실 같은 뿌리에서 나옵니다. 둘 다 <b>"시간을 어디에 놓을 것인가"</b>에 관한 이야기죠.
+          아래 문장을 눌러 보세요. 시간 자 위에서 문장이 어디에 놓이는지 직접 보입니다.
+        </p>
+
+        <div class="thesis">
+          <div class="thesis-q">눌러서 비교해 보세요</div>
+          <div class="switch" id="heroSwitch"></div>
+          <div class="ruler" id="heroRuler">
+            <div class="axis"></div>
+            <div class="now"></div>
+            <div class="zone past">← past</div>
+            <div class="zone future">future →</div>
+          </div>
+          <div class="thesis-read" id="heroRead"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+
+      <!-- ============ 01 과거분사 ============ -->
+      <section id="s-pp">
+        <div class="sec-num">Part 1 · 01</div>
+        <h2>먼저 재료부터 — <span class="en">과거분사(p.p.)</span>가 뭔가요?</h2>
+        <p>
+          <code>have + 과거분사</code>를 배우기 전에, 재료인 <b>과거분사</b>를 알아야 합니다.
+          영어 동사는 모양이 세 개씩 있습니다. 이걸 <b>동사의 3단 변화</b>라고 부릅니다.
+        </p>
+
+        <div class="formula">
+          <span class="s">원형</span><span class="plus">/</span><span class="s">과거형</span><span class="plus">/</span><span class="s">과거분사형</span>
+          <span class="o">   →   go / went / gone</span>
+        </div>
+        <div class="formula-ko">세 번째 칸이 과거분사입니다. 영어로 past participle, 줄여서 <b>p.p.</b></div>
+
+        <div class="callout key">
+          <div class="ttl">가장 중요한 오해 풀기</div>
+          <p>
+            <b>과거분사는 "과거 시제"가 아닙니다.</b> 이름에 '과거'가 들어 있어서 헷갈리지만,
+            과거분사 혼자서는 시간을 나타내지 못합니다. 과거분사의 뜻은 딱 하나 —
+            <span class="k">"이미 끝난 / 그렇게 된 상태"</span>입니다.
+          </p>
+          <p>
+            그래서 과거분사는 형용사처럼 쓰입니다:
+            <code>a broken window</code>(깨진 창문), <code>a written letter</code>(쓰여진 편지),
+            <code>fried chicken</code>(튀겨진 치킨). 시간이 아니라 <b>상태</b>를 말하고 있죠.
+          </p>
+        </div>
+
+        <h3>규칙 동사 — 그냥 -ed를 붙입니다</h3>
+        <div class="tw">
+          <table>
+            <thead><tr><th>원형</th><th>과거형</th><th>과거분사</th><th>규칙</th></tr></thead>
+            <tbody>
+              <tr><td class="e">work</td><td class="e">worked</td><td class="e">worked</td><td>+ed</td></tr>
+              <tr><td class="e">live</td><td class="e">lived</td><td class="e">lived</td><td>e로 끝나면 +d</td></tr>
+              <tr><td class="e">study</td><td class="e">studied</td><td class="e">studied</td><td>자음+y → ied</td></tr>
+              <tr><td class="e">stop</td><td class="e">stopped</td><td class="e">stopped</td><td>단모음+단자음 → 자음 반복</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>규칙 동사는 과거형과 과거분사가 <b>똑같이 생겼습니다</b>. 외울 게 없습니다. 문제는 불규칙 동사죠.</p>
+
+        <h3>불규칙 동사 — 4가지 패턴으로 나눠서 외우기</h3>
+        <p>불규칙 동사를 무작정 외우면 지칩니다. <b>모양이 변하는 방식</b>으로 묶으면 훨씬 빠릅니다.</p>
+
+        <div class="tabs" id="irrTabs">
+          <div class="heads">
+            <button class="on" data-p="0">A-A-A · 안 변함</button>
+            <button data-p="1">A-B-B · 뒤 둘이 같음</button>
+            <button data-p="2">A-B-A · 처음과 끝이 같음</button>
+            <button data-p="3">A-B-C · 다 다름</button>
+          </div>
+          <div class="body">
+            <div class="pane on">
+              <p>세 칸이 모두 같은 동사들. 문장에서 위치를 보고 판단해야 합니다.</p>
+              <div class="tw"><table>
+                <thead><tr><th>동사</th><th>3단 변화</th><th>뜻</th></tr></thead>
+                <tbody>
+                  <tr><td class="e">cut</td><td class="m">cut · cut · cut</td><td>자르다</td></tr>
+                  <tr><td class="e">put</td><td class="m">put · put · put</td><td>놓다</td></tr>
+                  <tr><td class="e">set</td><td class="m">set · set · set</td><td>설정하다</td></tr>
+                  <tr><td class="e">hit</td><td class="m">hit · hit · hit</td><td>치다</td></tr>
+                  <tr><td class="e">shut</td><td class="m">shut · shut · shut</td><td>닫다</td></tr>
+                  <tr><td class="e">let</td><td class="m">let · let · let</td><td>~하게 하다</td></tr>
+                  <tr><td class="e">cost</td><td class="m">cost · cost · cost</td><td>비용이 들다</td></tr>
+                  <tr><td class="e">hurt</td><td class="m">hurt · hurt · hurt</td><td>다치게 하다</td></tr>
+                  <tr><td class="e">read</td><td class="m">read · read · read</td><td>읽다 (발음만 [리드]→[레드])</td></tr>
+                </tbody>
+              </table></div>
+            </div>
+            <div class="pane">
+              <p>가장 숫자가 많은 그룹. <b>과거형만 알면 과거분사도 아는</b> 편한 그룹입니다.</p>
+              <div class="tw"><table>
+                <thead><tr><th>동사</th><th>3단 변화</th><th>뜻</th></tr></thead>
+                <tbody>
+                  <tr><td class="e">buy</td><td class="m">buy · bought · bought</td><td>사다</td></tr>
+                  <tr><td class="e">teach</td><td class="m">teach · taught · taught</td><td>가르치다</td></tr>
+                  <tr><td class="e">think</td><td class="m">think · thought · thought</td><td>생각하다</td></tr>
+                  <tr><td class="e">bring</td><td class="m">bring · brought · brought</td><td>가져오다</td></tr>
+                  <tr><td class="e">catch</td><td class="m">catch · caught · caught</td><td>잡다</td></tr>
+                  <tr><td class="e">find</td><td class="m">find · found · found</td><td>찾다</td></tr>
+                  <tr><td class="e">have</td><td class="m">have · had · had</td><td>가지다</td></tr>
+                  <tr><td class="e">make</td><td class="m">make · made · made</td><td>만들다</td></tr>
+                  <tr><td class="e">say</td><td class="m">say · said · said</td><td>말하다</td></tr>
+                  <tr><td class="e">tell</td><td class="m">tell · told · told</td><td>말해주다</td></tr>
+                  <tr><td class="e">lose</td><td class="m">lose · lost · lost</td><td>잃다</td></tr>
+                  <tr><td class="e">leave</td><td class="m">leave · left · left</td><td>떠나다</td></tr>
+                  <tr><td class="e">keep</td><td class="m">keep · kept · kept</td><td>유지하다</td></tr>
+                  <tr><td class="e">sleep</td><td class="m">sleep · slept · slept</td><td>자다</td></tr>
+                  <tr><td class="e">meet</td><td class="m">meet · met · met</td><td>만나다</td></tr>
+                  <tr><td class="e">pay</td><td class="m">pay · paid · paid</td><td>지불하다</td></tr>
+                  <tr><td class="e">hear</td><td class="m">hear · heard · heard</td><td>듣다</td></tr>
+                  <tr><td class="e">build</td><td class="m">build · built · built</td><td>짓다</td></tr>
+                  <tr><td class="e">send</td><td class="m">send · sent · sent</td><td>보내다</td></tr>
+                  <tr><td class="e">spend</td><td class="m">spend · spent · spent</td><td>쓰다</td></tr>
+                  <tr><td class="e">feel</td><td class="m">feel · felt · felt</td><td>느끼다</td></tr>
+                  <tr><td class="e">understand</td><td class="m">understand · understood · understood</td><td>이해하다</td></tr>
+                  <tr><td class="e">win</td><td class="m">win · won · won</td><td>이기다</td></tr>
+                  <tr><td class="e">sit</td><td class="m">sit · sat · sat</td><td>앉다</td></tr>
+                  <tr><td class="e">stand</td><td class="m">stand · stood · stood</td><td>서다</td></tr>
+                </tbody>
+              </table></div>
+            </div>
+            <div class="pane">
+              <p>과거분사가 <b>원형과 똑같이</b> 돌아오는 그룹. 개수가 적어서 통째로 외우면 됩니다.</p>
+              <div class="tw"><table>
+                <thead><tr><th>동사</th><th>3단 변화</th><th>뜻</th></tr></thead>
+                <tbody>
+                  <tr><td class="e">come</td><td class="m">come · came · come</td><td>오다</td></tr>
+                  <tr><td class="e">become</td><td class="m">become · became · become</td><td>~이 되다</td></tr>
+                  <tr><td class="e">run</td><td class="m">run · ran · run</td><td>달리다</td></tr>
+                </tbody>
+              </table></div>
+            </div>
+            <div class="pane">
+              <p>세 칸이 다 다른 그룹. <b>과거분사가 -n / -en으로 끝나는</b> 경우가 많다는 힌트를 기억하세요.</p>
+              <div class="tw"><table>
+                <thead><tr><th>동사</th><th>3단 변화</th><th>뜻</th></tr></thead>
+                <tbody>
+                  <tr><td class="e">be</td><td class="m">be · was/were · been</td><td>~이다</td></tr>
+                  <tr><td class="e">go</td><td class="m">go · went · gone</td><td>가다</td></tr>
+                  <tr><td class="e">do</td><td class="m">do · did · done</td><td>하다</td></tr>
+                  <tr><td class="e">see</td><td class="m">see · saw · seen</td><td>보다</td></tr>
+                  <tr><td class="e">eat</td><td class="m">eat · ate · eaten</td><td>먹다</td></tr>
+                  <tr><td class="e">write</td><td class="m">write · wrote · written</td><td>쓰다</td></tr>
+                  <tr><td class="e">take</td><td class="m">take · took · taken</td><td>가져가다</td></tr>
+                  <tr><td class="e">give</td><td class="m">give · gave · given</td><td>주다</td></tr>
+                  <tr><td class="e">speak</td><td class="m">speak · spoke · spoken</td><td>말하다</td></tr>
+                  <tr><td class="e">break</td><td class="m">break · broke · broken</td><td>깨다</td></tr>
+                  <tr><td class="e">choose</td><td class="m">choose · chose · chosen</td><td>선택하다</td></tr>
+                  <tr><td class="e">drive</td><td class="m">drive · drove · driven</td><td>운전하다</td></tr>
+                  <tr><td class="e">know</td><td class="m">know · knew · known</td><td>알다</td></tr>
+                  <tr><td class="e">grow</td><td class="m">grow · grew · grown</td><td>자라다</td></tr>
+                  <tr><td class="e">throw</td><td class="m">throw · threw · thrown</td><td>던지다</td></tr>
+                  <tr><td class="e">fly</td><td class="m">fly · flew · flown</td><td>날다</td></tr>
+                  <tr><td class="e">begin</td><td class="m">begin · began · begun</td><td>시작하다</td></tr>
+                  <tr><td class="e">drink</td><td class="m">drink · drank · drunk</td><td>마시다</td></tr>
+                  <tr><td class="e">sing</td><td class="m">sing · sang · sung</td><td>노래하다</td></tr>
+                  <tr><td class="e">swim</td><td class="m">swim · swam · swum</td><td>수영하다</td></tr>
+                  <tr><td class="e">forget</td><td class="m">forget · forgot · forgotten</td><td>잊다</td></tr>
+                  <tr><td class="e">get</td><td class="m">get · got · gotten</td><td>얻다</td></tr>
+                  <tr><td class="e">wear</td><td class="m">wear · wore · worn</td><td>입다</td></tr>
+                  <tr><td class="e">fall</td><td class="m">fall · fell · fallen</td><td>떨어지다</td></tr>
+                  <tr><td class="e">steal</td><td class="m">steal · stole · stolen</td><td>훔치다</td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget">
+          <div class="wttl">Drill · 3단 변화 연습</div>
+          <div class="wsub">원형을 보고 머릿속으로 과거형·과거분사를 말한 뒤 정답을 확인하세요. 패턴별로 골라 연습할 수 있습니다.</div>
+          <div class="chipbar" id="drillChips"></div>
+          <div class="drill-card">
+            <div class="base" id="drillBase">go</div>
+            <div class="meaning" id="drillMeaning">가다</div>
+            <div class="answer hidden" id="drillAnswer">머릿속으로 말해 보고 "정답 보기"를 누르세요</div>
+          </div>
+          <div class="drill-actions">
+            <button class="btn primary" id="drillShow">정답 보기</button>
+            <button class="btn" id="drillNext">다음 동사</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 02 현재완료 ============ -->
+      <section id="s-perfect">
+        <div class="sec-num">Part 1 · 02</div>
+        <h2><span class="en">have + p.p.</span> — 과거를 지금 손에 들고 있다</h2>
+
+        <div class="formula">
+          <span class="s">주어</span><span class="plus">+</span>have / has<span class="plus">+</span><span class="s">과거분사</span>
+        </div>
+        <div class="formula-ko">주어가 he / she / it / 단수일 때만 <b>has</b>, 나머지는 모두 <b>have</b></div>
+
+        <div class="callout key">
+          <div class="ttl">초급자를 위한 직관</div>
+          <p>
+            <code>have</code>의 원래 뜻은 <b>"가지고 있다"</b>입니다. 그리고 과거분사는 <b>"끝난 상태"</b>죠.
+            둘을 붙이면 이렇게 읽힙니다:
+          </p>
+          <p style="font-size:16.5px; color:var(--chalk);">
+            <span class="k">"나는 [끝난 일]을 지금 가지고 있다."</span>
+          </p>
+          <p>
+            <code>I have finished it.</code> = 나는 <b>그걸 끝낸 상태</b>를 <b>지금</b> 가지고 있다 → "다 했어."<br>
+            그래서 <b>have + p.p.는 항상 '지금'과 연결되어 있습니다.</b> 이 한 줄이 현재완료의 전부입니다.
+          </p>
+        </div>
+
+        <h3>과거는 '점', 현재완료는 '지금까지 이어진 선'</h3>
+        <p>
+          한국어는 이 차이를 구별하지 않아서 어렵게 느껴집니다. "잃어버렸어"는 둘 다 되니까요.
+          하지만 영어에서는 <b>지금 상황이 어떤지</b>가 완전히 다릅니다.
+        </p>
+
+        <div class="ex">
+          <div class="en">I <u>lost</u> my wallet yesterday. <span style="color:var(--chalk-faint); font-size:14px; font-family:var(--ko);">(과거)</span></div>
+          <div class="ko">어제 지갑을 잃어버렸어.</div>
+          <div class="note">과거의 한 <b>점</b>에서 일어난 사건만 말합니다. 지금 찾았는지 안 찾았는지는 <b>알 수 없음</b>.</div>
+        </div>
+        <div class="ex">
+          <div class="en">I <u>have lost</u> my wallet. <span style="color:var(--chalk-faint); font-size:14px; font-family:var(--ko);">(현재완료)</span></div>
+          <div class="ko">지갑을 잃어버렸어. (그래서 지금 없어)</div>
+          <div class="note">과거에 잃어버린 <b>결과가 지금까지 이어집니다</b>. → "지금 돈이 없어, 카드도 없어" 라는 <b>현재 상황</b>이 핵심.</div>
+        </div>
+
+        <h3>현재완료의 4가지 용법 — 결국 다 '지금과의 연결'</h3>
+        <p>문법책은 4가지로 나누지만, 외울 필요는 없습니다. <b>같이 쓰이는 단어(신호어)</b>만 익히면 저절로 구별됩니다.</p>
+
+        <div class="tabs" id="usageTabs">
+          <div class="heads">
+            <button class="on" data-p="0">① 완료 · 방금 끝냄</button>
+            <button data-p="1">② 경험 · 해본 적</button>
+            <button data-p="2">③ 계속 · 계속 ~해왔다</button>
+            <button data-p="3">④ 결과 · 그래서 지금</button>
+          </div>
+          <div class="body">
+            <div class="pane on">
+              <p><b>신호어:</b> <code>just</code>(방금) <code>already</code>(벌써) <code>yet</code>(아직/벌써) <code>recently</code>(최근에)</p>
+              <div class="ex">
+                <div class="en">I <u>have just finished</u> my homework.</div>
+                <div class="ko">방금 숙제를 다 끝냈어.</div>
+              </div>
+              <div class="ex">
+                <div class="en">She <u>has already left</u> the office.</div>
+                <div class="ko">그녀는 벌써 퇴근했어. (그래서 지금 사무실에 없어)</div>
+              </div>
+              <div class="ex">
+                <div class="en"><u>Have</u> you <u>eaten</u> lunch <u>yet</u>?</div>
+                <div class="ko">점심 벌써 먹었어?</div>
+                <div class="note"><b>yet</b>은 의문문에서 "벌써", 부정문에서 "아직"으로 쓰이고 항상 <b>문장 끝</b>에 옵니다. → <code>I haven't eaten yet.</code></div>
+              </div>
+            </div>
+            <div class="pane">
+              <p><b>신호어:</b> <code>ever</code>(한 번이라도) <code>never</code>(한 번도 없다) <code>before</code>(전에) <code>once / twice / three times</code>(~번)</p>
+              <div class="ex">
+                <div class="en"><u>Have</u> you <u>ever been</u> to Japan?</div>
+                <div class="ko">일본에 가본 적 있어?</div>
+              </div>
+              <div class="ex">
+                <div class="en">I <u>have never seen</u> snow.</div>
+                <div class="ko">난 눈을 한 번도 본 적이 없어.</div>
+                <div class="note"><b>never</b>가 이미 부정이므로 <code>haven't never</code>처럼 쓰지 않습니다.</div>
+              </div>
+              <div class="ex">
+                <div class="en">I <u>have watched</u> that movie <u>three times</u>.</div>
+                <div class="ko">그 영화를 세 번 봤어.</div>
+                <div class="note">"태어나서 지금까지"라는 <b>경험 통장</b>에 3회가 쌓인 것. 그래서 현재완료.</div>
+              </div>
+            </div>
+            <div class="pane">
+              <p><b>신호어:</b> <code>for + 기간</code> <code>since + 시작 시점</code> <code>How long ~?</code></p>
+              <div class="ex">
+                <div class="en">I <u>have lived</u> in Seoul <u>for</u> ten years.</div>
+                <div class="ko">서울에서 10년째 살고 있어. (지금도 살고 있음)</div>
+              </div>
+              <div class="ex">
+                <div class="en">We <u>have known</u> each other <u>since</u> 2015.</div>
+                <div class="ko">우리는 2015년부터 알고 지냈어.</div>
+              </div>
+              <div class="ex">
+                <div class="en"><u>How long have</u> you <u>worked</u> here?</div>
+                <div class="ko">여기서 얼마나 일했어요?</div>
+                <div class="note">한국어로는 "~하고 있다"인데 영어는 현재완료를 씁니다. <b>과거에 시작해서 지금까지 이어지는 선</b>이니까요.</div>
+              </div>
+            </div>
+            <div class="pane">
+              <p>"과거에 이런 일이 있었고, <b>그래서 지금 이렇다</b>"를 한 문장으로 말합니다. 신호어 없이 문맥으로 판단합니다.</p>
+              <div class="ex">
+                <div class="en">He <u>has gone</u> to Busan.</div>
+                <div class="ko">그는 부산에 가버렸어. (그래서 지금 여기 없어)</div>
+              </div>
+              <div class="ex">
+                <div class="en">I <u>have caught</u> a cold.</div>
+                <div class="ko">감기에 걸렸어. (그래서 지금 아파)</div>
+              </div>
+              <div class="ex">
+                <div class="en">Someone <u>has broken</u> the window.</div>
+                <div class="ko">누가 창문을 깨뜨렸어. (그래서 지금 깨져 있어)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3>부정문과 의문문</h3>
+        <div class="tw">
+          <table>
+            <thead><tr><th>형태</th><th>만드는 법</th><th>예문</th></tr></thead>
+            <tbody>
+              <tr><td><strong>긍정</strong></td><td class="m">have/has + p.p.</td><td class="e">I have seen it.</td></tr>
+              <tr><td><strong>부정</strong></td><td class="m">have/has + not + p.p.</td><td class="e">I haven't seen it.</td></tr>
+              <tr><td><strong>의문</strong></td><td class="m">Have/Has + 주어 + p.p. ?</td><td class="e">Have you seen it?</td></tr>
+              <tr><td><strong>대답</strong></td><td class="m">Yes, 주어 + have. / No, 주어 + haven't.</td><td class="e">Yes, I have.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><b>축약형:</b> <code>I've</code> <code>you've</code> <code>he's</code> <code>she's</code> <code>we've</code> <code>they've</code> / <code>haven't</code> <code>hasn't</code>
+        &nbsp;— <code>he's</code>는 <code>he is</code>일 수도 있으니 뒤에 오는 단어가 과거분사인지 보고 판단합니다.</p>
+      </section>
+
+      <!-- ============ 03 과거 vs 현재완료 ============ -->
+      <section id="s-vs">
+        <div class="sec-num">Part 1 · 03</div>
+        <h2>절대 규칙 — <span class="en">yesterday</span>와 현재완료는 함께 못 씁니다</h2>
+        <p>
+          시험과 실전에서 가장 많이 틀리는 부분입니다. 규칙은 아주 단순합니다.
+          <b>과거의 특정 시점을 못 박는 표현</b>은 현재완료와 같이 쓸 수 없습니다.
+          "지금까지 이어진 선"이라고 말하면서 "어제 딱 그때"라고 못 박으면 모순이니까요.
+        </p>
+
+        <div class="tw">
+          <table>
+            <thead><tr><th>현재완료와 못 쓰는 표현</th><th>현재완료와 어울리는 표현</th></tr></thead>
+            <tbody>
+              <tr><td class="m">yesterday, last night/week/year</td><td class="m">just, already, yet, recently</td></tr>
+              <tr><td class="m">two days ago, in 2019</td><td class="m">for two days, since 2019</td></tr>
+              <tr><td class="m">When ~? (언제?)</td><td class="m">How long ~? (얼마나 오래?)</td></tr>
+              <tr><td class="m">then, at that time</td><td class="m">ever, never, before, so far</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ex bad">
+          <div class="en">✕ I <u class="u2">have seen</u> him yesterday.</div>
+          <div class="ko">yesterday가 시점을 못 박았으므로 현재완료 불가</div>
+        </div>
+        <div class="ex good">
+          <div class="en">✓ I <u>saw</u> him yesterday.</div>
+          <div class="ko">어제 그를 봤어.</div>
+        </div>
+        <div class="ex bad">
+          <div class="en">✕ <u class="u2">When have</u> you arrived?</div>
+          <div class="ko">"언제?"는 시점을 묻는 질문 → 과거시제로</div>
+        </div>
+        <div class="ex good">
+          <div class="en">✓ <u>When did</u> you arrive?</div>
+          <div class="ko">언제 도착했어?</div>
+        </div>
+
+        <div class="widget">
+          <div class="wttl">Quick Game · 과거 vs 현재완료</div>
+          <div class="wsub">빈칸에 알맞은 형태를 고르세요. 문장 안의 신호어를 먼저 찾는 게 요령입니다.</div>
+          <div class="game-meta"><span id="gMeta">1 / 10</span><span id="gScore">정답 0</span></div>
+          <div class="game-q" id="gQ"></div>
+          <div class="game-ko" id="gK"></div>
+          <div class="game-opts" id="gOpts"></div>
+          <div class="game-fb" id="gFb">둘 중 하나를 고르면 이유를 알려드립니다.</div>
+          <div style="margin-top:14px;"><button class="btn" id="gNext">다음 문제</button></div>
+        </div>
+
+        <h3>꼭 짝지어 알아둘 세 쌍</h3>
+        <h4>① have been to vs have gone to</h4>
+        <div class="ex">
+          <div class="en">I <u>have been to</u> Paris.</div>
+          <div class="ko">파리에 가본 적 있어. (갔다가 <b>돌아왔음</b> → 경험)</div>
+        </div>
+        <div class="ex">
+          <div class="en">She <u>has gone to</u> Paris.</div>
+          <div class="ko">그녀는 파리에 가버렸어. (<b>아직 거기 있음</b> → 결과)</div>
+        </div>
+
+        <h4>② for vs since</h4>
+        <p><code>for</code> 다음에는 <b>기간</b>(얼마나 오래), <code>since</code> 다음에는 <b>시작 시점</b>(언제부터)이 옵니다.</p>
+        <div class="ex">
+          <div class="en">for three years / for a long time / for two hours</div>
+          <div class="ko">3년 동안 / 오랫동안 / 두 시간 동안</div>
+        </div>
+        <div class="ex">
+          <div class="en">since 2020 / since last May / since I was a child</div>
+          <div class="ko">2020년부터 / 지난 5월부터 / 어릴 때부터</div>
+          <div class="note">✕ <code>since three years</code> 는 틀립니다. 3년은 기간이니까 <b>for</b>.</div>
+        </div>
+
+        <h4>③ have been -ing (현재완료진행)</h4>
+        <p>계속을 <b>더 생생하게</b> 강조할 때 씁니다. 특히 동작 동사(work, study, wait, rain 등)에서 자연스럽습니다.</p>
+        <div class="formula">
+          <span class="s">주어</span><span class="plus">+</span>have / has<span class="plus">+</span>been<span class="plus">+</span><span class="s">동사-ing</span>
+        </div>
+        <div class="ex">
+          <div class="en">I <u>have been waiting</u> for you for two hours.</div>
+          <div class="ko">두 시간 동안 너를 기다리고 있어. (지금도 기다리는 중)</div>
+        </div>
+        <div class="ex">
+          <div class="en">It <u>has been raining</u> since this morning.</div>
+          <div class="ko">아침부터 계속 비가 오고 있어.</div>
+          <div class="note"><b>know, like, have, want</b> 처럼 상태를 나타내는 동사는 진행형으로 잘 쓰지 않습니다. → <code>I have known him for years.</code> (✓)</div>
+        </div>
+      </section>
+
+      <!-- ============ 04 과거완료 ============ -->
+      <section id="s-past-perfect">
+        <div class="sec-num">Part 1 · 04</div>
+        <h2><span class="en">had + p.p.</span> — 과거보다 더 과거</h2>
+        <p>
+          현재완료의 기준점이 <b>지금</b>이었다면, 과거완료의 기준점은 <b>과거의 어떤 순간</b>입니다.
+          "그때보다 <b>이미 먼저</b> 일어난 일"을 말할 때 씁니다. 이야기 속에서 시간을 한 칸 더 뒤로 밀 때 쓰는 도구죠.
+        </p>
+
+        <div class="formula">
+          <span class="s">주어</span><span class="plus">+</span>had<span class="plus">+</span><span class="s">과거분사</span>
+          <span class="o">   (주어가 뭐든 항상 had)</span>
+        </div>
+
+        <div class="widget">
+          <div class="wttl">Timeline · 두 개의 과거 순서 보기</div>
+          <div class="wsub">문장을 눌러 어느 일이 먼저인지 시간 자에서 확인하세요.</div>
+          <div class="switch" id="ppSwitch"></div>
+          <div class="ruler" id="ppRuler">
+            <div class="axis"></div><div class="now"></div>
+            <div class="zone past">← past</div><div class="zone future">future →</div>
+          </div>
+          <div class="thesis-read" id="ppRead"></div>
+        </div>
+
+        <div class="ex">
+          <div class="en">When I arrived at the station, the train <u>had already left</u>.</div>
+          <div class="ko">내가 역에 도착했을 때, 기차는 이미 떠나 있었어.</div>
+          <div class="note">기차가 떠난 것(<b>had left</b>) → 내가 도착한 것(<b>arrived</b>) 순서. 더 먼저 일어난 쪽이 had p.p.</div>
+        </div>
+        <div class="ex">
+          <div class="en">I <u>had never eaten</u> Thai food before I visited Bangkok.</div>
+          <div class="ko">방콕에 가기 전에는 태국 음식을 먹어본 적이 없었어.</div>
+          <div class="note">"방콕 방문(과거)" 시점까지의 경험을 말하므로 과거완료.</div>
+        </div>
+        <div class="ex">
+          <div class="en">She said she <u>had lost</u> her phone.</div>
+          <div class="ko">그녀는 휴대폰을 잃어버렸다고 말했어.</div>
+          <div class="note">말한 것보다 잃어버린 것이 먼저 → had lost. (현재라면 <code>She says she has lost…</code>)</div>
+        </div>
+
+        <div class="callout">
+          <div class="ttl">한눈에 정리</div>
+          <p>
+            <span class="k">have p.p.</span> = 지금 기준으로 "이미 ~했다"<br>
+            <span class="k">had p.p.</span> = 과거 어느 순간 기준으로 "그때 이미 ~했었다"<br>
+            <span class="k">will have p.p.</span> = 미래 어느 순간 기준으로 "그때는 이미 ~했을 것이다"
+          </p>
+          <p style="margin-top:12px;"><b>미래완료 예:</b> <code>By next March, I will have worked here for five years.</code>
+          — 내년 3월이면 여기서 5년 근무한 것이 됩니다.</p>
+        </div>
+      </section>
+
+      <!-- ============ 05 조동사 + have p.p. ============ -->
+      <section id="s-modal">
+        <div class="sec-num">Part 1 · 05 → Part 2로 가는 다리</div>
+        <h2><span class="en">조동사 + have + p.p.</span> — 과거에 대한 추측과 후회</h2>
+        <p>
+          이 표현이 이 강의에서 가장 중요한 <b>연결 고리</b>입니다.
+          왜냐하면 뒤에 배울 가정법 문장의 결론 부분이 정확히 이 모양이기 때문입니다.
+          지금 확실히 익혀두면 가정법이 절반은 끝납니다.
+        </p>
+
+        <div class="formula">
+          must / can't / may / might / should / could<span class="plus">+</span>have<span class="plus">+</span><span class="s">과거분사</span>
+        </div>
+        <div class="formula-ko">조동사 뒤라서 <b>has</b>가 아니고 항상 <b>have</b>입니다. 주어가 he여도 <code>he must have gone</code></div>
+
+        <div class="tw">
+          <table>
+            <thead><tr><th>표현</th><th>뜻</th><th>예문</th></tr></thead>
+            <tbody>
+              <tr><td class="m">must have p.p.</td><td>~했음이 <strong>틀림없다</strong> (강한 확신)</td><td class="e">He must have forgotten.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">그가 잊어버린 게 분명해.</span></td></tr>
+              <tr><td class="m">can't have p.p.</td><td>~했을 <strong>리가 없다</strong></td><td class="e">She can't have said that.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">그녀가 그런 말을 했을 리 없어.</span></td></tr>
+              <tr><td class="m">may/might have p.p.</td><td>~했을지도 <strong>모른다</strong> (약한 추측)</td><td class="e">He might have missed the bus.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">버스를 놓쳤을지도 몰라.</span></td></tr>
+              <tr><td class="m">should have p.p.</td><td>~<strong>했어야 했는데</strong> (안 해서 후회)</td><td class="e">I should have studied harder.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">더 열심히 공부했어야 했는데.</span></td></tr>
+              <tr><td class="m">shouldn't have p.p.</td><td>~하지 <strong>말았어야 했는데</strong> (해서 후회)</td><td class="e">I shouldn't have said that.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">그런 말 하지 말았어야 했어.</span></td></tr>
+              <tr><td class="m">could have p.p.</td><td>~할 <strong>수도 있었는데</strong> (안 했음)</td><td class="e">You could have told me.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">말해줄 수도 있었잖아.</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout key">
+          <div class="ttl">여기서 눈치채야 하는 것</div>
+          <p>
+            <code>should have p.p.</code>와 <code>could have p.p.</code>는 이미 <b>"실제로는 그렇지 않았다"</b>는 뜻을 담고 있습니다.
+            <b>사실과 반대</b>를 말하고 있는 거죠. 이게 바로 <span class="u">가정법</span>의 정체입니다.
+          </p>
+          <p>
+            <code>I should have studied.</code>(공부했어야 했는데 = 안 했다) 에
+            "만약 공부했다면" 이라는 조건만 앞에 붙이면 완성된 가정법 문장이 됩니다:<br>
+            <span style="font-family:var(--en); font-size:17px; color:var(--chalk);">If I <b>had studied</b>, I <b>would have passed</b>.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 06 두 종류의 if ============ -->
+      <section id="s-if">
+        <div class="sec-num">Part 2 · 06</div>
+        <h2>가정법의 출발점 — <span class="en">if</span>에는 두 종류가 있다</h2>
+        <p>
+          한국어 "만약"은 하나지만, 영어의 if는 두 가지 완전히 다른 상황에 쓰입니다.
+          이 구별을 못 하면 가정법은 끝까지 헷갈립니다.
+        </p>
+
+        <div class="ex good">
+          <div class="en">If it <u>rains</u> tomorrow, I <u>will stay</u> home.</div>
+          <div class="ko">내일 비가 오면 집에 있을 거야.</div>
+          <div class="note"><b>진짜 조건 (직설법)</b> — 실제로 비가 올 수 있습니다. 가능성이 있는 미래를 말합니다.<br>if절은 미래여도 <b>현재시제</b>를 씁니다. ✕ <code>If it will rain</code></div>
+        </div>
+        <div class="ex">
+          <div class="en">If I <u class="u2">were</u> a bird, I <u class="u2">would fly</u> to you.</div>
+          <div class="ko">내가 새라면, 너에게 날아갈 텐데.</div>
+          <div class="note"><b>가정법</b> — 나는 새가 아닙니다. 앞으로도 안 됩니다. <b>사실이 아닌 상상</b>이죠.</div>
+        </div>
+
+        <h3>핵심 원리 하나: "시제를 한 칸 뒤로 밀기"</h3>
+        <p>
+          영어는 <b>현실에서 멀어질 때 시제를 뒤로 밉니다.</b> 시간이 아니라 <b>거리</b>를 표시하는 겁니다.
+          한국어에서 "그렇다면"보다 "그랬다면"이 더 아득하게 들리는 것과 비슷합니다.
+        </p>
+        <p>
+          이 규칙 하나로 가정법 전체가 설명됩니다. 아래에서 직접 밀어보세요.
+        </p>
+
+        <div class="widget">
+          <div class="wttl">Shifter · 시제를 한 칸 뒤로</div>
+          <div class="wsub">같은 내용을 현실 → 현재의 상상 → 과거의 상상으로 옮기면 시제가 한 칸씩 뒤로 밀립니다.</div>
+          <div class="shift-rows">
+            <div class="shift-row on" data-lv="0">
+              <div class="lv">현실<br>직설법</div>
+              <div>
+                <div class="sent">If I <em>have</em> time, I <em>will visit</em> you.</div>
+                <div class="tr">시간이 있으면 찾아갈게. → 현재시제 + will (가능성 있음)</div>
+              </div>
+            </div>
+            <div class="shift-row unreal" data-lv="1">
+              <div class="lv">현재의 상상<br>가정법 과거</div>
+              <div>
+                <div class="sent">If I <em>had</em> time, I <em>would visit</em> you.</div>
+                <div class="tr">시간이 있으면 찾아갈 텐데. → 과거시제 + would (지금 시간이 없음)</div>
+              </div>
+            </div>
+            <div class="shift-row unreal" data-lv="2">
+              <div class="lv">과거의 상상<br>가정법 과거완료</div>
+              <div>
+                <div class="sent">If I <em>had had</em> time, I <em>would have visited</em> you.</div>
+                <div class="tr">시간이 있었다면 찾아갔을 텐데. → had p.p. + would have p.p. (그때 시간이 없었음)</div>
+              </div>
+            </div>
+          </div>
+          <div class="drill-actions">
+            <button class="btn primary" id="shiftBack">한 칸 뒤로 밀기 →</button>
+            <button class="btn" id="shiftReset">처음으로</button>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <div class="ttl">이름 때문에 속지 마세요</div>
+          <p>
+            <b>가정법 과거</b>는 과거 이야기가 아니라 <span class="k">지금</span>에 대한 상상입니다.<br>
+            <b>가정법 과거완료</b>가 <span class="k">과거</span>에 대한 상상입니다.<br>
+            이름에 있는 '과거'는 <b>시간</b>이 아니라 <b>동사 모양</b>을 가리킵니다.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 07 가정법 과거 ============ -->
+      <section id="s-sub2">
+        <div class="sec-num">Part 2 · 07</div>
+        <h2>가정법 과거 — <span class="en">지금</span> 사실의 반대를 상상</h2>
+
+        <div class="formula unreal">
+          If<span class="plus">+</span><span class="s">주어</span><span class="plus">+</span>과거동사<span class="plus">,</span>
+          <span class="s">주어</span><span class="plus">+</span>would / could / might<span class="plus">+</span><span class="s">동사원형</span>
+        </div>
+        <div class="formula-ko">뜻: "(지금) ~라면, ~할 텐데" — 실제로는 그렇지 않다는 의미가 항상 깔려 있습니다.</div>
+
+        <p>만드는 순서는 딱 세 단계입니다.</p>
+        <ol>
+          <li>현실을 확인한다 → <b>I don't have money.</b> (지금 돈이 없다)</li>
+          <li>반대로 뒤집고 시제를 한 칸 뒤로 → <b>If I had money,</b></li>
+          <li>결론에 would + 동사원형 → <b>I would buy a car.</b></li>
+        </ol>
+
+        <div class="ex">
+          <div class="en">If I <u class="u2">had</u> money, I <u class="u2">would buy</u> a car.</div>
+          <div class="ko">돈이 있으면 차를 살 텐데. (사실: 돈이 없다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">If I <u class="u2">knew</u> his number, I <u class="u2">would call</u> him.</div>
+          <div class="ko">그의 번호를 알면 전화할 텐데. (사실: 모른다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">If she <u class="u2">were</u> here, she <u class="u2">could help</u> us.</div>
+          <div class="ko">그녀가 여기 있다면 우리를 도와줄 수 있을 텐데. (사실: 없다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">If I <u class="u2">didn't have</u> to work, I <u class="u2">would travel</u> the world.</div>
+          <div class="ko">일을 안 해도 된다면 세계를 여행할 텐데. (사실: 일해야 한다)</div>
+        </div>
+
+        <div class="callout">
+          <div class="ttl">was가 아니라 were</div>
+          <p>
+            가정법에서 be동사는 주어가 I, he, she, it이어도 <b>were</b>를 씁니다.
+            <code>If I <b>were</b> you…</code> (내가 너라면…) — 회화에서 was도 쓰이지만,
+            시험과 격식 있는 글에서는 <b>were</b>가 정답입니다.
+          </p>
+          <p>
+            가장 많이 쓰이는 표현: <span style="font-family:var(--en); font-size:17px; color:var(--chalk);">If I were you, I would apologize first.</span>
+            — 내가 너라면 먼저 사과할 거야. (조언할 때 쓰는 관용 표현)
+          </p>
+        </div>
+
+        <h3>would / could / might 골라 쓰기</h3>
+        <div class="tw">
+          <table>
+            <thead><tr><th>조동사</th><th>뜻</th><th>예문</th></tr></thead>
+            <tbody>
+              <tr><td class="m">would</td><td>~할 텐데 (의지·예상)</td><td class="e">I would tell her the truth.</td></tr>
+              <tr><td class="m">could</td><td>~할 수 있을 텐데 (능력·가능)</td><td class="e">I could speak Chinese.</td></tr>
+              <tr><td class="m">might</td><td>~할지도 모를 텐데 (약한 추측)</td><td class="e">He might change his mind.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ 08 가정법 과거완료 ============ -->
+      <section id="s-sub3">
+        <div class="sec-num">Part 2 · 08</div>
+        <h2>가정법 과거완료 — <span class="en">과거</span> 사실의 반대, 후회의 문법</h2>
+
+        <div class="formula unreal">
+          If<span class="plus">+</span><span class="s">주어</span><span class="plus">+</span>had<span class="plus">+</span>p.p.<span class="plus">,</span>
+          <span class="s">주어</span><span class="plus">+</span>would / could / might<span class="plus">+</span>have<span class="plus">+</span>p.p.
+        </div>
+        <div class="formula-ko">뜻: "(그때) ~였다면, ~했을 텐데" — 이미 지나가서 바꿀 수 없는 일에 대한 아쉬움</div>
+
+        <p>
+          앞에서 배운 <code>would have p.p.</code>가 여기 그대로 등장합니다.
+          <b>Part 1을 공부한 이유가 이것입니다.</b> 과거분사를 자유롭게 쓸 수 있으면 이 구조는 어렵지 않습니다.
+        </p>
+
+        <div class="ex">
+          <div class="en">If I <u class="u2">had studied</u> harder, I <u class="u2">would have passed</u> the exam.</div>
+          <div class="ko">더 열심히 공부했다면 시험에 붙었을 텐데. (사실: 공부 안 했고 떨어졌다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">If you <u class="u2">had told</u> me earlier, I <u class="u2">could have helped</u> you.</div>
+          <div class="ko">더 일찍 말해줬다면 도와줄 수 있었을 텐데. (사실: 말 안 했고 못 도왔다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">If I <u class="u2">hadn't missed</u> the bus, I <u class="u2">wouldn't have been</u> late.</div>
+          <div class="ko">버스를 놓치지 않았다면 늦지 않았을 텐데. (사실: 놓쳤고 늦었다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">If it <u class="u2">hadn't rained</u>, we <u class="u2">would have gone</u> hiking.</div>
+          <div class="ko">비가 안 왔다면 등산을 갔을 텐데. (사실: 비가 와서 못 갔다)</div>
+        </div>
+
+        <div class="widget">
+          <div class="wttl">Transformer · 사실을 가정법으로 바꾸기</div>
+          <div class="wsub">왼쪽에서 상황을 고르면, 같은 내용이 세 가지 형태로 어떻게 달라지는지 보여줍니다.</div>
+          <div class="tf-picker" id="tfPicker"></div>
+          <div class="tf-stage" id="tfStage"></div>
+        </div>
+
+        <h3>혼합 가정법 — 조건은 과거, 결과는 지금</h3>
+        <p>
+          "과거에 그랬다면, <b>지금</b> 이럴 텐데"처럼 두 시간이 섞이는 경우가 있습니다.
+          앞은 과거완료, 뒤는 가정법 과거 형태를 씁니다. 흔하고 아주 유용한 표현입니다.
+        </p>
+        <div class="formula unreal">
+          If<span class="plus">+</span><span class="s">주어</span><span class="plus">+</span>had<span class="plus">+</span>p.p.<span class="plus">,</span>
+          <span class="s">주어</span><span class="plus">+</span>would<span class="plus">+</span><span class="s">동사원형</span>
+          <span class="o">   (+ now / today)</span>
+        </div>
+        <div class="ex">
+          <div class="en">If I <u class="u2">had studied</u> medicine, I <u class="u2">would be</u> a doctor <u>now</u>.</div>
+          <div class="ko">의대를 갔다면 지금 의사일 텐데. (과거의 선택 → 현재의 결과)</div>
+        </div>
+        <div class="ex">
+          <div class="en">If she <u class="u2">hadn't quit</u> her job, she <u class="u2">would be</u> rich today.</div>
+          <div class="ko">일을 그만두지 않았다면 지금 부자일 텐데.</div>
+        </div>
+
+        <div class="callout warn">
+          <div class="ttl">가장 흔한 실수 3개</div>
+          <p>
+            ✕ <code>If I would have known…</code> → ✓ <code>If I <b>had</b> known…</code><br>
+            <span style="font-size:13px; color:var(--chalk-faint);">if절에는 would를 쓰지 않습니다. would는 <b>결론절 전용</b>입니다.</span>
+          </p>
+          <p>
+            ✕ <code>If I will be rich…</code> → ✓ <code>If I <b>were</b> rich…</code><br>
+            <span style="font-size:13px; color:var(--chalk-faint);">가정법 if절에는 미래시제를 쓰지 않습니다.</span>
+          </p>
+          <p>
+            ✕ <code>If she had come, I will be happy.</code> → ✓ <code>I <b>would have been</b> happy.</code><br>
+            <span style="font-size:13px; color:var(--chalk-faint);">두 절의 시제 짝을 맞춰야 합니다.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 09 가정법 친척들 ============ -->
+      <section id="s-family">
+        <div class="sec-num">Part 2 · 09</div>
+        <h2>if 없는 가정법 — <span class="en">wish, as if</span> 그리고 도치</h2>
+        <p>
+          가정법은 if 문장에만 있는 게 아닙니다. <b>시제를 한 칸 뒤로 미는</b> 원리는 여기서도 똑같이 작동합니다.
+          원리를 알면 새로 외울 게 거의 없습니다.
+        </p>
+
+        <h3>① I wish — "~라면 좋겠는데"</h3>
+        <div class="tw">
+          <table>
+            <thead><tr><th>형태</th><th>시점</th><th>예문</th></tr></thead>
+            <tbody>
+              <tr><td class="m">I wish + 과거동사</td><td>지금이 아쉬움</td><td class="e">I wish I were taller.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">키가 더 컸으면 좋겠어. (지금 작다)</span></td></tr>
+              <tr><td class="m">I wish + had p.p.</td><td>과거가 아쉬움</td><td class="e">I wish I had studied harder.<br><span style="font-family:var(--ko);font-size:12.5px;color:var(--chalk-faint)">더 열심히 공부했으면 좋았을 텐데. (안 했다)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ex">
+          <div class="en">I <u class="u2">wish</u> I <u class="u2">knew</u> how to swim.</div>
+          <div class="ko">수영할 줄 알면 좋겠어. (사실: 못 한다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">I <u class="u2">wish</u> I <u class="u2">hadn't said</u> that.</div>
+          <div class="ko">그 말을 안 했으면 좋았을 텐데. (사실: 해버렸다)</div>
+        </div>
+
+        <h3>② as if / as though — "마치 ~인 것처럼"</h3>
+        <div class="ex">
+          <div class="en">He talks <u class="u2">as if</u> he <u class="u2">knew</u> everything.</div>
+          <div class="ko">그는 마치 모든 걸 아는 것처럼 말한다. (사실: 모른다)</div>
+        </div>
+        <div class="ex">
+          <div class="en">She looks <u class="u2">as if</u> she <u class="u2">had seen</u> a ghost.</div>
+          <div class="ko">그녀는 유령을 본 것 같은 얼굴이다. (더 앞선 과거의 일)</div>
+        </div>
+
+        <h3>③ It's time / would rather</h3>
+        <div class="ex">
+          <div class="en">It's time you <u class="u2">went</u> to bed.</div>
+          <div class="ko">이제 자야 할 시간이야. (아직 안 자고 있다 → 재촉)</div>
+        </div>
+        <div class="ex">
+          <div class="en">I'd rather you <u class="u2">didn't</u> smoke here.</div>
+          <div class="ko">여기서 담배 안 피우시면 좋겠어요. (정중한 부탁)</div>
+        </div>
+
+        <h3>④ without / but for — "~가 없다면"</h3>
+        <div class="ex">
+          <div class="en"><u class="u2">Without</u> water, we <u class="u2">couldn't survive</u>.</div>
+          <div class="ko">물이 없다면 우리는 살 수 없을 것이다. = If it were not for water,</div>
+        </div>
+        <div class="ex">
+          <div class="en"><u class="u2">But for</u> your help, I <u class="u2">would have failed</u>.</div>
+          <div class="ko">네 도움이 없었다면 실패했을 거야.</div>
+        </div>
+
+        <h3>⑤ 도치 — if를 지우고 동사를 앞으로</h3>
+        <p>격식 있는 글이나 관용 표현에서 if를 생략하고 <b>동사를 문장 맨 앞</b>으로 보냅니다. 뜻은 같습니다.</p>
+        <div class="tw">
+          <table>
+            <thead><tr><th>원래 문장</th><th>도치된 문장</th></tr></thead>
+            <tbody>
+              <tr><td class="e">If I were you,</td><td class="e"><strong>Were</strong> I you,</td></tr>
+              <tr><td class="e">If I had known,</td><td class="e"><strong>Had</strong> I known,</td></tr>
+              <tr><td class="e">If you should need help,</td><td class="e"><strong>Should</strong> you need help,</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ex">
+          <div class="en"><u class="u2">Had</u> I known you were coming, I <u class="u2">would have prepared</u> dinner.</div>
+          <div class="ko">네가 온다는 걸 알았다면 저녁을 준비했을 텐데.</div>
+          <div class="note">비즈니스 이메일에서 자주 보이는 형태: <code>Should you have any questions, please contact me.</code> (문의사항이 있으시면 연락 주세요)</div>
+        </div>
+      </section>
+
+      <!-- ============ 10 정리 ============ -->
+      <section id="s-summary">
+        <div class="sec-num">Part 1 + 2 · 10</div>
+        <h2>전체 지도 한 장으로 정리</h2>
+
+        <h3>have + p.p. 계열</h3>
+        <div class="cards">
+          <div class="mini">
+            <div class="m-form">have / has + p.p.</div>
+            <div class="m-ko">현재완료 — 지금 기준으로 이미 끝났거나, 지금까지 이어짐</div>
+            <div class="m-ex">I have finished it.</div>
+          </div>
+          <div class="mini">
+            <div class="m-form">have been + -ing</div>
+            <div class="m-ko">현재완료진행 — 계속 ~해오고 있다 (지금도 진행 중)</div>
+            <div class="m-ex">It has been raining.</div>
+          </div>
+          <div class="mini">
+            <div class="m-form">had + p.p.</div>
+            <div class="m-ko">과거완료 — 과거의 어떤 시점보다 더 먼저</div>
+            <div class="m-ex">The train had left.</div>
+          </div>
+          <div class="mini">
+            <div class="m-form">will have + p.p.</div>
+            <div class="m-ko">미래완료 — 미래 어느 시점이면 이미 ~한 상태</div>
+            <div class="m-ex">I will have finished by then.</div>
+          </div>
+          <div class="mini">
+            <div class="m-form">must have + p.p.</div>
+            <div class="m-ko">~했음이 틀림없다 (과거 추측)</div>
+            <div class="m-ex">He must have left.</div>
+          </div>
+          <div class="mini">
+            <div class="m-form">should have + p.p.</div>
+            <div class="m-ko">~했어야 했는데 (안 해서 후회)</div>
+            <div class="m-ex">I should have called you.</div>
+          </div>
+        </div>
+
+        <h3>가정법 계열</h3>
+        <div class="cards">
+          <div class="mini u">
+            <div class="m-form">If + 현재, will + 동원</div>
+            <div class="m-ko">진짜 조건(직설법) — 실제로 일어날 수 있음</div>
+            <div class="m-ex">If it rains, I'll stay in.</div>
+          </div>
+          <div class="mini u">
+            <div class="m-form">If + 과거, would + 동원</div>
+            <div class="m-ko">가정법 과거 — 지금 사실의 반대</div>
+            <div class="m-ex">If I were rich, I'd travel.</div>
+          </div>
+          <div class="mini u">
+            <div class="m-form">If + had p.p., would have p.p.</div>
+            <div class="m-ko">가정법 과거완료 — 과거 사실의 반대</div>
+            <div class="m-ex">If I had known, I'd have come.</div>
+          </div>
+          <div class="mini u">
+            <div class="m-form">If + had p.p., would + 동원</div>
+            <div class="m-ko">혼합 가정법 — 과거 조건, 현재 결과</div>
+            <div class="m-ex">If I'd studied, I'd be a doctor now.</div>
+          </div>
+          <div class="mini u">
+            <div class="m-form">I wish + 과거 / had p.p.</div>
+            <div class="m-ko">~라면 / ~였다면 좋겠는데</div>
+            <div class="m-ex">I wish I were there.</div>
+          </div>
+          <div class="mini u">
+            <div class="m-form">Were / Had + 주어 …</div>
+            <div class="m-ko">도치 — if를 생략한 격식체</div>
+            <div class="m-ex">Had I known, I'd have helped.</div>
+          </div>
+        </div>
+
+        <div class="callout key">
+          <div class="ttl">이 강의를 한 문장으로</div>
+          <p style="font-size:16.5px; color:var(--chalk);">
+            <span class="k">have + p.p.</span>는 <b>지금과 과거를 연결</b>하는 도구이고,
+            <span class="u">가정법</span>은 <b>시제를 한 칸 뒤로 밀어 현실과 거리를 두는</b> 도구입니다.
+          </p>
+          <p>둘 다 시간을 다루는 문법이고, 그래서 재료(과거분사)를 공유합니다.</p>
+        </div>
+      </section>
+
+      <!-- ============ 11 퀴즈 ============ -->
+      <section id="s-quiz">
+        <div class="sec-num">Final Check · 11</div>
+        <h2>확인 문제 <span class="en">10</span>개</h2>
+        <p>모두 고른 뒤 채점하면 문제마다 해설이 열립니다. 틀린 문제의 해설만 다시 읽어도 충분합니다.</p>
+        <div id="quizBox"></div>
+        <div class="quiz-foot">
+          <button class="btn primary" id="quizGrade">채점하기</button>
+          <button class="btn" id="quizReset">다시 풀기</button>
+          <span class="score" id="quizScore"></span>
+        </div>
+      </section>
+
+      <footer>
+        <div class="fq">"If I had known grammar, I would have spoken sooner."</div>
+        have + past participle &amp; the subjunctive mood · 초급자용 인터랙티브 강의
+      </footer>
+
+    </div><!-- /wrap -->
+  </main>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= 목차 ================= */
+var SECTIONS = [
+  {part:'Part 1 · 완료 시제', items:[
+    {id:'s-pp',           n:'01', t:'과거분사(p.p.)란?'},
+    {id:'s-perfect',      n:'02', t:'have + p.p. 현재완료'},
+    {id:'s-vs',           n:'03', t:'과거 vs 현재완료'},
+    {id:'s-past-perfect', n:'04', t:'had + p.p. 과거완료'},
+    {id:'s-modal',        n:'05', t:'조동사 + have + p.p.'}
+  ]},
+  {part:'Part 2 · 가정법', items:[
+    {id:'s-if',      n:'06', t:'두 종류의 if'},
+    {id:'s-sub2',    n:'07', t:'가정법 과거'},
+    {id:'s-sub3',    n:'08', t:'가정법 과거완료'},
+    {id:'s-family',  n:'09', t:'wish · as if · 도치'}
+  ]},
+  {part:'마무리', items:[
+    {id:'s-summary', n:'10', t:'전체 정리'},
+    {id:'s-quiz',    n:'11', t:'확인 문제 10개'}
+  ]}
+];
+
+function buildNav(target){
+  var html = '';
+  SECTIONS.forEach(function(g){
+    html += '<div class="nav-part">' + g.part + '</div>';
+    g.items.forEach(function(it){
+      html += '<a href="#' + it.id + '" data-t="' + it.id + '"><span class="num">' + it.n + '</span>' + it.t + '</a>';
+    });
+  });
+  target.innerHTML = html;
+}
+buildNav(document.getElementById('navList'));
+buildNav(document.getElementById('mobileToc'));
+
+var tocBtn = document.getElementById('tocBtn');
+var mobileToc = document.getElementById('mobileToc');
+tocBtn.addEventListener('click', function(){ mobileToc.classList.toggle('open'); });
+mobileToc.addEventListener('click', function(e){
+  if(e.target.tagName === 'A') mobileToc.classList.remove('open');
+});
+
+/* ================= 스크롤 스파이 + 진행바 ================= */
+var links = Array.prototype.slice.call(document.querySelectorAll('nav.side a'));
+var secs  = SECTIONS.reduce(function(a,g){ return a.concat(g.items.map(function(i){return i.id;})); }, []);
+var bar = document.getElementById('progress');
+
+function onScroll(){
+  var st = window.pageYOffset || document.documentElement.scrollTop;
+  var h = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = (h > 0 ? (st / h) * 100 : 0) + '%';
+
+  var cur = null;
+  secs.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.getBoundingClientRect().top <= 140) cur = id;
+  });
+  links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-t') === cur); });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll);
+onScroll();
+
+/* ================= 탭 ================= */
+Array.prototype.forEach.call(document.querySelectorAll('.tabs'), function(tabs){
+  var heads = tabs.querySelectorAll('.heads button');
+  var panes = tabs.querySelectorAll('.pane');
+  Array.prototype.forEach.call(heads, function(btn){
+    btn.addEventListener('click', function(){
+      var i = parseInt(btn.getAttribute('data-p'), 10);
+      Array.prototype.forEach.call(heads, function(b,j){ b.classList.toggle('on', i === j); });
+      Array.prototype.forEach.call(panes, function(p,j){ p.classList.toggle('on', i === j); });
+    });
+  });
+});
+
+/* ================= 시간 자 렌더러 ================= */
+function renderRuler(ruler, marks){
+  Array.prototype.forEach.call(ruler.querySelectorAll('.mk'), function(m){ m.remove(); });
+  marks.forEach(function(m){
+    var d = document.createElement('div');
+    d.className = 'mk' + (m.unreal ? ' unreal' : '');
+    d.style.left = m.from + '%';
+    var inner = '';
+    if(m.to != null){
+      inner += '<div class="bar" style="width:' + (m.to - m.from) + '%"></div>';
+      inner += '<div class="dot"></div>';
+      inner += '<div class="lab' + (m.labRight ? ' right' : '') + '">' + m.label + '</div>';
+    }else{
+      inner += '<div class="dot"></div>';
+      inner += '<div class="lab">' + m.label + '</div>';
+    }
+    if(m.sub) inner += '<div class="sub">' + m.sub + '</div>';
+    d.innerHTML = inner;
+    ruler.appendChild(d);
+  });
+}
+function renderRead(box, rows){
+  box.innerHTML = rows.map(function(r){
+    return '<div class="row"><div class="tag">' + r.tag + '</div><div class="val' + (r.hi ? ' hi' : '') + '">' + r.val + '</div></div>';
+  }).join('');
+}
+
+/* ---------- 히어로 데모 ---------- */
+var HERO = [
+  {
+    btn:'I lost my key.',
+    marks:[{from:24, label:'lost', sub:'과거의 한 점'}],
+    read:[
+      {tag:'형태', val:'과거시제 — <b>lost</b>'},
+      {tag:'뜻', val:'열쇠를 잃어버렸어. (그때 그런 일이 있었다)'},
+      {tag:'지금은', val:'알 수 없음. 찾았을 수도 있고 아닐 수도 있음.'},
+      {tag:'쓸 때', val:'<b>yesterday, last week</b>처럼 시점을 밝힐 때', hi:true}
+    ]
+  },
+  {
+    btn:'I have lost my key.',
+    marks:[{from:24, to:50, label:'lost', sub:'그 결과가 지금까지'}],
+    read:[
+      {tag:'형태', val:'현재완료 — <b>have + lost</b>'},
+      {tag:'뜻', val:'열쇠를 잃어버렸어. <b>그래서 지금 없어.</b>'},
+      {tag:'지금은', val:'여전히 못 찾은 상태. 지금 문을 못 열고 있음.'},
+      {tag:'쓸 때', val:'과거의 일이 <b>지금 상황</b>과 연결될 때', hi:true}
+    ]
+  },
+  {
+    btn:"If I hadn't lost it…",
+    marks:[
+      {from:24, to:50, label:'실제로는 잃어버림', sub:'현실', unreal:false},
+      {from:24, to:44, label:'', sub:'', unreal:true}
+    ],
+    read:[
+      {tag:'형태', val:'가정법 과거완료 — <b>had not lost</b> + <b>would have p.p.</b>'},
+      {tag:'전체 문장', val:"If I hadn't lost it, I <b>would have been</b> home by now."},
+      {tag:'뜻', val:'잃어버리지 않았다면 지금쯤 집에 있었을 텐데.'},
+      {tag:'속뜻', val:'실제로는 <b>잃어버렸고</b>, 집에 못 갔다는 뜻', hi:true}
+    ]
+  }
+];
+var heroSwitch = document.getElementById('heroSwitch');
+var heroRuler  = document.getElementById('heroRuler');
+var heroRead   = document.getElementById('heroRead');
+HERO.forEach(function(h, i){
+  var b = document.createElement('button');
+  b.textContent = h.btn;
+  if(i === 0) b.className = 'on';
+  b.addEventListener('click', function(){
+    Array.prototype.forEach.call(heroSwitch.children, function(c){ c.classList.remove('on'); });
+    b.classList.add('on');
+    renderRuler(heroRuler, h.marks);
+    renderRead(heroRead, h.read);
+  });
+  heroSwitch.appendChild(b);
+});
+renderRuler(heroRuler, HERO[0].marks);
+renderRead(heroRead, HERO[0].read);
+
+/* ---------- 과거완료 데모 ---------- */
+var PP = [
+  {
+    btn:'The train had already left.',
+    marks:[
+      {from:16, label:'train left', sub:'① 먼저'},
+      {from:36, label:'I arrived', sub:'② 나중'}
+    ],
+    read:[
+      {tag:'문장', val:'When I <b>arrived</b>, the train <b>had already left</b>.'},
+      {tag:'순서', val:'기차가 떠남 → 내가 도착함'},
+      {tag:'왜', val:'더 <b>먼저</b> 일어난 일에 had p.p.를 씁니다', hi:true}
+    ]
+  },
+  {
+    btn:'I have lived here for 5 years.',
+    marks:[{from:14, to:50, label:'lived', sub:'5년째 계속 → 지금도'}],
+    read:[
+      {tag:'문장', val:'I <b>have lived</b> here for five years.'},
+      {tag:'기준점', val:'지금(NOW) — 그래서 have p.p.'},
+      {tag:'왜', val:'선의 끝이 <b>지금</b>에 닿아 있습니다', hi:true}
+    ]
+  },
+  {
+    btn:'I had lived there for 5 years.',
+    marks:[{from:8, to:34, label:'lived', sub:'그 과거 시점까지 5년'}, {from:34, label:'moved', sub:'그때 이사'}],
+    read:[
+      {tag:'문장', val:'I <b>had lived</b> there for five years before I moved.'},
+      {tag:'기준점', val:'과거의 한 시점(이사한 때) — 그래서 had p.p.'},
+      {tag:'왜', val:'선의 끝이 <b>과거</b>에 멈춰 있습니다', hi:true}
+    ]
+  }
+];
+var ppSwitch = document.getElementById('ppSwitch');
+var ppRuler  = document.getElementById('ppRuler');
+var ppRead   = document.getElementById('ppRead');
+PP.forEach(function(h, i){
+  var b = document.createElement('button');
+  b.textContent = h.btn;
+  if(i === 0) b.className = 'on';
+  b.addEventListener('click', function(){
+    Array.prototype.forEach.call(ppSwitch.children, function(c){ c.classList.remove('on'); });
+    b.classList.add('on');
+    renderRuler(ppRuler, h.marks);
+    renderRead(ppRead, h.read);
+  });
+  ppSwitch.appendChild(b);
+});
+renderRuler(ppRuler, PP[0].marks);
+renderRead(ppRead, PP[0].read);
+
+/* ================= 3단 변화 드릴 ================= */
+var VERBS = [
+  ['cut','cut','cut','자르다','AAA'],['put','put','put','놓다','AAA'],
+  ['set','set','set','설정하다','AAA'],['hit','hit','hit','치다','AAA'],
+  ['shut','shut','shut','닫다','AAA'],['cost','cost','cost','비용이 들다','AAA'],
+  ['hurt','hurt','hurt','다치게 하다','AAA'],['let','let','let','~하게 하다','AAA'],
+  ['buy','bought','bought','사다','ABB'],['teach','taught','taught','가르치다','ABB'],
+  ['think','thought','thought','생각하다','ABB'],['bring','brought','brought','가져오다','ABB'],
+  ['catch','caught','caught','잡다','ABB'],['find','found','found','찾다','ABB'],
+  ['make','made','made','만들다','ABB'],['say','said','said','말하다','ABB'],
+  ['tell','told','told','말해주다','ABB'],['lose','lost','lost','잃다','ABB'],
+  ['leave','left','left','떠나다','ABB'],['keep','kept','kept','유지하다','ABB'],
+  ['sleep','slept','slept','자다','ABB'],['meet','met','met','만나다','ABB'],
+  ['pay','paid','paid','지불하다','ABB'],['hear','heard','heard','듣다','ABB'],
+  ['build','built','built','짓다','ABB'],['send','sent','sent','보내다','ABB'],
+  ['spend','spent','spent','쓰다','ABB'],['feel','felt','felt','느끼다','ABB'],
+  ['understand','understood','understood','이해하다','ABB'],['win','won','won','이기다','ABB'],
+  ['sit','sat','sat','앉다','ABB'],['stand','stood','stood','서다','ABB'],
+  ['come','came','come','오다','ABA'],['become','became','become','~이 되다','ABA'],
+  ['run','ran','run','달리다','ABA'],
+  ['be','was / were','been','~이다','ABC'],['go','went','gone','가다','ABC'],
+  ['do','did','done','하다','ABC'],['see','saw','seen','보다','ABC'],
+  ['eat','ate','eaten','먹다','ABC'],['write','wrote','written','쓰다','ABC'],
+  ['take','took','taken','가져가다','ABC'],['give','gave','given','주다','ABC'],
+  ['speak','spoke','spoken','말하다','ABC'],['break','broke','broken','깨다','ABC'],
+  ['choose','chose','chosen','선택하다','ABC'],['drive','drove','driven','운전하다','ABC'],
+  ['know','knew','known','알다','ABC'],['grow','grew','grown','자라다','ABC'],
+  ['throw','threw','thrown','던지다','ABC'],['fly','flew','flown','날다','ABC'],
+  ['begin','began','begun','시작하다','ABC'],['drink','drank','drunk','마시다','ABC'],
+  ['sing','sang','sung','노래하다','ABC'],['swim','swam','swum','수영하다','ABC'],
+  ['forget','forgot','forgotten','잊다','ABC'],['get','got','gotten','얻다','ABC'],
+  ['wear','wore','worn','입다','ABC'],['fall','fell','fallen','떨어지다','ABC'],
+  ['steal','stole','stolen','훔치다','ABC']
+];
+var GROUPS = [['ALL','전체'],['AAA','A-A-A'],['ABB','A-B-B'],['ABA','A-B-A'],['ABC','A-B-C']];
+var drillGroup = 'ALL', drillCur = null;
+var dBase = document.getElementById('drillBase');
+var dMean = document.getElementById('drillMeaning');
+var dAns  = document.getElementById('drillAnswer');
+var chipbar = document.getElementById('drillChips');
+
+GROUPS.forEach(function(g, i){
+  var c = document.createElement('button');
+  c.className = 'chip' + (i === 0 ? ' on' : '');
+  c.textContent = g[1];
+  c.addEventListener('click', function(){
+    drillGroup = g[0];
+    Array.prototype.forEach.call(chipbar.children, function(x){ x.classList.remove('on'); });
+    c.classList.add('on');
+    nextVerb();
+  });
+  chipbar.appendChild(c);
+});
+
+function pool(){
+  return drillGroup === 'ALL' ? VERBS : VERBS.filter(function(v){ return v[4] === drillGroup; });
+}
+function nextVerb(){
+  var p = pool();
+  var v = p[Math.floor(Math.random() * p.length)];
+  if(p.length > 1 && drillCur && v[0] === drillCur[0]) return nextVerb();
+  drillCur = v;
+  dBase.textContent = v[0];
+  dMean.textContent = v[3];
+  dAns.className = 'answer hidden';
+  dAns.textContent = '머릿속으로 말해 보고 "정답 보기"를 누르세요';
+}
+document.getElementById('drillShow').addEventListener('click', function(){
+  if(!drillCur) return;
+  dAns.className = 'answer';
+  dAns.innerHTML = drillCur[0] + ' <span class="dim">·</span> ' + drillCur[1] + ' <span class="dim">·</span> ' + drillCur[2];
+});
+document.getElementById('drillNext').addEventListener('click', nextVerb);
+nextVerb();
+
+/* ================= 과거 vs 현재완료 미니게임 ================= */
+var GAME = [
+  {q:'I ___ him yesterday.', ko:'어제 그를 만났어.', o:['met','have met'], a:0,
+   e:'<b>yesterday</b>는 과거 시점을 못 박는 표현이라 현재완료와 함께 쓸 수 없습니다.'},
+  {q:'I ___ my homework already.', ko:'벌써 숙제를 다 했어.', o:['finished','have finished'], a:1,
+   e:'<b>already</b>는 현재완료의 신호어입니다. "지금 이미 끝난 상태"를 말합니다.'},
+  {q:'She ___ in Busan for ten years.', ko:'그녀는 부산에서 10년째 살고 있어.', o:['lived','has lived'], a:1,
+   e:'<b>for + 기간</b>은 과거부터 지금까지 이어지는 계속. 현재완료입니다.'},
+  {q:'___ you ever ___ sushi?', ko:'초밥 먹어본 적 있어?', o:['Did / eat','Have / eaten'], a:1,
+   e:'<b>ever</b>는 경험을 묻는 신호어. Have you ever + p.p.? 가 정해진 형태입니다.'},
+  {q:'When ___ you ___ Korea?', ko:'언제 한국에 왔어?', o:['did / come','have / come'], a:0,
+   e:'<b>When ~?</b>은 특정 시점을 묻는 질문이므로 과거시제만 가능합니다.'},
+  {q:'I ___ to Canada in 2018.', ko:'2018년에 캐나다에 갔어.', o:['went','have gone'], a:0,
+   e:'<b>in 2018</b>은 끝난 과거 시점. 과거시제를 씁니다.'},
+  {q:'He ___ to Japan. He comes back next week.', ko:'그는 일본에 가 있어. 다음 주에 돌아와.', o:['has been','has gone'], a:1,
+   e:'지금 거기 있으면 <b>has gone to</b>, 갔다 돌아왔으면 <b>has been to</b>입니다.'},
+  {q:"I ___ this movie twice, so let's watch another one.", ko:'이 영화 두 번 봤어. 다른 거 보자.', o:['saw','have seen'], a:1,
+   e:'"지금까지 두 번"이라는 경험이 지금 결정에 영향을 줍니다. 현재완료.'},
+  {q:'When I got home, my sister ___ all the cake.', ko:'집에 왔을 때 동생이 케이크를 다 먹어버렸더라.', o:['ate','had eaten'], a:1,
+   e:'집에 온 것(과거)보다 먹은 게 더 <b>먼저</b>입니다. 과거완료 had p.p.'},
+  {q:'The ground is wet. It ___.', ko:'땅이 젖었네. 비가 왔었구나.', o:['must have rained','must rain'], a:0,
+   e:'과거에 대한 확신 있는 추측은 <b>must have p.p.</b>입니다.'}
+];
+var gi = 0, gScore = 0, gLocked = false;
+var gQ = document.getElementById('gQ'), gK = document.getElementById('gK');
+var gOpts = document.getElementById('gOpts'), gFb = document.getElementById('gFb');
+var gMeta = document.getElementById('gMeta'), gScoreEl = document.getElementById('gScore');
+
+function paintGame(){
+  var it = GAME[gi];
+  gLocked = false;
+  gMeta.textContent = (gi + 1) + ' / ' + GAME.length;
+  gScoreEl.textContent = '정답 ' + gScore;
+  gQ.innerHTML = it.q.replace(/___/g, '<span class="blank"></span>');
+  gK.textContent = it.ko;
+  gFb.className = 'game-fb';
+  gFb.textContent = '둘 중 하나를 고르면 이유를 알려드립니다.';
+  gOpts.innerHTML = '';
+  it.o.forEach(function(txt, idx){
+    var b = document.createElement('button');
+    b.textContent = txt;
+    b.addEventListener('click', function(){
+      if(gLocked) return;
+      gLocked = true;
+      var ok = (idx === it.a);
+      if(ok) gScore++;
+      Array.prototype.forEach.call(gOpts.children, function(c, j){
+        if(j === it.a) c.classList.add('right');
+        else if(j === idx) c.classList.add('wrong');
+      });
+      gFb.className = 'game-fb ' + (ok ? 'ok' : 'no');
+      gFb.innerHTML = (ok ? '정답입니다. ' : '정답은 <b>' + it.o[it.a] + '</b>. ') + it.e;
+      gScoreEl.textContent = '정답 ' + gScore;
+    });
+    gOpts.appendChild(b);
+  });
+}
+document.getElementById('gNext').addEventListener('click', function(){
+  gi = (gi + 1) % GAME.length;
+  if(gi === 0) gScore = 0;
+  paintGame();
+});
+paintGame();
+
+/* ================= 시프터 ================= */
+var shiftLv = 0;
+var shiftRows = Array.prototype.slice.call(document.querySelectorAll('.shift-row'));
+function paintShift(){
+  shiftRows.forEach(function(r, i){ r.classList.toggle('on', i === shiftLv); });
+}
+document.getElementById('shiftBack').addEventListener('click', function(){
+  shiftLv = Math.min(shiftLv + 1, shiftRows.length - 1);
+  paintShift();
+});
+document.getElementById('shiftReset').addEventListener('click', function(){
+  shiftLv = 0; paintShift();
+});
+paintShift();
+
+/* ================= 가정법 변환기 ================= */
+var TF = [
+  {
+    label:'돈이 없다',
+    fact:{s:'I don\'t have money, so I can\'t travel.', t:'돈이 없어서 여행을 못 가.', w:'현실 · 직설법 현재'},
+    l2:{s:'If I <em>had</em> money, I <em>would travel</em> the world.', t:'돈이 있으면 세계를 여행할 텐데.', w:'가정법 과거 · 지금 사실의 반대'},
+    l3:{s:'If I <em>had had</em> money, I <em>would have traveled</em> the world.', t:'(그때) 돈이 있었다면 세계를 여행했을 텐데.', w:'가정법 과거완료 · 과거 사실의 반대'}
+  },
+  {
+    label:'번호를 모른다',
+    fact:{s:'I don\'t know her number, so I can\'t call her.', t:'그녀 번호를 몰라서 전화를 못 해.', w:'현실 · 직설법 현재'},
+    l2:{s:'If I <em>knew</em> her number, I <em>would call</em> her.', t:'번호를 알면 전화할 텐데.', w:'가정법 과거 · 지금 모른다'},
+    l3:{s:'If I <em>had known</em> her number, I <em>would have called</em> her.', t:'번호를 알았다면 전화했을 텐데.', w:'가정법 과거완료 · 그때 몰랐다'}
+  },
+  {
+    label:'공부를 안 했다',
+    fact:{s:'She didn\'t study, so she failed the exam.', t:'공부를 안 해서 시험에 떨어졌어.', w:'현실 · 직설법 과거'},
+    l2:{s:'If she <em>studied</em> more, she <em>would get</em> better grades.', t:'공부를 더 하면 성적이 좋아질 텐데.', w:'가정법 과거 · 평소 습관에 대한 상상'},
+    l3:{s:'If she <em>had studied</em>, she <em>would have passed</em> the exam.', t:'공부했다면 시험에 붙었을 텐데.', w:'가정법 과거완료 · 이미 지난 시험'}
+  },
+  {
+    label:'버스를 놓쳤다',
+    fact:{s:'I missed the bus, so I was late for work.', t:'버스를 놓쳐서 회사에 지각했어.', w:'현실 · 직설법 과거'},
+    l2:{s:'If I <em>got up</em> earlier, I <em>wouldn\'t be</em> late.', t:'더 일찍 일어나면 지각하지 않을 텐데.', w:'가정법 과거 · 반복되는 현재 상황'},
+    l3:{s:'If I <em>hadn\'t missed</em> the bus, I <em>wouldn\'t have been</em> late.', t:'버스를 놓치지 않았다면 지각하지 않았을 텐데.', w:'가정법 과거완료 · 오늘 아침 일'}
+  },
+  {
+    label:'내가 새가 아니다',
+    fact:{s:'I\'m not a bird, so I can\'t fly to you.', t:'나는 새가 아니라서 너에게 날아갈 수 없어.', w:'현실 · 절대 바뀔 수 없는 사실'},
+    l2:{s:'If I <em>were</em> a bird, I <em>could fly</em> to you.', t:'내가 새라면 너에게 날아갈 수 있을 텐데.', w:'가정법 과거 · be동사는 were'},
+    l3:{s:'If I <em>had been</em> a bird, I <em>could have flown</em> to you.', t:'내가 새였다면 너에게 날아갈 수 있었을 텐데.', w:'가정법 과거완료 · 과거의 상상'}
+  }
+];
+var tfPicker = document.getElementById('tfPicker');
+var tfStage = document.getElementById('tfStage');
+function paintTF(i){
+  var d = TF[i];
+  tfStage.innerHTML =
+    '<div class="tf-card fact"><div class="kind">사실 (fact)</div><div class="sent">' + d.fact.s + '</div>' +
+      '<div class="tr">' + d.fact.t + '</div><div class="why">' + d.fact.w + '</div></div>' +
+    '<div class="tf-card unreal"><div class="kind">가정법 과거 · 지금의 반대</div><div class="sent">' + d.l2.s + '</div>' +
+      '<div class="tr">' + d.l2.t + '</div><div class="why">' + d.l2.w + '</div></div>' +
+    '<div class="tf-card unreal"><div class="kind">가정법 과거완료 · 과거의 반대</div><div class="sent">' + d.l3.s + '</div>' +
+      '<div class="tr">' + d.l3.t + '</div><div class="why">' + d.l3.w + '</div></div>';
+}
+TF.forEach(function(d, i){
+  var c = document.createElement('button');
+  c.className = 'chip' + (i === 0 ? ' on' : '');
+  c.textContent = d.label;
+  c.addEventListener('click', function(){
+    Array.prototype.forEach.call(tfPicker.children, function(x){ x.classList.remove('on'); });
+    c.classList.add('on');
+    paintTF(i);
+  });
+  tfPicker.appendChild(c);
+});
+paintTF(0);
+
+/* ================= 최종 퀴즈 ================= */
+var QUIZ = [
+  {q:'I ___ this book three times. It\'s my favorite.', ko:'이 책을 세 번 읽었어. 내가 제일 좋아하는 책이야.',
+   o:['read','have read','had read'], a:1,
+   e:'"지금까지 세 번"이라는 <b>경험</b>이 지금의 평가와 연결됩니다. 현재완료 have read.'},
+  {q:'We ___ each other since middle school.', ko:'우리는 중학교 때부터 알고 지냈어.',
+   o:['know','knew','have known'], a:2,
+   e:'<b>since</b> + 시작 시점 → 과거부터 지금까지 계속. 현재완료입니다. know는 상태동사라 진행형으로 쓰지 않습니다.'},
+  {q:'By the time I got to the party, everyone ___.', ko:'내가 파티에 도착했을 때 모두 떠나 있었어.',
+   o:['left','has left','had left'], a:2,
+   e:'도착(과거)보다 떠난 것이 더 <b>먼저</b>이므로 과거완료 had left.'},
+  {q:'The lights are off. He ___ home already.', ko:'불이 꺼져 있네. 벌써 집에 간 게 분명해.',
+   o:['must go','must have gone','should have gone'], a:1,
+   e:'과거 일에 대한 강한 확신은 <b>must have p.p.</b> — "~했음이 틀림없다".'},
+  {q:'I\'m so tired. I ___ to bed earlier last night.', ko:'너무 피곤해. 어젯밤에 더 일찍 잤어야 했는데.',
+   o:['should have gone','must have gone','could go'], a:0,
+   e:'"~했어야 했는데 안 했다"는 후회는 <b>should have p.p.</b>입니다.'},
+  {q:'If I ___ you, I would take the offer.', ko:'내가 너라면 그 제안을 받아들일 거야.',
+   o:['am','was','were'], a:2,
+   e:'가정법 과거에서 be동사는 주어와 무관하게 <b>were</b>. 관용 표현 If I were you.'},
+  {q:'If she had asked me, I ___ her.', ko:'그녀가 부탁했다면 도와줬을 텐데.',
+   o:['would help','would have helped','will help'], a:1,
+   e:'if절이 <b>had p.p.</b>이므로 결론절은 <b>would have p.p.</b>로 짝을 맞춥니다.'},
+  {q:'If I ___ harder in college, I would be a lawyer now.', ko:'대학 때 더 열심히 했다면 지금 변호사일 텐데.',
+   o:['studied','had studied','would study'], a:1,
+   e:'조건은 과거, 결과는 현재(now) → <b>혼합 가정법</b>. if절은 had p.p., 결론절은 would + 동사원형.'},
+  {q:'I wish I ___ how to drive.', ko:'운전할 줄 알면 좋겠어.',
+   o:['know','knew','have known'], a:1,
+   e:'지금 사실이 아쉬울 때 <b>I wish + 과거동사</b>. 사실은 운전을 못 한다는 뜻.'},
+  {q:'___ I known you were sick, I would have visited you.', ko:'네가 아픈 걸 알았다면 찾아갔을 텐데.',
+   o:['If','Had','Have'], a:1,
+   e:'If I had known에서 if를 생략하고 had를 앞으로 보낸 <b>도치</b> 구문입니다.'}
+];
+var qBox = document.getElementById('quizBox');
+var qAns = new Array(QUIZ.length).fill(-1);
+var qGraded = false;
+
+function buildQuiz(){
+  qBox.innerHTML = QUIZ.map(function(it, i){
+    var opts = it.o.map(function(o, j){
+      return '<button class="opt" data-q="' + i + '" data-o="' + j + '">' +
+             '<span class="mark">' + 'ABC'[j] + '</span><span class="txt">' + o + '</span></button>';
+    }).join('');
+    return '<div class="quiz-item" id="qi' + i + '">' +
+      '<div class="qn">Q' + (i + 1) + '</div>' +
+      '<div class="qt">' + it.q.replace(/___/g, '<span class="blank">_____</span>') + '</div>' +
+      '<div class="qk">' + it.ko + '</div>' +
+      '<div class="opts">' + opts + '</div>' +
+      '<div class="quiz-exp" id="qe' + i + '"></div></div>';
+  }).join('');
+
+  Array.prototype.forEach.call(qBox.querySelectorAll('.opt'), function(btn){
+    btn.addEventListener('click', function(){
+      if(qGraded) return;
+      var qi = +btn.getAttribute('data-q'), oi = +btn.getAttribute('data-o');
+      qAns[qi] = oi;
+      Array.prototype.forEach.call(qBox.querySelectorAll('.opt[data-q="' + qi + '"]'), function(b){
+        b.classList.toggle('sel', b === btn);
+      });
+    });
+  });
+}
+buildQuiz();
+
+document.getElementById('quizGrade').addEventListener('click', function(){
+  qGraded = true;
+  var score = 0;
+  QUIZ.forEach(function(it, i){
+    var picked = qAns[i];
+    if(picked === it.a) score++;
+    Array.prototype.forEach.call(qBox.querySelectorAll('.opt[data-q="' + i + '"]'), function(b){
+      var oi = +b.getAttribute('data-o');
+      b.classList.add('locked');
+      b.classList.remove('sel');
+      if(oi === it.a) b.classList.add('ok');
+      else if(oi === picked) b.classList.add('ng');
+    });
+    var exp = document.getElementById('qe' + i);
+    exp.className = 'quiz-exp show';
+    exp.innerHTML = '<b>정답: ' + it.o[it.a] + '</b> — ' + it.e;
+  });
+  var msg = score === QUIZ.length ? '완벽합니다.' :
+            score >= 8 ? '아주 좋습니다. 틀린 부분만 다시 보세요.' :
+            score >= 5 ? '절반 이상 맞혔습니다. 03번과 08번 섹션을 복습해 보세요.' :
+                         '천천히 다시 읽어 보세요. 02번 섹션의 "직관" 부분부터 시작하면 좋습니다.';
+  document.getElementById('quizScore').innerHTML = '<b>' + score + '</b> / ' + QUIZ.length + ' &nbsp; ' + msg;
+});
+
+document.getElementById('quizReset').addEventListener('click', function(){
+  qGraded = false;
+  qAns = new Array(QUIZ.length).fill(-1);
+  buildQuiz();
+  document.getElementById('quizScore').textContent = '';
+  document.getElementById('s-quiz').scrollIntoView({block:'start'});
+});
+
+})();
+</script>
+</body>
+</html>
