@@ -1,2 +1,2 @@
-# english_study
+# English study
 Let's learn English!
