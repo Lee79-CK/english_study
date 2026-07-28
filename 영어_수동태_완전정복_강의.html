@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영어 수동태 완전 정복 · Passive Voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --ink:#0E1116; --panel:#151A21; --panel2:#1A212A; --line:#28313D;
+  --fg:#E9EDF3; --muted:#95A2B3; --dim:#5F6C7B;
+  --act:#FFB13B;      /* 능동태 */
+  --pas:#3FD9C8;      /* 수동태 */
+  --warn:#FF6B7A;     /* 오답·주의 */
+  --ok:#79E08C;       /* 정답 */
+  --sans:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+  --serif:'Newsreader',Georgia,serif;
+  --mono:'JetBrains Mono',monospace;
+  --sidebar:280px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{
+  background:var(--ink);color:var(--fg);font-family:var(--sans);
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;
+  letter-spacing:-0.01em;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 500px at 85% -5%, rgba(63,217,200,.07), transparent 60%),
+    radial-gradient(700px 420px at 5% 8%, rgba(255,177,59,.06), transparent 60%);
+}
+::selection{background:rgba(63,217,200,.3)}
+
+/* ---------- 레이아웃 ---------- */
+.wrap{display:flex;position:relative;z-index:1}
+aside{
+  width:var(--sidebar);flex:0 0 var(--sidebar);height:100vh;position:sticky;top:0;
+  border-right:1px solid var(--line);background:rgba(14,17,22,.7);
+  backdrop-filter:blur(8px);display:flex;flex-direction:column;
+}
+.side-head{padding:26px 24px 16px;border-bottom:1px solid var(--line)}
+.side-head .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--pas);text-transform:uppercase}
+.side-head h1{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15;margin-top:8px;letter-spacing:-0.02em}
+.side-head h1 em{font-style:italic;color:var(--pas)}
+.side-head p{font-size:12px;color:var(--dim);margin-top:8px}
+nav{overflow-y:auto;padding:14px 12px 30px;flex:1;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+nav::-webkit-scrollbar{width:6px}
+nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+nav a{
+  display:flex;gap:10px;align-items:baseline;padding:7px 12px;border-radius:7px;
+  color:var(--muted);text-decoration:none;font-size:13.5px;line-height:1.4;
+  border-left:2px solid transparent;transition:.18s;
+}
+nav a .n{font-family:var(--mono);font-size:10px;color:var(--dim);flex:0 0 20px}
+nav a:hover{color:var(--fg);background:rgba(255,255,255,.035)}
+nav a.on{color:var(--pas);background:rgba(63,217,200,.09);border-left-color:var(--pas)}
+nav a.on .n{color:var(--pas)}
+.prog{height:2px;background:var(--line);position:sticky;top:0;z-index:5}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--act),var(--pas));transition:width .1s}
+
+main{flex:1;min-width:0;padding:0 clamp(20px,5vw,80px) 140px;max-width:1080px}
+
+/* ---------- 히어로 ---------- */
+.hero{padding:92px 0 64px;border-bottom:1px solid var(--line)}
+.hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--dim);text-transform:uppercase}
+.hero h2{
+  font-family:var(--serif);font-weight:300;font-size:clamp(38px,6.2vw,72px);
+  line-height:1.04;letter-spacing:-0.03em;margin:20px 0 0;
+}
+.hero h2 b{font-weight:600;color:var(--act)}
+.hero h2 i{font-style:italic;color:var(--pas)}
+.hero .lede{font-size:17px;color:var(--muted);max-width:62ch;margin-top:26px;line-height:1.85}
+.hero .lede strong{color:var(--fg);font-weight:600}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+.pill{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);
+  padding:5px 11px;border-radius:999px;background:var(--panel)}
+
+/* ---------- 섹션 ---------- */
+section{padding:74px 0 8px;scroll-margin-top:10px}
+.sec-head{display:flex;gap:16px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:30px}
+.sec-head .num{font-family:var(--mono);font-size:12px;color:var(--pas);letter-spacing:.1em;padding-top:6px}
+.sec-head h3{font-size:27px;font-weight:800;letter-spacing:-0.03em;line-height:1.25}
+.sec-head .sub{display:block;font-family:var(--mono);font-size:11px;font-weight:400;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-top:6px}
+h4{font-size:18px;font-weight:700;margin:38px 0 14px;letter-spacing:-0.02em;display:flex;align-items:center;gap:9px}
+h4::before{content:'';width:3px;height:15px;background:var(--pas);border-radius:2px;flex:0 0 3px}
+h5{font-size:15px;font-weight:700;margin:24px 0 10px;color:var(--fg)}
+p{color:#C3CCD8;margin:12px 0;max-width:74ch}
+p strong{color:var(--fg);font-weight:700}
+.hl-a{color:var(--act);font-weight:600}
+.hl-p{color:var(--pas);font-weight:600}
+code{font-family:var(--mono);font-size:.87em;background:var(--panel2);border:1px solid var(--line);
+  padding:1.5px 6px;border-radius:5px;color:#DCE4EE}
+ul,ol{margin:12px 0 12px 4px;padding-left:20px;color:#C3CCD8;max-width:74ch}
+li{margin:7px 0}
+li::marker{color:var(--dim)}
+
+/* ---------- 카드 ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:20px 0}
+.card.tight{padding:16px 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.note{border-left:3px solid var(--act);background:rgba(255,177,59,.055);border-radius:0 10px 10px 0;
+  padding:15px 18px;margin:20px 0;font-size:14.5px;color:#D7DEE8}
+.note.warn{border-left-color:var(--warn);background:rgba(255,107,122,.06)}
+.note.tip{border-left-color:var(--pas);background:rgba(63,217,200,.06)}
+.note b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:6px;color:var(--act)}
+.note.warn b{color:var(--warn)} .note.tip b{color:var(--pas)}
+
+/* ---------- 예문 스타일 ---------- */
+.ex{font-family:var(--serif);font-size:19px;line-height:1.6;margin:9px 0}
+.ex .ko{display:block;font-family:var(--sans);font-size:13px;color:var(--dim);margin-top:2px;letter-spacing:0}
+.ex-a{border-left:2px solid var(--act);padding-left:14px}
+.ex-p{border-left:2px solid var(--pas);padding-left:14px}
+.ex-x{border-left:2px solid var(--warn);padding-left:14px;color:#B9A0A6}
+.ex-x s{text-decoration-color:var(--warn);text-decoration-thickness:1.5px}
+.ex-o{border-left:2px solid var(--ok);padding-left:14px}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;padding:2px 7px;border-radius:4px;
+  vertical-align:middle;margin-right:8px;text-transform:uppercase;font-weight:500}
+.tag.a{background:rgba(255,177,59,.15);color:var(--act);border:1px solid rgba(255,177,59,.3)}
+.tag.p{background:rgba(63,217,200,.14);color:var(--pas);border:1px solid rgba(63,217,200,.3)}
+.tag.x{background:rgba(255,107,122,.13);color:var(--warn);border:1px solid rgba(255,107,122,.3)}
+.tag.o{background:rgba(121,224,140,.13);color:var(--ok);border:1px solid rgba(121,224,140,.3)}
+u.be{color:var(--pas);text-decoration:none;border-bottom:2px solid var(--pas);padding-bottom:1px}
+u.pp{color:var(--pas);text-decoration:none;border-bottom:2px dotted var(--pas);padding-bottom:1px}
+u.by{color:var(--act);text-decoration:none;border-bottom:1px dashed var(--act)}
+
+/* ---------- 공식 박스 ---------- */
+.formula{
+  font-family:var(--mono);text-align:center;padding:26px 18px;border-radius:14px;
+  background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
+  margin:22px 0;font-size:clamp(15px,2.6vw,22px);letter-spacing:.02em;line-height:2;
+}
+.formula .b{color:var(--pas);font-weight:700}
+.formula .s{color:var(--dim);font-size:.62em;display:block;letter-spacing:.16em;margin-bottom:12px;text-transform:uppercase}
+.formula .op{color:var(--dim);margin:0 8px}
+
+/* ---------- 표 ---------- */
+.tbl-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+th{background:var(--panel2);text-align:left;padding:12px 14px;font-size:11px;font-family:var(--mono);
+  letter-spacing:.14em;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid rgba(40,49,61,.6);color:#C3CCD8;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.022)}
+td.en{font-family:var(--serif);font-size:16px;color:var(--fg)}
+td.m{font-family:var(--mono);font-size:12.5px;color:var(--pas)}
+
+/* ---------- 버튼 ---------- */
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.btn{
+  font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 20px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);
+  color:var(--fg);transition:.18s;
+}
+.btn:hover{border-color:var(--pas);color:var(--pas)}
+.btn.pri{background:var(--pas);color:#06231F;border-color:var(--pas);font-weight:700}
+.btn.pri:hover{filter:brightness(1.12);color:#06231F}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn:focus-visible,a:focus-visible,.chip:focus-visible{outline:2px solid var(--pas);outline-offset:3px}
+
+/* ---------- 변환기(시그니처) ---------- */
+.machine{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:26px 0;background:var(--panel)}
+.machine-top{display:flex;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+.chip{
+  font-family:var(--mono);font-size:11px;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);color:var(--muted);background:transparent;transition:.16s;
+}
+.chip:hover{color:var(--fg);border-color:var(--dim)}
+.chip.on{background:rgba(63,217,200,.14);border-color:var(--pas);color:var(--pas)}
+.stage-label{
+  display:flex;align-items:center;gap:10px;padding:14px 20px 0;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;
+}
+.stage-label .dot{width:6px;height:6px;border-radius:50%;background:var(--act);box-shadow:0 0 10px var(--act)}
+.stage-label.p .dot{background:var(--pas);box-shadow:0 0 10px var(--pas)}
+.track{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  padding:22px 20px 8px;min-height:92px;
+}
+.tok{
+  font-family:var(--serif);font-size:clamp(19px,3.4vw,27px);line-height:1.2;
+  padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);
+  transition:background .3s,border-color .3s,color .3s,opacity .3s;
+}
+.tok[data-role="subj"]{border-color:rgba(255,177,59,.45);color:var(--act);background:rgba(255,177,59,.08)}
+.tok[data-role="verb"]{border-color:rgba(63,217,200,.45);color:var(--pas);background:rgba(63,217,200,.08)}
+.tok[data-role="obj"]{border-color:rgba(233,237,243,.22);color:var(--fg)}
+.tok[data-role="agent"]{border-color:rgba(255,177,59,.3);color:#C9A26A;background:transparent;font-size:.82em;opacity:.85}
+.tok[data-role="dot"]{border:none;background:none;padding:8px 0;color:var(--dim)}
+.tok.flash{animation:flash .7s ease}
+@keyframes flash{0%,100%{box-shadow:0 0 0 rgba(63,217,200,0)}40%{box-shadow:0 0 0 5px rgba(63,217,200,.22)}}
+.machine-note{padding:4px 20px 16px;font-size:13.5px;color:var(--muted);min-height:44px}
+.machine-note b{color:var(--fg)}
+.machine-foot{display:flex;gap:10px;align-items:center;padding:14px 20px;border-top:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+.steps{display:flex;gap:6px;margin-left:auto}
+.steps i{width:26px;height:3px;border-radius:2px;background:var(--line);transition:.25s}
+.steps i.on{background:var(--pas)}
+
+/* ---------- 시제 매트릭스 ---------- */
+.tense-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;margin:18px 0}
+.tense-grid button{
+  font-family:var(--mono);font-size:11.5px;padding:11px 8px;border-radius:9px;border:1px solid var(--line);
+  background:var(--panel);color:var(--muted);transition:.16s;text-align:center;line-height:1.4;
+}
+.tense-grid button:hover{border-color:var(--dim);color:var(--fg)}
+.tense-grid button.on{background:rgba(63,217,200,.13);border-color:var(--pas);color:var(--pas)}
+.tense-out{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;min-height:190px}
+.tense-out .f{font-family:var(--mono);font-size:13px;color:var(--pas);letter-spacing:.06em;
+  padding-bottom:14px;border-bottom:1px dashed var(--line);margin-bottom:16px}
+
+/* ---------- 플래시카드 ---------- */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin:18px 0}
+.fc{perspective:800px;height:96px;cursor:pointer;background:none;padding:0;border:none}
+.fc-in{display:block;position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.1,.2,1);transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;backface-visibility:hidden;border-radius:11px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px}
+.fc-f{background:var(--panel)}
+.fc-b{background:rgba(63,217,200,.09);border-color:rgba(63,217,200,.4);transform:rotateY(180deg)}
+.fc-f .w{font-family:var(--serif);font-size:20px;color:var(--fg)}
+.fc-f .k{font-size:11px;color:var(--dim)}
+.fc-b .p{font-family:var(--serif);font-size:18px;color:var(--pas)}
+.fc-b .s{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.05em;text-align:center;line-height:1.5}
+
+/* ---------- 연습(전치사) ---------- */
+.drill{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px 16px;margin:10px 0;
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.drill .q{font-family:var(--serif);font-size:17px;flex:1 1 260px}
+.drill .q .blank{display:inline-block;min-width:56px;border-bottom:2px solid var(--dim);text-align:center;color:var(--pas)}
+.drill .opts{display:flex;gap:6px;flex-wrap:wrap}
+.drill .opts button{font-family:var(--mono);font-size:12px;padding:6px 13px;border-radius:7px;
+  border:1px solid var(--line);background:var(--panel2);color:var(--muted);transition:.15s}
+.drill .opts button:hover{border-color:var(--dim);color:var(--fg)}
+.drill .opts button.ok{background:rgba(121,224,140,.16);border-color:var(--ok);color:var(--ok)}
+.drill .opts button.no{background:rgba(255,107,122,.13);border-color:var(--warn);color:var(--warn)}
+.drill .ko{flex-basis:100%;font-size:12.5px;color:var(--dim)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.shake{animation:shake .3s}
+
+/* ---------- 실수 카드 ---------- */
+.mis{border:1px solid var(--line);border-radius:12px;background:var(--panel);margin:12px 0;overflow:hidden}
+.mis-h{display:flex;gap:12px;align-items:flex-start;padding:15px 18px;cursor:pointer;width:100%;text-align:left}
+.mis-h .no{font-family:var(--mono);font-size:11px;color:var(--warn);flex:0 0 26px;padding-top:4px}
+.mis-h .t{flex:1;font-weight:600;font-size:15px}
+.mis-h .ar{color:var(--dim);font-family:var(--mono);font-size:13px;transition:.2s}
+.mis.open .mis-h .ar{transform:rotate(90deg);color:var(--pas)}
+.mis-b{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.mis.open .mis-b{max-height:520px}
+.mis-b .inner{padding:2px 18px 18px 56px;border-top:1px solid var(--line);margin-top:0;padding-top:14px}
+
+/* ---------- 판단 도우미 ---------- */
+.decide{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+.decide .qq{font-size:17px;font-weight:700;margin-bottom:6px}
+.decide .hint{font-size:13.5px;color:var(--muted);margin-bottom:16px}
+.decide .row{display:flex;gap:10px;flex-wrap:wrap}
+.decide .res{border-left:3px solid var(--pas);padding:12px 16px;background:rgba(63,217,200,.06);border-radius:0 10px 10px 0}
+.decide .res.no{border-left-color:var(--act);background:rgba(255,177,59,.06)}
+
+/* ---------- 퀴즈 ---------- */
+.quiz{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;margin:24px 0}
+.q-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;
+  color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.q-bar{height:3px;background:var(--line);border-radius:2px;margin-bottom:22px;overflow:hidden}
+.q-bar i{display:block;height:100%;background:var(--pas);width:0;transition:width .3s}
+.q-text{font-size:17px;font-weight:600;line-height:1.6;margin-bottom:6px}
+.q-en{font-family:var(--serif);font-size:20px;color:var(--fg);margin:12px 0 18px;line-height:1.5}
+.q-opts{display:flex;flex-direction:column;gap:9px}
+.q-opts button{
+  text-align:left;padding:13px 16px;border-radius:10px;border:1px solid var(--line);
+  background:var(--panel2);transition:.15s;display:flex;gap:12px;align-items:flex-start;
+  font-family:var(--serif);font-size:16.5px;
+}
+.q-opts button .l{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:5px;flex:0 0 14px}
+.q-opts button:hover:not(:disabled){border-color:var(--pas)}
+.q-opts button.ok{background:rgba(121,224,140,.12);border-color:var(--ok)}
+.q-opts button.ok .l{color:var(--ok)}
+.q-opts button.no{background:rgba(255,107,122,.1);border-color:var(--warn)}
+.q-opts button.no .l{color:var(--warn)}
+.q-fb{margin-top:16px;padding:14px 16px;border-radius:10px;font-size:14px;line-height:1.7;display:none;color:#D2DAE4}
+.q-fb.show{display:block}
+.q-fb.good{background:rgba(121,224,140,.08);border-left:3px solid var(--ok)}
+.q-fb.bad{background:rgba(255,107,122,.08);border-left:3px solid var(--warn)}
+.q-fb b{color:var(--fg)}
+.q-nav{display:flex;justify-content:flex-end;margin-top:18px}
+.score{text-align:center;padding:20px 0}
+.score .big{font-family:var(--serif);font-size:64px;line-height:1;color:var(--pas)}
+.score .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-top:10px}
+.score p{margin:16px auto 22px;max-width:46ch}
+
+/* ---------- 치트시트 ---------- */
+.cheat{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel2),var(--panel));padding:28px}
+.cheat h4{margin-top:0}
+.cheat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:6px}
+.cheat-item{border-left:2px solid var(--line);padding-left:14px}
+.cheat-item .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;color:var(--pas);text-transform:uppercase;margin-bottom:8px}
+.cheat-item div{font-size:14px;color:#C3CCD8;line-height:1.7}
+
+footer{border-top:1px solid var(--line);margin-top:70px;padding-top:26px;
+  font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+.menu-btn{display:none}
+@media(max-width:960px){
+  .grid2,.grid3{grid-template-columns:1fr}
+  aside{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform .3s;width:290px;flex-basis:290px}
+  aside.open{transform:none;box-shadow:0 0 60px rgba(0,0,0,.6)}
+  main{padding-top:56px}
+  .menu-btn{display:flex;position:fixed;top:12px;left:12px;z-index:70;align-items:center;gap:8px;
+    background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:9px 14px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--fg)}
+  .hero{padding-top:56px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<button class="menu-btn" id="menuBtn">☰ 목차</button>
+<div class="wrap">
+<aside id="side">
+  <div class="side-head">
+    <div class="kicker">English Grammar · Lecture</div>
+    <h1>영어 <em>수동태</em><br>완전 정복</h1>
+    <p>The Passive Voice, for absolute beginners</p>
+  </div>
+  <div class="prog"><i id="progBar"></i></div>
+  <nav id="nav">
+    <a href="#s1"><span class="n">01</span><span>수동태란 무엇인가</span></a>
+    <a href="#s2"><span class="n">02</span><span>변환 3단계 · 문장 뒤집기</span></a>
+    <a href="#s3"><span class="n">03</span><span>과거분사(p.p.) 정복</span></a>
+    <a href="#s4"><span class="n">04</span><span>시제별 수동태 12가지</span></a>
+    <a href="#s5"><span class="n">05</span><span>조동사·부정문·의문문</span></a>
+    <a href="#s6"><span class="n">06</span><span>by + 행위자, 쓸까 말까</span></a>
+    <a href="#s7"><span class="n">07</span><span>4형식·5형식의 수동태</span></a>
+    <a href="#s8"><span class="n">08</span><span>까다로운 수동태 5종</span></a>
+    <a href="#s9"><span class="n">09</span><span>by를 안 쓰는 관용 표현</span></a>
+    <a href="#s10"><span class="n">10</span><span>수동태가 불가능한 동사</span></a>
+    <a href="#s11"><span class="n">11</span><span>초보자 실수 TOP 10</span></a>
+    <a href="#s12"><span class="n">12</span><span>언제 수동태를 쓸까</span></a>
+    <a href="#s13"><span class="n">13</span><span>최종 점검 퀴즈</span></a>
+    <a href="#s14"><span class="n">14</span><span>한 장 요약 치트시트</span></a>
+  </nav>
+</aside>
+
+<main>
+<header class="hero">
+  <div class="eyebrow">Lecture · Passive Voice · 초급자용</div>
+  <h2>누가 했는지보다<br><b>무슨 일이 일어났는지</b>가<br>중요할 때, <i>수동태</i>.</h2>
+  <p class="lede">
+    수동태는 어려운 문법이 아닙니다. <strong>딱 하나의 공식</strong>과 <strong>세 번의 자리 이동</strong>이 전부입니다.
+    이 강의는 "Tom cleaned the room." 한 문장이 "The room was cleaned by Tom."으로 변하는 과정을
+    눈으로 직접 보는 것에서 시작합니다. 규칙을 외우기 전에, 문장이 뒤집히는 <strong>장면</strong>을 먼저 기억하세요.
+  </p>
+  <div class="hero-meta">
+    <span class="pill">be + p.p.</span>
+    <span class="pill">12시제 전부</span>
+    <span class="pill">인터랙티브 변환기</span>
+    <span class="pill">불규칙 동사 카드</span>
+    <span class="pill">실수 TOP 10</span>
+    <span class="pill">퀴즈 15문항</span>
+  </div>
+</header>
+
+<!-- ========== 01 ========== -->
+<section id="s1">
+  <div class="sec-head">
+    <div class="num">01</div>
+    <div><h3>수동태란 무엇인가<span class="sub">Active vs. Passive — 시점의 문제</span></h3></div>
+  </div>
+
+  <p>영어 문장은 <strong>같은 사실</strong>을 두 가지 방식으로 말할 수 있습니다. 무엇을 문장 맨 앞(주어)에 놓느냐의 차이일 뿐입니다.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <span class="tag a">Active · 능동태</span>
+      <div class="ex ex-a" style="margin-top:12px">Tom broke the window.
+        <span class="ko">톰이 창문을 깼다.</span></div>
+      <p style="font-size:14px;margin-top:14px">주인공은 <span class="hl-a">Tom</span>.
+        "누가 했는가"에 초점이 있습니다. 행위자가 문장 맨 앞에 옵니다.</p>
+    </div>
+    <div class="card">
+      <span class="tag p">Passive · 수동태</span>
+      <div class="ex ex-p" style="margin-top:12px">The window was broken by Tom.
+        <span class="ko">창문이 톰에 의해 깨졌다.</span></div>
+      <p style="font-size:14px;margin-top:14px">주인공은 <span class="hl-p">the window</span>.
+        "무엇이 어떻게 됐는가"에 초점이 있습니다. 행위를 <em>당한</em> 쪽이 앞으로 나옵니다.</p>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <b>가장 중요한 한 문장</b>
+    수동태는 <strong>"당하다 / ~되다"</strong>입니다. 주어가 스스로 행동하는 게 아니라, 무언가를 <strong>당하는</strong> 입장이 됩니다.
+    한국어로 옮길 때 "~되다, ~받다, ~당하다, ~지다"가 자연스러우면 그건 수동태입니다.
+  </div>
+
+  <h4>왜 굳이 수동태를 쓰나요?</h4>
+  <p>능동태로 다 말할 수 있는데 왜 수동태가 존재할까요? 영어 원어민이 수동태를 선택하는 이유는 딱 네 가지입니다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:22%">이유</th><th style="width:44%">예문</th><th>설명</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>① 행위자를 모를 때</strong></td>
+          <td class="en">My bike was stolen.<br><span style="font-size:12px;color:var(--dim);font-family:var(--sans)">내 자전거를 도둑맞았다.</span></td>
+          <td>누가 훔쳤는지 모릅니다. 능동태로 쓰려면 주어를 지어내야 하죠.</td>
+        </tr>
+        <tr>
+          <td><strong>② 행위자가 뻔할 때</strong></td>
+          <td class="en">He was arrested last night.<br><span style="font-size:12px;color:var(--dim);font-family:var(--sans)">그는 어젯밤 체포되었다.</span></td>
+          <td>체포는 당연히 경찰이 합니다. 굳이 말할 필요가 없습니다.</td>
+        </tr>
+        <tr>
+          <td><strong>③ 행위자보다 대상이 중요할 때</strong></td>
+          <td class="en">This bridge was built in 1937.<br><span style="font-size:12px;color:var(--dim);font-family:var(--sans)">이 다리는 1937년에 지어졌다.</span></td>
+          <td>다리 이야기를 하는 중입니다. 건설사 이름은 관심 밖입니다.</td>
+        </tr>
+        <tr>
+          <td><strong>④ 객관적으로 말할 때</strong></td>
+          <td class="en">The sample was heated to 80°C.<br><span style="font-size:12px;color:var(--dim);font-family:var(--sans)">시료를 80도로 가열하였다.</span></td>
+          <td>논문·보고서·뉴스·매뉴얼의 기본 문체입니다. "내가 했다"를 감춥니다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <b>주의</b>
+    수동태는 "고급스러운 표현"이 아닙니다. 일상 회화에서는 능동태가 훨씬 자주 쓰이며, 더 명확하고 힘이 있습니다.
+    <strong>위 네 가지 이유에 해당하지 않으면 능동태를 쓰세요.</strong> 수동태 남용은 원어민에게 어색하게 들립니다.
+  </div>
+</section>
+
+<!-- ========== 02 ========== -->
+<section id="s2">
+  <div class="sec-head">
+    <div class="num">02</div>
+    <div><h3>변환 3단계 · 문장 뒤집기<span class="sub">The Three-Step Flip</span></h3></div>
+  </div>
+
+  <p>수동태 만들기는 <strong>딱 세 번의 동작</strong>입니다. 아래 기계에서 문장을 골라 버튼을 누르고, 단어들이 실제로 어디로 움직이는지 눈으로 따라가 보세요.</p>
+
+  <div class="machine">
+    <div class="machine-top" id="mTop"></div>
+    <div class="stage-label" id="mStage"><span class="dot"></span><span id="mStageTxt">STEP 0 · 능동태 원문</span></div>
+    <div class="track" id="mTrack"></div>
+    <div class="machine-note" id="mNote"></div>
+    <div class="machine-foot">
+      <button class="btn" id="mPrev">← 이전</button>
+      <button class="btn pri" id="mNext">다음 단계 →</button>
+      <button class="btn" id="mReset">처음부터</button>
+      <div class="steps" id="mSteps"><i class="on"></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+
+  <h4>공식은 단 하나입니다</h4>
+  <div class="formula">
+    <span class="s">The one and only formula</span>
+    목적어 <span class="op">→</span> 주어
+    <span class="op">+</span>
+    <span class="b">be동사 + 과거분사(p.p.)</span>
+    <span class="op">+</span>
+    <span style="color:var(--act)">(by 행위자)</span>
+  </div>
+
+  <div class="grid3">
+    <div class="card tight">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--pas);letter-spacing:.14em;margin-bottom:8px">STEP 1</div>
+      <strong>목적어를 맨 앞으로</strong>
+      <p style="font-size:13.5px;margin-top:6px">능동태의 목적어가 수동태의 주어가 됩니다. 목적어가 대명사면 <strong>주격</strong>으로 바꿉니다. (me → I, him → he)</p>
+    </div>
+    <div class="card tight">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--pas);letter-spacing:.14em;margin-bottom:8px">STEP 2</div>
+      <strong>동사를 be + p.p.로</strong>
+      <p style="font-size:13.5px;margin-top:6px">be동사의 <strong>시제는 원래 동사에서</strong>, <strong>수(단·복수)는 새 주어에서</strong> 가져옵니다. 본동사는 과거분사로 고정.</p>
+    </div>
+    <div class="card tight">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--pas);letter-spacing:.14em;margin-bottom:8px">STEP 3</div>
+      <strong>원래 주어는 by 뒤로</strong>
+      <p style="font-size:13.5px;margin-top:6px">대명사면 <strong>목적격</strong>으로 바꿉니다. (I → me, she → her) 필요 없으면 통째로 생략합니다.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>초보자가 가장 많이 틀리는 지점</b>
+    be동사를 <strong>새 주어</strong>에 맞춰야 합니다. "Tom cleans <u>the rooms</u>." → 새 주어가 복수 <code>the rooms</code>이므로
+    <span class="hl-p">are</span> cleaned가 됩니다. <code>is</code>가 아닙니다. 시제(현재)는 그대로, 수만 새 주어를 따라갑니다.
+  </div>
+
+  <h5>직접 확인해 봅시다</h5>
+  <div class="card">
+    <div class="ex ex-a"><span class="tag a">능동</span>She <b style="color:var(--act)">writes</b> <b>two letters</b> every day.
+      <span class="ko">그녀는 매일 편지 두 통을 쓴다.</span></div>
+    <div style="text-align:center;color:var(--dim);font-family:var(--mono);font-size:18px;margin:8px 0">↓</div>
+    <div class="ex ex-p"><span class="tag p">수동</span><b>Two letters</b> <u class="be">are</u> <u class="pp">written</u> <u class="by">by her</u> every day.
+      <span class="ko">매일 편지 두 통이 그녀에 의해 쓰여진다.</span></div>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:14px">
+      ① two letters가 앞으로 · ② writes(현재) → are(현재, 복수 주어) + written · ③ She → by her (목적격!)
+    </p>
+  </div>
+</section>
+
+<!-- ========== 03 ========== -->
+<section id="s3">
+  <div class="sec-head">
+    <div class="num">03</div>
+    <div><h3>과거분사(p.p.) 정복<span class="sub">Past Participle — 수동태의 절반</span></h3></div>
+  </div>
+
+  <p><strong>p.p.는 past participle, 즉 과거분사</strong>의 약자입니다. 수동태의 절반이 여기서 결정되므로, 여기만 확실히 하면 수동태의 80%는 끝납니다.</p>
+
+  <h4>규칙 동사 — 그냥 -ed</h4>
+  <p>대부분의 동사는 과거형과 과거분사형이 <strong>똑같습니다</strong>. 그냥 <code>-ed</code>를 붙이면 끝입니다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>원형</th><th>과거</th><th>과거분사 (p.p.)</th><th>수동태 예문</th></tr></thead>
+      <tbody>
+        <tr><td class="en">clean</td><td class="en">cleaned</td><td class="en" style="color:var(--pas)">cleaned</td><td class="en">The room is cleaned daily.</td></tr>
+        <tr><td class="en">use</td><td class="en">used</td><td class="en" style="color:var(--pas)">used</td><td class="en">This app is used worldwide.</td></tr>
+        <tr><td class="en">invite</td><td class="en">invited</td><td class="en" style="color:var(--pas)">invited</td><td class="en">We were invited to the party.</td></tr>
+        <tr><td class="en">finish</td><td class="en">finished</td><td class="en" style="color:var(--pas)">finished</td><td class="en">The work was finished on time.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>불규칙 동사 — 외우는 수밖에 없습니다</h4>
+  <p>문제는 이쪽입니다. 그런데 다행히도 <strong>자주 쓰는 것은 30개 남짓</strong>입니다. 카드를 눌러 뒤집으며 확인하세요.
+    앞면은 원형과 뜻, 뒷면은 <span class="hl-p">과거분사</span>와 3단 변화입니다.</p>
+  <div class="fc-grid" id="fcGrid"></div>
+  <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
+    <button class="btn" id="fcAll">전부 뒤집기</button>
+    <button class="btn" id="fcNone">전부 덮기</button>
+    <button class="btn" id="fcShuffle">섞기</button>
+  </div>
+
+  <div class="note warn">
+    <b>가장 헷갈리는 3형제</b>
+    <div style="margin-top:8px;line-height:2">
+      <code>see – saw – <b style="color:var(--pas)">seen</b></code>  ·
+      <code>eat – ate – <b style="color:var(--pas)">eaten</b></code>  ·
+      <code>write – wrote – <b style="color:var(--pas)">written</b></code><br>
+      수동태에는 <strong>세 번째 칸</strong>을 씁니다. <s style="text-decoration-color:var(--warn)">It was saw by him.</s> → It was <b style="color:var(--ok)">seen</b> by him.
+    </div>
+  </div>
+
+  <div class="note tip">
+    <b>암기 팁</b>
+    p.p. 자리에는 <strong>have와 짝이 되는 형태</strong>가 들어갑니다. <code>I have ___ it.</code>의 빈칸에 넣어서 자연스러운 단어가 곧 p.p.입니다.
+    "I have seen it."이 맞으니 수동태도 "It was <b style="color:var(--pas)">seen</b>."입니다.
+  </div>
+</section>
+
+<!-- ========== 04 ========== -->
+<section id="s4">
+  <div class="sec-head">
+    <div class="num">04</div>
+    <div><h3>시제별 수동태 12가지<span class="sub">Tense Matrix — be동사만 바꾸면 끝</span></h3></div>
+  </div>
+
+  <p>여기서 초보자들이 겁을 먹습니다. 하지만 사실은 매우 단순합니다.
+    <strong>바뀌는 것은 be동사 하나뿐</strong>이고, <code>p.p.</code>는 절대 변하지 않습니다.
+    아래에서 시제를 눌러 비교해 보세요. 예문은 모두 <em>clean(청소하다)</em> 하나로 통일했습니다.</p>
+
+  <div class="tense-grid" id="tGrid"></div>
+  <div class="tense-out" id="tOut"></div>
+
+  <div class="note">
+    <b>패턴이 보이시나요</b>
+    be동사가 위치만 지킨 채 모습을 바꿉니다. <code>is → is being → has been → will be → will have been</code>.
+    나머지 <code>cleaned</code>는 끝까지 그대로입니다. <strong>수동태 시제 = be동사 시제 변화 문제</strong>일 뿐입니다.
+  </div>
+
+  <div class="note warn">
+    <b>실제로는 잘 쓰지 않는 시제</b>
+    <strong>미래진행 수동</strong>(will be being cleaned)과 <strong>완료진행 수동</strong>(has been being cleaned)은
+    문법적으로는 가능하지만 너무 어색해서 원어민도 쓰지 않습니다. 이런 경우엔 그냥 능동태로 말합니다.
+    외우지 마세요. <strong>실용적으로 필요한 것은 위 표의 앞 8개</strong>입니다.
+  </div>
+</section>
+
+<!-- ========== 05 ========== -->
+<section id="s5">
+  <div class="sec-head">
+    <div class="num">05</div>
+    <div><h3>조동사·부정문·의문문<span class="sub">Modals, Negatives, Questions</span></h3></div>
+  </div>
+
+  <h4>조동사가 있으면: 조동사 + be + p.p.</h4>
+  <p>can, will, must, should, may, might, could 뒤에는 <strong>동사원형</strong>이 와야 합니다.
+    be동사의 원형은 <code>be</code>이므로, 조동사 뒤에는 항상 <span class="hl-p">be + p.p.</span>가 옵니다. 시제 걱정 없이 이 하나면 됩니다.</p>
+  <div class="formula">
+    <span class="s">Modal Passive</span>
+    can / will / must / should <span class="op">+</span> <span class="b">be</span> <span class="op">+</span> <span class="b">p.p.</span>
+  </div>
+  <div class="card">
+    <div class="ex ex-a"><span class="tag a">능동</span>You <b>must finish</b> the report today.</div>
+    <div class="ex ex-p"><span class="tag p">수동</span>The report <b>must <u class="be">be</u> <u class="pp">finished</u></b> today.
+      <span class="ko">보고서는 오늘 완료되어야 한다.</span></div>
+    <div class="ex ex-a" style="margin-top:16px"><span class="tag a">능동</span>Anyone <b>can solve</b> this problem.</div>
+    <div class="ex ex-p"><span class="tag p">수동</span>This problem <b>can <u class="be">be</u> <u class="pp">solved</u></b> by anyone.
+      <span class="ko">이 문제는 누구나 풀 수 있다.</span></div>
+  </div>
+  <div class="note warn">
+    <b>흔한 실수</b>
+    <s>The report must <b>is</b> finished.</s> → 조동사 뒤에는 무조건 원형 <b style="color:var(--ok)">be</b>입니다.
+    <code>is / was / are</code>가 조동사 뒤에 오는 일은 없습니다.
+  </div>
+
+  <h4>부정문: be동사 바로 뒤에 not</h4>
+  <p>수동태의 부정은 간단합니다. <strong>be동사 뒤에 not</strong>을 붙이면 끝입니다. 조동사가 있으면 조동사 뒤에 붙입니다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:20%">형태</th><th>긍정</th><th>부정</th></tr></thead>
+      <tbody>
+        <tr><td>현재</td><td class="en">It is used.</td><td class="en">It is <b style="color:var(--warn)">not</b> used.</td></tr>
+        <tr><td>과거</td><td class="en">They were invited.</td><td class="en">They were <b style="color:var(--warn)">not</b> invited.</td></tr>
+        <tr><td>현재완료</td><td class="en">It has been fixed.</td><td class="en">It has <b style="color:var(--warn)">not</b> been fixed.</td></tr>
+        <tr><td>조동사</td><td class="en">It can be done.</td><td class="en">It can<b style="color:var(--warn)">not</b> be done.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>의문문: be동사를 문장 맨 앞으로</h4>
+  <p>일반 의문문과 규칙이 완전히 같습니다. <strong>be동사를 주어 앞으로</strong> 보내기만 하면 됩니다.
+    조동사가 있으면 조동사를 앞으로 보냅니다. <strong>do/does/did는 쓰지 않습니다.</strong></p>
+  <div class="card">
+    <div class="ex ex-p">The window was broken. → <b><u class="be">Was</u> the window broken?</b>
+      <span class="ko">창문이 깨졌나요?</span></div>
+    <div class="ex ex-p">This can be fixed. → <b>Can this be fixed?</b>
+      <span class="ko">이거 고칠 수 있나요?</span></div>
+    <div class="ex ex-p">The email was sent. → <b>When was the email sent?</b>
+      <span class="ko">그 이메일은 언제 발송되었나요?</span></div>
+    <div class="ex ex-x" style="margin-top:14px"><span class="tag x">틀림</span><s>Did the window broken?</s>
+      <span class="ko">수동태에는 do 계열 조동사를 쓰지 않습니다.</span></div>
+  </div>
+</section>
+
+<!-- ========== 06 ========== -->
+<section id="s6">
+  <div class="sec-head">
+    <div class="num">06</div>
+    <div><h3>by + 행위자, 쓸까 말까<span class="sub">The Agent — 대부분은 생략합니다</span></h3></div>
+  </div>
+
+  <p>교과서는 "by + 행위자"를 강조하지만, 실제 영어에서는 <strong>수동태 문장의 약 80%가 by를 쓰지 않습니다.</strong>
+    by를 붙이는 것이 기본이 아니라, <strong>생략하는 것이 기본</strong>이라고 생각하세요.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--warn);letter-spacing:.14em;margin-bottom:10px">생략하는 경우 (대부분)</div>
+      <ul style="margin:0">
+        <li><strong>모를 때</strong> — My wallet was stolen.</li>
+        <li><strong>뻔할 때</strong> — He was sent to prison. (법원이)</li>
+        <li><strong>중요하지 않을 때</strong> — The road is being repaired.</li>
+        <li><strong>막연한 사람들</strong> — English is spoken here.<br>
+          <span style="font-size:12.5px;color:var(--dim)">by people / by someone / by them은 거의 항상 생략</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--act);letter-spacing:.14em;margin-bottom:10px">꼭 쓰는 경우 (소수)</div>
+      <ul style="margin:0">
+        <li><strong>행위자가 새 정보일 때</strong><br>
+          <span style="font-family:var(--serif);font-size:16px">Hamlet was written <span class="hl-a">by Shakespeare</span>.</span></li>
+        <li><strong>행위자가 놀랍거나 핵심일 때</strong><br>
+          <span style="font-family:var(--serif);font-size:16px">The fire was started <span class="hl-a">by a child</span>.</span></li>
+        <li><strong>작품·발명·발견의 주체</strong><br>
+          <span style="font-family:var(--serif);font-size:16px">Penicillin was discovered <span class="hl-a">by Fleming</span>.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <b>판단 기준 한 줄</b>
+    "by 뒤의 정보를 지웠을 때 문장이 <strong>여전히 쓸모 있는가?</strong>" 쓸모 있으면 지우세요.
+    지웠더니 문장이 알맹이를 잃으면 남기세요.
+  </div>
+
+  <h4>대명사는 반드시 목적격으로</h4>
+  <p>by는 전치사이므로 뒤에는 <strong>목적격</strong>이 옵니다. 초보자가 자주 놓치는 부분입니다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>능동태 주어</th><th>by 뒤 (목적격)</th><th>능동태 주어</th><th>by 뒤 (목적격)</th></tr></thead>
+      <tbody>
+        <tr><td class="en">I</td><td class="m">by me</td><td class="en">we</td><td class="m">by us</td></tr>
+        <tr><td class="en">he</td><td class="m">by him</td><td class="en">she</td><td class="m">by her</td></tr>
+        <tr><td class="en">they</td><td class="m">by them</td><td class="en">you</td><td class="m">by you</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ex ex-x"><span class="tag x">틀림</span><s>The song was sung by she.</s></div>
+  <div class="ex ex-o"><span class="tag o">맞음</span>The song was sung by <b>her</b>. <span class="ko">그 노래는 그녀가 불렀다.</span></div>
+</section>
+
+<!-- ========== 07 ========== -->
+<section id="s7">
+  <div class="sec-head">
+    <div class="num">07</div>
+    <div><h3>4형식·5형식의 수동태<span class="sub">목적어가 둘일 때, 목적격보어가 있을 때</span></h3></div>
+  </div>
+
+  <h4>4형식 — 목적어가 두 개면 수동태도 두 개</h4>
+  <p><code>give, send, teach, show, tell, buy, offer</code> 같은 동사는 목적어를 둘 가집니다.
+    (~에게 / ~을) 목적어가 둘이니, <strong>수동태 문장도 두 가지</strong>가 만들어집니다.</p>
+
+  <div class="card">
+    <div class="ex ex-a"><span class="tag a">능동 · 4형식</span>He gave <b style="color:var(--act)">me</b> <b>a book</b>.
+      <span class="ko">그는 나에게 책 한 권을 주었다.</span></div>
+    <div style="text-align:center;color:var(--dim);font-family:var(--mono);margin:10px 0">↓ 두 갈래</div>
+    <div class="ex ex-p"><span class="tag p">사람 주어</span><b style="color:var(--act)">I</b> was given a book (by him).
+      <span class="ko">나는 책 한 권을 받았다. — 훨씬 자연스럽고 흔한 형태</span></div>
+    <div class="ex ex-p" style="margin-top:10px"><span class="tag p">사물 주어</span><b>A book</b> was given <b style="color:var(--act)">to me</b> (by him).
+      <span class="ko">책 한 권이 나에게 주어졌다. — 사람 앞에 전치사가 필요!</span></div>
+  </div>
+
+  <div class="note warn">
+    <b>사물을 주어로 할 때는 전치사를 잊지 마세요</b>
+    <s>A book was given me.</s> → A book was given <b style="color:var(--ok)">to</b> me. <br>
+    <span style="display:inline-block;margin-top:8px">
+    <code>to</code> — give, send, teach, show, tell, lend, pass ·
+    <code>for</code> — buy, make, cook, get, find ·
+    <code>of</code> — ask
+    </span>
+  </div>
+
+  <div class="ex ex-a" style="margin-top:16px"><span class="tag a">능동</span>She bought her son a bike.</div>
+  <div class="ex ex-p">→ Her son was bought a bike. <span style="color:var(--dim);font-size:13px">(어색 — 잘 안 씀)</span></div>
+  <div class="ex ex-p">→ A bike was bought <b style="color:var(--act)">for</b> her son. <span class="ko">자전거가 그녀의 아들을 위해 구입되었다.</span></div>
+  <p style="font-size:14px;color:var(--muted)">buy, make 계열은 <strong>사물 주어 쪽만</strong> 쓰는 게 보통입니다. 무조건 두 개를 다 만들 필요는 없습니다.</p>
+
+  <h4>5형식 — 목적격보어는 그 자리에 그대로</h4>
+  <p><code>call, make, elect, name, consider, find</code>처럼 "O를 C라고/C하게"를 표현하는 동사입니다.
+    목적어만 앞으로 가고, <strong>보어는 움직이지 않습니다.</strong></p>
+  <div class="card">
+    <div class="ex ex-a"><span class="tag a">능동</span>They call <b>the baby</b> <span style="color:var(--pas)">Lucy</span>.</div>
+    <div class="ex ex-p"><span class="tag p">수동</span><b>The baby</b> is called <span style="color:var(--pas)">Lucy</span>.
+      <span class="ko">그 아기는 루시라고 불린다. — Lucy는 제자리 그대로</span></div>
+    <div class="ex ex-a" style="margin-top:16px"><span class="tag a">능동</span>The news made <b>him</b> <span style="color:var(--pas)">happy</span>.</div>
+    <div class="ex ex-p"><span class="tag p">수동</span><b>He</b> was made <span style="color:var(--pas)">happy</span> by the news.
+      <span class="ko">그는 그 소식에 행복해졌다.</span></div>
+  </div>
+</section>
+
+<!-- ========== 08 ========== -->
+<section id="s8">
+  <div class="sec-head">
+    <div class="num">08</div>
+    <div><h3>까다로운 수동태 5종<span class="sub">시험과 실전에서 갈리는 지점</span></h3></div>
+  </div>
+
+  <h4>① 구동사(phrasal verb) — 덩어리째 움직입니다</h4>
+  <p><code>look after, turn on, take care of, put off, laugh at</code>처럼 여러 단어가 한 동사인 경우,
+    <strong>전치사·부사를 절대 떼어놓지 않습니다.</strong> 통째로 p.p. 뒤에 붙여 씁니다.</p>
+  <div class="card">
+    <div class="ex ex-a"><span class="tag a">능동</span>Someone <b>looked after</b> the dog.</div>
+    <div class="ex ex-o"><span class="tag o">맞음</span>The dog was <b>looked after</b>. <span class="ko">그 개는 돌봄을 받았다.</span></div>
+    <div class="ex ex-x"><span class="tag x">틀림</span><s>The dog was looked.</s> <span class="ko">after를 버리면 뜻이 사라집니다.</span></div>
+    <div class="ex ex-o" style="margin-top:12px">The meeting was <b>put off</b> until Friday. <span class="ko">회의가 금요일로 연기되었다.</span></div>
+    <div class="ex ex-o">He was <b>laughed at</b> by everyone. <span class="ko">그는 모두에게 비웃음을 샀다.</span></div>
+  </div>
+
+  <h4>② that절 목적어 — 두 가지 변형</h4>
+  <p><code>say, think, believe, know, report, expect</code> 뒤에 that절이 오면 수동태가 두 형태로 만들어집니다.
+    뉴스 영어에서 매우 자주 보입니다.</p>
+  <div class="card">
+    <div class="ex ex-a"><span class="tag a">능동</span>People say that he is rich.</div>
+    <div class="ex ex-p"><span class="tag p">형태 A</span><b>It</b> is said that he is rich.
+      <span class="ko">그가 부자라고들 한다. — 가주어 it 사용, 가장 흔한 형태</span></div>
+    <div class="ex ex-p"><span class="tag p">형태 B</span><b>He</b> is said <b>to be</b> rich.
+      <span class="ko">that절의 주어를 앞으로 빼고, 동사를 to부정사로</span></div>
+  </div>
+  <div class="note tip">
+    <b>형태 B의 시제 규칙</b>
+    that절의 시제가 <strong>주절보다 앞서면</strong> <code>to have p.p.</code>를 씁니다.<br>
+    They say he <b>was</b> rich. → He is said <b style="color:var(--pas)">to have been</b> rich. (과거에 부자였다고 한다)
+  </div>
+
+  <h4>③ 지각동사 · 사역동사 — 사라졌던 to가 돌아옵니다</h4>
+  <p>능동태에서 <code>see / hear / watch / make</code> 뒤의 목적격보어는 <strong>동사원형</strong>이었습니다.
+    그런데 수동태가 되면 <strong>to부정사로 부활</strong>합니다. 이것이 시험 단골 포인트입니다.</p>
+  <div class="card">
+    <div class="ex ex-a"><span class="tag a">능동</span>I saw him <b style="color:var(--act)">enter</b> the room. <span class="ko">원형</span></div>
+    <div class="ex ex-p"><span class="tag p">수동</span>He was seen <b style="color:var(--pas)">to enter</b> the room. <span class="ko">to가 부활!</span></div>
+    <div class="ex ex-a" style="margin-top:14px"><span class="tag a">능동</span>They made me <b style="color:var(--act)">wait</b>.</div>
+    <div class="ex ex-p"><span class="tag p">수동</span>I was made <b style="color:var(--pas)">to wait</b>. <span class="ko">나는 기다려야만 했다.</span></div>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:12px">
+      단, <code>let</code>은 수동태로 잘 쓰지 않고 <code>be allowed to</code>로 대체합니다.
+      <code>have</code>(사역)도 수동태를 만들지 않습니다.</p>
+  </div>
+
+  <h4>④ 자동사 + 전치사 — 목적어처럼 보이지만</h4>
+  <p><code>arrive at, listen to, talk about, deal with</code> 등은 전치사를 포함해야만 수동태가 가능합니다.
+    전치사를 반드시 살려 두세요.</p>
+  <div class="ex ex-o">This problem must be <b>dealt with</b> immediately. <span class="ko">이 문제는 즉시 처리되어야 한다.</span></div>
+  <div class="ex ex-o">The matter was <b>talked about</b> for hours. <span class="ko">그 사안은 몇 시간 동안 논의되었다.</span></div>
+
+  <h4>⑤ 명령문의 수동태</h4>
+  <p>명령문은 <code>Let + 목적어 + be + p.p.</code> 형태를 씁니다. 격식 있는 문어체나 안내문에서 볼 수 있습니다.</p>
+  <div class="ex ex-a"><span class="tag a">능동</span>Do it at once.</div>
+  <div class="ex ex-p"><span class="tag p">수동</span><b>Let it be done</b> at once. <span class="ko">즉시 처리되도록 하라.</span></div>
+</section>
+
+<!-- ========== 09 ========== -->
+<section id="s9">
+  <div class="sec-head">
+    <div class="num">09</div>
+    <div><h3>by를 안 쓰는 관용 표현<span class="sub">감정·상태 수동태 — 통째로 외우는 편이 빠릅니다</span></h3></div>
+  </div>
+
+  <p>수동태인데 <strong>by가 아닌 다른 전치사</strong>가 오는 표현들이 있습니다. 대부분 감정이나 상태를 나타내며,
+    "행위를 당한다"기보다 "그런 상태이다"에 가깝습니다. 규칙이 없으니 <strong>덩어리로 외우세요.</strong>
+    아래 연습에서 맞는 전치사를 골라 보세요.</p>
+
+  <div id="prepDrills"></div>
+  <div style="display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap">
+    <button class="btn" id="prepReset">다시 풀기</button>
+    <span style="font-family:var(--mono);font-size:12px;color:var(--muted)" id="prepScore">0 / 12 정답</span>
+  </div>
+
+  <h4>한눈에 보는 정리표</h4>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:34%">표현</th><th style="width:24%">뜻</th><th>메모</th></tr></thead>
+      <tbody>
+        <tr><td class="en">be interested <b class="hl-p">in</b></td><td>~에 관심이 있다</td><td>in만 씁니다. about 아님</td></tr>
+        <tr><td class="en">be surprised <b class="hl-p">at / by</b></td><td>~에 놀라다</td><td>둘 다 가능</td></tr>
+        <tr><td class="en">be satisfied <b class="hl-p">with</b></td><td>~에 만족하다</td><td>pleased with도 동일</td></tr>
+        <tr><td class="en">be covered <b class="hl-p">with / in</b></td><td>~로 덮여 있다</td><td>눈, 먼지 등</td></tr>
+        <tr><td class="en">be filled <b class="hl-p">with</b></td><td>~로 가득 차다</td><td>= be full of</td></tr>
+        <tr><td class="en">be crowded <b class="hl-p">with</b></td><td>~로 붐비다</td><td>사람, 관광객</td></tr>
+        <tr><td class="en">be worried <b class="hl-p">about</b></td><td>~을 걱정하다</td><td>concerned about도 동일</td></tr>
+        <tr><td class="en">be tired <b class="hl-p">of</b></td><td>~에 싫증나다</td><td>tired <b>from</b>은 "피곤하다"</td></tr>
+        <tr><td class="en">be made <b class="hl-p">of</b></td><td>~로 만들어지다 (형태 유지)</td><td>나무 책상 — 재료가 보임</td></tr>
+        <tr><td class="en">be made <b class="hl-p">from</b></td><td>~로 만들어지다 (성질 변화)</td><td>포도 → 와인 — 재료가 안 보임</td></tr>
+        <tr><td class="en">be known <b class="hl-p">for</b></td><td>~로 유명하다</td><td>이유·특징</td></tr>
+        <tr><td class="en">be known <b class="hl-p">as</b></td><td>~로서 알려지다</td><td>자격·이름</td></tr>
+        <tr><td class="en">be known <b class="hl-p">to</b></td><td>~에게 알려지다</td><td>대상</td></tr>
+        <tr><td class="en">be married <b class="hl-p">to</b></td><td>~와 결혼한 상태다</td><td><s>married with</s> 주의</td></tr>
+        <tr><td class="en">be disappointed <b class="hl-p">with / in</b></td><td>~에 실망하다</td><td>사람에겐 in도 자주</td></tr>
+        <tr><td class="en">be excited <b class="hl-p">about</b></td><td>~에 신나다</td><td>다가올 일</td></tr>
+        <tr><td class="en">be scared / afraid <b class="hl-p">of</b></td><td>~을 두려워하다</td><td>of 고정</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <b>-ed와 -ing 구분법 · 매우 중요</b>
+    <div style="margin-top:8px">
+      <b style="color:var(--pas)">-ed</b>는 <strong>사람이 느끼는 감정</strong>, <b style="color:var(--act)">-ing</b>는 <strong>그 감정을 유발하는 것</strong>입니다.<br>
+      <span style="font-family:var(--serif);font-size:17px;display:block;margin-top:8px">
+        I am <b style="color:var(--pas)">bored</b>. — 나는 지루함을 느낀다.<br>
+        The movie is <b style="color:var(--act)">boring</b>. — 그 영화가 지루하게 만든다.
+      </span>
+      <span style="display:block;margin-top:8px;font-size:13.5px;color:var(--muted)">
+        "I am boring."이라고 하면 "나는 (남을) 지루하게 하는 사람이다"라는 뜻이 됩니다. 자기소개에서 조심하세요.
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 10 ========== -->
+<section id="s10">
+  <div class="sec-head">
+    <div class="num">10</div>
+    <div><h3>수동태가 불가능한 동사<span class="sub">아무 문장이나 뒤집을 수 있는 게 아닙니다</span></h3></div>
+  </div>
+
+  <p>수동태의 전제 조건은 딱 하나, <strong>목적어가 있어야 한다</strong>는 것입니다.
+    목적어가 없으면 앞으로 끌어올 것이 없으니 수동태 자체가 성립하지 않습니다.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--warn);letter-spacing:.14em;margin-bottom:10px">① 자동사 — 목적어가 없음</div>
+      <p style="font-size:14px;margin-top:0">happen, occur, appear, disappear, arrive, come, go, die, rise, fall, exist, sleep, wait, seem</p>
+      <div class="ex ex-x" style="font-size:16px"><s>The accident was happened.</s></div>
+      <div class="ex ex-o" style="font-size:16px">The accident <b>happened</b>. <span class="ko">사고가 일어났다.</span></div>
+      <p style="font-size:13px;color:var(--dim);margin-top:10px">happen은 그 자체로 이미 "일어나다"입니다. 한국어의 "~되다"에 끌려 was를 붙이지 마세요.</p>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--warn);letter-spacing:.14em;margin-bottom:10px">② 상태동사 — 행위가 아님</div>
+      <p style="font-size:14px;margin-top:0">have(가지다), resemble, lack, fit, suit, cost, weigh, become, equal</p>
+      <div class="ex ex-x" style="font-size:16px"><s>Her mother is resembled by her.</s></div>
+      <div class="ex ex-o" style="font-size:16px">She <b>resembles</b> her mother. <span class="ko">그녀는 엄마를 닮았다.</span></div>
+      <p style="font-size:13px;color:var(--dim);margin-top:10px">목적어는 있지만 "당하는" 개념이 없습니다. 이런 동사는 형태만 타동사입니다.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <b>한국어 때문에 생기는 함정</b>
+    <div style="line-height:2;margin-top:6px">
+      <s>The war was broken out.</s> → The war <b style="color:var(--ok)">broke out</b>. (전쟁이 발발했다)<br>
+      <s>He was died last year.</s> → He <b style="color:var(--ok)">died</b> last year. (그는 작년에 죽었다)<br>
+      <s>The book is consisted of 10 chapters.</s> → The book <b style="color:var(--ok)">consists of</b> 10 chapters.<br>
+      <s>The price was risen.</s> → The price <b style="color:var(--ok)">rose</b>. (rise는 자동사 / raise는 타동사)
+    </div>
+  </div>
+
+  <div class="note tip">
+    <b>1초 판별법</b>
+    문장을 수동태로 바꾸기 전에 스스로 물어보세요. <strong>"동사 바로 뒤에 '무엇을'에 해당하는 말이 있는가?"</strong>
+    없으면 그 문장은 수동태로 바꿀 수 없습니다. 그것으로 끝입니다.
+  </div>
+</section>
+
+<!-- ========== 11 ========== -->
+<section id="s11">
+  <div class="sec-head">
+    <div class="num">11</div>
+    <div><h3>초보자 실수 TOP 10<span class="sub">클릭해서 정답과 이유를 확인하세요</span></h3></div>
+  </div>
+  <p>실제 학습자들이 가장 자주 저지르는 오류를 빈도순으로 모았습니다. 각 항목을 눌러 펼쳐 보세요.</p>
+  <div id="misList"></div>
+</section>
+
+<!-- ========== 12 ========== -->
+<section id="s12">
+  <div class="sec-head">
+    <div class="num">12</div>
+    <div><h3>언제 수동태를 쓸까<span class="sub">문법이 아니라 선택의 문제</span></h3></div>
+  </div>
+
+  <p>수동태를 <em>만들 줄 아는 것</em>과 <em>제때 쓰는 것</em>은 다른 능력입니다.
+    아래 질문에 답하면서 지금 쓰려는 문장에 수동태가 어울리는지 판단해 보세요.</p>
+
+  <div class="decide" id="decide"></div>
+
+  <h4>문체별 사용 빈도</h4>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:24%">상황</th><th style="width:16%">수동태 비중</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td>일상 대화</td><td class="m">아주 낮음</td><td>누가 했는지가 대화의 핵심이라 능동태가 자연스럽습니다.</td></tr>
+        <tr><td>이메일·업무 보고</td><td class="m">중간</td><td>책임 소재를 부드럽게 할 때 유용합니다. "The deadline was missed."</td></tr>
+        <tr><td>뉴스 기사</td><td class="m">높음</td><td>사건 자체가 주인공이고, 출처가 불명확한 경우가 많습니다.</td></tr>
+        <tr><td>논문·기술 문서</td><td class="m">매우 높음</td><td>실험 절차와 객관성이 중요하며, 연구자 개인은 부차적입니다.</td></tr>
+        <tr><td>매뉴얼·규정</td><td class="m">높음</td><td>"~되어야 한다"는 비인격적 지시에 적합합니다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>실무 팁 · 책임을 흐리는 수동태</b>
+    <span style="font-family:var(--serif);font-size:17px;display:block;margin:8px 0">
+      "You made a mistake in the report." → "A mistake was made in the report."
+    </span>
+    앞 문장은 상대를 지목하지만, 뒤 문장은 실수 자체만 언급합니다. 영어권 업무 이메일에서 자주 쓰이는 완충 장치입니다.
+    다만 남용하면 <strong>책임 회피</strong>로 읽히니, 자신의 잘못에는 능동태로 "I made a mistake."라고 말하는 편이 신뢰를 얻습니다.
+  </div>
+</section>
+
+<!-- ========== 13 ========== -->
+<section id="s13">
+  <div class="sec-head">
+    <div class="num">13</div>
+    <div><h3>최종 점검 퀴즈<span class="sub">15 questions · 각 문제마다 해설이 나옵니다</span></h3></div>
+  </div>
+  <p>지금까지 배운 내용을 확인해 봅시다. 답을 고르면 즉시 해설이 표시됩니다. 틀려도 괜찮습니다. 해설이 진짜 수업입니다.</p>
+  <div class="quiz" id="quiz"></div>
+</section>
+
+<!-- ========== 14 ========== -->
+<section id="s14">
+  <div class="sec-head">
+    <div class="num">14</div>
+    <div><h3>한 장 요약 치트시트<span class="sub">이것만 기억하면 됩니다</span></h3></div>
+  </div>
+
+  <div class="cheat">
+    <div class="formula" style="margin-top:0">
+      <span class="s">Core</span>
+      목적어 → 주어 <span class="op">+</span> <span class="b">be + p.p.</span> <span class="op">+</span> <span style="color:var(--act)">(by 행위자)</span>
+    </div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="t">시제는 be가 담당</div>
+        <div>is / was / will be<br>is being / was being<br>has been / had been<br>조동사 + <b>be</b> + p.p.</div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">수 일치는 새 주어</div>
+        <div>The room <b>is</b> cleaned.<br>The rooms <b>are</b> cleaned.<br>시제는 원래 동사, 단복수는 새 주어.</div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">by는 대부분 생략</div>
+        <div>모를 때 · 뻔할 때 · 중요하지 않을 때 → 삭제<br>대명사는 목적격 (by him / her / them)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">부정과 의문</div>
+        <div>be + <b>not</b> + p.p.<br><b>Be</b>동사를 맨 앞으로 → 의문문<br>do / does / did 사용 금지</div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">구동사는 통째로</div>
+        <div>looked <b>after</b> · put <b>off</b><br>laughed <b>at</b> · dealt <b>with</b><br>전치사를 절대 버리지 않습니다.</div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">지각·사역은 to 부활</div>
+        <div>saw him <b>enter</b><br>→ was seen <b>to enter</b><br>made me wait → was made <b>to wait</b></div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">불가능한 동사</div>
+        <div>happen · occur · appear<br>arrive · die · rise · consist of<br>resemble · have · become</div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">감정 표현</div>
+        <div>interested <b>in</b> · surprised <b>at</b><br>satisfied <b>with</b> · worried <b>about</b><br>tired <b>of</b> · married <b>to</b></div>
+      </div>
+      <div class="cheat-item">
+        <div class="t">-ed vs -ing</div>
+        <div>I am bor<b>ed</b>. (내 감정)<br>It is bor<b>ing</b>. (원인 제공)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note tip" style="margin-top:26px">
+    <b>다음 학습 방향</b>
+    수동태 공식을 외웠다면, 이제 <strong>영어 뉴스 기사 한 편</strong>을 읽으며 수동태 문장에 밑줄을 쳐 보세요.
+    왜 그 자리에서 능동태가 아닌 수동태를 썼는지 이유를 한 줄로 적어 보면, 공식 암기가 실제 감각으로 바뀝니다.
+  </div>
+
+  <footer>
+    <span>PASSIVE VOICE · INTERACTIVE LECTURE</span>
+    <span>be + p.p.</span>
+  </footer>
+</section>
+</main>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- 사이드바 / 스크롤스파이 ---------- */
+const side=$('#side'), menuBtn=$('#menuBtn');
+menuBtn.addEventListener('click',()=>side.classList.toggle('open'));
+$$('#nav a').forEach(a=>a.addEventListener('click',()=>side.classList.remove('open')));
+const links=$$('#nav a'), secs=links.map(a=>$(a.getAttribute('href')));
+const bar=$('#progBar');
+function spy(){
+  const y=window.scrollY+window.innerHeight*0.28;
+  let i=0;
+  secs.forEach((s,k)=>{ if(s && s.offsetTop<=y) i=k; });
+  links.forEach((a,k)=>a.classList.toggle('on',k===i));
+  const h=document.body.scrollHeight-window.innerHeight;
+  bar.style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';
+}
+window.addEventListener('scroll',spy,{passive:true});
+window.addEventListener('resize',spy); spy();
+
+/* ---------- 02. 문장 변환기 ---------- */
+const SENT=[
+ {label:'기본 · 과거', stages:[
+   {toks:[{id:'s',t:'Tom',r:'subj'},{id:'v',t:'cleaned',r:'verb'},{id:'o',t:'the room',r:'obj'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>원문(능동태)</b> — 주어 Tom, 동사 cleaned, 목적어 the room. 목적어가 있으니 수동태로 바꿀 수 있습니다.'},
+   {toks:[{id:'o',t:'The room',r:'subj'},{id:'v',t:'cleaned',r:'verb'},{id:'s',t:'Tom',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 1 · 목적어를 맨 앞으로</b> — the room이 새 주어가 되어 대문자로 시작합니다. Tom은 뒤로 밀려납니다.'},
+   {toks:[{id:'o',t:'The room',r:'subj'},{id:'v',t:'was cleaned',r:'verb'},{id:'s',t:'Tom',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 2 · be + p.p.</b> — cleaned는 과거시제였고 새 주어 the room은 단수이므로 <b>was</b>. 본동사는 과거분사 cleaned로 고정.'},
+   {toks:[{id:'o',t:'The room',r:'subj'},{id:'v',t:'was cleaned',r:'verb'},{id:'s',t:'by Tom',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 3 · by 붙이기 · 완성</b> — The room was cleaned by Tom. 톰이 누구인지 중요하지 않다면 by Tom을 통째로 지워도 완전한 문장입니다.'}
+ ]},
+ {label:'미래 · will', stages:[
+   {toks:[{id:'s',t:'The students',r:'subj'},{id:'v',t:'will finish',r:'verb'},{id:'o',t:'the project',r:'obj'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>원문</b> — 학생들이 프로젝트를 끝낼 것이다. 조동사 will이 붙어 있습니다.'},
+   {toks:[{id:'o',t:'The project',r:'subj'},{id:'v',t:'will finish',r:'verb'},{id:'s',t:'The students',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 1</b> — the project가 앞으로 나옵니다.'},
+   {toks:[{id:'o',t:'The project',r:'subj'},{id:'v',t:'will be finished',r:'verb'},{id:'s',t:'The students',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 2</b> — 조동사 will 뒤에는 반드시 동사원형. 그래서 <b>will be finished</b>입니다. will was/will is는 존재하지 않습니다.'},
+   {toks:[{id:'o',t:'The project',r:'subj'},{id:'v',t:'will be finished',r:'verb'},{id:'s',t:'by the students',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>완성</b> — The project will be finished by the students. 프로젝트가 완료된다는 사실이 초점입니다.'}
+ ]},
+ {label:'현재완료 · 복수 주어', stages:[
+   {toks:[{id:'s',t:'She',r:'subj'},{id:'v',t:'has sent',r:'verb'},{id:'o',t:'the emails',r:'obj'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>원문</b> — 현재완료(has sent)이고 목적어는 복수 the emails입니다.'},
+   {toks:[{id:'o',t:'The emails',r:'subj'},{id:'v',t:'has sent',r:'verb'},{id:'s',t:'She',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 1</b> — the emails가 새 주어. <b>복수</b>라는 점을 꼭 기억하세요.'},
+   {toks:[{id:'o',t:'The emails',r:'subj'},{id:'v',t:'have been sent',r:'verb'},{id:'s',t:'She',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 2</b> — 현재완료 수동은 have/has been + p.p. 새 주어가 복수이므로 has가 아니라 <b>have</b>입니다. 시제는 유지, 수는 새 주어를 따릅니다.'},
+   {toks:[{id:'o',t:'The emails',r:'subj'},{id:'v',t:'have been sent',r:'verb'},{id:'s',t:'by her',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 3 · 완성</b> — She는 by 뒤에서 목적격 <b>her</b>로 바뀝니다. by she는 틀린 표현입니다.'}
+ ]},
+ {label:'행위자 생략', stages:[
+   {toks:[{id:'s',t:'Someone',r:'subj'},{id:'v',t:'stole',r:'verb'},{id:'o',t:'my bike',r:'obj'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>원문</b> — 주어가 Someone, 즉 누구인지 모릅니다. 이럴 때가 수동태의 본무대입니다.'},
+   {toks:[{id:'o',t:'My bike',r:'subj'},{id:'v',t:'stole',r:'verb'},{id:'s',t:'Someone',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 1</b> — my bike를 맨 앞으로.'},
+   {toks:[{id:'o',t:'My bike',r:'subj'},{id:'v',t:'was stolen',r:'verb'},{id:'s',t:'Someone',r:'agent'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 2</b> — steal의 3단 변화는 steal – stole – <b>stolen</b>. 과거분사는 stolen입니다.'},
+   {toks:[{id:'o',t:'My bike',r:'subj'},{id:'v',t:'was stolen',r:'verb'},{id:'d',t:'.',r:'dot'}],
+    note:'<b>STEP 3 · 삭제</b> — by someone은 아무 정보도 주지 않으므로 통째로 지웁니다. 최종형은 <b>My bike was stolen.</b> 실제 영어에서 가장 흔한 수동태 모습입니다.'}
+ ]}
+];
+let sIdx=0, stIdx=0;
+const mTop=$('#mTop'), mTrack=$('#mTrack'), mNote=$('#mNote'),
+      mStage=$('#mStage'), mStageTxt=$('#mStageTxt'), mSteps=$('#mSteps');
+SENT.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.className='chip'+(i===0?' on':''); b.textContent=s.label;
+  b.addEventListener('click',()=>{sIdx=i;stIdx=0;$$('.chip',mTop).forEach((c,k)=>c.classList.toggle('on',k===i));render(true);});
+  mTop.appendChild(b);
+});
+function render(fresh){
+  const prev={};
+  if(!fresh) $$('.tok',mTrack).forEach(el=>prev[el.dataset.id]=el.getBoundingClientRect());
+  const st=SENT[sIdx].stages[stIdx];
+  mTrack.innerHTML=st.toks.map(t=>`<span class="tok" data-id="${t.id}" data-role="${t.r}">${t.t}</span>`).join('');
+  mNote.innerHTML=st.note;
+  const labels=['STEP 0 · 능동태 원문','STEP 1 · 목적어 → 주어','STEP 2 · 동사 → be + p.p.','STEP 3 · 주어 → by + 행위자'];
+  mStageTxt.textContent=labels[stIdx];
+  mStage.classList.toggle('p',stIdx>0);
+  $$('i',mSteps).forEach((i,k)=>i.classList.toggle('on',k<=stIdx));
+  $('#mPrev').disabled=stIdx===0; $('#mNext').disabled=stIdx===3;
+  if(reduce) return;
+  $$('.tok',mTrack).forEach(el=>{
+    const p=prev[el.dataset.id];
+    if(!p){ el.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:300,easing:'ease-out'}); return; }
+    const n=el.getBoundingClientRect(), dx=p.left-n.left, dy=p.top-n.top;
+    if(Math.abs(dx)>1||Math.abs(dy)>1){
+      el.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:520,easing:'cubic-bezier(.5,.05,.2,1)'});
+    } else if(!fresh && p.width!==n.width){ el.classList.add('flash'); }
+  });
+}
+$('#mNext').addEventListener('click',()=>{if(stIdx<3){stIdx++;render(false);}});
+$('#mPrev').addEventListener('click',()=>{if(stIdx>0){stIdx--;render(false);}});
+$('#mReset').addEventListener('click',()=>{stIdx=0;render(false);});
+render(true);
+
+/* ---------- 03. 불규칙 동사 플래시카드 ---------- */
+const IRR=[
+ ['be','~이다','been','be – was/were – been'],['do','하다','done','do – did – done'],
+ ['see','보다','seen','see – saw – seen'],['eat','먹다','eaten','eat – ate – eaten'],
+ ['write','쓰다','written','write – wrote – written'],['speak','말하다','spoken','speak – spoke – spoken'],
+ ['take','가져가다','taken','take – took – taken'],['give','주다','given','give – gave – given'],
+ ['break','깨다','broken','break – broke – broken'],['steal','훔치다','stolen','steal – stole – stolen'],
+ ['choose','고르다','chosen','choose – chose – chosen'],['drive','운전하다','driven','drive – drove – driven'],
+ ['know','알다','known','know – knew – known'],['grow','기르다','grown','grow – grew – grown'],
+ ['throw','던지다','thrown','throw – threw – thrown'],['forget','잊다','forgotten','forget – forgot – forgotten'],
+ ['hide','숨기다','hidden','hide – hid – hidden'],['wear','입다','worn','wear – wore – worn'],
+ ['find','찾다','found','find – found – found'],['make','만들다','made','make – made – made'],
+ ['build','짓다','built','build – built – built'],['send','보내다','sent','send – sent – sent'],
+ ['teach','가르치다','taught','teach – taught – taught'],['catch','잡다','caught','catch – caught – caught'],
+ ['buy','사다','bought','buy – bought – bought'],['bring','가져오다','brought','bring – brought – brought'],
+ ['pay','지불하다','paid','pay – paid – paid'],['tell','말하다','told','tell – told – told'],
+ ['hold','열다/잡다','held','hold – held – held'],['cut','자르다','cut','cut – cut – cut'],
+ ['put','놓다','put','put – put – put'],['read','읽다','read','read – read – read (발음만 변화)']
+];
+const fcGrid=$('#fcGrid');
+function paintFC(list){
+  fcGrid.innerHTML=list.map(v=>`
+    <button class="fc" type="button" aria-label="${v[0]} 카드 뒤집기">
+      <span class="fc-in">
+        <span class="fc-f"><span class="w">${v[0]}</span><span class="k">${v[1]}</span></span>
+        <span class="fc-b"><span class="p">${v[2]}</span><span class="s">${v[3]}</span></span>
+      </span>
+    </button>`).join('');
+  $$('.fc',fcGrid).forEach(c=>c.addEventListener('click',()=>c.classList.toggle('flip')));
+}
+paintFC(IRR);
+$('#fcAll').addEventListener('click',()=>$$('.fc',fcGrid).forEach(c=>c.classList.add('flip')));
+$('#fcNone').addEventListener('click',()=>$$('.fc',fcGrid).forEach(c=>c.classList.remove('flip')));
+$('#fcShuffle').addEventListener('click',()=>paintFC(IRR.slice().sort(()=>Math.random()-0.5)));
+
+/* ---------- 04. 시제 매트릭스 ---------- */
+const TENSE=[
+ {k:'현재',f:'am / is / are + p.p.',a:'Tom cleans the room.',p:'The room is cleaned (by Tom).',ko:'방이 청소된다.',m:'반복·습관·일반적 사실'},
+ {k:'과거',f:'was / were + p.p.',a:'Tom cleaned the room.',p:'The room was cleaned (by Tom).',ko:'방이 청소되었다.',m:'가장 많이 쓰는 수동태'},
+ {k:'미래',f:'will be + p.p.',a:'Tom will clean the room.',p:'The room will be cleaned (by Tom).',ko:'방이 청소될 것이다.',m:'will 뒤에는 반드시 원형 be'},
+ {k:'현재진행',f:'am / is / are being + p.p.',a:'Tom is cleaning the room.',p:'The room is being cleaned.',ko:'방이 청소되고 있는 중이다.',m:'being을 빠뜨리기 쉽습니다'},
+ {k:'과거진행',f:'was / were being + p.p.',a:'Tom was cleaning the room.',p:'The room was being cleaned.',ko:'방이 청소되고 있었다.',m:'그 시점에 진행 중이던 일'},
+ {k:'현재완료',f:'have / has been + p.p.',a:'Tom has cleaned the room.',p:'The room has been cleaned.',ko:'방이 청소되었다(그래서 지금 깨끗하다).',m:'been을 빠뜨리면 틀립니다'},
+ {k:'과거완료',f:'had been + p.p.',a:'Tom had cleaned the room.',p:'The room had been cleaned.',ko:'(그 전에 이미) 방이 청소되어 있었다.',m:'과거보다 더 과거'},
+ {k:'미래완료',f:'will have been + p.p.',a:'Tom will have cleaned it.',p:'The room will have been cleaned.',ko:'(그때쯤이면) 청소가 끝나 있을 것이다.',m:'격식체에서 가끔'},
+ {k:'조동사',f:'can / must / should + be + p.p.',a:'Tom must clean the room.',p:'The room must be cleaned.',ko:'방은 청소되어야 한다.',m:'조동사 뒤는 무조건 be'},
+ {k:'to부정사',f:'to be + p.p.',a:'He wants to clean the room.',p:'The room needs to be cleaned.',ko:'방은 청소될 필요가 있다.',m:'to be를 잊지 마세요'},
+ {k:'동명사',f:'being + p.p.',a:'He likes cleaning the room.',p:'I hate being ignored.',ko:'나는 무시당하는 것이 싫다.',m:'전치사 뒤·동사 목적어 자리'}
+];
+const tGrid=$('#tGrid'), tOut=$('#tOut');
+TENSE.forEach((t,i)=>{
+  const b=document.createElement('button');
+  b.className=(i===1?'on':''); b.textContent=t.k;
+  b.addEventListener('click',()=>{$$('button',tGrid).forEach((x,k)=>x.classList.toggle('on',k===i));showT(i);});
+  tGrid.appendChild(b);
+});
+function showT(i){
+  const t=TENSE[i];
+  tOut.innerHTML=`
+    <div class="f">${t.k} 수동태 &nbsp;→&nbsp; ${t.f}</div>
+    <div class="ex ex-a"><span class="tag a">능동</span>${t.a}</div>
+    <div class="ex ex-p" style="margin-top:12px"><span class="tag p">수동</span>${t.p}<span class="ko">${t.ko}</span></div>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:16px;padding-top:12px;border-top:1px dashed var(--line)">${t.m}</p>`;
+}
+showT(1);
+
+/* ---------- 09. 전치사 드릴 ---------- */
+const PREP=[
+ ['I am interested ___ Korean history.','in',['in','on','with','for'],'~에 관심이 있다'],
+ ['She was surprised ___ the news.','at',['at','of','to','from'],'~에 놀라다 (by도 가능)'],
+ ['We are satisfied ___ the result.','with',['with','in','at','of'],'~에 만족하다'],
+ ['The mountain is covered ___ snow.','with',['with','by','on','of'],'~로 덮여 있다 (in도 가능)'],
+ ['The box was filled ___ old photos.','with',['with','of','in','by'],'~로 가득 차다'],
+ ['I am worried ___ the exam.','about',['about','of','with','on'],'~을 걱정하다'],
+ ['He is tired ___ the same food.','of',['of','from','with','by'],'~에 싫증나다'],
+ ['This desk is made ___ wood.','of',['of','from','with','by'],'재료가 눈에 보임 → of'],
+ ['Wine is made ___ grapes.','from',['from','of','by','with'],'성질이 변함 → from'],
+ ['Busan is known ___ its beaches.','for',['for','as','to','of'],'~로 유명하다'],
+ ['She is married ___ a doctor.','to',['to','with','by','of'],'~와 결혼한 상태다'],
+ ['The kids are scared ___ the dark.','of',['of','from','at','with'],'~을 두려워하다']
+];
+const pd=$('#prepDrills'), pScore=$('#prepScore');
+let pDone=0;
+function buildPrep(){
+  pDone=0; pScore.textContent='0 / '+PREP.length+' 정답';
+  pd.innerHTML=PREP.map((q,i)=>`
+    <div class="drill" data-i="${i}">
+      <div class="q">${q[0].replace('___','<span class="blank">&nbsp;?&nbsp;</span>')}</div>
+      <div class="opts">${q[2].map(o=>`<button type="button" data-o="${o}">${o}</button>`).join('')}</div>
+      <div class="ko">${q[3]}</div>
+    </div>`).join('');
+  $$('.drill',pd).forEach(d=>{
+    const i=+d.dataset.i;
+    $$('button',d).forEach(b=>b.addEventListener('click',()=>{
+      if(d.dataset.ok) return;
+      if(b.dataset.o===PREP[i][1]){
+        b.classList.add('ok'); d.dataset.ok='1';
+        $('.blank',d).textContent=' '+PREP[i][1]+' ';
+        pDone++; pScore.textContent=pDone+' / '+PREP.length+' 정답';
+      }else{ b.classList.add('no'); d.classList.add('shake'); setTimeout(()=>d.classList.remove('shake'),320); }
+    }));
+  });
+}
+buildPrep();
+$('#prepReset').addEventListener('click',buildPrep);
+
+/* ---------- 11. 실수 TOP 10 ---------- */
+const MIS=[
+ ['be동사를 빠뜨린다','<div class="ex ex-x"><s>The window broken by him.</s></div><div class="ex ex-o">The window <b>was</b> broken by him.</div><p style="font-size:14px">과거분사만으로는 문장이 되지 않습니다. 수동태는 <b>be동사가 진짜 동사</b>이고 p.p.는 그 뒤를 따르는 형태일 뿐입니다. be가 없으면 동사가 없는 문장입니다.</p>'],
+ ['과거형과 과거분사를 혼동한다','<div class="ex ex-x"><s>The book was wrote by her.</s></div><div class="ex ex-o">The book was <b>written</b> by her.</div><p style="font-size:14px">3단 변화의 <b>세 번째</b>를 씁니다. 헷갈리면 "I have ___ it."에 넣어 보세요. have wrote는 어색하고 have written이 맞으니, 수동태도 written입니다.</p>'],
+ ['자동사를 수동태로 만든다','<div class="ex ex-x"><s>The accident was happened yesterday.</s></div><div class="ex ex-o">The accident <b>happened</b> yesterday.</div><p style="font-size:14px">한국어 "사고가 일어<b>났다</b>"의 피동 느낌 때문에 생기는 실수입니다. happen, occur, appear, arrive, die, rise, consist of는 목적어가 없어 수동태가 불가능합니다.</p>'],
+ ['새 주어와 be동사의 수를 안 맞춘다','<div class="ex ex-x"><s>The letters was sent yesterday.</s></div><div class="ex ex-o">The letters <b>were</b> sent yesterday.</div><p style="font-size:14px">be동사는 원래 주어가 아니라 <b>새 주어</b>를 따라갑니다. 시제만 원래 동사에서 가져오고, 단수·복수는 앞으로 나온 목적어를 봅니다.</p>'],
+ ['조동사 뒤에 be가 아닌 것을 쓴다','<div class="ex ex-x"><s>It should is finished today.</s></div><div class="ex ex-o">It should <b>be</b> finished today.</div><p style="font-size:14px">조동사 뒤에는 예외 없이 동사원형입니다. is, was, are는 원형이 아닙니다. 원형은 <code>be</code> 하나뿐입니다.</p>'],
+ ['구동사의 전치사를 버린다','<div class="ex ex-x"><s>The baby was looked by his aunt.</s></div><div class="ex ex-o">The baby was <b>looked after</b> by his aunt.</div><p style="font-size:14px">look after는 두 단어가 붙어 하나의 동사입니다. after를 떼면 "쳐다봤다"는 전혀 다른 뜻이 되거나 문장이 깨집니다.</p>'],
+ ['by 뒤에 주격 대명사를 쓴다','<div class="ex ex-x"><s>This picture was painted by I.</s></div><div class="ex ex-o">This picture was painted by <b>me</b>.</div><p style="font-size:14px">by는 전치사이므로 뒤에는 목적격이 옵니다. I→me, he→him, she→her, they→them, we→us.</p>'],
+ ['의문문에 do/does/did를 쓴다','<div class="ex ex-x"><s>Did the room cleaned?</s></div><div class="ex ex-o"><b>Was</b> the room cleaned?</div><p style="font-size:14px">be동사가 있는 문장은 be동사를 앞으로 보내 의문문을 만듭니다. do 계열 조동사가 낄 자리가 없습니다.</p>'],
+ ['진행형·완료형에서 being / been을 빠뜨린다','<div class="ex ex-x"><s>The road is repaired now.</s> <span class="ko">(지금 공사 중이라는 뜻이 안 됨)</span></div><div class="ex ex-o">The road is <b>being</b> repaired now.</div><div class="ex ex-o" style="margin-top:8px">The report has <b>been</b> submitted.</div><p style="font-size:14px">진행 수동은 be + <b>being</b> + p.p., 완료 수동은 have + <b>been</b> + p.p. 이 한 단어가 시제를 결정합니다.</p>'],
+ ['필요 없는 곳에 수동태를 남발한다','<div class="ex ex-x"><s>A decision was made by me to go home.</s> <span class="ko">문법은 맞지만 어색합니다</span></div><div class="ex ex-o">I decided to go home.</div><p style="font-size:14px">가장 흔하고 가장 눈에 띄는 실수입니다. 행위자가 분명하고 중요할 때는 능동태가 짧고 강합니다. 수동태는 <b>이유가 있을 때만</b> 쓰세요.</p>']
+];
+$('#misList').innerHTML=MIS.map((m,i)=>`
+  <div class="mis">
+    <button class="mis-h" type="button" aria-expanded="false">
+      <span class="no">${String(i+1).padStart(2,'0')}</span>
+      <span class="t">${m[0]}</span><span class="ar">›</span>
+    </button>
+    <div class="mis-b"><div class="inner">${m[1]}</div></div>
+  </div>`).join('');
+$$('.mis-h').forEach(h=>h.addEventListener('click',()=>{
+  const c=h.parentElement, o=c.classList.toggle('open');
+  h.setAttribute('aria-expanded',o?'true':'false');
+}));
+
+/* ---------- 12. 판단 도우미 ---------- */
+const DQ=[
+ {q:'그 행동을 한 사람이 누구인지 모르거나, 굳이 밝힐 필요가 없나요?',h:'예: 도난, 공사, 규정, 일반적인 관행'},
+ {q:'지금 이야기의 중심이 "행동한 쪽"이 아니라 "당한 쪽"인가요?',h:'예: 건물, 제품, 데이터, 사건 자체를 설명하는 중'},
+ {q:'앞 문장에서 이미 언급한 대상을 이번 문장의 주어로 이어가고 싶나요?',h:'같은 화제를 주어 자리에 유지하면 글이 매끄러워집니다'},
+ {q:'객관적이거나 격식 있는 문체(보고서, 논문, 공지)인가요?',h:'일상 대화라면 대체로 아니오입니다'}
+];
+let dIdx=0,dYes=0;
+const dEl=$('#decide');
+function drawD(){
+  if(dIdx<DQ.length){
+    dEl.innerHTML=`
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--dim);margin-bottom:14px">
+        QUESTION ${dIdx+1} / ${DQ.length}</div>
+      <div class="qq">${DQ[dIdx].q}</div>
+      <div class="hint">${DQ[dIdx].h}</div>
+      <div class="row">
+        <button class="btn pri" data-y="1">예</button>
+        <button class="btn" data-y="0">아니오</button>
+      </div>`;
+    $$('button',dEl).forEach(b=>b.addEventListener('click',()=>{dYes+=+b.dataset.y;dIdx++;drawD();}));
+  }else{
+    let r;
+    if(dYes>=3) r={c:'',t:'수동태를 쓰세요',d:'이 문장은 수동태가 더 자연스럽습니다. 대상이 주인공이고 행위자는 부차적입니다. by 구는 필요할 때만 붙이세요.'};
+    else if(dYes===2) r={c:'',t:'둘 다 가능합니다',d:'문맥에 따라 갈립니다. 앞뒤 문장의 주어 흐름을 보고 결정하세요. 앞 문장과 같은 대상을 계속 이야기한다면 수동태가 유리합니다.'};
+    else r={c:'no',t:'능동태를 쓰세요',d:'행위자가 분명하고 중요합니다. 능동태가 더 짧고 명확하며 힘이 있습니다. 굳이 수동태로 돌려 말할 이유가 없습니다.'};
+    dEl.innerHTML=`
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--dim);margin-bottom:14px">
+        RESULT · "예" ${dYes}개 / ${DQ.length}개</div>
+      <div class="res ${r.c}"><strong style="font-size:18px">${r.t}</strong><p style="margin:8px 0 0;font-size:14.5px">${r.d}</p></div>
+      <div class="row" style="margin-top:18px"><button class="btn" id="dAgain">다시 진단하기</button></div>`;
+    $('#dAgain').addEventListener('click',()=>{dIdx=0;dYes=0;drawD();});
+  }
+}
+drawD();
+
+/* ---------- 13. 퀴즈 ---------- */
+const QZ=[
+ {q:'다음 능동태 문장을 수동태로 바르게 바꾼 것은?',en:'Tom cleans the room every day.',
+  o:['The room is cleaned by Tom every day.','The room was cleaned by Tom every day.','The room is clean by Tom every day.','The room cleans by Tom every day.'],a:0,
+  e:'현재시제 + 단수 주어(the room)이므로 <b>is cleaned</b>입니다. 시제는 원래 동사(cleans, 현재)에서, 단복수는 새 주어에서 가져옵니다.'},
+ {q:'빈칸에 알맞은 것은?',en:'He washes the cars. → The cars ___ washed by him.',
+  o:['is','are','was','be'],a:1,
+  e:'새 주어 <b>the cars</b>가 복수이므로 are입니다. 원래 주어 He에 맞춰 is를 쓰면 안 됩니다. 시제는 현재 그대로 유지.'},
+ {q:'빈칸에 알맞은 것은?',en:'You must send it today. → It must ___ today.',
+  o:['is sent','be sent','was sent','sending'],a:1,
+  e:'조동사 must 뒤에는 반드시 동사원형이 옵니다. be동사의 원형은 <b>be</b>이므로 must be sent가 됩니다.'},
+ {q:'빈칸에 알맞은 과거분사는?',en:'She wrote the book. → The book was ___ by her.',
+  o:['wrote','write','written','writing'],a:2,
+  e:'write – wrote – <b>written</b>. 수동태에는 세 번째 형태인 과거분사를 씁니다. wrote는 과거형이라 쓸 수 없습니다.'},
+ {q:'수동태로 바꿀 수 <b>없는</b> 문장은?',en:'',
+  o:['They built the bridge.','The accident happened at noon.','She teaches English.','He opened the door.'],a:1,
+  e:'happen은 목적어를 갖지 않는 <b>자동사</b>입니다. 앞으로 끌어올 목적어가 없으므로 수동태가 성립하지 않습니다. was happened는 언제나 틀린 표현입니다.'},
+ {q:'빈칸에 알맞은 전치사는?',en:'He gave me a book. → A book was given ___ me.',
+  o:['to','for','of','with'],a:0,
+  e:'give는 <b>to</b> 계열입니다. (give, send, teach, show, tell → to / buy, make, cook → for / ask → of) 사물을 주어로 세울 때 사람 앞에 전치사가 반드시 필요합니다.'},
+ {q:'빈칸에 알맞은 것은?',en:'I saw him leave the office. → He was seen ___ the office.',
+  o:['leave','to leave','leaving by','left'],a:1,
+  e:'지각동사의 목적격보어는 능동태에서 원형(leave)이지만, 수동태가 되면 <b>to부정사</b>로 부활합니다. 사역동사 make도 마찬가지입니다. (made me wait → was made to wait)'},
+ {q:'빈칸에 알맞은 것은?',en:'They looked after the baby. → The baby was ___ by them.',
+  o:['looked','looked after','after looked','look after'],a:1,
+  e:'look after는 두 단어가 하나의 동사인 <b>구동사</b>입니다. after를 떼어내면 의미가 사라집니다. 전치사·부사를 반드시 p.p. 뒤에 그대로 붙여 씁니다.'},
+ {q:'빈칸에 알맞은 전치사는?',en:'I am interested ___ classical music.',
+  o:['on','at','in','for'],a:2,
+  e:'be interested <b>in</b>은 통째로 외우는 관용 표현입니다. 감정을 나타내는 수동태 표현들은 by 대신 고유한 전치사를 씁니다.'},
+ {q:'어법상 올바른 의문문은?',en:'',
+  o:['Did the window broken?','Was the window broken?','Does the window broken?','Is the window break?'],a:1,
+  e:'수동태 의문문은 <b>be동사를 주어 앞으로</b> 보내면 끝입니다. do/does/did는 be동사가 있는 문장에 쓰지 않습니다.'},
+ {q:'빈칸에 알맞은 것은?',en:'They have finished the work. → The work ___ finished.',
+  o:['has been','have been','is been','has'],a:0,
+  e:'현재완료 수동은 have/has <b>been</b> + p.p.입니다. 새 주어 the work가 단수이므로 has been. been을 빠뜨리면 틀립니다.'},
+ {q:'빈칸에 알맞은 것은?',en:'She sang the song. → The song was sung by ___.',
+  o:['she','her','hers','herself'],a:1,
+  e:'by는 전치사이므로 뒤에는 <b>목적격</b>이 옵니다. she → her. I → me, he → him, they → them도 같은 원리입니다.'},
+ {q:'빈칸에 알맞은 것은?',en:'People say that he is honest. → It ___ that he is honest.',
+  o:['says','is saying','is said','said'],a:2,
+  e:'that절이 목적어일 때는 가주어 It을 세우고 <b>It is said that ~</b> 형태를 씁니다. 또는 He is said to be honest.로도 표현할 수 있습니다.'},
+ {q:'빈칸에 알맞은 것은?',en:'I fell asleep. The movie was very ___.',
+  o:['bored','boring','bore','been bored'],a:1,
+  e:'감정을 <b>유발하는 것</b>에는 -ing, 감정을 <b>느끼는 사람</b>에는 -ed를 씁니다. 영화가 지루하게 만들었으므로 boring. 나는 I was bored.'},
+ {q:'빈칸에 알맞은 것은?',en:'They are building a new bridge. → A new bridge ___ built.',
+  o:['is being','is been','was being','is build'],a:0,
+  e:'현재진행 수동은 am/is/are <b>being</b> + p.p.입니다. being을 빠뜨리면 "이미 지어졌다"는 뜻이 되어 시제가 달라집니다.'}
+];
+let qi=0,qs=0,qLock=false;
+const quiz=$('#quiz');
+function drawQ(){
+  if(qi>=QZ.length){ drawScore(); return; }
+  const q=QZ[qi]; qLock=false;
+  quiz.innerHTML=`
+    <div class="q-top"><span>Question ${qi+1} / ${QZ.length}</span><span>Score ${qs}</span></div>
+    <div class="q-bar"><i style="width:${qi/QZ.length*100}%"></i></div>
+    <div class="q-text">${q.q}</div>
+    ${q.en?`<div class="q-en">${q.en}</div>`:'<div style="height:8px"></div>'}
+    <div class="q-opts">${q.o.map((o,i)=>`<button type="button" data-i="${i}"><span class="l">${'ABCD'[i]}</span><span>${o}</span></button>`).join('')}</div>
+    <div class="q-fb" id="qfb"></div>
+    <div class="q-nav"><button class="btn pri" id="qNext" style="display:none">${qi===QZ.length-1?'결과 보기':'다음 문제 →'}</button></div>`;
+  $$('.q-opts button',quiz).forEach(b=>b.addEventListener('click',()=>{
+    if(qLock) return; qLock=true;
+    const pick=+b.dataset.i, ok=pick===q.a;
+    if(ok) qs++;
+    $$('.q-opts button',quiz).forEach((x,i)=>{ x.disabled=true; if(i===q.a)x.classList.add('ok'); });
+    if(!ok) b.classList.add('no');
+    const fb=$('#qfb');
+    fb.className='q-fb show '+(ok?'good':'bad');
+    fb.innerHTML=`<b>${ok?'정답입니다':'정답은 '+'ABCD'[q.a]+'번'}</b> — ${q.e}`;
+    $('#qNext').style.display='inline-block';
+  }));
+  $('#qNext').addEventListener('click',()=>{qi++;drawQ();quiz.scrollIntoView({block:'start'});});
+}
+function drawScore(){
+  const pct=Math.round(qs/QZ.length*100);
+  let msg;
+  if(pct>=90) msg='수동태의 원리를 확실히 이해하셨습니다. 이제 실제 영어 기사나 매뉴얼에서 수동태를 찾아 읽으며 감각을 굳히세요.';
+  else if(pct>=70) msg='기본기는 탄탄합니다. 틀린 문제의 해설을 다시 읽고, 특히 시제와 과거분사 부분을 한 번 더 확인해 보세요.';
+  else if(pct>=50) msg='절반은 잡으셨습니다. 02장의 변환 3단계와 04장의 시제 매트릭스를 다시 보고 오시면 점수가 크게 오릅니다.';
+  else msg='조급해하지 마세요. 02장 변환기를 열어 문장이 뒤집히는 과정을 몇 번 더 눈으로 따라가 보는 것부터 시작하면 됩니다.';
+  quiz.innerHTML=`
+    <div class="score">
+      <div class="big">${qs}<span style="font-size:26px;color:var(--dim)"> / ${QZ.length}</span></div>
+      <div class="lbl">정답률 ${pct}%</div>
+      <p>${msg}</p>
+      <button class="btn pri" id="qAgain">다시 풀기</button>
+    </div>`;
+  $('#qAgain').addEventListener('click',()=>{qi=0;qs=0;drawQ();});
+}
+drawQ();
+})();
+</script>
+</body>
+</html>

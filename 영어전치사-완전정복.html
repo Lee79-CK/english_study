@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영어 전치사 완전정복 · 초보자를 위한 인터랙티브 강의</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#0F1216;
+  --bg-2:#141920;
+  --surface:#1A2029;
+  --surface-2:#212A35;
+  --line:#2B3543;
+  --line-soft:#222B36;
+  --fg:#E8ECF2;
+  --fg-dim:#A3AEBD;
+  --fg-faint:#6B7787;
+  --chalk:#F2C14E;
+  --mint:#63D9B0;
+  --coral:#FF7B6B;
+  --sky:#78B6FF;
+  --violet:#B08CFF;
+
+  --font-kr:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-en:'Newsreader',Georgia,'Times New Roman',serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+
+  --sidebar-w:270px;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-kr);
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  letter-spacing:-0.01em;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 500px at 78% -8%, rgba(242,193,78,.07), transparent 60%),
+    radial-gradient(700px 500px at 8% 12%, rgba(120,182,255,.05), transparent 60%);
+}
+::selection{background:rgba(242,193,78,.28)}
+
+/* ============ PROGRESS ============ */
+#progress{
+  position:fixed;top:0;left:0;height:3px;width:0%;z-index:200;
+  background:linear-gradient(90deg,var(--chalk),var(--mint));
+  transition:width .12s linear;
+}
+
+/* ============ SIDEBAR ============ */
+#sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);z-index:100;
+  background:linear-gradient(180deg,#12161C,#0F1216);
+  border-right:1px solid var(--line-soft);
+  display:flex;flex-direction:column;
+}
+.sb-head{padding:26px 24px 18px;border-bottom:1px solid var(--line-soft)}
+.sb-kicker{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;
+  color:var(--chalk);text-transform:uppercase;
+}
+.sb-title{font-size:19px;font-weight:800;margin-top:8px;letter-spacing:-.02em}
+.sb-sub{font-size:12px;color:var(--fg-faint);margin-top:4px}
+.sb-nav{flex:1;overflow-y:auto;padding:14px 12px 40px}
+.sb-nav::-webkit-scrollbar{width:6px}
+.sb-nav::-webkit-scrollbar-thumb{background:#2A3340;border-radius:3px}
+.sb-group{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;
+  color:var(--fg-faint);text-transform:uppercase;padding:16px 12px 7px;
+}
+.sb-link{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;border-radius:9px;
+  color:var(--fg-dim);text-decoration:none;font-size:13.5px;
+  transition:.16s;border-left:2px solid transparent;
+}
+.sb-link .n{
+  font-family:var(--font-mono);font-size:10px;color:var(--fg-faint);
+  min-width:16px;transition:.16s;
+}
+.sb-link:hover{background:var(--surface);color:var(--fg)}
+.sb-link.active{
+  background:rgba(242,193,78,.09);color:var(--chalk);
+  border-left-color:var(--chalk);font-weight:600;
+}
+.sb-link.active .n{color:var(--chalk)}
+
+/* ============ LAYOUT ============ */
+#main{margin-left:var(--sidebar-w);position:relative;z-index:1}
+.wrap{max-width:880px;margin:0 auto;padding:0 34px}
+section{padding:74px 0 10px;scroll-margin-top:40px}
+
+/* ============ HERO ============ */
+#hero{
+  padding:92px 0 62px;
+  border-bottom:1px solid var(--line-soft);
+}
+.hero-kicker{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.26em;
+  color:var(--chalk);text-transform:uppercase;margin-bottom:22px;
+}
+.hero-h1{
+  font-size:clamp(34px,5.4vw,54px);line-height:1.14;font-weight:800;
+  letter-spacing:-.035em;
+}
+.hero-h1 em{
+  font-family:var(--font-en);font-style:italic;font-weight:400;
+  color:var(--chalk);letter-spacing:-.01em;
+}
+.hero-lead{
+  margin-top:22px;font-size:16.5px;color:var(--fg-dim);max-width:640px;
+  line-height:1.85;
+}
+.hero-strip{
+  margin-top:38px;display:flex;flex-wrap:wrap;gap:8px;
+}
+.hero-chip{
+  font-family:var(--font-en);font-size:15px;
+  padding:6px 13px;border:1px solid var(--line);border-radius:99px;
+  color:var(--fg-dim);background:var(--surface);
+}
+.hero-chip:nth-child(3n+1){color:var(--chalk);border-color:rgba(242,193,78,.3)}
+.hero-chip:nth-child(3n+2){color:var(--sky);border-color:rgba(120,182,255,.3)}
+.hero-chip:nth-child(3n){color:var(--mint);border-color:rgba(99,217,176,.3)}
+
+/* ============ HEADINGS ============ */
+.sec-num{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;
+  color:var(--fg-faint);
+}
+h2{
+  font-size:29px;font-weight:800;letter-spacing:-.03em;margin:8px 0 12px;
+  line-height:1.3;
+}
+h2 .en{font-family:var(--font-en);font-weight:400;font-style:italic;color:var(--chalk)}
+.sec-lead{color:var(--fg-dim);font-size:15.5px;margin-bottom:30px;max-width:660px}
+h3{
+  font-size:19px;font-weight:700;letter-spacing:-.02em;
+  margin:38px 0 14px;display:flex;align-items:center;gap:10px;
+}
+h3::before{
+  content:'';width:4px;height:17px;border-radius:2px;background:var(--chalk);
+  flex:none;
+}
+h4{font-size:15.5px;font-weight:700;margin:24px 0 10px;color:var(--fg)}
+p{margin:12px 0;color:var(--fg-dim)}
+p strong,li strong{color:var(--fg);font-weight:700}
+.hl{color:var(--chalk);font-weight:600}
+.hl-b{color:var(--sky);font-weight:600}
+.hl-g{color:var(--mint);font-weight:600}
+
+/* ============ ENGLISH SENTENCE (signature) ============ */
+.en-line{
+  font-family:var(--font-en);font-size:20px;line-height:1.55;
+  color:#F3F1EA;font-weight:400;letter-spacing:-.005em;
+}
+.en-line .p{
+  color:var(--chalk);font-weight:600;
+  background:linear-gradient(transparent 62%, rgba(242,193,78,.22) 62%);
+  padding:0 2px;
+}
+.ko-line{font-size:14px;color:var(--fg-faint);margin-top:5px}
+
+.ex{
+  border-left:2px solid var(--line);
+  padding:13px 0 13px 18px;margin:14px 0;
+}
+.ex + .ex{margin-top:-2px}
+.ex.good{border-left-color:var(--mint)}
+.ex.bad{border-left-color:var(--coral)}
+.ex.bad .en-line{color:#C9BEBB;text-decoration:line-through;text-decoration-color:rgba(255,123,107,.5)}
+.ex.bad .en-line .p{color:var(--coral);background:linear-gradient(transparent 62%, rgba(255,123,107,.18) 62%)}
+.tag{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;
+  padding:2px 7px;border-radius:5px;margin-right:8px;vertical-align:2px;
+}
+.tag.ok{background:rgba(99,217,176,.14);color:var(--mint)}
+.tag.no{background:rgba(255,123,107,.14);color:var(--coral)}
+
+/* ============ CARDS / PANELS ============ */
+.card{
+  background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:var(--radius);padding:22px 24px;margin:18px 0;
+}
+.panel{
+  background:linear-gradient(180deg,var(--surface),var(--bg-2));
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;margin:24px 0;
+}
+.panel-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:18px;flex-wrap:wrap;
+}
+.panel-title{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;
+  color:var(--fg-faint);text-transform:uppercase;
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+.note{
+  border-radius:12px;padding:16px 18px;margin:20px 0;font-size:14.5px;
+  border:1px solid;line-height:1.75;
+}
+.note .lbl{
+  display:block;font-family:var(--font-mono);font-size:10px;
+  letter-spacing:.16em;margin-bottom:7px;text-transform:uppercase;
+}
+.note.tip{background:rgba(99,217,176,.06);border-color:rgba(99,217,176,.25)}
+.note.tip .lbl{color:var(--mint)}
+.note.warn{background:rgba(255,123,107,.06);border-color:rgba(255,123,107,.25)}
+.note.warn .lbl{color:var(--coral)}
+.note.info{background:rgba(120,182,255,.06);border-color:rgba(120,182,255,.25)}
+.note.info .lbl{color:var(--sky)}
+.note.key{background:rgba(242,193,78,.07);border-color:rgba(242,193,78,.28)}
+.note.key .lbl{color:var(--chalk)}
+.note p{margin:6px 0;color:var(--fg-dim)}
+
+/* ============ TABLE ============ */
+.tbl-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line-soft);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+th{
+  background:var(--surface-2);text-align:left;padding:12px 16px;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.13em;
+  color:var(--fg-dim);text-transform:uppercase;font-weight:500;
+  border-bottom:1px solid var(--line);
+}
+td{padding:13px 16px;border-bottom:1px solid var(--line-soft);color:var(--fg-dim);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.017)}
+td .en-s{font-family:var(--font-en);font-size:16px;color:var(--fg)}
+td code,.mono{font-family:var(--font-mono);font-size:12.5px;color:var(--chalk)}
+
+/* ============ BUTTONS ============ */
+.btn{
+  font-family:var(--font-kr);font-size:13.5px;font-weight:600;
+  padding:8px 15px;border-radius:9px;border:1px solid var(--line);
+  background:var(--surface-2);color:var(--fg-dim);cursor:pointer;
+  transition:.15s;
+}
+.btn:hover{border-color:var(--chalk);color:var(--fg)}
+.btn.on{background:rgba(242,193,78,.14);border-color:var(--chalk);color:var(--chalk)}
+.btn:focus-visible,a:focus-visible,.chip:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px}
+
+.chip{
+  font-family:var(--font-en);font-size:15px;
+  padding:7px 14px;border-radius:99px;border:1px solid var(--line);
+  background:var(--bg-2);color:var(--fg-dim);cursor:pointer;transition:.15s;
+}
+.chip:hover{border-color:var(--fg-faint);color:var(--fg)}
+.chip.on{background:var(--chalk);border-color:var(--chalk);color:#161208;font-weight:600}
+
+/* ============ MISC ============ */
+ul.bul{margin:12px 0 12px 2px;list-style:none}
+ul.bul li{
+  position:relative;padding-left:18px;margin:8px 0;color:var(--fg-dim);font-size:15px;
+}
+ul.bul li::before{
+  content:'';position:absolute;left:2px;top:11px;
+  width:5px;height:5px;border-radius:50%;background:var(--fg-faint);
+}
+footer{
+  margin-top:90px;padding:36px 0 60px;border-top:1px solid var(--line-soft);
+  color:var(--fg-faint);font-size:13px;
+}
+
+/* ============ ACCORDION ============ */
+.acc-wrap{margin:22px 0}
+.acc{
+  border:1px solid var(--line-soft);border-radius:12px;
+  background:var(--surface);margin-bottom:10px;overflow:hidden;
+}
+.acc[open]{border-color:rgba(242,193,78,.32)}
+.acc summary{
+  list-style:none;cursor:pointer;padding:15px 20px;
+  display:flex;align-items:baseline;gap:14px;transition:.15s;
+}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:'+';margin-left:auto;color:var(--fg-faint);font-size:19px;font-family:var(--font-mono)}
+.acc[open] summary::after{content:'−';color:var(--chalk)}
+.acc summary:hover{background:var(--surface-2)}
+.acc-en{font-family:var(--font-en);font-style:italic;font-size:22px;color:var(--chalk);min-width:96px}
+.acc-ko{font-size:14px;color:var(--fg-dim)}
+.acc-body{padding:2px 20px 20px;border-top:1px solid var(--line-soft);margin-top:-1px;padding-top:16px}
+
+/* ============ COLLOCATION LIST ============ */
+.col-item{
+  display:flex;align-items:baseline;gap:14px;padding:11px 14px;
+  border-radius:9px;border:1px solid transparent;transition:.14s;flex-wrap:wrap;
+}
+.col-item:hover{background:var(--surface-2);border-color:var(--line-soft)}
+.col-key{font-family:var(--font-en);font-size:17px;color:#F3F1EA;min-width:190px}
+.col-key b{color:var(--chalk);font-weight:600}
+.col-ko{font-size:13.5px;color:var(--fg-faint);flex:1;min-width:130px}
+.col-cat{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;padding:2px 7px;
+  border-radius:4px;background:var(--surface-2);color:var(--fg-faint);
+}
+#col-list::-webkit-scrollbar{width:7px}
+#col-list::-webkit-scrollbar-thumb{background:#2A3340;border-radius:4px}
+.col-empty{padding:26px;text-align:center;color:var(--fg-faint);font-size:14px}
+
+/* ============ MISTAKE CARDS ============ */
+.mis{
+  border:1px solid var(--line-soft);border-radius:12px;background:var(--surface);
+  margin-bottom:11px;overflow:hidden;
+}
+.mis-top{
+  padding:15px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;
+  transition:.15s;
+}
+.mis-top:hover{background:var(--surface-2)}
+.mis-no{font-family:var(--font-mono);font-size:11px;color:var(--fg-faint);min-width:22px}
+.mis-wrong{font-family:var(--font-en);font-size:18px;color:#C9BEBB;flex:1}
+.mis-wrong s{text-decoration-color:rgba(255,123,107,.55)}
+.mis-hint{font-family:var(--font-mono);font-size:10px;color:var(--fg-faint);letter-spacing:.1em}
+.mis-body{display:none;padding:0 20px 18px;border-top:1px solid var(--line-soft);padding-top:15px}
+.mis.open .mis-body{display:block}
+.mis.open{border-color:rgba(99,217,176,.28)}
+.mis.open .mis-hint{color:var(--mint)}
+.mis-right{font-family:var(--font-en);font-size:19px;color:#F3F1EA}
+.mis-right b{color:var(--mint);font-weight:600;background:linear-gradient(transparent 62%, rgba(99,217,176,.2) 62%)}
+.mis-why{font-size:14px;color:var(--fg-dim);margin-top:9px;line-height:1.7}
+
+/* ============ QUIZ ============ */
+.qz{
+  border:1px solid var(--line-soft);border-radius:12px;background:var(--surface);
+  padding:20px 22px;margin-bottom:12px;
+}
+.qz-q{font-size:15px;color:var(--fg-dim);margin-bottom:4px}
+.qz-s{font-family:var(--font-en);font-size:20px;color:#F3F1EA;margin:6px 0 14px;line-height:1.5}
+.qz-s u{text-decoration:none;color:var(--chalk);border-bottom:2px dotted rgba(242,193,78,.6);padding:0 12px}
+.qz-opts{display:flex;flex-wrap:wrap;gap:8px}
+.qz-opt{
+  font-family:var(--font-en);font-size:16px;padding:8px 16px;border-radius:9px;
+  border:1px solid var(--line);background:var(--bg-2);color:var(--fg-dim);cursor:pointer;transition:.15s;
+}
+.qz-opt:hover:not(:disabled){border-color:var(--chalk);color:var(--fg)}
+.qz-opt:disabled{cursor:default}
+.qz-opt.correct{background:rgba(99,217,176,.16);border-color:var(--mint);color:var(--mint);font-weight:600}
+.qz-opt.wrong{background:rgba(255,123,107,.14);border-color:var(--coral);color:var(--coral)}
+.qz-ex{
+  display:none;margin-top:14px;padding:13px 16px;border-radius:9px;
+  background:var(--bg-2);border:1px solid var(--line-soft);font-size:14px;color:var(--fg-dim);line-height:1.75;
+}
+.qz.done .qz-ex{display:block}
+
+@media (max-width:960px){
+  :root{--sidebar-w:0px}
+  #sidebar{transform:translateX(-100%);transition:transform .25s}
+  #sidebar.open{transform:none;width:270px;box-shadow:0 0 40px rgba(0,0,0,.6)}
+  #menu-btn{display:flex}
+  .wrap{padding:0 20px}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .hero-h1{font-size:32px}
+}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:150;
+  width:42px;height:42px;border-radius:11px;align-items:center;justify-content:center;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--fg);
+  cursor:pointer;font-size:18px;
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="menu-btn" aria-label="목차 열기">☰</button>
+
+<aside id="sidebar">
+  <div class="sb-head">
+    <div class="sb-kicker">English Grammar</div>
+    <div class="sb-title">영어 전치사 완전정복</div>
+    <div class="sb-sub">초보자를 위한 인터랙티브 강의</div>
+  </div>
+  <nav class="sb-nav" id="sb-nav">
+    <div class="sb-group">기초 다지기</div>
+    <a class="sb-link" href="#intro"><span class="n">01</span>전치사란 무엇인가</a>
+    <a class="sb-link" href="#rules"><span class="n">02</span>3가지 기본 규칙</a>
+    <div class="sb-group">시간</div>
+    <a class="sb-link" href="#time-aoi"><span class="n">03</span>at · on · in (시간)</a>
+    <a class="sb-link" href="#time-more"><span class="n">04</span>기간과 시점 전치사</a>
+    <div class="sb-group">공간</div>
+    <a class="sb-link" href="#place-aoi"><span class="n">05</span>at · on · in (장소)</a>
+    <a class="sb-link" href="#position"><span class="n">06</span>위치 관계 전치사</a>
+    <a class="sb-link" href="#direction"><span class="n">07</span>방향과 이동 전치사</a>
+    <div class="sb-group">확장</div>
+    <a class="sb-link" href="#others"><span class="n">08</span>그 밖의 핵심 전치사</a>
+    <a class="sb-link" href="#phrasal"><span class="n">09</span>두 단어 이상 전치사</a>
+    <a class="sb-link" href="#gerund"><span class="n">10</span>전치사 뒤의 동사</a>
+    <a class="sb-link" href="#collocation"><span class="n">11</span>단어와 짝꿍 전치사</a>
+    <div class="sb-group">마무리</div>
+    <a class="sb-link" href="#mistakes"><span class="n">12</span>자주 틀리는 표현</a>
+    <a class="sb-link" href="#quiz"><span class="n">13</span>최종 점검 퀴즈</a>
+    <a class="sb-link" href="#cheatsheet"><span class="n">14</span>한 장 요약</a>
+  </nav>
+</aside>
+
+<div id="main">
+<div class="wrap">
+
+<!-- ============ HERO ============ -->
+<header id="hero">
+  <div class="hero-kicker">Prepositions · 전치사</div>
+  <h1 class="hero-h1">단어 하나로<br>문장의 <em>위치</em>가 정해진다</h1>
+  <p class="hero-lead">
+    전치사는 영어에서 가장 짧지만 가장 자주 틀리는 단어입니다.
+    at 하나를 in으로 바꾸면 뜻이 완전히 달라지고, 어떤 표현은 아예 전치사를 쓰면 안 됩니다.
+    이 강의는 규칙을 외우는 대신 <strong>그림으로 감각을 잡는 방식</strong>으로 전치사를 설명합니다.
+    직접 눌러보고, 움직여보고, 마지막에 퀴즈로 확인하세요.
+  </p>
+  <div class="hero-strip">
+    <span class="hero-chip">at</span><span class="hero-chip">on</span><span class="hero-chip">in</span>
+    <span class="hero-chip">for</span><span class="hero-chip">to</span><span class="hero-chip">by</span>
+    <span class="hero-chip">with</span><span class="hero-chip">of</span><span class="hero-chip">from</span>
+    <span class="hero-chip">about</span><span class="hero-chip">over</span><span class="hero-chip">under</span>
+    <span class="hero-chip">through</span><span class="hero-chip">between</span><span class="hero-chip">during</span>
+  </div>
+</header>
+
+<!-- ============ 01 INTRO ============ -->
+<section id="intro">
+  <div class="sec-num">01 / 기초 다지기</div>
+  <h2>전치사란 무엇인가</h2>
+  <p class="sec-lead">전치사(前置詞)는 이름 그대로 <strong>명사 앞(前)에 놓이는(置) 말</strong>입니다.
+  명사 하나만으로는 알 수 없는 <em>언제 · 어디서 · 어떻게 · 무엇과</em>를 알려주는 안내판이죠.</p>
+
+  <div class="panel">
+    <div class="panel-hd"><span class="panel-title">직접 바꿔보기 · 전치사 하나가 만드는 차이</span></div>
+    <div class="en-line" style="font-size:23px">
+      The cat is <span class="p" id="swap-word">on</span> the box.
+    </div>
+    <div class="ko-line" id="swap-ko" style="font-size:15px;margin-top:9px">고양이가 상자 <b style="color:var(--chalk)">위에</b> 있다.</div>
+    <div class="btn-row" style="margin-top:18px">
+      <button class="btn on" data-sw="on" data-ko="고양이가 상자 <b>위에</b> 있다. (표면에 닿아서)">on</button>
+      <button class="btn" data-sw="in" data-ko="고양이가 상자 <b>안에</b> 있다. (들어가 있음)">in</button>
+      <button class="btn" data-sw="under" data-ko="고양이가 상자 <b>아래에</b> 있다.">under</button>
+      <button class="btn" data-sw="behind" data-ko="고양이가 상자 <b>뒤에</b> 있다.">behind</button>
+      <button class="btn" data-sw="next to" data-ko="고양이가 상자 <b>옆에</b> 있다.">next to</button>
+      <button class="btn" data-sw="near" data-ko="고양이가 상자 <b>근처에</b> 있다.">near</button>
+    </div>
+    <p style="margin-top:16px;font-size:14px;color:var(--fg-faint)">
+      단어 세 글자만 바뀌었는데 상황이 완전히 달라집니다. 전치사를 공부한다는 건 이 <b style="color:var(--fg-dim)">관계 감각</b>을 익히는 일입니다.
+    </p>
+  </div>
+
+  <h3>전치사가 들어가는 자리</h3>
+  <p>영어 문장에서 전치사는 항상 이런 형태로 등장합니다.</p>
+
+  <div class="card" style="text-align:center;padding:30px 20px">
+    <div style="font-family:var(--font-mono);font-size:15px;letter-spacing:.02em;line-height:2.4">
+      <span style="color:var(--sky)">[ 전치사 ]</span>
+      <span style="color:var(--fg-faint)">＋</span>
+      <span style="color:var(--mint)">[ 명사 · 대명사 · 동명사 ]</span>
+      <span style="color:var(--fg-faint)">＝</span>
+      <span style="color:var(--chalk)">전치사구</span>
+    </div>
+    <div style="margin-top:20px;font-family:var(--font-en);font-size:19px;color:#F3F1EA">
+      in <span style="color:var(--mint)">Seoul</span> &nbsp;·&nbsp;
+      with <span style="color:var(--mint)">her</span> &nbsp;·&nbsp;
+      after <span style="color:var(--mint)">lunch</span> &nbsp;·&nbsp;
+      by <span style="color:var(--mint)">walking</span>
+    </div>
+  </div>
+
+  <p>이 <strong>전치사구</strong>는 문장에 붙어서 추가 정보를 줍니다. 없어도 문장은 성립하지만, 있으면 훨씬 구체적이 됩니다.</p>
+
+  <div class="ex">
+    <div class="en-line">I study.</div>
+    <div class="ko-line">나는 공부한다. — 언제? 어디서? 알 수 없음</div>
+  </div>
+  <div class="ex good">
+    <div class="en-line">I study <span class="p">at</span> the library <span class="p">in</span> the morning <span class="p">with</span> my friend.</div>
+    <div class="ko-line">나는 아침에 도서관에서 친구와 함께 공부한다. — 전치사 3개로 상황이 선명해짐</div>
+  </div>
+
+  <div class="note info">
+    <span class="lbl">한국어와의 차이</span>
+    <p>한국어는 명사 <strong>뒤</strong>에 조사를 붙입니다 → 서울<b>에</b>, 친구<b>와</b>, 아침<b>에</b>.<br>
+    영어는 명사 <strong>앞</strong>에 전치사를 놓습니다 → <span class="mono">in Seoul, with my friend, in the morning</span>.<br>
+    순서가 정반대라는 점만 기억해도 초반 실수가 크게 줄어듭니다.</p>
+  </div>
+</section>
+
+<!-- ============ 02 RULES ============ -->
+<section id="rules">
+  <div class="sec-num">02 / 기초 다지기</div>
+  <h2>먼저 알아야 할 <span class="en">3가지</span> 기본 규칙</h2>
+  <p class="sec-lead">세부 뜻을 외우기 전에, 모든 전치사에 공통으로 적용되는 문법 규칙 세 가지를 먼저 잡고 갑니다.</p>
+
+  <h3>규칙 1 · 전치사 뒤에는 반드시 명사류가 온다</h3>
+  <p>전치사 뒤에 올 수 있는 것은 딱 세 종류입니다. <strong>명사</strong>, <strong>대명사(목적격)</strong>, <strong>동명사(-ing)</strong>.</p>
+  <div class="ex good">
+    <div class="en-line"><span class="tag ok">OK</span>Thank you <span class="p">for</span> your help.</div>
+    <div class="ko-line">for + 명사(help) — 도와주셔서 감사합니다.</div>
+  </div>
+  <div class="ex good">
+    <div class="en-line"><span class="tag ok">OK</span>Thank you <span class="p">for</span> helping me.</div>
+    <div class="ko-line">for + 동명사(helping) — 저를 도와주셔서 감사합니다.</div>
+  </div>
+  <div class="ex bad">
+    <div class="en-line"><span class="tag no">NO</span>Thank you <span class="p">for</span> help me.</div>
+    <div class="ko-line">전치사 뒤에 동사원형(help)은 올 수 없습니다.</div>
+  </div>
+
+  <h4>대명사는 목적격으로 바꿔야 합니다</h4>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>주격</th><th>전치사 뒤 (목적격)</th><th>예문</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">I</td><td class="mono" style="color:var(--mint)">me</td><td><span class="en-s">Come with <b style="color:var(--chalk)">me</b>.</span></td></tr>
+        <tr><td class="mono">he</td><td class="mono" style="color:var(--mint)">him</td><td><span class="en-s">I talked to <b style="color:var(--chalk)">him</b>.</span></td></tr>
+        <tr><td class="mono">she</td><td class="mono" style="color:var(--mint)">her</td><td><span class="en-s">This is for <b style="color:var(--chalk)">her</b>.</span></td></tr>
+        <tr><td class="mono">we</td><td class="mono" style="color:var(--mint)">us</td><td><span class="en-s">Sit between <b style="color:var(--chalk)">us</b>.</span></td></tr>
+        <tr><td class="mono">they</td><td class="mono" style="color:var(--mint)">them</td><td><span class="en-s">Look at <b style="color:var(--chalk)">them</b>.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>규칙 2 · 하나의 명사에는 전치사 하나</h3>
+  <p>초보자가 자주 하는 실수가 전치사를 두 번 붙이는 것입니다. 뜻이 겹치면 하나만 씁니다.</p>
+  <div class="ex bad">
+    <div class="en-line"><span class="tag no">NO</span>I arrived <span class="p">at in</span> Seoul.</div>
+  </div>
+  <div class="ex good">
+    <div class="en-line"><span class="tag ok">OK</span>I arrived <span class="p">in</span> Seoul.</div>
+    <div class="ko-line">나는 서울에 도착했다.</div>
+  </div>
+
+  <h3>규칙 3 · 전치사가 아예 없어야 하는 자리도 있다</h3>
+  <p>한국어로는 "~에"가 붙는데 영어에서는 전치사를 쓰지 않는 표현들이 있습니다. 이건 규칙이라기보다 <strong>통째로 외우는 목록</strong>입니다.</p>
+
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(255,123,107,.25)">
+      <div class="panel-title" style="color:var(--coral);margin-bottom:12px">전치사 금지 · this/last/next/every</div>
+      <div style="font-family:var(--font-en);font-size:16px;line-height:2;color:var(--fg-dim)">
+        <s style="color:var(--fg-faint)">in this morning</s> → <b style="color:var(--mint)">this morning</b><br>
+        <s style="color:var(--fg-faint)">on last Friday</s> → <b style="color:var(--mint)">last Friday</b><br>
+        <s style="color:var(--fg-faint)">in next year</s> → <b style="color:var(--mint)">next year</b><br>
+        <s style="color:var(--fg-faint)">on every day</s> → <b style="color:var(--mint)">every day</b>
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(255,123,107,.25)">
+      <div class="panel-title" style="color:var(--coral);margin-bottom:12px">전치사 금지 · home / here / there</div>
+      <div style="font-family:var(--font-en);font-size:16px;line-height:2;color:var(--fg-dim)">
+        <s style="color:var(--fg-faint)">go to home</s> → <b style="color:var(--mint)">go home</b><br>
+        <s style="color:var(--fg-faint)">come to here</s> → <b style="color:var(--mint)">come here</b><br>
+        <s style="color:var(--fg-faint)">go to there</s> → <b style="color:var(--mint)">go there</b><br>
+        <s style="color:var(--fg-faint)">go to abroad</s> → <b style="color:var(--mint)">go abroad</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="lbl">외우는 요령</span>
+    <p><span class="mono">home, here, there, abroad, downtown, upstairs, inside, outside</span> 는 그 자체가 이미 "~로/~에"라는 방향의 뜻을 품고 있는 <strong>부사</strong>입니다. 그래서 to를 또 붙이면 중복입니다.<br>
+    단, <span class="mono">at home</span>(집에 있는 상태)처럼 <strong>이동이 아닌 위치</strong>를 말할 때는 at을 씁니다.</p>
+  </div>
+</section>
+
+<!-- ============ 03 TIME AT/ON/IN ============ -->
+<section id="time-aoi">
+  <div class="sec-num">03 / 시간</div>
+  <h2>시간의 <span class="en">at · on · in</span></h2>
+  <p class="sec-lead">전치사 공부의 8할은 이 셋입니다. 다행히 원리는 아주 단순합니다.
+  <strong>시간 덩어리가 작으면 at, 중간이면 on, 크면 in.</strong></p>
+
+  <div class="panel">
+    <div class="panel-hd"><span class="panel-title">시간의 크기 눈금</span></div>
+    <svg viewBox="0 0 700 150" style="width:100%;height:auto" role="img" aria-label="at은 시각, on은 날짜, in은 월·연도에 사용">
+      <defs>
+        <linearGradient id="tg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#F2C14E"/><stop offset="50%" stop-color="#78B6FF"/><stop offset="100%" stop-color="#63D9B0"/>
+        </linearGradient>
+      </defs>
+      <line x1="40" y1="96" x2="660" y2="96" stroke="#2B3543" stroke-width="2"/>
+      <line x1="40" y1="96" x2="660" y2="96" stroke="url(#tg)" stroke-width="2" opacity=".55"/>
+      <circle cx="120" cy="96" r="6" fill="#F2C14E"/>
+      <rect x="300" y="86" width="90" height="20" rx="5" fill="none" stroke="#78B6FF" stroke-width="2"/>
+      <rect x="500" y="70" width="140" height="52" rx="8" fill="rgba(99,217,176,.1)" stroke="#63D9B0" stroke-width="2"/>
+      <text x="120" y="60" text-anchor="middle" font-family="Newsreader,serif" font-size="26" fill="#F2C14E" font-style="italic">at</text>
+      <text x="345" y="60" text-anchor="middle" font-family="Newsreader,serif" font-size="26" fill="#78B6FF" font-style="italic">on</text>
+      <text x="570" y="52" text-anchor="middle" font-family="Newsreader,serif" font-size="26" fill="#63D9B0" font-style="italic">in</text>
+      <text x="120" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#A3AEBD">시각 · 콕 찍은 점</text>
+      <text x="345" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#A3AEBD">날짜 · 요일</text>
+      <text x="570" y="142" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#A3AEBD">월 · 계절 · 연도</text>
+      <text x="120" y="146" text-anchor="middle" font-family="Newsreader,serif" font-size="14" fill="#6B7787">7 o'clock</text>
+      <text x="345" y="146" text-anchor="middle" font-family="Newsreader,serif" font-size="14" fill="#6B7787">Monday</text>
+      <text x="570" y="102" text-anchor="middle" font-family="Newsreader,serif" font-size="15" fill="#63D9B0">2026 · July</text>
+    </svg>
+  </div>
+
+  <h3>at · 시계로 콕 찍는 순간</h3>
+  <p>시각처럼 <strong>점 하나로 표시되는 짧은 시간</strong>에 씁니다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:34%">쓰임</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td>정확한 시각</td><td><span class="en-s">at 7:30 &nbsp;· at noon &nbsp;· at midnight</span></td></tr>
+        <tr><td>식사 시간</td><td><span class="en-s">at lunch &nbsp;· at breakfast</span></td></tr>
+        <tr><td>밤</td><td><span class="en-s">at night</span> <span style="color:var(--fg-faint);font-size:13px">— 유일하게 at을 쓰는 하루의 때</span></td></tr>
+        <tr><td>주말 (영국식)</td><td><span class="en-s">at the weekend</span> <span style="color:var(--fg-faint);font-size:13px">— 미국식은 on the weekend</span></td></tr>
+        <tr><td>명절·기간 전체</td><td><span class="en-s">at Christmas &nbsp;· at the same time</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ex good">
+    <div class="en-line">The meeting starts <span class="p">at</span> 9 a.m.</div>
+    <div class="ko-line">회의는 오전 9시에 시작합니다.</div>
+  </div>
+
+  <h3>on · 달력에서 하루를 짚는 느낌</h3>
+  <p><strong>날짜와 요일</strong>에 씁니다. 달력 한 칸을 손가락으로 짚는 이미지를 떠올리세요.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:34%">쓰임</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td>요일</td><td><span class="en-s">on Monday &nbsp;· on Fridays</span> <span style="color:var(--fg-faint);font-size:13px">— 복수형은 "매주 ~요일마다"</span></td></tr>
+        <tr><td>날짜</td><td><span class="en-s">on July 27 &nbsp;· on the 3rd of May</span></td></tr>
+        <tr><td>특정한 날</td><td><span class="en-s">on my birthday &nbsp;· on New Year's Day</span></td></tr>
+        <tr><td>특정 날의 아침·오후</td><td><span class="en-s">on Monday morning &nbsp;· on a cold night</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note key">
+    <span class="lbl">함정 주의</span>
+    <p>보통 <span class="mono">in the morning</span>이지만, <strong>어떤 날인지 지정되면 on</strong>으로 바뀝니다.<br>
+    <span class="en-s">in the morning</span> (아침에) → <span class="en-s" style="color:var(--chalk)">on Sunday morning</span> (일요일 아침에)</p>
+  </div>
+
+  <h3>in · 시간이라는 상자 안에 들어가기</h3>
+  <p><strong>하루보다 긴 시간</strong>, 또는 아침·오후·저녁처럼 폭이 있는 때에 씁니다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:34%">쓰임</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td>하루의 때</td><td><span class="en-s">in the morning · in the afternoon · in the evening</span></td></tr>
+        <tr><td>월</td><td><span class="en-s">in July &nbsp;· in December</span></td></tr>
+        <tr><td>계절</td><td><span class="en-s">in summer &nbsp;· in the winter</span></td></tr>
+        <tr><td>연도·세기</td><td><span class="en-s">in 2026 &nbsp;· in the 21st century</span></td></tr>
+        <tr><td>~후에 (미래)</td><td><span class="en-s">in two hours</span> <span style="color:var(--fg-faint);font-size:13px">— 2시간 후에</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panel-hd">
+      <span class="panel-title">훈련기 · at / on / in 고르기</span>
+      <span class="panel-title" id="t-score">0 / 0 정답</span>
+    </div>
+    <div style="text-align:center;padding:10px 0 4px">
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--fg-faint);letter-spacing:.14em">이 표현 앞에는?</div>
+      <div class="en-line" id="t-q" style="font-size:30px;margin-top:12px">___ Monday</div>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin:22px 0 8px">
+      <button class="btn t-ans" data-a="at" style="min-width:88px;font-family:var(--font-en);font-size:17px">at</button>
+      <button class="btn t-ans" data-a="on" style="min-width:88px;font-family:var(--font-en);font-size:17px">on</button>
+      <button class="btn t-ans" data-a="in" style="min-width:88px;font-family:var(--font-en);font-size:17px">in</button>
+    </div>
+    <div id="t-fb" style="min-height:56px;text-align:center;font-size:14.5px;color:var(--fg-dim);padding:8px 4px"></div>
+    <div style="text-align:center"><button class="btn" id="t-next">다음 문제 →</button></div>
+  </div>
+</section>
+
+<!-- ============ 04 TIME MORE ============ -->
+<section id="time-more">
+  <div class="sec-num">04 / 시간</div>
+  <h2>기간과 시점을 나타내는 전치사</h2>
+  <p class="sec-lead">at·on·in이 "언제"라면, 이번 전치사들은 "얼마나 오래" 또는 "언제까지"를 말합니다.
+  한국어로는 모두 "~동안, ~까지"로 번역돼서 특히 헷갈리는 구간입니다.</p>
+
+  <div class="panel">
+    <div class="panel-hd"><span class="panel-title">비교 · 탭을 눌러 확인하세요</span></div>
+    <div class="btn-row" id="cmp-tabs" style="margin-bottom:18px">
+      <button class="btn on" data-cmp="c1">for vs during</button>
+      <button class="btn" data-cmp="c2">since vs for</button>
+      <button class="btn" data-cmp="c3">by vs until</button>
+      <button class="btn" data-cmp="c4">in vs within</button>
+      <button class="btn" data-cmp="c5">ago vs before</button>
+    </div>
+
+    <div class="cmp-body" id="c1">
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0;color:var(--chalk)">for + 얼마나 (숫자·길이)</h4>
+          <p style="font-size:14.5px">"몇 시간, 며칠"처럼 <b>기간의 길이</b>가 뒤에 옵니다.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">I slept <span class="p">for</span> eight hours.</div><div class="ko-line">8시간 동안 잤다.</div></div>
+          <div class="en-s" style="color:var(--fg-faint);font-size:14px">for two weeks · for a long time · for 10 minutes</div>
+        </div>
+        <div>
+          <h4 style="margin-top:0;color:var(--sky)">during + 언제 (사건·기간 이름)</h4>
+          <p style="font-size:14.5px">"수업 중에, 방학 동안"처럼 <b>사건이나 기간의 이름</b>이 뒤에 옵니다.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">I slept <span class="p">during</span> the movie.</div><div class="ko-line">영화 보는 동안 잤다.</div></div>
+          <div class="en-s" style="color:var(--fg-faint);font-size:14px">during the meeting · during summer · during the war</div>
+        </div>
+      </div>
+      <div class="note warn" style="margin-bottom:0">
+        <span class="lbl">판별법</span>
+        <p>뒤에 <b>숫자를 셀 수 있으면 for</b>, <b>이름이 붙은 기간이면 during</b>.<br>
+        <s style="color:var(--fg-faint)">during three hours</s> → <b class="hl-g">for three hours</b> ／
+        <s style="color:var(--fg-faint)">for the vacation</s> → <b class="hl-g">during the vacation</b></p>
+      </div>
+    </div>
+
+    <div class="cmp-body" id="c2" hidden>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0;color:var(--chalk)">since + 시작 시점</h4>
+          <p style="font-size:14.5px">"언제부터" — 과거의 <b>한 점</b>이 뒤에 옵니다. 보통 현재완료와 함께 씁니다.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">I've lived here <span class="p">since</span> 2020.</div><div class="ko-line">2020년부터 여기 살고 있다.</div></div>
+        </div>
+        <div>
+          <h4 style="margin-top:0;color:var(--mint)">for + 지속 기간</h4>
+          <p style="font-size:14.5px">"얼마 동안" — <b>길이</b>가 뒤에 옵니다.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">I've lived here <span class="p">for</span> six years.</div><div class="ko-line">6년째 여기 살고 있다.</div></div>
+        </div>
+      </div>
+      <div class="note tip" style="margin-bottom:0"><span class="lbl">같은 상황, 다른 표현</span>
+      <p>2020년에 시작해 2026년인 지금까지 → <span class="en-s">since 2020</span> = <span class="en-s">for six years</span>. 시작점을 말하면 since, 길이를 말하면 for입니다.</p></div>
+    </div>
+
+    <div class="cmp-body" id="c3" hidden>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0;color:var(--chalk)">by · 그 전에 완료 (마감)</h4>
+          <p style="font-size:14.5px">그 시점 <b>전 아무 때나</b> 끝내면 됨. 한 번의 동작.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">Submit it <span class="p">by</span> Friday.</div><div class="ko-line">금요일까지 제출하세요. (금요일 전에 내면 OK)</div></div>
+        </div>
+        <div>
+          <h4 style="margin-top:0;color:var(--violet)">until · 그때까지 계속</h4>
+          <p style="font-size:14.5px">그 시점까지 <b>쭉 이어지는</b> 상태나 동작.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">I'll wait <span class="p">until</span> Friday.</div><div class="ko-line">금요일까지 기다릴게요. (계속 기다리는 중)</div></div>
+        </div>
+      </div>
+      <div class="note warn" style="margin-bottom:0"><span class="lbl">한국어가 만드는 함정</span>
+      <p>둘 다 "~까지"로 번역되지만 완전히 다릅니다. <b>끝내는 동작이면 by</b>, <b>이어지는 상태면 until</b>.<br>
+      <s style="color:var(--fg-faint)">Finish it until 5.</s> → <b class="hl-g">Finish it by 5.</b> (끝내는 건 한 번의 동작)</p></div>
+    </div>
+
+    <div class="cmp-body" id="c4" hidden>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0;color:var(--chalk)">in + 시간 · ~후에</h4>
+          <p style="font-size:14.5px">지금부터 그만큼 <b>지난 뒤</b>에 일어남.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">He'll arrive <span class="p">in</span> an hour.</div><div class="ko-line">한 시간 후에 도착할 거예요.</div></div>
+        </div>
+        <div>
+          <h4 style="margin-top:0;color:var(--mint)">within + 시간 · ~이내에</h4>
+          <p style="font-size:14.5px">그 시간이 <b>다 지나기 전</b> 아무 때나.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">He'll arrive <span class="p">within</span> an hour.</div><div class="ko-line">한 시간 이내에 도착할 거예요.</div></div>
+        </div>
+      </div>
+      <div class="note info" style="margin-bottom:0"><span class="lbl">업무 메일에서</span>
+      <p><span class="en-s">I'll reply within 24 hours.</span> — 24시간 안에 답장드리겠습니다. 고객 응대에서 자주 쓰는 표현입니다.</p></div>
+    </div>
+
+    <div class="cmp-body" id="c5" hidden>
+      <div class="grid2">
+        <div>
+          <h4 style="margin-top:0;color:var(--chalk)">ago · 지금 기준 ~전 (뒤에 붙임)</h4>
+          <p style="font-size:14.5px">전치사가 아니라 <b>부사</b>라서 명사 <b>뒤</b>에 옵니다. 과거시제와 함께.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">I met her three days <span class="p">ago</span>.</div><div class="ko-line">3일 전에 그녀를 만났다.</div></div>
+        </div>
+        <div>
+          <h4 style="margin-top:0;color:var(--sky)">before · 어떤 시점 ~전 (앞에 붙임)</h4>
+          <p style="font-size:14.5px">기준이 되는 <b>시점</b> 앞에 놓는 전치사입니다.</p>
+          <div class="ex good" style="margin:10px 0"><div class="en-line" style="font-size:18px">I met her <span class="p">before</span> the meeting.</div><div class="ko-line">회의 전에 그녀를 만났다.</div></div>
+        </div>
+      </div>
+      <div class="note warn" style="margin-bottom:0"><span class="lbl">위치 실수 1위</span>
+      <p><s style="color:var(--fg-faint)">ago three days</s> → <b class="hl-g">three days ago</b>. ago는 항상 <b>뒤</b>입니다.</p></div>
+    </div>
+  </div>
+
+  <h3>한눈에 정리</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:18%">전치사</th><th style="width:26%">의미</th><th>예문</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">from ~ to</td><td>~부터 ~까지</td><td><span class="en-s">I work <b style="color:var(--chalk)">from</b> 9 <b style="color:var(--chalk)">to</b> 6.</span></td></tr>
+        <tr><td class="mono">between ~ and</td><td>~와 ~ 사이에</td><td><span class="en-s">Call me <b style="color:var(--chalk)">between</b> 2 <b style="color:var(--chalk)">and</b> 4.</span></td></tr>
+        <tr><td class="mono">before</td><td>~보다 먼저</td><td><span class="en-s">Wash your hands <b style="color:var(--chalk)">before</b> dinner.</span></td></tr>
+        <tr><td class="mono">after</td><td>~뒤에</td><td><span class="en-s">Let's talk <b style="color:var(--chalk)">after</b> class.</span></td></tr>
+        <tr><td class="mono">over</td><td>~에 걸쳐서</td><td><span class="en-s">It rained <b style="color:var(--chalk)">over</b> the weekend.</span></td></tr>
+        <tr><td class="mono">throughout</td><td>~내내</td><td><span class="en-s">She smiled <b style="color:var(--chalk)">throughout</b> the show.</span></td></tr>
+        <tr><td class="mono">around / about</td><td>~쯤</td><td><span class="en-s">See you <b style="color:var(--chalk)">around</b> 7.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 05 PLACE AT/ON/IN ============ -->
+<section id="place-aoi">
+  <div class="sec-num">05 / 공간</div>
+  <h2>장소의 <span class="en">at · on · in</span></h2>
+  <p class="sec-lead">시간과 원리가 똑같습니다. <strong>점이면 at, 면이면 on, 공간이면 in.</strong>
+  머릿속에 지도를 그린다고 생각하세요.</p>
+
+  <div class="panel">
+    <div class="panel-hd"><span class="panel-title">점 · 면 · 공간</span></div>
+    <div class="grid3">
+      <div style="text-align:center">
+        <svg viewBox="0 0 140 110" style="width:100%;max-width:170px" role="img" aria-label="점을 나타내는 at">
+          <rect x="10" y="70" width="120" height="2" fill="#2B3543"/>
+          <circle cx="70" cy="55" r="9" fill="#F2C14E"/>
+          <circle cx="70" cy="55" r="19" fill="none" stroke="#F2C14E" stroke-width="1.5" opacity=".35"/>
+          <text x="70" y="98" text-anchor="middle" font-family="Newsreader,serif" font-style="italic" font-size="24" fill="#F2C14E">at</text>
+        </svg>
+        <div style="font-size:13.5px;color:var(--fg-dim);margin-top:2px"><b style="color:var(--fg)">점</b> · 지도 위의 한 지점</div>
+        <div class="en-s" style="font-size:14px;color:var(--fg-faint);line-height:1.7;margin-top:6px">at the bus stop<br>at the door · at school</div>
+      </div>
+      <div style="text-align:center">
+        <svg viewBox="0 0 140 110" style="width:100%;max-width:170px" role="img" aria-label="면을 나타내는 on">
+          <rect x="20" y="66" width="100" height="7" rx="2" fill="#2B3543"/>
+          <rect x="52" y="42" width="36" height="24" rx="3" fill="#78B6FF"/>
+          <text x="70" y="98" text-anchor="middle" font-family="Newsreader,serif" font-style="italic" font-size="24" fill="#78B6FF">on</text>
+        </svg>
+        <div style="font-size:13.5px;color:var(--fg-dim);margin-top:2px"><b style="color:var(--fg)">면</b> · 표면에 닿아 있음</div>
+        <div class="en-s" style="font-size:14px;color:var(--fg-faint);line-height:1.7;margin-top:6px">on the table<br>on the wall · on the floor</div>
+      </div>
+      <div style="text-align:center">
+        <svg viewBox="0 0 140 110" style="width:100%;max-width:170px" role="img" aria-label="공간을 나타내는 in">
+          <rect x="32" y="30" width="76" height="48" rx="6" fill="rgba(99,217,176,.08)" stroke="#63D9B0" stroke-width="2"/>
+          <circle cx="70" cy="54" r="9" fill="#63D9B0"/>
+          <text x="70" y="98" text-anchor="middle" font-family="Newsreader,serif" font-style="italic" font-size="24" fill="#63D9B0">in</text>
+        </svg>
+        <div style="font-size:13.5px;color:var(--fg-dim);margin-top:2px"><b style="color:var(--fg)">공간</b> · 경계 안에 있음</div>
+        <div class="en-s" style="font-size:14px;color:var(--fg-faint);line-height:1.7;margin-top:6px">in the room<br>in Seoul · in the box</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>같은 장소도 관점에 따라 달라진다</h3>
+  <p>이게 초보자가 가장 헷갈리는 부분입니다. <strong>장소가 정해주는 게 아니라, 화자가 그 장소를 어떻게 바라보느냐</strong>가 전치사를 정합니다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:30%">표현</th><th>화자의 관점</th></tr></thead>
+      <tbody>
+        <tr><td><span class="en-s"><b style="color:var(--chalk)">at</b> the office</span></td><td>사무실이라는 <b>지점</b>에 있다 — 위치를 말함</td></tr>
+        <tr><td><span class="en-s"><b style="color:var(--mint)">in</b> the office</span></td><td>사무실 <b>건물 안에</b> 있다 — 내부를 말함</td></tr>
+        <tr><td><span class="en-s"><b style="color:var(--chalk)">at</b> school</span></td><td>학교에 (공부하러) 와 있다 — 목적·활동</td></tr>
+        <tr><td><span class="en-s"><b style="color:var(--mint)">in</b> the school</span></td><td>학교 건물 안에 있다 — 물리적 내부</td></tr>
+        <tr><td><span class="en-s"><b style="color:var(--sky)">on</b> the bus</span></td><td>버스에 타고 있다 — 발판 위에 서는 큰 탈것</td></tr>
+        <tr><td><span class="en-s"><b style="color:var(--mint)">in</b> the car</span></td><td>차 안에 있다 — 몸을 접어 넣는 작은 탈것</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note key">
+    <span class="lbl">탈것 규칙 · 외우면 평생 안 틀림</span>
+    <p><b class="hl-b">on</b> — 서서 걸어다닐 수 있는 큰 탈것: <span class="en-s">on the bus, on the train, on a plane, on a ship, on a bike, on a horse</span><br>
+    <b class="hl-g">in</b> — 몸을 넣어 앉는 작은 탈것: <span class="en-s">in a car, in a taxi, in a boat</span></p>
+  </div>
+
+  <h3>주소는 큰 곳에서 작은 곳으로 in → on → at</h3>
+  <div class="card" style="text-align:center">
+    <div class="en-line" style="font-size:19px;line-height:2">
+      <span class="p">in</span> Korea &nbsp;→&nbsp; <span class="p">in</span> Seoul &nbsp;→&nbsp;
+      <span class="p">on</span> Sejong-daero &nbsp;→&nbsp; <span class="p">at</span> 175 Sejong-daero
+    </div>
+    <div class="ko-line" style="font-size:14px;margin-top:12px">나라·도시는 공간(in), 길은 선(on), 정확한 번지는 점(at)</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-hd">
+      <span class="panel-title">연습 · 장소 전치사 고르기</span>
+      <span class="panel-title" id="p-score">0 / 0 정답</span>
+    </div>
+    <div style="text-align:center;padding:8px 0 2px">
+      <div class="en-line" id="p-q" style="font-size:26px">She is waiting ___ the bus stop.</div>
+      <div class="ko-line" id="p-ko" style="font-size:14px;margin-top:8px">그녀는 버스 정류장에서 기다리고 있다.</div>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin:20px 0 8px">
+      <button class="btn p-ans" data-a="at" style="min-width:88px;font-family:var(--font-en);font-size:17px">at</button>
+      <button class="btn p-ans" data-a="on" style="min-width:88px;font-family:var(--font-en);font-size:17px">on</button>
+      <button class="btn p-ans" data-a="in" style="min-width:88px;font-family:var(--font-en);font-size:17px">in</button>
+    </div>
+    <div id="p-fb" style="min-height:52px;text-align:center;font-size:14.5px;color:var(--fg-dim);padding:6px 4px"></div>
+    <div style="text-align:center"><button class="btn" id="p-next">다음 문제 →</button></div>
+  </div>
+</section>
+
+<!-- ============ 06 POSITION ============ -->
+<section id="position">
+  <div class="sec-num">06 / 공간</div>
+  <h2>위치 관계 전치사</h2>
+  <p class="sec-lead">이 전치사들은 설명보다 그림이 빠릅니다. 아래 시뮬레이터에서 단어를 눌러
+  <strong>공이 상자를 기준으로 어디로 가는지</strong> 직접 확인하세요.</p>
+
+  <div class="panel" id="sim">
+    <div class="panel-hd"><span class="panel-title">위치 시뮬레이터</span><span class="panel-title" id="sim-name">on</span></div>
+    <svg viewBox="0 0 480 300" style="width:100%;height:auto;background:linear-gradient(180deg,#12161C,#0D1013);border-radius:10px" role="img" aria-labelledby="sim-desc">
+      <title id="sim-desc">상자를 기준으로 공의 위치가 전치사에 따라 이동하는 그림</title>
+      <line x1="0" y1="266" x2="480" y2="266" stroke="#2B3543" stroke-width="1.5"/>
+      <g id="g-multi" opacity="0">
+        <rect x="92" y="150" width="50" height="48" rx="5" fill="#1D242E" stroke="#3A4756" stroke-width="1.5"/>
+        <rect x="156" y="172" width="44" height="40" rx="5" fill="#1D242E" stroke="#3A4756" stroke-width="1.5"/>
+        <rect x="262" y="164" width="50" height="46" rx="5" fill="#1D242E" stroke="#3A4756" stroke-width="1.5"/>
+        <rect x="330" y="146" width="48" height="52" rx="5" fill="#1D242E" stroke="#3A4756" stroke-width="1.5"/>
+      </g>
+      <g id="g-pair" opacity="0">
+        <rect x="96" y="130" width="76" height="80" rx="7" fill="#1D242E" stroke="#4A5A6D" stroke-width="2"/>
+        <rect x="308" y="130" width="76" height="80" rx="7" fill="#1D242E" stroke="#4A5A6D" stroke-width="2"/>
+      </g>
+      <circle id="ball-back" cx="255" cy="150" r="16" fill="#FF7B6B" opacity="0"/>
+      <g id="g-box">
+        <rect id="box-face" x="180" y="130" width="120" height="80" rx="8" fill="#26313F" stroke="#4A5A6D" stroke-width="2" style="transition:fill .3s"/>
+        <line x1="180" y1="152" x2="300" y2="152" stroke="#3A4756" stroke-width="1" opacity=".7"/>
+      </g>
+      <circle id="ball" cx="240" cy="92" r="16" fill="#F2C14E" style="transition:cx .45s cubic-bezier(.34,1.4,.5,1),cy .45s cubic-bezier(.34,1.4,.5,1)"/>
+      <ellipse id="shadow" cx="240" cy="266" rx="20" ry="5" fill="#F2C14E" opacity=".16" style="transition:cx .45s,rx .45s,opacity .45s"/>
+    </svg>
+    <div class="btn-row" style="margin-top:18px" id="sim-btns">
+      <button class="btn on" data-pos="on">on</button>
+      <button class="btn" data-pos="in">in</button>
+      <button class="btn" data-pos="under">under</button>
+      <button class="btn" data-pos="below">below</button>
+      <button class="btn" data-pos="over">over</button>
+      <button class="btn" data-pos="above">above</button>
+      <button class="btn" data-pos="behind">behind</button>
+      <button class="btn" data-pos="in front of">in front of</button>
+      <button class="btn" data-pos="next to">next to</button>
+      <button class="btn" data-pos="near">near</button>
+      <button class="btn" data-pos="against">against</button>
+      <button class="btn" data-pos="between">between</button>
+      <button class="btn" data-pos="among">among</button>
+    </div>
+    <div style="margin-top:20px;border-top:1px solid var(--line-soft);padding-top:18px">
+      <div class="en-line" id="sim-en" style="font-size:21px">The ball is <span class="p">on</span> the box.</div>
+      <div class="ko-line" id="sim-ko" style="font-size:14.5px">공이 상자 위에 (닿아서) 있다.</div>
+      <p id="sim-tip" style="font-size:14px;margin-top:10px;color:var(--fg-faint)">표면에 <b style="color:var(--fg-dim)">접촉</b>해 있을 때 on을 씁니다.</p>
+    </div>
+  </div>
+
+  <h3>헷갈리는 짝 정리</h3>
+
+  <h4>over vs above · 둘 다 "위"인데?</h4>
+  <ul class="bul">
+    <li><b class="hl">over</b> — 바로 위, 덮는 느낌, 지나가는 움직임에도 사용. <span class="en-s">A lamp hangs over the table.</span></li>
+    <li><b class="hl-b">above</b> — 더 높은 위치, 반드시 수직으로 정렬될 필요 없음. <span class="en-s">The clouds are above us.</span></li>
+    <li>수치·기준을 말할 땐 above가 자연스럽습니다. <span class="en-s">above zero, above average</span></li>
+  </ul>
+
+  <h4>under vs below · 둘 다 "아래"인데?</h4>
+  <ul class="bul">
+    <li><b class="hl">under</b> — 바로 아래, 덮여 있는 느낌. <span class="en-s">The cat is under the table.</span></li>
+    <li><b class="hl-b">below</b> — 더 낮은 위치. <span class="en-s">The sun sank below the horizon.</span></li>
+    <li>나이·수량이 "미만"일 때는 under. <span class="en-s">under 18 · under $50</span></li>
+  </ul>
+
+  <h4>between vs among · "사이"의 개수 차이</h4>
+  <ul class="bul">
+    <li><b class="hl">between</b> — <b>둘</b> 또는 <b>개별적으로 구분되는 대상들</b> 사이. <span class="en-s">between you and me</span></li>
+    <li><b class="hl-g">among</b> — <b>셋 이상의 뭉뚱그린 무리</b> 속. <span class="en-s">among the trees</span></li>
+    <li>셋이라도 하나하나 구분하면 between을 씁니다. <span class="en-s">Korea lies between China, Japan, and Russia.</span></li>
+  </ul>
+
+  <h4>beside vs besides · 철자 하나 차이, 뜻은 완전히 다름</h4>
+  <div class="grid2">
+    <div class="card" style="margin:8px 0">
+      <div class="en-line" style="font-size:18px">Sit <span class="p">beside</span> me.</div>
+      <div class="ko-line">내 <b style="color:var(--mint)">옆에</b> 앉아. — 위치</div>
+    </div>
+    <div class="card" style="margin:8px 0">
+      <div class="en-line" style="font-size:18px"><span class="p">Besides</span> me, no one came.</div>
+      <div class="ko-line">나 <b style="color:var(--coral)">말고는</b> 아무도 안 왔다. — 제외·추가</div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="lbl">추가로 알아두면 좋은 위치 전치사</span>
+    <p><span class="mono">opposite</span> 맞은편에 · <span class="mono">inside / outside</span> 내부 / 외부에 ·
+    <span class="mono">along</span> ~을 따라 · <span class="mono">across from</span> ~의 건너편에 ·
+    <span class="mono">by</span> 바로 옆에 · <span class="mono">around</span> ~주변에</p>
+  </div>
+</section>
+
+<!-- ============ 07 DIRECTION ============ -->
+<section id="direction">
+  <div class="sec-num">07 / 공간</div>
+  <h2>방향과 이동 전치사</h2>
+  <p class="sec-lead">앞 장의 전치사가 <strong>멈춰 있는 위치</strong>였다면, 이번에는 <strong>움직이는 방향</strong>입니다.
+  버튼을 누르면 점이 실제로 그 경로를 따라 움직입니다.</p>
+
+  <div class="panel" id="mov">
+    <div class="panel-hd"><span class="panel-title">이동 경로 시뮬레이터</span><span class="panel-title" id="mov-name">to</span></div>
+    <svg viewBox="0 0 480 260" style="width:100%;height:auto;background:linear-gradient(180deg,#12161C,#0D1013);border-radius:10px" role="img" aria-labelledby="mov-desc">
+      <title id="mov-desc">전치사에 따라 점이 서로 다른 경로로 움직이는 애니메이션</title>
+      <g id="sc-river" opacity="0">
+        <rect x="195" y="20" width="86" height="220" fill="rgba(120,182,255,.13)" stroke="#2E4A69" stroke-width="1.5"/>
+        <path d="M215 30 Q225 90 215 150 Q205 200 215 235" stroke="#3C6A9C" stroke-width="1.5" fill="none" opacity=".8"/>
+        <path d="M258 30 Q248 90 258 150 Q268 200 258 235" stroke="#3C6A9C" stroke-width="1.5" fill="none" opacity=".8"/>
+      </g>
+      <g id="sc-road" opacity="0">
+        <rect x="20" y="192" width="440" height="30" rx="4" fill="#1A2029" stroke="#2B3543"/>
+        <line x1="30" y1="207" x2="450" y2="207" stroke="#3A4756" stroke-width="2" stroke-dasharray="16 14"/>
+      </g>
+      <g id="sc-circle" opacity="0">
+        <circle cx="250" cy="150" r="45" fill="#1E2733" stroke="#4A5A6D" stroke-width="2"/>
+        <circle cx="250" cy="150" r="22" fill="none" stroke="#3A4756" stroke-width="1.5"/>
+      </g>
+      <g id="sc-wall" opacity="0">
+        <rect x="234" y="112" width="26" height="98" rx="3" fill="#26313F" stroke="#4A5A6D" stroke-width="2"/>
+        <line x1="234" y1="140" x2="260" y2="140" stroke="#3A4756"/><line x1="234" y1="168" x2="260" y2="168" stroke="#3A4756"/>
+      </g>
+      <g id="sc-pole" opacity="0">
+        <rect x="246" y="96" width="8" height="118" fill="#26313F" stroke="#4A5A6D" stroke-width="1.5"/>
+        <circle cx="250" cy="88" r="20" fill="#1E2733" stroke="#4A5A6D" stroke-width="2"/>
+      </g>
+      <g id="sc-point" opacity="0">
+        <circle cx="392" cy="150" r="24" fill="none" stroke="#63D9B0" stroke-width="2" stroke-dasharray="5 5"/>
+        <circle cx="392" cy="150" r="7" fill="#63D9B0"/>
+      </g>
+      <g id="sc-box" opacity="0">
+        <rect x="196" y="106" width="120" height="88" rx="8" fill="rgba(30,39,51,.55)" stroke="#4A5A6D" stroke-width="2"/>
+      </g>
+      <path id="mov-path" d="" stroke="#3A4756" stroke-width="2" fill="none" stroke-dasharray="6 8"/>
+      <circle id="mov-dot" cx="60" cy="150" r="11" fill="#F2C14E"/>
+    </svg>
+    <div class="btn-row" style="margin-top:18px" id="mov-btns">
+      <button class="btn on" data-mv="to">to</button>
+      <button class="btn" data-mv="toward">toward</button>
+      <button class="btn" data-mv="into">into</button>
+      <button class="btn" data-mv="onto">onto</button>
+      <button class="btn" data-mv="out of">out of</button>
+      <button class="btn" data-mv="from">from</button>
+      <button class="btn" data-mv="through">through</button>
+      <button class="btn" data-mv="across">across</button>
+      <button class="btn" data-mv="along">along</button>
+      <button class="btn" data-mv="around">around</button>
+      <button class="btn" data-mv="over">over</button>
+      <button class="btn" data-mv="past">past</button>
+    </div>
+    <div style="margin-top:20px;border-top:1px solid var(--line-soft);padding-top:18px">
+      <div class="en-line" id="mov-en" style="font-size:21px">I walked <span class="p">to</span> the station.</div>
+      <div class="ko-line" id="mov-ko" style="font-size:14.5px">나는 역까지 걸어갔다.</div>
+      <p id="mov-tip" style="font-size:14px;margin-top:10px;color:var(--fg-faint)">도착점이 분명한 이동. 목적지에 도달했다는 뜻을 포함합니다.</p>
+    </div>
+  </div>
+
+  <h3>꼭 구분해야 할 짝</h3>
+
+  <h4>to vs toward · 도착했나, 그쪽으로 갔나</h4>
+  <div class="ex good"><div class="en-line">He ran <span class="p">to</span> the door.</div><div class="ko-line">문까지 달려갔다. — 문에 도착함</div></div>
+  <div class="ex good"><div class="en-line">He ran <span class="p">toward</span> the door.</div><div class="ko-line">문 쪽으로 달려갔다. — 도착 여부는 모름</div></div>
+
+  <h4>in vs into · 상태인가, 들어가는 동작인가</h4>
+  <div class="ex good"><div class="en-line">She is <span class="p">in</span> the room.</div><div class="ko-line">그녀는 방 안에 있다. — 정지된 위치</div></div>
+  <div class="ex good"><div class="en-line">She walked <span class="p">into</span> the room.</div><div class="ko-line">그녀는 방 안으로 걸어 들어갔다. — 밖 → 안 이동</div></div>
+
+  <h4>through vs across · 뚫고 가나, 가로질러 가나</h4>
+  <ul class="bul">
+    <li><b class="hl">through</b> — <b>내부를 통과</b>. 3차원 공간을 뚫고 지나감. <span class="en-s">through the tunnel, through the forest</span></li>
+    <li><b class="hl-b">across</b> — <b>표면을 가로지름</b>. 평면의 한쪽에서 반대쪽으로. <span class="en-s">across the street, across the river</span></li>
+  </ul>
+
+  <div class="note warn">
+    <span class="lbl">가장 흔한 실수</span>
+    <p><s style="color:var(--fg-faint)">I went to shopping.</s> → <b class="hl-g">I went shopping.</b><br>
+    <s style="color:var(--fg-faint)">Let's go to home.</s> → <b class="hl-g">Let's go home.</b><br>
+    <s style="color:var(--fg-faint)">I entered into the room.</s> → <b class="hl-g">I entered the room.</b> (enter는 전치사 없이 목적어를 바로 받습니다)</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:20%">전치사</th><th style="width:26%">뜻</th><th>예문</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">up / down</td><td>위로 / 아래로</td><td><span class="en-s">walk <b style="color:var(--chalk)">up</b> the stairs</span></td></tr>
+        <tr><td class="mono">onto</td><td>~위로 올라가</td><td><span class="en-s">The cat jumped <b style="color:var(--chalk)">onto</b> the desk.</span></td></tr>
+        <tr><td class="mono">off</td><td>~에서 떨어져</td><td><span class="en-s">Take your feet <b style="color:var(--chalk)">off</b> the table.</span></td></tr>
+        <tr><td class="mono">out of</td><td>~밖으로</td><td><span class="en-s">He ran <b style="color:var(--chalk)">out of</b> the building.</span></td></tr>
+        <tr><td class="mono">from ~ to</td><td>~에서 ~까지</td><td><span class="en-s">a flight <b style="color:var(--chalk)">from</b> Seoul <b style="color:var(--chalk)">to</b> Tokyo</span></td></tr>
+        <tr><td class="mono">into</td><td>~안으로 (변화에도)</td><td><span class="en-s">Water turns <b style="color:var(--chalk)">into</b> ice.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 08 OTHERS ============ -->
+<section id="others">
+  <div class="sec-num">08 / 확장</div>
+  <h2>그 밖의 핵심 전치사</h2>
+  <p class="sec-lead">시간·장소 외에도 자주 쓰이는 전치사들입니다. 하나의 전치사가 여러 뜻을 갖기 때문에,
+  <strong>대표 뜻 하나를 먼저 잡고 나머지를 붙여 나가는</strong> 방식이 좋습니다. 항목을 눌러 펼쳐보세요.</p>
+
+  <div class="acc-wrap">
+    <details class="acc" open>
+      <summary><span class="acc-en">of</span><span class="acc-ko">~의 · 소속과 부분</span></summary>
+      <div class="acc-body">
+        <ul class="bul">
+          <li><b>소유·소속</b> — <span class="en-s">the capital <b style="color:var(--chalk)">of</b> Korea</span> 한국의 수도</li>
+          <li><b>부분·양</b> — <span class="en-s">a cup <b style="color:var(--chalk)">of</b> coffee</span> 커피 한 잔</li>
+          <li><b>재료·구성</b> — <span class="en-s">made <b style="color:var(--chalk)">of</b> wood</span> 나무로 만든</li>
+          <li><b>원인</b> — <span class="en-s">He died <b style="color:var(--chalk)">of</b> cancer.</span> 암으로 사망했다</li>
+        </ul>
+        <div class="note info" style="margin-bottom:0"><span class="lbl">사람에게는 's</span>
+        <p>사람·동물의 소유는 <span class="en-s">of</span>보다 <span class="en-s">'s</span>가 자연스럽습니다.<br>
+        <s style="color:var(--fg-faint)">the book of Tom</s> → <b class="hl-g">Tom's book</b></p></div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">for</span><span class="acc-ko">~을 위해 · 대상과 목적</span></summary>
+      <div class="acc-body">
+        <ul class="bul">
+          <li><b>수혜자</b> — <span class="en-s">This gift is <b style="color:var(--chalk)">for</b> you.</span> 너를 위한 선물</li>
+          <li><b>목적</b> — <span class="en-s">I came here <b style="color:var(--chalk)">for</b> the interview.</span> 면접 때문에 왔다</li>
+          <li><b>기간</b> — <span class="en-s">for two hours</span> 두 시간 동안</li>
+          <li><b>교환·가격</b> — <span class="en-s">I bought it <b style="color:var(--chalk)">for</b> $20.</span> 20달러에 샀다</li>
+          <li><b>찬성</b> — <span class="en-s">Are you <b style="color:var(--chalk)">for</b> or against it?</span> 찬성? 반대?</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">with</span><span class="acc-ko">~와 함께 · 도구와 동반</span></summary>
+      <div class="acc-body">
+        <ul class="bul">
+          <li><b>동반</b> — <span class="en-s">I went <b style="color:var(--chalk)">with</b> my sister.</span> 언니와 함께 갔다</li>
+          <li><b>도구</b> — <span class="en-s">Cut it <b style="color:var(--chalk)">with</b> a knife.</span> 칼로 자르다</li>
+          <li><b>소유·특징</b> — <span class="en-s">a man <b style="color:var(--chalk)">with</b> glasses</span> 안경 쓴 남자</li>
+          <li><b>~한 상태로</b> — <span class="en-s">She spoke <b style="color:var(--chalk)">with</b> a smile.</span> 미소 지으며 말했다</li>
+        </ul>
+        <div class="note warn" style="margin-bottom:0"><span class="lbl">with vs by · 둘 다 "~로"</span>
+        <p><b class="hl">with</b> = 손에 쥐는 <b>도구</b> · <b class="hl-b">by</b> = 방법·수단<br>
+        <span class="en-s">write <b style="color:var(--chalk)">with</b> a pen</span> (펜으로) ／
+        <span class="en-s">go <b style="color:var(--sky)">by</b> bus</span> (버스로) ／
+        <span class="en-s">pay <b style="color:var(--sky)">by</b> card</span> (카드로)</p></div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">by</span><span class="acc-ko">~에 의해 · 수단과 행위자</span></summary>
+      <div class="acc-body">
+        <ul class="bul">
+          <li><b>행위자 (수동태)</b> — <span class="en-s">It was written <b style="color:var(--chalk)">by</b> Hemingway.</span></li>
+          <li><b>교통수단</b> — <span class="en-s">by bus, by car, by plane</span> <span style="color:var(--fg-faint)">※ 관사 없이!</span></li>
+          <li><b>방법</b> — <span class="en-s">Learn <b style="color:var(--chalk)">by</b> doing.</span> 해보면서 배우다</li>
+          <li><b>기한</b> — <span class="en-s">by Monday</span> 월요일까지</li>
+          <li><b>바로 옆</b> — <span class="en-s">Sit <b style="color:var(--chalk)">by</b> the window.</span> 창가에 앉다</li>
+        </ul>
+        <div class="note warn" style="margin-bottom:0"><span class="lbl">관사 함정</span>
+        <p><s style="color:var(--fg-faint)">by a bus</s> → <b class="hl-g">by bus</b>. 교통수단 by 뒤에는 관사를 붙이지 않습니다.<br>
+        단, 특정 차를 가리키면 <span class="en-s">in my car</span>, <span class="en-s">on the 7 o'clock train</span>처럼 씁니다.</p></div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">about</span><span class="acc-ko">~에 대해 · 주제</span></summary>
+      <div class="acc-body">
+        <ul class="bul">
+          <li><b>주제</b> — <span class="en-s">a book <b style="color:var(--chalk)">about</b> history</span> 역사에 관한 책</li>
+          <li><b>대략</b> — <span class="en-s">about 30 people</span> 약 30명</li>
+        </ul>
+        <div class="note warn" style="margin-bottom:0"><span class="lbl">discuss에는 about을 쓰지 않습니다</span>
+        <p><s style="color:var(--fg-faint)">discuss about the plan</s> → <b class="hl-g">discuss the plan</b><br>
+        같은 계열: <span class="en-s">mention, explain(설명 대상), answer</span> 도 전치사 없이 목적어를 받습니다.</p></div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">like / as</span><span class="acc-ko">~처럼 · ~로서</span></summary>
+      <div class="acc-body">
+        <div class="ex good"><div class="en-line">She works <span class="p">like</span> a machine.</div><div class="ko-line">기계<b style="color:var(--chalk)">처럼</b> 일한다 — 비유. 실제 기계는 아님</div></div>
+        <div class="ex good"><div class="en-line">She works <span class="p">as</span> an engineer.</div><div class="ko-line">엔지니어<b style="color:var(--chalk)">로서</b> 일한다 — 실제 직업이 엔지니어</div></div>
+        <p style="font-size:14px;color:var(--fg-faint)">비슷하지만 다름 = like, 실제로 그것임 = as.</p>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">without</span><span class="acc-ko">~없이</span></summary>
+      <div class="acc-body">
+        <div class="ex good"><div class="en-line">I can't work <span class="p">without</span> coffee.</div><div class="ko-line">커피 없이는 일 못 한다.</div></div>
+        <div class="ex good"><div class="en-line">He left <span class="p">without</span> saying goodbye.</div><div class="ko-line">인사도 없이 떠났다. — without + 동명사</div></div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">against</span><span class="acc-ko">~에 반대하여 · ~에 기대어</span></summary>
+      <div class="acc-body">
+        <ul class="bul">
+          <li><b>반대</b> — <span class="en-s">I'm <b style="color:var(--chalk)">against</b> the plan.</span> 그 계획에 반대한다</li>
+          <li><b>대항</b> — <span class="en-s">Korea played <b style="color:var(--chalk)">against</b> Japan.</span></li>
+          <li><b>기댐</b> — <span class="en-s">He leaned <b style="color:var(--chalk)">against</b> the wall.</span> 벽에 기댔다</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">despite</span><span class="acc-ko">~에도 불구하고</span></summary>
+      <div class="acc-body">
+        <div class="ex good"><div class="en-line">We went out <span class="p">despite</span> the rain.</div><div class="ko-line">비가 왔지만 나갔다.</div></div>
+        <div class="note warn" style="margin-bottom:0"><span class="lbl">despite 뒤에 of는 없습니다</span>
+        <p><s style="color:var(--fg-faint)">despite of the rain</s> → <b class="hl-g">despite the rain</b> 또는 <b class="hl-g">in spite of the rain</b><br>
+        despite = in spite of. of는 in spite 쪽에만 붙습니다.</p></div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary><span class="acc-en">except / besides</span><span class="acc-ko">~을 제외하고 / ~외에도</span></summary>
+      <div class="acc-body">
+        <div class="ex good"><div class="en-line">Everyone came <span class="p">except</span> Tom.</div><div class="ko-line">톰을 <b style="color:var(--coral)">빼고</b> 다 왔다 — 제외</div></div>
+        <div class="ex good"><div class="en-line"><span class="p">Besides</span> Tom, three others came.</div><div class="ko-line">톰 <b style="color:var(--mint)">외에도</b> 세 명이 더 왔다 — 추가</div></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 09 PHRASAL PREP ============ -->
+<section id="phrasal">
+  <div class="sec-num">09 / 확장</div>
+  <h2>두 단어 이상으로 된 전치사</h2>
+  <p class="sec-lead">여러 단어가 뭉쳐서 전치사 하나처럼 작동하는 표현입니다.
+  문어체·업무 영어에서 특히 많이 등장하므로 <strong>덩어리째 외우는 편이 빠릅니다.</strong></p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:26%">표현</th><th style="width:20%">뜻</th><th>예문</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">because of</td><td>~때문에</td><td><span class="en-s">delayed <b style="color:var(--chalk)">because of</b> the snow</span></td></tr>
+        <tr><td class="mono">due to</td><td>~로 인해</td><td><span class="en-s">cancelled <b style="color:var(--chalk)">due to</b> bad weather</span></td></tr>
+        <tr><td class="mono">thanks to</td><td>~덕분에</td><td><span class="en-s"><b style="color:var(--chalk)">Thanks to</b> your help, I passed.</span></td></tr>
+        <tr><td class="mono">according to</td><td>~에 따르면</td><td><span class="en-s"><b style="color:var(--chalk)">According to</b> the report, sales rose.</span></td></tr>
+        <tr><td class="mono">instead of</td><td>~대신에</td><td><span class="en-s">tea <b style="color:var(--chalk)">instead of</b> coffee</span></td></tr>
+        <tr><td class="mono">in front of</td><td>~앞에</td><td><span class="en-s">parked <b style="color:var(--chalk)">in front of</b> the store</span></td></tr>
+        <tr><td class="mono">next to</td><td>~옆에</td><td><span class="en-s">the café <b style="color:var(--chalk)">next to</b> the bank</span></td></tr>
+        <tr><td class="mono">in addition to</td><td>~에 더하여</td><td><span class="en-s"><b style="color:var(--chalk)">In addition to</b> English, she speaks French.</span></td></tr>
+        <tr><td class="mono">in spite of</td><td>~에도 불구하고</td><td><span class="en-s"><b style="color:var(--chalk)">In spite of</b> the noise, he slept.</span></td></tr>
+        <tr><td class="mono">as for</td><td>~에 관해서는</td><td><span class="en-s"><b style="color:var(--chalk)">As for</b> me, I'll stay.</span></td></tr>
+        <tr><td class="mono">regardless of</td><td>~와 상관없이</td><td><span class="en-s"><b style="color:var(--chalk)">Regardless of</b> the cost, we'll do it.</span></td></tr>
+        <tr><td class="mono">on behalf of</td><td>~를 대신하여</td><td><span class="en-s">speaking <b style="color:var(--chalk)">on behalf of</b> the team</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note key">
+    <span class="lbl">because vs because of · 뒤에 뭐가 오나</span>
+    <p><b class="hl">because of</b> + <b>명사</b> → <span class="en-s">We stayed home because of the rain.</span><br>
+    <b class="hl-b">because</b> + <b>문장(주어+동사)</b> → <span class="en-s">We stayed home because it rained.</span><br>
+    <s style="color:var(--fg-faint)">because of it rained</s> 는 틀린 문장입니다. <span class="mono">due to, thanks to, in spite of</span>도 모두 뒤에 명사가 옵니다.</p>
+  </div>
+</section>
+
+<!-- ============ 10 GERUND ============ -->
+<section id="gerund">
+  <div class="sec-num">10 / 확장</div>
+  <h2>전치사 뒤에 동사를 쓰고 싶을 때</h2>
+  <p class="sec-lead">규칙은 하나뿐입니다. <strong>전치사 뒤의 동사는 반드시 -ing 형태(동명사)</strong>로 바꿉니다.
+  예외는 없습니다.</p>
+
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(255,123,107,.25)">
+      <div class="panel-title" style="color:var(--coral);margin-bottom:10px">틀린 문장</div>
+      <div class="en-line" style="font-size:17px;color:#C9BEBB;line-height:1.9">
+        <s>good at swim</s><br><s>before go out</s><br><s>interested in learn</s>
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(99,217,176,.25)">
+      <div class="panel-title" style="color:var(--mint);margin-bottom:10px">맞는 문장</div>
+      <div class="en-line" style="font-size:17px;line-height:1.9">
+        good at <span class="p">swimming</span><br>before <span class="p">going</span> out<br>interested in <span class="p">learning</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>가장 헷갈리는 지점 · to의 두 얼굴</h3>
+  <p>to는 <strong>전치사</strong>일 때도 있고 <strong>to부정사의 to</strong>일 때도 있습니다. 뒤에 오는 형태가 완전히 달라집니다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:36%">to의 정체</th><th>뒤에 오는 형태</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:var(--sky)">to부정사</b> — want to, need to, decide to</td><td><span class="en-s">I want <b style="color:var(--sky)">to go</b>.</span> 동사원형</td></tr>
+        <tr><td><b style="color:var(--chalk)">전치사 to</b> — look forward to, be used to</td><td><span class="en-s">I look forward to <b style="color:var(--chalk)">going</b>.</span> 동명사</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="lbl">전치사 to를 쓰는 표현 · 반드시 -ing</span>
+    <p><span class="mono">look forward to</span> ~을 고대하다 → <span class="en-s">I look forward to <b style="color:var(--chalk)">meeting</b> you.</span><br>
+    <span class="mono">be used to</span> ~에 익숙하다 → <span class="en-s">I'm used to <b style="color:var(--chalk)">working</b> late.</span><br>
+    <span class="mono">object to</span> ~에 반대하다 · <span class="mono">be committed to</span> ~에 헌신하다 ·
+    <span class="mono">contribute to</span> ~에 기여하다 · <span class="mono">be opposed to</span> ~에 반대하다</p>
+  </div>
+
+  <div class="note info">
+    <span class="lbl">비교해서 기억하기</span>
+    <p><span class="en-s">I <b style="color:var(--sky)">used to</b> work late.</span> — 예전엔 늦게까지 일했다 (지금은 아님) · to부정사<br>
+    <span class="en-s">I'm <b style="color:var(--chalk)">used to</b> work<b>ing</b> late.</span> — 늦게까지 일하는 데 익숙하다 · 전치사</p>
+  </div>
+
+  <h3>구분법 · to 뒤에 "it"을 넣어보기</h3>
+  <p>to 뒤에 <span class="mono">it</span>이나 <span class="mono">this</span>를 넣었을 때 말이 되면 <strong>전치사</strong>입니다.</p>
+  <ul class="bul">
+    <li><span class="en-s">I look forward to <b style="color:var(--mint)">it</b>.</span> → 자연스러움 → 전치사 → 뒤에 -ing</li>
+    <li><span class="en-s">I want to <b style="color:var(--coral)">it</b>.</span> → 어색함 → to부정사 → 뒤에 동사원형</li>
+  </ul>
+</section>
+
+<!-- ============ 11 COLLOCATION ============ -->
+<section id="collocation">
+  <div class="sec-num">11 / 확장</div>
+  <h2>단어마다 정해진 짝꿍 전치사</h2>
+  <p class="sec-lead">사실 전치사의 상당수는 논리가 아니라 <strong>단어와 함께 굳어진 습관</strong>입니다.
+  아래 목록은 통째로 외우는 대상입니다. 검색창에 단어나 한글 뜻을 넣어 찾아보세요.</p>
+
+  <div class="panel">
+    <div class="panel-hd">
+      <span class="panel-title">짝꿍 전치사 찾기</span>
+      <span class="panel-title" id="col-count">전체 48개</span>
+    </div>
+    <input id="col-search" type="text" placeholder="예: afraid, 의존하다, in, 결혼"
+      style="width:100%;padding:12px 15px;border-radius:10px;border:1px solid var(--line);
+      background:var(--bg-2);color:var(--fg);font-family:var(--font-kr);font-size:15px;outline:none">
+    <div class="btn-row" style="margin-top:14px" id="col-filters">
+      <button class="btn on" data-cat="all">전체</button>
+      <button class="btn" data-cat="verb">동사 +</button>
+      <button class="btn" data-cat="adj">형용사 +</button>
+      <button class="btn" data-cat="noun">명사 +</button>
+    </div>
+    <div id="col-list" style="margin-top:16px;max-height:430px;overflow-y:auto"></div>
+  </div>
+</section>
+
+<!-- ============ 12 MISTAKES ============ -->
+<section id="mistakes">
+  <div class="sec-num">12 / 마무리</div>
+  <h2>한국인이 자주 틀리는 전치사 <span class="en">16</span></h2>
+  <p class="sec-lead">대부분 한국어를 그대로 옮기다가 생기는 실수입니다.
+  먼저 <strong>어디가 틀렸는지 스스로 짚어보고</strong> 카드를 눌러 확인하세요.</p>
+  <div id="mis-list"></div>
+</section>
+
+<!-- ============ 13 QUIZ ============ -->
+<section id="quiz">
+  <div class="sec-num">13 / 마무리</div>
+  <h2>최종 점검 퀴즈</h2>
+  <p class="sec-lead">전체 15문항입니다. 답을 고르면 바로 해설이 나옵니다. 틀려도 괜찮으니 감각으로 먼저 골라보세요.</p>
+
+  <div class="panel">
+    <div class="panel-hd">
+      <span class="panel-title">진행 상황</span>
+      <span class="panel-title" id="q-progress">0 / 15 완료 · 0점</span>
+    </div>
+    <div style="height:5px;background:var(--bg-2);border-radius:3px;overflow:hidden">
+      <div id="q-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--chalk),var(--mint));transition:width .3s"></div>
+    </div>
+  </div>
+
+  <div id="quiz-list"></div>
+
+  <div id="q-result" class="panel" style="display:none;text-align:center">
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--fg-faint)">RESULT</div>
+    <div id="q-score" style="font-size:44px;font-weight:800;margin:10px 0;letter-spacing:-.03em"></div>
+    <div id="q-msg" style="color:var(--fg-dim);font-size:15px"></div>
+    <button class="btn" id="q-reset" style="margin-top:20px">다시 풀기</button>
+  </div>
+</section>
+
+<!-- ============ 14 CHEATSHEET ============ -->
+<section id="cheatsheet">
+  <div class="sec-num">14 / 마무리</div>
+  <h2>한 장 요약</h2>
+  <p class="sec-lead">헷갈릴 때 이 장만 다시 보면 됩니다.</p>
+
+  <h3>at · on · in 한 줄 정리</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:14%"></th><th style="width:43%">시간</th><th>장소</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="en-s" style="color:var(--chalk);font-size:19px;font-style:italic">at</span></td>
+          <td>시각 · 식사 · 밤<br><span class="en-s" style="font-size:14px;color:var(--fg-faint)">at 6 p.m. · at noon · at night</span></td>
+          <td>한 지점<br><span class="en-s" style="font-size:14px;color:var(--fg-faint)">at the door · at the bus stop</span></td>
+        </tr>
+        <tr>
+          <td><span class="en-s" style="color:var(--sky);font-size:19px;font-style:italic">on</span></td>
+          <td>날짜 · 요일<br><span class="en-s" style="font-size:14px;color:var(--fg-faint)">on Monday · on July 27</span></td>
+          <td>표면 · 접촉<br><span class="en-s" style="font-size:14px;color:var(--fg-faint)">on the wall · on the bus</span></td>
+        </tr>
+        <tr>
+          <td><span class="en-s" style="color:var(--mint);font-size:19px;font-style:italic">in</span></td>
+          <td>월 · 계절 · 연도 · 하루의 때<br><span class="en-s" style="font-size:14px;color:var(--fg-faint)">in May · in 2026 · in the morning</span></td>
+          <td>공간 내부<br><span class="en-s" style="font-size:14px;color:var(--fg-faint)">in the room · in Seoul · in a car</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>헷갈리는 짝 총정리</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:30%">비교</th><th>구분 기준</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">for / during</td><td>숫자로 센 길이 = for · 사건 이름 = during</td></tr>
+        <tr><td class="mono">since / for</td><td>시작 시점 = since · 지속 기간 = for</td></tr>
+        <tr><td class="mono">by / until</td><td>그 전에 끝냄 = by · 그때까지 지속 = until</td></tr>
+        <tr><td class="mono">in / within</td><td>~후에 = in · ~이내에 = within</td></tr>
+        <tr><td class="mono">to / toward</td><td>도착함 = to · 그쪽 방향 = toward</td></tr>
+        <tr><td class="mono">in / into</td><td>정지 상태 = in · 들어가는 동작 = into</td></tr>
+        <tr><td class="mono">through / across</td><td>내부 통과 = through · 표면 횡단 = across</td></tr>
+        <tr><td class="mono">over / above</td><td>바로 위·덮음 = over · 더 높이 = above</td></tr>
+        <tr><td class="mono">between / among</td><td>둘·개별 = between · 셋 이상 무리 = among</td></tr>
+        <tr><td class="mono">beside / besides</td><td>옆에 = beside · ~외에 = besides</td></tr>
+        <tr><td class="mono">with / by</td><td>손에 든 도구 = with · 수단·방법 = by</td></tr>
+        <tr><td class="mono">like / as</td><td>비유(사실 아님) = like · 실제 자격 = as</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>전치사를 쓰면 안 되는 자리</h3>
+  <div class="grid2">
+    <div class="card">
+      <div class="panel-title" style="margin-bottom:10px">시간 표현 앞</div>
+      <div class="en-s" style="color:var(--fg-dim);line-height:1.9;font-size:15px">
+        this / last / next / every + 시간<br>
+        <span style="color:var(--mint)">this morning, last week, next year, every day</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="panel-title" style="margin-bottom:10px">이미 방향을 품은 부사</div>
+      <div class="en-s" style="color:var(--fg-dim);line-height:1.9;font-size:15px">
+        go / come + 부사<br>
+        <span style="color:var(--mint)">go home, come here, go abroad, go upstairs</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="panel-title" style="margin-bottom:10px">타동사 뒤 (전치사 불필요)</div>
+      <div class="en-s" style="color:var(--fg-dim);line-height:1.9;font-size:15px">
+        <span style="color:var(--mint)">discuss / marry / enter / answer /<br>attend / reach / mention / resemble</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="panel-title" style="margin-bottom:10px">반대로 꼭 필요한 자동사</div>
+      <div class="en-s" style="color:var(--fg-dim);line-height:1.9;font-size:15px">
+        <span style="color:var(--chalk)">listen to / wait for / look at /<br>arrive at·in / graduate from / apologize to</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note key">
+    <span class="lbl">마지막 조언</span>
+    <p>전치사는 규칙표를 외워서 완성되지 않습니다. 규칙은 60%까지만 데려다주고, 나머지 40%는
+    <strong>많이 읽고 들으면서 쌓이는 감각</strong>입니다.<br>
+    새 표현을 만나면 단어 하나가 아니라 <span class="mono">depend on</span>, <span class="mono">in charge of</span>처럼
+    <strong>전치사까지 묶어서 통째로</strong> 저장하세요. 그게 가장 빠른 길입니다.</p>
+  </div>
+</section>
+
+<footer>
+  영어 전치사 완전정복 · 초보자를 위한 인터랙티브 강의<br>
+  <span style="color:var(--fg-faint);font-size:12px">시뮬레이터와 퀴즈는 모두 이 파일 안에서 동작합니다. 인터넷 없이도 열립니다.</span>
+</footer>
+
+</div><!-- /wrap -->
+</div><!-- /main -->
+
+<script>
+(function(){
+'use strict';
+var $  = function(s,c){return (c||document).querySelector(s);};
+var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+
+/* ---------- 사이드바 · 스크롤 스파이 · 진행 바 ---------- */
+var sidebar = $('#sidebar'), menuBtn = $('#menu-btn');
+menuBtn.addEventListener('click', function(){ sidebar.classList.toggle('open'); });
+$$('.sb-link').forEach(function(a){
+  a.addEventListener('click', function(){ if(window.innerWidth<=960) sidebar.classList.remove('open'); });
+});
+var secs = $$('section[id]'), links = $$('.sb-link');
+function onScroll(){
+  var h = document.documentElement;
+  var pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+  $('#progress').style.width = Math.min(100, Math.max(0,pct)) + '%';
+  var cur = secs[0] ? secs[0].id : '';
+  secs.forEach(function(s){ if(s.getBoundingClientRect().top <= 140) cur = s.id; });
+  links.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href') === '#'+cur); });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ---------- 01 · 전치사 교체 데모 ---------- */
+$$('[data-sw]').forEach(function(b){
+  b.addEventListener('click', function(){
+    $$('[data-sw]').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    $('#swap-word').textContent = b.dataset.sw;
+    $('#swap-ko').innerHTML = b.dataset.ko.replace(/<b>/g,'<b style="color:var(--chalk)">');
+  });
+});
+
+/* ---------- 03 · 시간 전치사 훈련기 ---------- */
+var timeQ = [
+  {t:'___ Monday', a:'on', w:'요일 앞에는 on. 달력 한 칸을 짚는 느낌입니다.'},
+  {t:'___ 7 o\u2019clock', a:'at', w:'정확한 시각은 점 하나 → at.'},
+  {t:'___ July', a:'in', w:'월 이름은 큰 시간 덩어리 → in.'},
+  {t:'___ the morning', a:'in', w:'하루의 때(아침·오후·저녁)는 in.'},
+  {t:'___ night', a:'at', w:'예외 중의 예외. night만 at을 씁니다.'},
+  {t:'___ 2026', a:'in', w:'연도는 in.'},
+  {t:'___ my birthday', a:'on', w:'특정한 하루는 on.'},
+  {t:'___ noon', a:'at', w:'정오는 시각 → at.'},
+  {t:'___ summer', a:'in', w:'계절은 in.'},
+  {t:'___ Sunday morning', a:'on', w:'보통 in the morning이지만, 요일이 붙으면 on으로 바뀝니다.'},
+  {t:'___ March 3', a:'on', w:'날짜는 on.'},
+  {t:'___ the 21st century', a:'in', w:'세기처럼 아주 긴 기간은 in.'},
+  {t:'___ lunch', a:'at', w:'식사 시간은 at.'},
+  {t:'___ Fridays', a:'on', w:'요일 복수형은 "매주 금요일마다" → on.'},
+  {t:'___ the evening', a:'in', w:'저녁도 하루의 때 → in.'}
+];
+makeTrainer(timeQ, 't', function(q){ return q.t; });
+
+/* ---------- 05 · 장소 전치사 훈련기 ---------- */
+var placeQ = [
+  {t:'She is waiting ___ the bus stop.', k:'그녀는 버스 정류장에서 기다리고 있다.', a:'at', w:'정류장은 지도 위의 한 지점 → at.'},
+  {t:'The book is ___ the table.', k:'책이 탁자 위에 있다.', a:'on', w:'표면에 닿아 있으면 on.'},
+  {t:'They live ___ Seoul.', k:'그들은 서울에 산다.', a:'in', w:'도시·나라는 공간 → in.'},
+  {t:'I saw him ___ the bus.', k:'버스에서 그를 봤다.', a:'on', w:'서서 다닐 수 있는 큰 탈것은 on.'},
+  {t:'She is ___ her car.', k:'그녀는 차 안에 있다.', a:'in', w:'몸을 넣어 앉는 작은 탈것은 in.'},
+  {t:'There is a picture ___ the wall.', k:'벽에 그림이 걸려 있다.', a:'on', w:'벽면에 붙어 있으므로 on.'},
+  {t:'Meet me ___ the door.', k:'문 앞에서 만나자.', a:'at', w:'문은 만나는 지점 → at.'},
+  {t:'The keys are ___ my bag.', k:'열쇠는 내 가방 안에 있다.', a:'in', w:'가방 내부 → in.'},
+  {t:'He works ___ a bank.', k:'그는 은행에서 일한다.', a:'at', w:'직장을 말할 땐 지점 개념 → at (in a bank도 가능하나 at이 일반적).'},
+  {t:'We stayed ___ home.', k:'우리는 집에 있었다.', a:'at', w:'집이라는 지점에 머묾 → at home. (to home은 틀림)'},
+  {t:'The cat is ___ the box.', k:'고양이가 상자 안에 있다.', a:'in', w:'경계 안에 들어가 있으면 in.'},
+  {t:'Write your name ___ the top.', k:'맨 위에 이름을 쓰세요.', a:'at', w:'맨 위/아래 지점은 at the top / at the bottom.'}
+];
+makeTrainer(placeQ, 'p', function(q){ return q.t.replace('___','<span class="p">___</span>'); }, true);
+
+function makeTrainer(data, pfx, render, hasKo){
+  var order = data.map(function(_,i){return i;}), idx = 0, score = 0, done = 0, answered = false;
+  shuffle(order);
+  function draw(){
+    var q = data[order[idx]];
+    $('#'+pfx+'-q').innerHTML = render(q);
+    if(hasKo) $('#'+pfx+'-ko').textContent = q.k;
+    $('#'+pfx+'-fb').innerHTML = '';
+    answered = false;
+    $$('.'+pfx+'-ans').forEach(function(b){ b.classList.remove('on'); b.style.borderColor=''; b.style.color=''; });
+  }
+  $$('.'+pfx+'-ans').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(answered) return;
+      answered = true; done++;
+      var q = data[order[idx]], ok = b.dataset.a === q.a;
+      if(ok){ score++; b.style.borderColor='var(--mint)'; b.style.color='var(--mint)'; }
+      else{
+        b.style.borderColor='var(--coral)'; b.style.color='var(--coral)';
+        $$('.'+pfx+'-ans').forEach(function(x){
+          if(x.dataset.a===q.a){ x.style.borderColor='var(--mint)'; x.style.color='var(--mint)'; }
+        });
+      }
+      $('#'+pfx+'-fb').innerHTML = (ok
+        ? '<b style="color:var(--mint)">정답!</b> '
+        : '<b style="color:var(--coral)">아쉬워요.</b> 정답은 <b style="color:var(--mint);font-family:var(--font-en)">'+q.a+'</b> — ')
+        + q.w;
+      $('#'+pfx+'-score').textContent = score + ' / ' + done + ' 정답';
+    });
+  });
+  $('#'+pfx+'-next').addEventListener('click', function(){
+    idx = (idx+1) % order.length;
+    if(idx===0) shuffle(order);
+    draw();
+  });
+  draw();
+}
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } }
+
+/* ---------- 04 · 비교 탭 ---------- */
+$$('#cmp-tabs .btn').forEach(function(b){
+  b.addEventListener('click', function(){
+    $$('#cmp-tabs .btn').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    $$('.cmp-body').forEach(function(d){ d.hidden = (d.id !== b.dataset.cmp); });
+  });
+});
+
+/* ---------- 06 · 위치 시뮬레이터 ---------- */
+var POS = {
+  'on':          {x:240,y:114, layer:'front', en:'The ball is <span class="p">on</span> the box.', ko:'공이 상자 위에 (닿아서) 있다.', tip:'표면에 <b style="color:var(--fg-dim)">접촉</b>해 있을 때 on을 씁니다.'},
+  'in':          {x:240,y:170, layer:'back',  en:'The ball is <span class="p">in</span> the box.', ko:'공이 상자 안에 있다.', tip:'경계 <b style="color:var(--fg-dim)">안쪽</b>에 들어가 있으면 in. inside도 같은 뜻이지만 더 강조하는 표현입니다.'},
+  'under':       {x:240,y:232, layer:'front', en:'The ball is <span class="p">under</span> the box.', ko:'공이 상자 바로 아래에 있다.', tip:'바로 아래·덮여 있는 느낌. 수량이 "미만"일 때도 씁니다 — under 18.'},
+  'below':       {x:240,y:252, layer:'front', en:'The ball is <span class="p">below</span> the box.', ko:'공이 상자보다 낮은 곳에 있다.', tip:'"더 낮은 위치"라는 뜻이라 반드시 바로 밑일 필요는 없습니다.'},
+  'over':        {x:240,y:92,  layer:'front', en:'The ball is <span class="p">over</span> the box.', ko:'공이 상자 바로 위에 (떠서) 있다.', tip:'바로 위를 덮듯이. 닿지 않아도 됩니다. 넘어가는 움직임에도 씁니다 — jump over.'},
+  'above':       {x:240,y:62,  layer:'front', en:'The ball is <span class="p">above</span> the box.', ko:'공이 상자보다 높은 곳에 있다.', tip:'"더 높이"에 초점. 수직으로 정렬될 필요는 없습니다 — above average.'},
+  'behind':      {x:304,y:126, layer:'back',  en:'The ball is <span class="p">behind</span> the box.', ko:'공이 상자 뒤에 있다.', tip:'상자에 가려 일부만 보이는 상태입니다.'},
+  'in front of': {x:214,y:202, layer:'front', en:'The ball is <span class="p">in front of</span> the box.', ko:'공이 상자 앞에 있다.', tip:'세 단어가 한 덩어리입니다. in front of the box — of를 빠뜨리지 마세요.'},
+  'next to':     {x:332,y:176, layer:'front', en:'The ball is <span class="p">next to</span> the box.', ko:'공이 상자 바로 옆에 있다.', tip:'beside · by도 같은 뜻입니다. next to가 가장 흔하게 쓰입니다.'},
+  'near':        {x:396,y:200, layer:'front', en:'The ball is <span class="p">near</span> the box.', ko:'공이 상자 근처에 있다.', tip:'옆까지는 아니고 가까운 범위. close to도 같은 뜻입니다.'},
+  'against':     {x:162,y:178, layer:'front', en:'The ball is leaning <span class="p">against</span> the box.', ko:'공이 상자에 기대어 있다.', tip:'옆면에 <b style="color:var(--fg-dim)">밀착</b>해 기댄 상태. "반대하다"라는 뜻도 같은 이미지에서 나옵니다.'},
+  'between':     {x:240,y:170, layer:'front', scene:'pair', en:'The ball is <span class="p">between</span> the two boxes.', ko:'공이 두 상자 사이에 있다.', tip:'대상이 <b style="color:var(--fg-dim)">둘</b>이거나 하나하나 구분될 때 between.'},
+  'among':       {x:226,y:178, layer:'front', scene:'multi', en:'The ball is <span class="p">among</span> the boxes.', ko:'공이 상자들 사이에 섞여 있다.', tip:'셋 이상의 <b style="color:var(--fg-dim)">무리 속</b>에 있을 때 among.'}
+};
+var ball = $('#ball'), ballBack = $('#ball-back'), shadow = $('#shadow');
+function setPos(name){
+  var d = POS[name]; if(!d) return;
+  $('#g-pair').style.opacity  = d.scene==='pair'  ? 1 : 0;
+  $('#g-multi').style.opacity = d.scene==='multi' ? 1 : 0;
+  $('#g-box').style.opacity   = d.scene ? 0 : 1;
+  var front = d.layer==='front';
+  $('#box-face').setAttribute('fill', name==='in' ? 'rgba(38,49,63,.34)' : '#26313F');
+  ball.setAttribute('cx', d.x); ball.setAttribute('cy', d.y);
+  ballBack.setAttribute('cx', d.x); ballBack.setAttribute('cy', d.y);
+  ball.style.opacity = front ? 1 : 0;
+  ballBack.style.opacity = front ? 0 : 1;
+  ballBack.setAttribute('fill', '#F2C14E');
+  shadow.setAttribute('cx', d.x);
+  var far = Math.max(0, 266 - d.y);
+  shadow.setAttribute('rx', Math.max(10, 26 - far*0.045));
+  shadow.style.opacity = Math.max(.05, .26 - far*0.0008);
+  $('#sim-name').textContent = name;
+  $('#sim-en').innerHTML = d.en;
+  $('#sim-ko').textContent = d.ko;
+  $('#sim-tip').innerHTML = d.tip;
+}
+$$('#sim-btns .btn').forEach(function(b){
+  b.addEventListener('click', function(){
+    $$('#sim-btns .btn').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); setPos(b.dataset.pos);
+  });
+});
+ballBack.style.transition = ball.style.transition;
+setPos('on');
+
+/* ---------- 07 · 이동 시뮬레이터 ---------- */
+var MOV = {
+  'to':      {d:'M50 150 L360 150', sc:'point', en:'I walked <span class="p">to</span> the station.', ko:'나는 역까지 걸어갔다.', tip:'도착점이 분명한 이동. 목적지에 <b style="color:var(--fg-dim)">도달했다</b>는 뜻을 포함합니다.'},
+  'toward':  {d:'M50 150 L292 150', sc:'point', en:'He ran <span class="p">toward</span> the station.', ko:'그는 역 쪽으로 달려갔다.', tip:'방향만 가리킬 뿐 <b style="color:var(--fg-dim)">도착 여부는 모릅니다.</b> 영국식 철자는 towards.'},
+  'into':    {d:'M40 150 L256 150', sc:'box', en:'She walked <span class="p">into</span> the room.', ko:'그녀는 방 안으로 걸어 들어갔다.', tip:'밖 → 안으로 <b style="color:var(--fg-dim)">들어가는 동작</b>. 정지 상태는 in입니다.'},
+  'onto':    {d:'M40 205 C130 205 150 96 256 96', sc:'box', en:'The cat jumped <span class="p">onto</span> the desk.', ko:'고양이가 책상 위로 뛰어올랐다.', tip:'표면 <b style="color:var(--fg-dim)">위로 올라가는</b> 동작. 올라간 뒤의 상태는 on입니다.'},
+  'out of':  {d:'M256 150 L40 150', sc:'box', en:'He ran <span class="p">out of</span> the building.', ko:'그는 건물 밖으로 뛰어나갔다.', tip:'안 → 밖. 두 단어가 한 덩어리이고, out만 쓰면 어색합니다.'},
+  'from':    {d:'M392 150 L60 150', sc:'point', en:'The train came <span class="p">from</span> Busan.', ko:'그 기차는 부산에서 왔다.', tip:'<b style="color:var(--fg-dim)">출발점</b>을 표시합니다. 도착점 to와 짝으로 쓰입니다 — from A to B.'},
+  'through': {d:'M32 150 L448 150', sc:'box', en:'We drove <span class="p">through</span> the tunnel.', ko:'우리는 터널을 통과해 운전했다.', tip:'<b style="color:var(--fg-dim)">내부를 뚫고</b> 지나감. 들어갔다가 반대편으로 나옵니다.'},
+  'across':  {d:'M32 150 L448 150', sc:'river', en:'She swam <span class="p">across</span> the river.', ko:'그녀는 강을 헤엄쳐 건넜다.', tip:'<b style="color:var(--fg-dim)">표면을 가로질러</b> 반대편으로. 강·길·방을 건널 때 씁니다.'},
+  'along':   {d:'M28 207 L452 207', sc:'road', en:'We walked <span class="p">along</span> the river.', ko:'우리는 강을 따라 걸었다.', tip:'긴 것을 <b style="color:var(--fg-dim)">따라서</b> 나란히 이동합니다.'},
+  'around':  {d:'M32 150 L165 150 A85 85 0 0 1 335 150 L448 150', sc:'circle', en:'They walked <span class="p">around</span> the lake.', ko:'그들은 호수를 빙 둘러 걸었다.', tip:'둘레를 도는 이동. "~주변에"라는 위치 뜻으로도 씁니다.'},
+  'over':    {d:'M32 215 C130 215 170 56 247 56 C324 56 356 215 448 215', sc:'wall', en:'The horse jumped <span class="p">over</span> the fence.', ko:'말이 울타리를 뛰어넘었다.', tip:'위로 <b style="color:var(--fg-dim)">넘어가는</b> 움직임. 넘지 않고 그냥 위에 있을 때도 over입니다.'},
+  'past':    {d:'M28 215 L452 215', sc:'pole', en:'I walked <span class="p">past</span> the bank.', ko:'나는 은행을 지나쳐 걸어갔다.', tip:'옆을 <b style="color:var(--fg-dim)">스쳐 지나감</b>. 들어가지 않고 그냥 통과합니다.'}
+};
+var movPath = $('#mov-path'), movDot = $('#mov-dot'), movRAF = null;
+var scenes = {point:'#sc-point', box:'#sc-box', river:'#sc-river', road:'#sc-road', circle:'#sc-circle', wall:'#sc-wall', pole:'#sc-pole'};
+function setMov(name){
+  var m = MOV[name]; if(!m) return;
+  Object.keys(scenes).forEach(function(k){ $(scenes[k]).style.opacity = (k===m.sc) ? 1 : 0; });
+  movPath.setAttribute('d', m.d);
+  $('#mov-name').textContent = name;
+  $('#mov-en').innerHTML = m.en;
+  $('#mov-ko').textContent = m.ko;
+  $('#mov-tip').innerHTML = m.tip;
+  runMov();
+}
+function runMov(){
+  if(movRAF) cancelAnimationFrame(movRAF);
+  var len = movPath.getTotalLength();
+  if(!len){ return; }
+  var dur = 1700, t0 = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){ var pt = movPath.getPointAtLength(len); movDot.setAttribute('cx',pt.x); movDot.setAttribute('cy',pt.y); return; }
+  function step(ts){
+    if(t0===null) t0 = ts;
+    var k = Math.min(1, (ts-t0)/dur);
+    var e = k<.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2;
+    var pt = movPath.getPointAtLength(len*e);
+    movDot.setAttribute('cx', pt.x); movDot.setAttribute('cy', pt.y);
+    if(k<1) movRAF = requestAnimationFrame(step);
+  }
+  movRAF = requestAnimationFrame(step);
+}
+$$('#mov-btns .btn').forEach(function(b){
+  b.addEventListener('click', function(){
+    $$('#mov-btns .btn').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); setMov(b.dataset.mv);
+  });
+});
+setMov('to');
+
+/* ---------- 11 · 짝꿍 전치사 목록 ---------- */
+var COL = [
+  {k:'depend <b>on</b>', ko:'~에 의존하다 · ~에 달려 있다', c:'verb'},
+  {k:'rely <b>on</b>', ko:'~을 믿고 의지하다', c:'verb'},
+  {k:'listen <b>to</b>', ko:'~을 듣다', c:'verb'},
+  {k:'wait <b>for</b>', ko:'~을 기다리다', c:'verb'},
+  {k:'look <b>at</b>', ko:'~을 보다', c:'verb'},
+  {k:'look <b>for</b>', ko:'~을 찾다', c:'verb'},
+  {k:'look forward <b>to</b>', ko:'~을 고대하다 (뒤에 -ing)', c:'verb'},
+  {k:'apologize <b>to</b> 사람 <b>for</b> 일', ko:'~에게 ~에 대해 사과하다', c:'verb'},
+  {k:'belong <b>to</b>', ko:'~에 속하다 · ~의 것이다', c:'verb'},
+  {k:'agree <b>with</b> 사람', ko:'~의 의견에 동의하다', c:'verb'},
+  {k:'agree <b>to</b> 제안', ko:'~을 수락하다', c:'verb'},
+  {k:'arrive <b>at</b> 좁은 곳', ko:'~에 도착하다 (역·건물)', c:'verb'},
+  {k:'arrive <b>in</b> 넓은 곳', ko:'~에 도착하다 (도시·나라)', c:'verb'},
+  {k:'graduate <b>from</b>', ko:'~를 졸업하다', c:'verb'},
+  {k:'suffer <b>from</b>', ko:'~로 고통받다', c:'verb'},
+  {k:'consist <b>of</b>', ko:'~로 구성되다', c:'verb'},
+  {k:'concentrate <b>on</b>', ko:'~에 집중하다', c:'verb'},
+  {k:'focus <b>on</b>', ko:'~에 초점을 맞추다', c:'verb'},
+  {k:'apply <b>for</b> 자리', ko:'~에 지원하다', c:'verb'},
+  {k:'apply <b>to</b> 기관', ko:'~에 신청하다', c:'verb'},
+  {k:'complain <b>about</b>', ko:'~에 대해 불평하다', c:'verb'},
+  {k:'worry <b>about</b>', ko:'~을 걱정하다', c:'verb'},
+  {k:'think <b>about</b> / <b>of</b>', ko:'~에 대해 생각하다', c:'verb'},
+  {k:'talk <b>to</b> / <b>with</b>', ko:'~와 이야기하다', c:'verb'},
+  {k:'talk <b>about</b>', ko:'~에 대해 이야기하다', c:'verb'},
+  {k:'ask <b>for</b>', ko:'~을 요청하다', c:'verb'},
+  {k:'pay <b>for</b>', ko:'~의 값을 지불하다', c:'verb'},
+  {k:'search <b>for</b>', ko:'~을 찾다', c:'verb'},
+  {k:'succeed <b>in</b>', ko:'~에 성공하다', c:'verb'},
+  {k:'participate <b>in</b>', ko:'~에 참가하다', c:'verb'},
+  {k:'believe <b>in</b>', ko:'~의 존재·가치를 믿다', c:'verb'},
+  {k:'be afraid <b>of</b>', ko:'~을 두려워하다', c:'adj'},
+  {k:'be interested <b>in</b>', ko:'~에 관심이 있다', c:'adj'},
+  {k:'be good <b>at</b>', ko:'~을 잘하다', c:'adj'},
+  {k:'be bad <b>at</b>', ko:'~을 못하다', c:'adj'},
+  {k:'be famous <b>for</b>', ko:'~로 유명하다', c:'adj'},
+  {k:'be responsible <b>for</b>', ko:'~에 책임이 있다', c:'adj'},
+  {k:'be proud <b>of</b>', ko:'~을 자랑스러워하다', c:'adj'},
+  {k:'be tired <b>of</b>', ko:'~에 싫증나다', c:'adj'},
+  {k:'be full <b>of</b>', ko:'~로 가득하다', c:'adj'},
+  {k:'be different <b>from</b>', ko:'~와 다르다', c:'adj'},
+  {k:'be similar <b>to</b>', ko:'~와 비슷하다', c:'adj'},
+  {k:'be married <b>to</b>', ko:'~와 결혼한 상태다', c:'adj'},
+  {k:'be satisfied <b>with</b>', ko:'~에 만족하다', c:'adj'},
+  {k:'be familiar <b>with</b>', ko:'~에 익숙하다', c:'adj'},
+  {k:'be used <b>to</b>', ko:'~에 익숙하다 (뒤에 -ing)', c:'adj'},
+  {k:'be worried <b>about</b>', ko:'~을 걱정하다', c:'adj'},
+  {k:'be based <b>on</b>', ko:'~에 근거하다', c:'adj'},
+  {k:'a reason <b>for</b>', ko:'~의 이유', c:'noun'},
+  {k:'a solution <b>to</b>', ko:'~의 해결책', c:'noun'},
+  {k:'an increase <b>in</b>', ko:'~의 증가', c:'noun'},
+  {k:'the effect <b>on</b>', ko:'~에 미치는 영향', c:'noun'},
+  {k:'a demand <b>for</b>', ko:'~에 대한 수요', c:'noun'},
+  {k:'an interest <b>in</b>', ko:'~에 대한 관심', c:'noun'},
+  {k:'in charge <b>of</b>', ko:'~을 담당하는', c:'noun'},
+  {k:'on purpose', ko:'일부러', c:'noun'},
+  {k:'in advance', ko:'미리 · 사전에', c:'noun'},
+  {k:'by mistake', ko:'실수로', c:'noun'},
+  {k:'on time', ko:'정시에', c:'noun'},
+  {k:'in time', ko:'시간 안에 · 늦지 않게', c:'noun'}
+];
+var catLabel = {verb:'VERB', adj:'ADJ', noun:'NOUN'};
+var colCat = 'all';
+function renderCol(){
+  var q = $('#col-search').value.trim().toLowerCase();
+  var out = COL.filter(function(it){
+    if(colCat!=='all' && it.c!==colCat) return false;
+    if(!q) return true;
+    return (it.k.replace(/<\/?b>/g,'') + ' ' + it.ko).toLowerCase().indexOf(q) > -1;
+  });
+  $('#col-count').textContent = out.length ? out.length + '개' : '결과 없음';
+  $('#col-list').innerHTML = out.length
+    ? out.map(function(it){
+        return '<div class="col-item"><span class="col-key">'+it.k+'</span>'+
+               '<span class="col-ko">'+it.ko+'</span>'+
+               '<span class="col-cat">'+catLabel[it.c]+'</span></div>';
+      }).join('')
+    : '<div class="col-empty">찾는 표현이 없습니다. 다른 단어로 검색해 보세요.</div>';
+}
+$('#col-search').addEventListener('input', renderCol);
+$$('#col-filters .btn').forEach(function(b){
+  b.addEventListener('click', function(){
+    $$('#col-filters .btn').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); colCat = b.dataset.cat; renderCol();
+  });
+});
+renderCol();
+
+/* ---------- 12 · 자주 틀리는 표현 ---------- */
+var MIS = [
+  {w:'I discussed <s>about</s> the plan.', r:'I discussed the plan.', y:'discuss는 목적어를 바로 받는 타동사입니다. "~에 대해"라는 뜻이 discuss 안에 이미 들어 있어서 about이 중복됩니다. mention, answer, resemble도 같습니다.'},
+  {w:'He married <s>with</s> her.', r:'He married her. / He is married <b>to</b> her.', y:'"결혼하다"라는 동작은 marry + 목적어. 다만 "결혼한 상태"를 말할 때는 be married to를 씁니다. with가 아니라 to입니다.'},
+  {w:'I arrived <s>to</s> Seoul.', r:'I arrived <b>in</b> Seoul.', y:'arrive 뒤에는 to를 쓰지 않습니다. 도시·나라처럼 넓은 곳은 in, 역·공항처럼 좁은 지점은 at을 씁니다.'},
+  {w:'Let\u2019s go <s>to</s> home.', r:'Let\u2019s go home.', y:'home은 그 자체가 "집으로"라는 뜻의 부사입니다. here, there, abroad, upstairs도 마찬가지로 to를 붙이지 않습니다.'},
+  {w:'I <s>entered into</s> the room.', r:'I entered the room.', y:'enter도 타동사입니다. 단, "협상에 착수하다"처럼 추상적인 뜻에서는 enter into an agreement처럼 쓰기도 합니다.'},
+  {w:'Please explain <s>me</s> the rule.', r:'Please explain the rule <b>to</b> me.', y:'explain은 사람을 바로 받지 못합니다. explain + 내용 + to + 사람 순서입니다. say, suggest, describe도 같은 구조입니다.'},
+  {w:'I met him <s>ago three days</s>.', r:'I met him three days <b>ago</b>.', y:'ago는 전치사가 아니라 부사라서 항상 시간 표현 뒤에 붙습니다.'},
+  {w:'See you <s>in</s> next week.', r:'See you next week.', y:'this, last, next, every가 붙은 시간 표현 앞에는 전치사를 쓰지 않습니다.'},
+  {w:'I studied <s>during</s> three hours.', r:'I studied <b>for</b> three hours.', y:'숫자로 센 기간의 길이는 for, 이름이 있는 사건·기간은 during입니다.'},
+  {w:'Finish the report <s>until</s> Friday.', r:'Finish the report <b>by</b> Friday.', y:'"끝내다"는 한 번에 완료되는 동작이므로 by. until은 그 시점까지 계속 이어질 때 씁니다 — wait until Friday.'},
+  {w:'<s>Despite of</s> the rain, we went out.', r:'<b>Despite</b> the rain / <b>In spite of</b> the rain', y:'despite에는 of가 붙지 않습니다. of가 필요한 쪽은 in spite of입니다.'},
+  {w:'I\u2019m good at <s>swim</s>.', r:'I\u2019m good at <b>swimming</b>.', y:'전치사 뒤의 동사는 반드시 -ing 형태입니다. 예외 없습니다.'},
+  {w:'I look forward to <s>see</s> you.', r:'I look forward to <b>seeing</b> you.', y:'이때 to는 to부정사가 아니라 전치사입니다. "to it"으로 바꿔 말이 되면 전치사이므로 뒤에 -ing를 씁니다.'},
+  {w:'We stayed home <s>because of</s> it rained.', r:'... <b>because</b> it rained. / ... <b>because of</b> the rain.', y:'because of 뒤에는 명사, because 뒤에는 문장이 옵니다. due to, thanks to도 뒤에 명사가 옵니다.'},
+  {w:'I went there <s>by a bus</s>.', r:'I went there <b>by bus</b>.', y:'교통수단을 나타내는 by 뒤에는 관사를 붙이지 않습니다. 특정 차량을 가리킬 땐 in my car, on the 7 o\u2019clock train처럼 표현합니다.'},
+  {w:'He is different <s>with</s> his brother.', r:'He is different <b>from</b> his brother.', y:'"다르다"는 different from. 반대로 "비슷하다"는 similar to입니다. 한국어 "~와"에 이끌려 with를 쓰기 쉽습니다.'}
+];
+$('#mis-list').innerHTML = MIS.map(function(m,i){
+  return '<div class="mis"><div class="mis-top" role="button" tabindex="0">'+
+    '<span class="mis-no">'+String(i+1).padStart(2,'0')+'</span>'+
+    '<span class="mis-wrong">'+m.w+'</span>'+
+    '<span class="mis-hint">정답 보기</span></div>'+
+    '<div class="mis-body"><div class="mis-right">'+m.r+'</div>'+
+    '<div class="mis-why">'+m.y+'</div></div></div>';
+}).join('');
+$$('.mis-top').forEach(function(t){
+  function toggle(){
+    var card = t.parentElement;
+    card.classList.toggle('open');
+    t.querySelector('.mis-hint').textContent = card.classList.contains('open') ? '접기' : '정답 보기';
+  }
+  t.addEventListener('click', toggle);
+  t.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+});
+
+/* ---------- 13 · 최종 퀴즈 ---------- */
+var QUIZ = [
+  {s:'The class starts <u>___</u> 9 a.m.', o:['at','on','in'], a:0, e:'정확한 시각은 점 하나로 보므로 at입니다.'},
+  {s:'My birthday is <u>___</u> May 5.', o:['at','on','in'], a:1, e:'날짜는 달력의 한 칸 → on. 참고로 "in May"는 5월 한 달을 뜻합니다.'},
+  {s:'I usually read <u>___</u> the evening.', o:['at','on','in'], a:2, e:'아침·오후·저녁 등 하루의 때는 in. 단 at night만 예외입니다.'},
+  {s:'She has lived in Busan <u>___</u> 2019.', o:['for','since','during'], a:1, e:'2019라는 시작 시점이 왔으므로 since. 기간의 길이라면 for를 씁니다.'},
+  {s:'Please submit the form <u>___</u> Friday.', o:['by','until','in'], a:0, e:'제출은 한 번에 끝나는 동작이므로 마감을 뜻하는 by입니다.'},
+  {s:'He fell asleep <u>___</u> the meeting.', o:['for','during','since'], a:1, e:'the meeting은 이름이 있는 사건이므로 during입니다.'},
+  {s:'There is a poster <u>___</u> the wall.', o:['at','on','in'], a:1, e:'벽면에 붙어 있으므로 표면을 뜻하는 on입니다.'},
+  {s:'We got <u>___</u> a taxi at the airport.', o:['on','into','at'], a:1, e:'택시는 몸을 넣어 앉는 작은 탈것이라 in 계열. 타는 동작이므로 into(또는 get in)입니다.'},
+  {s:'The dog ran <u>___</u> the street to the park.', o:['through','across','along'], a:1, e:'길의 한쪽에서 반대쪽으로 표면을 가로지르므로 across입니다.'},
+  {s:'I\u2019m not good <u>___</u> remembering names.', o:['in','at','on'], a:1, e:'be good at은 굳어진 표현이고, 전치사 뒤라서 동사는 -ing 형태입니다.'},
+  {s:'The decision depends <u>___</u> the budget.', o:['of','on','to'], a:1, e:'depend on은 통째로 외우는 짝꿍 표현입니다.'},
+  {s:'She is married <u>___</u> a doctor.', o:['with','to','of'], a:1, e:'결혼한 상태는 be married to. with를 쓰지 않습니다.'},
+  {s:'We arrived <u>___</u> the airport at six.', o:['at','to','into'], a:0, e:'공항은 하나의 지점이므로 at. arrive to는 쓰지 않습니다.'},
+  {s:'I look forward <u>___</u> hearing from you.', o:['to','for','at'], a:0, e:'look forward to가 한 덩어리이며, 이때 to는 전치사라서 뒤에 -ing가 옵니다.'},
+  {s:'The event was cancelled <u>___</u> the typhoon.', o:['because','due to','despite'], a:1, e:'뒤에 명사(the typhoon)가 왔으므로 due to. because는 뒤에 문장이 와야 합니다.'}
+];
+var qDone = 0, qScore = 0;
+function buildQuiz(){
+  qDone = 0; qScore = 0;
+  $('#q-result').style.display = 'none';
+  $('#quiz-list').innerHTML = QUIZ.map(function(q,i){
+    return '<div class="qz" data-i="'+i+'">'+
+      '<div class="qz-q">문제 '+(i+1)+'</div>'+
+      '<div class="qz-s">'+q.s+'</div>'+
+      '<div class="qz-opts">'+ q.o.map(function(o,j){
+        return '<button class="qz-opt" data-j="'+j+'">'+o+'</button>';
+      }).join('') +'</div>'+
+      '<div class="qz-ex"></div></div>';
+  }).join('');
+  updateQ();
+  $$('.qz-opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var card = btn.closest('.qz');
+      if(card.classList.contains('done')) return;
+      var q = QUIZ[+card.dataset.i], j = +btn.dataset.j, ok = (j === q.a);
+      card.classList.add('done');
+      $$('.qz-opt', card).forEach(function(b){
+        b.disabled = true;
+        if(+b.dataset.j === q.a) b.classList.add('correct');
+      });
+      if(!ok) btn.classList.add('wrong');
+      $('.qz-ex', card).innerHTML = (ok
+        ? '<b style="color:var(--mint)">정답입니다.</b> '
+        : '<b style="color:var(--coral)">오답입니다.</b> 정답은 <b style="color:var(--mint);font-family:var(--font-en)">'+q.o[q.a]+'</b>. ') + q.e;
+      qDone++; if(ok) qScore++;
+      updateQ();
+      if(qDone === QUIZ.length) finishQ();
+    });
+  });
+}
+function updateQ(){
+  $('#q-progress').textContent = qDone + ' / ' + QUIZ.length + ' 완료 · ' + qScore + '점';
+  $('#q-bar').style.width = (qDone / QUIZ.length * 100) + '%';
+}
+function finishQ(){
+  var pct = Math.round(qScore / QUIZ.length * 100), msg;
+  if(pct >= 90)      msg = '훌륭합니다. 전치사 감각이 이미 자리를 잡았습니다. 이제는 실제 글과 대화에서 표현을 늘려가면 됩니다.';
+  else if(pct >= 70) msg = '기본기는 탄탄합니다. 틀린 문제의 해설만 다시 읽고, 12장 "자주 틀리는 표현"을 한 번 더 훑어보세요.';
+  else if(pct >= 40) msg = '핵심 원리는 잡혔습니다. 3장과 5장의 at·on·in을 복습하고 훈련기를 몇 번 더 돌려보세요.';
+  else               msg = '처음이라면 자연스러운 점수입니다. 14장 한 장 요약을 먼저 읽고, 시뮬레이터로 그림을 익힌 뒤 다시 도전해 보세요.';
+  $('#q-score').innerHTML = qScore + ' <span style="font-size:22px;color:var(--fg-faint)">/ ' + QUIZ.length + '</span>';
+  $('#q-msg').textContent = msg;
+  $('#q-result').style.display = 'block';
+}
+$('#q-reset').addEventListener('click', function(){
+  buildQuiz();
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+});
+buildQuiz();
+
+})();
+</script>
+</body>
+</html>
