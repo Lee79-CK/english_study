@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIZ.ENG PROTOCOL · Module IV 설득 · 숫자 · 협상 (14–17)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080c; --bg-2:#0c0e14; --panel:#11141c; --panel-2:#171b25;
+  --line:#222835; --line-2:#343c4e;
+  --ink:#e9edf5; --ink-2:#a4aec2; --ink-3:#69738a;
+  --cy:#22d3ee; --cy-dim:#0e7490; --mg:#f472b6; --lm:#a3e635;
+  --am:#fbbf24; --er:#fb7185; --vi:#a78bfa;
+  --mono:'JetBrains Mono','D2Coding',Consolas,monospace;
+  --disp:'Chakra Petch','Pretendard Variable',sans-serif;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --sbw:284px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.78;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(880px 520px at 82% -10%, rgba(34,211,238,.11), transparent 62%),
+    radial-gradient(720px 480px at 4% 106%, rgba(244,114,182,.075), transparent 60%)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.5;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px)}
+
+.shell{display:flex;position:relative;z-index:1}
+aside{width:var(--sbw);flex:0 0 var(--sbw);height:100vh;position:sticky;top:0;
+  border-right:1px solid var(--line);background:rgba(9,11,16,.9);
+  backdrop-filter:blur(12px);overflow-y:auto;padding:26px 0 60px}
+aside::-webkit-scrollbar{width:6px}
+aside::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+.brand{padding:0 24px 20px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.brand .mark{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:700;
+  font-size:12.5px;letter-spacing:.22em;color:var(--cy);text-transform:uppercase}
+.brand h2{font-size:17px;font-weight:800;margin-top:10px;letter-spacing:-.02em;line-height:1.38}
+.brand p{font-size:11.5px;color:var(--ink-3);margin-top:6px;font-family:var(--mono)}
+nav{padding:0 14px}
+nav .grp{font-family:var(--mono);font-size:10px;letter-spacing:.17em;color:var(--ink-3);
+  text-transform:uppercase;padding:16px 10px 7px}
+nav a{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border-radius:7px;
+  color:var(--ink-2);text-decoration:none;font-size:13.5px;line-height:1.45;transition:background .14s,color .14s}
+nav a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:22px;flex:0 0 22px}
+nav a:hover{background:var(--panel);color:var(--ink)}
+nav a.on{background:linear-gradient(90deg,rgba(34,211,238,.17),transparent);color:#fff;font-weight:600}
+nav a.on .n{color:var(--cy)}
+main{flex:1;min-width:0;padding:0 0 130px}
+.wrap{max-width:940px;margin:0 auto;padding:0 34px}
+
+.hero{border-bottom:1px solid var(--line);padding:76px 0 58px;margin-bottom:10px;
+  background:linear-gradient(180deg,rgba(34,211,238,.05),transparent)}
+.eyebrow{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.28em;color:var(--cy);
+  text-transform:uppercase;display:flex;align-items:center;gap:13px}
+.eyebrow::after{content:'';height:1px;flex:1;background:linear-gradient(90deg,var(--cy-dim),transparent)}
+.hero h1{font-size:clamp(31px,5vw,52px);font-weight:900;line-height:1.16;letter-spacing:-.045em;margin:22px 0 0}
+.hero h1 em{font-style:normal;color:var(--cy)}
+.hero h1 span.mg{color:var(--mg)}
+.hero .lede{font-size:17px;color:var(--ink-2);margin-top:20px;max-width:668px;line-height:1.82}
+.facts{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+.fact{border:1px solid var(--line);background:var(--panel);border-radius:9px;
+  padding:9px 14px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.fact b{color:var(--am);font-weight:700}
+
+section{padding:58px 0 8px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:12px;color:var(--cy);border:1px solid var(--cy-dim);
+  border-radius:7px;padding:4px 9px;flex:0 0 auto;margin-top:8px;background:rgba(34,211,238,.07)}
+.sec-head h2{font-size:clamp(23px,3.3vw,31px);font-weight:800;letter-spacing:-.035em;line-height:1.26}
+.sec-head .sub{color:var(--ink-3);font-size:14px;margin-top:6px;line-height:1.6}
+h3{font-size:19px;font-weight:700;letter-spacing:-.022em;margin:40px 0 12px;
+  padding-left:12px;border-left:3px solid var(--cy)}
+h4{font-size:15.5px;font-weight:700;margin:24px 0 9px;color:var(--ink)}
+p{color:var(--ink-2);margin:11px 0}
+p strong,li strong{color:var(--ink);font-weight:700}
+ul,ol{margin:12px 0 12px 20px;color:var(--ink-2)}
+li{margin:7px 0}
+.en{font-family:var(--mono);font-size:.9em;color:#8fe8ff;background:var(--panel-2);
+  border:1px solid var(--line);border-radius:5px;padding:1.5px 6px}
+
+.cold{border:1px solid var(--line);border-radius:13px;background:var(--bg-2);
+  padding:18px 20px;margin:22px 0;position:relative;overflow:hidden}
+.cold::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--er),var(--am))}
+.cold .cl{font-family:var(--disp);font-weight:600;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--er);margin-bottom:9px}
+.cold .msg{font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--ink-2);
+  background:#05060a;border:1px solid var(--line);border-radius:8px;padding:12px 14px;white-space:pre-wrap}
+.cold .msg .who{color:var(--cy);display:block;font-size:11px;margin-bottom:5px}
+.cold .rx{font-size:14px;color:var(--ink-3);margin-top:11px}
+.cold .rx b{color:var(--am)}
+
+.pb{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:18px 0;background:#0a0c11}
+.pb-bar{display:flex;align-items:center;gap:2px;background:var(--panel);
+  border-bottom:1px solid var(--line);padding:0 8px 0 0;overflow-x:auto}
+.pb-bar::-webkit-scrollbar{height:0}
+.pb-tab{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);background:none;border:0;
+  padding:12px 15px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.14s}
+.pb-tab:hover{color:var(--ink-2)}
+.pb-tab.on{color:var(--ink);border-bottom-color:var(--cy)}
+.pb-pane{display:none;padding:6px 0}
+.pb-pane.on{display:block}
+.ph{display:flex;align-items:flex-start;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(34,40,53,.6)}
+.ph:last-child{border-bottom:0}
+.ph:hover{background:rgba(34,211,238,.03)}
+.ph-txt{flex:1;min-width:0}
+.ph-en{font-family:var(--mono);font-size:13.5px;line-height:1.68;color:#cfe8f5;word-break:break-word}
+.ph-ko{font-size:12.5px;color:var(--ink-3);margin-top:4px;line-height:1.6}
+.ph-c{font-family:var(--mono);font-size:10px;color:var(--ink-3);background:var(--panel-2);
+  border:1px solid var(--line);border-radius:6px;padding:4px 8px;cursor:pointer;flex:0 0 auto;
+  margin-top:2px;transition:.14s}
+.ph-c:hover{color:var(--ink);border-color:var(--line-2)}
+.ph-c.done{color:var(--lm);border-color:var(--lm)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--cy);background:var(--panel);
+  border-radius:0 11px 11px 0;padding:15px 18px;margin:18px 0}
+.note .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cy);margin-bottom:6px;font-weight:700}
+.note p{margin:5px 0;font-size:14.5px}
+.note.warn{border-left-color:var(--am)} .note.warn .t{color:var(--am)}
+.note.trap{border-left-color:var(--er);background:linear-gradient(90deg,rgba(251,113,133,.06),var(--panel))}
+.note.trap .t{color:var(--er)}
+.note.ok{border-left-color:var(--lm)} .note.ok .t{color:var(--lm)}
+.note.tip{border-left-color:var(--vi)} .note.tip .t{color:var(--vi)}
+
+.tw{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:11px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:540px}
+th{background:var(--panel);text-align:left;padding:11px 14px;font-size:11px;
+  font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:rgba(34,211,238,.03)}
+td .mo{font-family:var(--mono);font-size:12.5px;color:#cfe8f5}
+td .x{color:var(--er)} td .o{color:var(--lm)}
+
+figure{margin:24px 0;border:1px solid var(--line);border-radius:13px;background:var(--bg-2);
+  padding:20px 18px 14px;overflow:hidden}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:center;
+  margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+
+.grid{display:grid;gap:13px;margin:18px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(252px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:16px}
+.card h5{font-size:14.5px;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin:4px 0;line-height:1.68}
+.card .mo{font-family:var(--mono);font-size:12px;color:#cfe8f5;display:block;margin-top:7px}
+.dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+
+.lab{border:1px solid var(--line-2);border-radius:15px;background:var(--panel);padding:21px;margin:24px 0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
+.lab-h{font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--am);margin-bottom:5px}
+.lab-s{font-size:13.5px;color:var(--ink-3);margin-bottom:17px}
+.lab-lb{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;
+  text-transform:uppercase;margin:14px 0 7px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:12px;padding:7px 13px;border-radius:20px;cursor:pointer;
+  border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink-2);transition:.15s}
+.chip:hover{border-color:var(--cy);color:var(--ink)}
+.chip.on{background:var(--cy);border-color:var(--cy);color:#04141a;font-weight:700}
+.out{font-family:var(--mono);font-size:13.5px;background:#05060a;border:1px solid var(--line);
+  border-radius:11px;padding:16px 17px;margin-top:16px;overflow-x:auto}
+.out .lbl{color:var(--ink-3);display:block;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:8px}
+.out .sent{color:#d8f4ff;line-height:1.72;font-size:13.5px;white-space:pre-wrap}
+.out .why{color:var(--ink-3);font-size:12px;margin-top:12px;padding-top:11px;
+  border-top:1px dashed var(--line);line-height:1.7;font-family:var(--sans)}
+.out .why b{color:var(--am)}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;
+  padding:3px 9px;border-radius:11px;margin-bottom:10px}
+.badge.f{background:rgba(244,114,182,.15);color:var(--mg)}
+.badge.n{background:rgba(34,211,238,.15);color:var(--cy)}
+.badge.c{background:rgba(163,230,53,.15);color:var(--lm)}
+.badge.w{background:rgba(251,191,36,.15);color:var(--am)}
+.badge.e{background:rgba(251,113,133,.15);color:var(--er)}
+
+.lad{display:flex;flex-direction:column;gap:6px;margin:18px 0}
+.rung{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;
+  border:1px solid var(--line);background:var(--bg-2);transition:.2s}
+.rung .lv{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;
+  flex:0 0 auto;background:var(--panel-2);color:var(--ink-3);border:1px solid var(--line);min-width:74px;text-align:center}
+.rung .sen{flex:1;min-width:0;font-family:var(--mono);font-size:12.5px;color:#cfe8f5;line-height:1.6}
+.rung .use{font-size:11.5px;color:var(--ink-3);flex:0 0 auto;text-align:right;max-width:176px;line-height:1.5}
+.rung.hi{border-color:var(--cy);background:rgba(34,211,238,.07);box-shadow:0 0 22px rgba(34,211,238,.09)}
+.rung.hi .lv{background:var(--cy);color:#04141a;border-color:var(--cy)}
+
+.tmpl{border:1px solid var(--line);border-left:3px solid var(--cy);border-radius:0 11px 11px 0;
+  background:#05060a;padding:15px 17px;margin:18px 0;font-family:var(--mono);font-size:12.5px;
+  line-height:1.85;color:#cfe8f5;white-space:pre-wrap;overflow-x:auto}
+.tmpl .k{color:var(--am);font-weight:700}
+.tmpl .g{color:var(--ink-3)}
+.tmpl .s{color:var(--mg);font-weight:700}
+
+.ba{display:grid;gap:13px;margin:20px 0;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.ba-box{border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:var(--bg-2)}
+.ba-box.b{border-left:3px solid var(--er)}
+.ba-box.a{border-left:3px solid var(--lm)}
+.ba-box .hd{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:10px;font-weight:700}
+.ba-box.b .hd{color:var(--er)} .ba-box.a .hd{color:var(--lm)}
+.ba-box .tx{font-family:var(--mono);font-size:12.5px;line-height:1.78;color:var(--ink-2);white-space:pre-wrap}
+.ba-box .nt{font-size:12.5px;color:var(--ink-3);margin-top:11px;padding-top:10px;border-top:1px dashed var(--line)}
+
+/* chart */
+.chartbox{border:1px solid var(--line);border-radius:12px;background:#05060a;padding:16px 14px 10px;margin-top:16px}
+.chartbox svg{width:100%;height:auto;display:block}
+.chartmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:10px;
+  padding-top:10px;border-top:1px solid var(--line)}
+.chartmeta b{color:var(--am)}
+.sentlv{border:1px solid var(--line);border-radius:10px;background:var(--bg-2);padding:12px 14px;margin-top:10px}
+.sentlv .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;padding:2px 8px;
+  border-radius:9px;background:var(--panel-2);color:var(--ink-3);display:inline-block;margin-bottom:7px}
+.sentlv.l1 .tag{background:rgba(163,230,53,.15);color:var(--lm)}
+.sentlv.l2 .tag{background:rgba(34,211,238,.15);color:var(--cy)}
+.sentlv.l3 .tag{background:rgba(244,114,182,.15);color:var(--mg)}
+.sentlv .en2{font-family:var(--mono);font-size:13px;color:#cfe8f5;line-height:1.7}
+.sentlv .ko2{font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.6}
+
+/* negotiation tree */
+.tr{margin-top:6px}
+.tr-said{border:1px solid var(--line);border-left:3px solid var(--mg);border-radius:0 10px 10px 0;
+  background:var(--bg-2);padding:12px 15px;margin:12px 0}
+.tr-said .who{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--mg);
+  text-transform:uppercase;display:block;margin-bottom:6px}
+.tr-said .tx2{font-family:var(--mono);font-size:13px;color:#cfe8f5;line-height:1.7}
+.tr-said.mine{border-left-color:var(--cy)}
+.tr-said.mine .who{color:var(--cy)}
+.tr-said.mine .tx2{color:#d8f4ff}
+.tr-opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--panel);
+  color:var(--ink-2);border-radius:9px;padding:11px 14px;margin:7px 0;cursor:pointer;
+  font-family:var(--mono);font-size:12.5px;transition:.14s;line-height:1.65}
+.tr-opt:hover{border-color:var(--cy);color:var(--ink);background:var(--panel-2)}
+.tr-end{border:1px solid var(--line-2);border-radius:12px;padding:16px 18px;margin-top:14px;background:var(--panel-2)}
+.tr-end.good{border-color:rgba(163,230,53,.45);background:rgba(163,230,53,.06)}
+.tr-end.mid{border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.06)}
+.tr-end.bad{border-color:rgba(251,113,133,.45);background:rgba(251,113,133,.06)}
+.tr-end .gr{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;margin-bottom:8px}
+.tr-end.good .gr{color:var(--lm)} .tr-end.mid .gr{color:var(--am)} .tr-end.bad .gr{color:var(--er)}
+.tr-end .ls{font-size:13.5px;color:var(--ink-2);line-height:1.72}
+.tr-end .ls b{color:var(--ink)}
+.tr-reset{font-family:var(--mono);font-size:11px;color:var(--ink-3);background:var(--bg-2);
+  border:1px solid var(--line-2);border-radius:8px;padding:7px 13px;cursor:pointer;margin-top:14px}
+.tr-reset:hover{color:var(--ink);border-color:var(--cy)}
+
+.qz{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:19px;margin:14px 0}
+.qz .qn{font-family:var(--mono);font-size:10.5px;color:var(--cy);letter-spacing:.13em;margin-bottom:8px}
+.qz .qq{font-size:15.5px;font-weight:700;margin-bottom:14px;letter-spacing:-.02em;line-height:1.58}
+.qz .qq .mo{font-family:var(--mono);font-size:14px;color:#cfe8f5;font-weight:400}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg-2);
+  color:var(--ink-2);border-radius:9px;padding:11px 14px;margin:7px 0;cursor:pointer;
+  font-family:var(--sans);font-size:14px;transition:.14s;line-height:1.58}
+.opt .mo{font-family:var(--mono);font-size:13px}
+.opt:hover:not(:disabled){border-color:var(--cy);color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--lm);background:rgba(163,230,53,.1);color:var(--ink)}
+.opt.wrong{border-color:var(--er);background:rgba(251,113,133,.09);color:var(--ink)}
+.qz-ex{display:none;margin-top:13px;padding:13px 15px;border-radius:9px;background:var(--bg-2);
+  border-left:3px solid var(--lm);font-size:14px;color:var(--ink-2);line-height:1.72}
+.qz-ex.show{display:block}
+.qz-ex b{color:var(--lm)}
+.score{border:1px solid var(--line-2);border-radius:12px;background:var(--panel-2);padding:18px 20px;
+  margin-top:18px;font-family:var(--mono);font-size:14px;text-align:center;color:var(--ink-2)}
+.score b{color:var(--am);font-size:23px}
+
+.ck{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);
+  border-radius:9px;background:var(--panel);margin:7px 0;cursor:pointer;transition:.14s}
+.ck:hover{border-color:var(--line-2)}
+.ck.done{background:rgba(163,230,53,.055);border-color:rgba(163,230,53,.3)}
+.ck .box{width:17px;height:17px;border:1.5px solid var(--line-2);border-radius:5px;flex:0 0 auto;
+  margin-top:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+.ck.done .box{background:var(--lm);border-color:var(--lm);color:#08110a}
+.ck .lb{font-size:14px;color:var(--ink-2);line-height:1.62}
+.ck .lb .mo{font-family:var(--mono);font-size:12.5px;color:#cfe8f5}
+.ck.done .lb{color:var(--ink-3);text-decoration:line-through}
+
+.next{border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(135deg,rgba(34,211,238,.06),rgba(244,114,182,.04));
+  padding:24px 26px;margin:34px 0 0}
+.next .t{font-family:var(--disp);font-weight:600;letter-spacing:.2em;font-size:11px;
+  text-transform:uppercase;color:var(--cy);margin-bottom:10px}
+.next h4{margin:0 0 10px;font-size:19px}
+.next ul{margin-left:18px}
+
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--cy),var(--mg));
+  z-index:99;width:0;transition:width .08s linear}
+#menu{display:none;position:fixed;bottom:20px;right:20px;z-index:100;width:52px;height:52px;
+  border-radius:50%;border:1px solid var(--line-2);background:var(--cy);color:#04141a;
+  font-size:20px;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.55)}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+@media(max-width:900px){
+  aside{position:fixed;left:0;top:0;z-index:98;transform:translateX(-100%);
+    transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.65)}
+  aside.open{transform:translateX(0)}
+  #menu{display:block}
+  .wrap{padding:0 17px}
+  .hero{padding:50px 0 38px}
+  .sec-head{gap:11px}
+  .rung{flex-wrap:wrap}
+  .rung .use{text-align:left;max-width:100%}
+  .ph{flex-direction:column;gap:8px}
+  .ph-c{align-self:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<button id="menu" aria-label="목차 열기">☰</button>
+
+<div class="shell">
+<aside id="side">
+  <div class="brand">
+    <div class="mark">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="M3 19V5M3 19h18" stroke-linecap="round"/>
+        <path d="M6.5 15l4-5 3.5 3L20 6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      BIZ.ENG
+    </div>
+    <h2>Module IV · 설득 · 숫자 · 협상</h2>
+    <p>for IT / cloud engineers</p>
+  </div>
+  <nav id="nav">
+    <div class="grp">Lessons</div>
+    <a href="#s14"><span class="n">14</span><span>프레젠테이션 시그널링</span></a>
+    <a href="#s15"><span class="n">15</span><span>숫자 · 그래프 · 추이</span></a>
+    <a href="#s16"><span class="n">16</span><span>협상 영어</span></a>
+    <a href="#s17"><span class="n">17</span><span>피드백과 갈등 관리</span></a>
+    <div class="grp">Wrap-up</div>
+    <a href="#s18"><span class="n">18</span><span>종합 드릴 10문항</span></a>
+    <a href="#s19"><span class="n">19</span><span>현장 체크리스트</span></a>
+  </nav>
+</aside>
+
+<main>
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">Module IV / 14–17</div>
+  <h1>숫자가 없으면<br><em>의견</em>이고, 있으면 <span class="mg">근거입니다</span></h1>
+  <p class="lede">
+    Module IV는 <strong>영향력</strong>을 다룹니다. 발표에서 청중을 놓치지 않는 표지판,
+    그래프를 문장으로 바꾸는 공식, 상대 앵커에 끌려가지 않는 협상 순서,
+    그리고 방어 반응을 만들지 않는 피드백 구조. 여기서 필요한 영어는 어렵지 않습니다.
+    <strong>순서와 부품이 정해져 있을 뿐입니다.</strong>
+  </p>
+  <div class="facts">
+    <div class="fact">학습 시간 <b>약 95분</b></div>
+    <div class="fact">실전 표현 <b>142개</b></div>
+    <div class="fact">인터랙티브 랩 <b>4종</b></div>
+    <div class="fact">협상 시나리오 <b>분기 12</b></div>
+    <div class="fact">Korean Trap <b>21선</b></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+
+<!-- ==================== 14 ==================== -->
+<section id="s14">
+  <div class="sec-head">
+    <div class="sec-num">14</div>
+    <div>
+      <h2>프레젠테이션 시그널링</h2>
+      <div class="sub">청중은 40%를 놓칩니다. 표지판이 있으면 다시 탑승합니다</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · and로 이어진 15분</div>
+    <div class="msg"><span class="who">Architecture review · 15분 발표</span>"So we looked at the current setup and there were some issues
+and the throughput was a problem and we tested three options
+and Kafka was one of them and RabbitMQ has some limitations
+and the cost was also considered and..."
+
+<span class="who">청중의 머릿속 · 6분 경과</span>지금 문제 설명 중인가? 이미 해결책 얘기인가?
+결론이 뭐지? 몇 개 남았지?</div>
+    <div class="rx">문법 오류는 없습니다. 하지만 청중은 <b>자기가 어디에 있는지</b> 모릅니다. 발표에서 가장 비싼 실수는 어려운 단어를 쓰는 게 아니라 <b>표지판을 안 세우는 것</b>입니다.</div>
+  </div>
+
+  <h3>Signposting 3종</h3>
+  <p>
+    청중은 딴생각, 알림, 시차 때문에 내용의 상당 부분을 놓칩니다. 이건 발표자의 잘못이 아니고 막을 수도 없습니다.
+    할 수 있는 일은 <strong>놓친 사람이 다시 올라탈 지점을 만드는 것</strong>입니다.
+  </p>
+
+  <div class="grid g3">
+    <div class="card">
+      <h5><span class="dot" style="background:var(--cy)"></span>① 로드맵</h5>
+      <p>개수와 시간을 미리 줍니다. 청중이 남은 분량을 계산할 수 있게 됩니다.</p>
+      <span class="mo">Three things: the problem, the options, and what I need from you. About ten minutes.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--lm)"></span>② 전환 신호</h5>
+      <p>구간이 바뀔 때 명시합니다. 이 한 줄이 없으면 청중은 문제와 해결책을 구분하지 못합니다.</p>
+      <span class="mo">That's the problem. Now, the three options we looked at.</span>
+      <span class="mo">Second of three —</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--am)"></span>③ 강조 신호</h5>
+      <p>중요한 숫자 앞에 경고등을 켭니다. 놓친 사람도 여기서는 집중합니다.</p>
+      <span class="mo">This is the number that matters:</span>
+      <span class="mo">If you remember one thing from this, it's —</span>
+    </div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 208" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+      <line x1="40" y1="120" x2="730" y2="120" stroke="#343c4e" stroke-width="2"/>
+      <text x="40" y="30" fill="#e9edf5" font-size="12" font-weight="700">15분 발표 · 표지판 위치</text>
+
+      <circle cx="72" cy="120" r="7" fill="#22d3ee"/>
+      <text x="72" y="150" fill="#22d3ee" font-size="9.5" text-anchor="middle">0:00</text>
+      <text x="72" y="102" fill="#8b93a1" font-size="9" text-anchor="middle">ROADMAP</text>
+      <text x="72" y="167" fill="#69738a" font-size="8.5" text-anchor="middle">개수 + 시간</text>
+
+      <circle cx="182" cy="120" r="6" fill="#a3e635"/>
+      <text x="182" y="150" fill="#a3e635" font-size="9.5" text-anchor="middle">0:30</text>
+      <text x="182" y="102" fill="#8b93a1" font-size="9" text-anchor="middle">결론 먼저</text>
+      <text x="182" y="167" fill="#69738a" font-size="8.5" text-anchor="middle">"I recommend X"</text>
+
+      <circle cx="310" cy="120" r="6" fill="#a3e635"/>
+      <text x="310" y="150" fill="#a3e635" font-size="9.5" text-anchor="middle">3:00</text>
+      <text x="310" y="102" fill="#8b93a1" font-size="9" text-anchor="middle">전환 ①</text>
+      <text x="310" y="167" fill="#69738a" font-size="8.5" text-anchor="middle">문제 → 옵션</text>
+
+      <circle cx="438" cy="120" r="7" fill="#fbbf24"/>
+      <text x="438" y="150" fill="#fbbf24" font-size="9.5" text-anchor="middle">7:00</text>
+      <text x="438" y="102" fill="#8b93a1" font-size="9" text-anchor="middle">강조</text>
+      <text x="438" y="167" fill="#69738a" font-size="8.5" text-anchor="middle">핵심 숫자 1개</text>
+
+      <circle cx="560" cy="120" r="6" fill="#a3e635"/>
+      <text x="560" y="150" fill="#a3e635" font-size="9.5" text-anchor="middle">10:00</text>
+      <text x="560" y="102" fill="#8b93a1" font-size="9" text-anchor="middle">전환 ②</text>
+      <text x="560" y="167" fill="#69738a" font-size="8.5" text-anchor="middle">옵션 → 리스크</text>
+
+      <circle cx="690" cy="120" r="7" fill="#f472b6"/>
+      <text x="690" y="150" fill="#f472b6" font-size="9.5" text-anchor="middle">13:00</text>
+      <text x="690" y="102" fill="#8b93a1" font-size="9" text-anchor="middle">ASK</text>
+      <text x="690" y="167" fill="#69738a" font-size="8.5" text-anchor="middle">누가·언제까지</text>
+
+      <text x="40" y="196" fill="#69738a" font-size="9.5">슬라이드는 8장 이하 · 1장 1메시지 · 마지막 2분은 Q&amp;A용으로 비워둘 것</text>
+    </svg>
+    <figcaption>표지판은 6개면 충분합니다. 없는 발표가 어려운 발표입니다</figcaption>
+  </figure>
+
+  <h3>발표 구조 3종 — 상황별로 고르십시오</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>구조</th><th>순서</th><th>쓰는 곳</th></tr></thead>
+      <tbody>
+        <tr><td><strong>P-S-A</strong></td>
+          <td><span class="mo">Problem → Solution → Ask</span></td>
+          <td>기술 제안, 아키텍처 리뷰. 가장 범용적</td></tr>
+        <tr><td><strong>SCQA</strong></td>
+          <td><span class="mo">Situation → Complication → Question → Answer</span></td>
+          <td>임원 보고. 상황을 공유한 뒤 문제를 던집니다</td></tr>
+        <tr><td><strong>W-SW-NW</strong></td>
+          <td><span class="mo">What → So what → Now what</span></td>
+          <td>3~5분 짧은 업데이트, 스프린트 데모</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tmpl"><span class="g">// P-S-A 골격 — 15분 기술 제안</span>
+
+<span class="s">[ROADMAP]</span>  Three things today: why our queue is about to break,
+           the three options we looked at, and the decision I need.
+           Roughly ten minutes, then questions.
+
+<span class="s">[결론 먼저]</span> Short version: I recommend self-managed Kafka on EKS.
+
+<span class="k">PROBLEM</span>    At current growth we hit the throughput ceiling in six weeks.
+<span class="s">[전환]</span>     That's the problem. Now, the options.
+
+<span class="k">OPTIONS</span>    RabbitMQ — simpler, but no replay.
+           Kinesis — managed, but 2.4x the cost at our volume.
+           Kafka — replay, at the price of one new system to operate.
+<span class="s">[강조]</span>     <span class="k">This is the number that matters:</span> 2.4x. That's $4,300 a month
+           we'd be paying for convenience.
+
+<span class="s">[전환]</span>     So that's the case for Kafka. Now the risk, because it isn't free.
+<span class="k">RISK</span>       Nobody on the team runs Kafka today. Mitigation: three brokers
+           to start, move to MSK if ops exceeds four hours a week.
+
+<span class="k">ASK</span>        Sarah — a decision by Sep 3, so we can start next sprint.
+<span class="s">[Q&amp;A]</span>      That's it. What have I missed?</div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Signpost Console</div>
+    <div class="lab-s">발표 중 지금 어느 구간입니까? 구간을 고르면 바로 쓸 표지판 문장이 나옵니다.</div>
+    <div class="lab-lb">발표 유형</div>
+    <div class="chips" id="spType">
+      <button class="chip on" data-i="0">기술 제안</button>
+      <button class="chip" data-i="1">임원 보고</button>
+      <button class="chip" data-i="2">스프린트 데모</button>
+    </div>
+    <div class="lab-lb">구간</div>
+    <div class="chips" id="spSeg">
+      <button class="chip on" data-i="0">오프닝</button>
+      <button class="chip" data-i="1">전환</button>
+      <button class="chip" data-i="2">강조</button>
+      <button class="chip" data-i="3">반론 선점</button>
+      <button class="chip" data-i="4">마무리 · Ask</button>
+      <button class="chip" data-i="5">Q&amp;A 대응</button>
+    </div>
+    <div class="out">
+      <span class="lbl">Signposts</span>
+      <div class="sent" id="spOut"></div>
+      <div class="why" id="spWhy"></div>
+    </div>
+  </div>
+
+  <h3>Q&amp;A 4가지 상황</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h5><span class="dot" style="background:var(--am)"></span>모르는 질문</h5>
+      <p>추측으로 답하면 그 순간 발표 전체의 신뢰가 흔들립니다. 모르면 모른다고 하고 기한을 붙이십시오.</p>
+      <span class="mo">I don't have that number in front of me — I'll post it in the channel by EOD.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--er)"></span>적대적 질문</h5>
+      <p>방어하지 말고 <strong>먼저 인정</strong>하십시오. 인정은 항복이 아니라 신뢰의 확보입니다.</p>
+      <span class="mo">That's fair. Let me address the ops risk head-on.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--cy)"></span>범위 밖 질문</h5>
+      <p>내용을 부정하지 않고 시간만 지킵니다. 반드시 후속을 지키십시오.</p>
+      <span class="mo">Good question, but outside today's scope — can I take it right after?</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--lm)"></span>못 알아들은 질문</h5>
+      <p>되짚기로 확인합니다. 엉뚱한 답을 하는 것보다 훨씬 낫고, 청중에게도 질문이 정리됩니다.</p>
+      <span class="mo">Let me make sure I've got the question — you're asking whether replay covers partial batches?</span>
+    </div>
+  </div>
+
+  <h3>표현 은행 · 발표</h3>
+  <div class="pb">
+    <div class="pb-bar">
+      <button class="pb-tab on">로드맵 · 전환</button>
+      <button class="pb-tab">강조</button>
+      <button class="pb-tab">반론 선점</button>
+      <button class="pb-tab">Q&amp;A</button>
+    </div>
+    <div class="pb-pane on">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Three things today: the problem, the options, and the decision I need from you.</div><div class="ph-ko">로드맵의 기본형. 개수를 먼저 주는 것이 핵심입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Short version up front: I recommend Kafka. I'll spend the next ten minutes on why.</div><div class="ph-ko">결론 선행 선언. 청중이 검증하며 들을 수 있게 됩니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That's the problem. Now, the three options we looked at.</div><div class="ph-ko">전환의 가장 명확한 형태. and로 이어붙이지 마십시오.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Second of three —</div><div class="ph-ko">진행 위치 표시. 짧지만 청중의 방향 감각을 회복시킵니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Before I move on — does the problem framing make sense so far?</div><div class="ph-ko">구간 종료 시 확인. 침묵을 동의로 두지 않습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I'm going to skip the implementation detail — it's in the doc if you want it.</div><div class="ph-ko">생략 선언. 자료가 있음을 알려 불안을 없앱니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This is the number that matters: 2.4x.</div><div class="ph-ko">강조 신호. 숫자 하나 앞에만 쓰십시오. 남발하면 무력해집니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If you remember one thing from this, it's that replay is not optional for us.</div><div class="ph-ko">단일 테이크어웨이 선언. 발표당 한 번.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Let me put that in context — that's roughly one engineer's monthly cost.</div><div class="ph-ko">숫자를 익숙한 단위로 환산. 임원 대상에서 특히 효과적입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Here's the trade-off in one line: we pay in ops complexity to get replay.</div><div class="ph-ko">한 줄 요약. 복잡한 논의를 하나의 교환으로 압축합니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The obvious objection is ops load, so let me address that now.</div><div class="ph-ko">반론 선점. 상대가 묻기 전에 내가 꺼내면 신뢰가 올라갑니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">You might be thinking we could just scale the current queue — we tested that, and here's why it doesn't hold.</div><div class="ph-ko">청중의 생각을 대신 말해줍니다. 매우 강력한 기법입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This isn't free, and I don't want to pretend otherwise.</div><div class="ph-ko">비용 인정 선언. 감추는 것보다 훨씬 설득력이 있습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The weakest part of my case is the ramp-up time. Here's how I'd reduce it.</div><div class="ph-ko">가장 약한 지점을 스스로 지목. 검토자의 방어를 해제합니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That's it from me. What have I missed?</div><div class="ph-ko"><span class="en">Any questions?</span>보다 답이 훨씬 잘 나옵니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Let me make sure I've got the question — you're asking whether replay covers partial batches?</div><div class="ph-ko">되짚기. 못 알아들었을 때와 질문이 모호할 때 모두 씁니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I don't have that number in front of me — I'll post it by EOD.</div><div class="ph-ko">모르는 것 인정 + 기한. 추측하지 마십시오.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That's fair. Let me address the ops risk head-on.</div><div class="ph-ko">적대적 질문에 먼저 인정. 항복이 아니라 신뢰 확보입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Good question, but it's outside today's scope — can I take it right after?</div><div class="ph-ko">범위 밖 질문. 내용을 부정하지 않고 시간을 지킵니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Two of you have asked about cost — let me take that once for everyone.</div><div class="ph-ko">중복 질문 통합. 시간을 크게 아낍니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+  </div>
+
+  <div class="note trap">
+    <div class="t">⚠ Korean Trap · 발표 6종</div>
+    <p>1. <strong>모든 문장을 and로 연결</strong> — 청중이 구간을 구분하지 못합니다. 전환 신호로 끊으십시오.<br>
+    2. <strong>슬라이드를 읽기</strong> — 청중은 이미 읽었습니다. 슬라이드에 없는 한 문장을 말하십시오.<br>
+    3. <strong>결론을 마지막에</strong> — 임원은 5분 뒤 나갑니다. 결론은 30초 안에.<br>
+    4. <span class="en">As you can see</span> 남발 — 보이지 않으니까 설명하는 겁니다. 대신 <span class="en">The line to watch is…</span><br>
+    5. <strong>Q&amp;A에서 추측으로 답</strong> — 한 번 틀리면 발표 전체가 의심받습니다.<br>
+    6. <strong>시간 초과</strong> — 마지막 2분을 비워두십시오. Q&amp;A 없이 끝난 발표는 승인을 못 받습니다.</p>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 14-1</div>
+    <div class="qq">Q&amp;A에서 모르는 숫자를 질문받았습니다. 가장 좋은 대응은?</div>
+    <button class="opt" data-a="0"><span class="mo">I think it's around 20%, maybe more.</span></button>
+    <button class="opt" data-a="1"><span class="mo">I don't have that number in front of me — I'll post it in the channel by EOD.</span></button>
+    <button class="opt" data-a="2"><span class="mo">Sorry, I didn't prepare that. My apologies.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 추측(1번)은 나중에 틀리면 발표 전체를 의심받게 합니다. 3번은 사과만 있고 후속이 없습니다. <strong>모른다 + 기한</strong>이 정답입니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 14-2</div>
+    <div class="qq">내 제안의 가장 약한 부분을 스스로 먼저 말하는 이유는?</div>
+    <button class="opt" data-a="0">겸손하게 보이기 위해</button>
+    <button class="opt" data-a="1">검토자가 이미 알고 있고, 내가 먼저 꺼내면 검토했다는 신호가 되기 때문</button>
+    <button class="opt" data-a="2">발표 시간을 채우기 위해</button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 약점을 감춘 제안은 검토자가 그것을 발견하는 순간 신뢰를 잃습니다. 먼저 꺼내면 남은 판단을 당신에게 맡깁니다.</div>
+  </div>
+</section>
+
+<!-- ==================== 15 ==================== -->
+<section id="s15">
+  <div class="sec-head">
+    <div class="sec-num">15</div>
+    <div>
+      <h2>숫자 · 그래프 · 추이 묘사</h2>
+      <div class="sub">그래프를 문장으로 바꾸는 5부품 공식</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 얼마나?</div>
+    <div class="msg"><span class="who">Weekly review</span>Jihoon: "The latency is up. It's much bigger than before.
+        Very high. It's a problem."
+
+Sarah:  "How much?"
+
+Jihoon: "Um... a lot? Like, very much higher."</div>
+    <div class="rx">지훈은 화면에 <b>정확한 숫자를 띄워놓고</b> 있었습니다. 문제는 그것을 문장으로 만드는 부품이 없었다는 것입니다. 추이 문장은 창작이 아니라 <b>조립</b>입니다. 부품 다섯 개를 순서대로 끼우면 끝납니다.</div>
+  </div>
+
+  <h3>5부품 공식</h3>
+  <div class="tmpl"><span class="k">주어</span>      +  <span class="k">증감 동사</span>  +  <span class="k">부사</span>    +  <span class="k">수치</span>          +  <span class="k">기간 · 비교</span>
+
+p95 latency  +  rose        +  sharply  +  from 120 to 980ms  +  after the deploy
+Daily calls  +  grew        +  steadily +  by 22%             +  quarter over quarter
+Error rate   +  dropped     +  —        +  to 0.1%            +  within two hours
+
+<span class="g">// 부사는 생략 가능합니다. 수치와 기간은 생략하면 안 됩니다.</span>
+<span class="g">// 수치 없는 추이 문장은 정보가 아니라 감상입니다.</span></div>
+
+  <h3>증감 동사 — 강도별</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>강도</th><th>상승</th><th>하락</th><th>메모</th></tr></thead>
+      <tbody>
+        <tr><td><span style="color:var(--er)">급격</span></td>
+          <td><span class="mo">surge · spike · jump · soar</span></td>
+          <td><span class="mo">plunge · crash · collapse</span></td>
+          <td><span class="mo">spike</span>는 급등 후 되돌아오는 뾰족한 형태에 씁니다</td></tr>
+        <tr><td>보통</td>
+          <td><span class="mo">rise · grow · increase · climb</span></td>
+          <td><span class="mo">fall · drop · decline · decrease</span></td>
+          <td>가장 안전한 기본값. <span class="mo">rise/fall</span>만 알아도 됩니다</td></tr>
+        <tr><td>완만</td>
+          <td><span class="mo">edge up · tick up · creep up</span></td>
+          <td><span class="mo">edge down · ease · dip · slip</span></td>
+          <td><span class="mo">creep up</span>은 "은근히 나쁘게 올라간다"는 함의가 있습니다</td></tr>
+        <tr><td>정체</td>
+          <td colspan="2"><span class="mo">hold steady · plateau · flatten out · level off · remain flat</span></td>
+          <td><span class="mo">plateau</span>는 성장이 멈췄다는 부정 함의</td></tr>
+        <tr><td>변동</td>
+          <td colspan="2"><span class="mo">fluctuate · swing · be volatile · bounce around</span></td>
+          <td>톱니 패턴에. 원인 언급을 함께 하십시오</td></tr>
+        <tr><td>회복</td>
+          <td colspan="2"><span class="mo">recover · rebound · bounce back · return to baseline</span></td>
+          <td>장애 후 복구 서술의 표준</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <div class="t">전치사 하나로 뜻이 완전히 바뀝니다</div>
+    <p><span class="en">rose <b>by</b> 12%</span> → 12%<strong>만큼</strong> 올랐다 (변화량)<br>
+    <span class="en">rose <b>to</b> 12%</span> → 12%<strong>까지</strong> 올랐다 (도달값)<br>
+    <span class="en">rose 12%</span> → by의 생략. 변화량으로 읽힙니다<br>
+    <span class="en">rose <b>from</b> 8% <b>to</b> 12%</span> → 가장 안전합니다. 오해가 불가능합니다<br>
+    확신이 없으면 항상 <strong>from A to B</strong>를 쓰십시오.</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Trend Describer</div>
+    <div class="lab-s">패턴을 고르면 그래프가 그려지고, 같은 데이터를 세 가지 수준으로 묘사한 문장이 나옵니다.</div>
+    <div class="lab-lb">데이터 패턴</div>
+    <div class="chips" id="tdCase">
+      <button class="chip on" data-i="0">급증 (spike)</button>
+      <button class="chip" data-i="1">꾸준한 성장</button>
+      <button class="chip" data-i="2">정체 (plateau)</button>
+      <button class="chip" data-i="3">급락 (개선)</button>
+      <button class="chip" data-i="4">V자 회복</button>
+      <button class="chip" data-i="5">톱니 (변동)</button>
+    </div>
+    <div class="chartbox">
+      <div id="tdChart"></div>
+      <div class="chartmeta" id="tdMeta"></div>
+    </div>
+    <div id="tdSents"></div>
+    <div class="out" style="margin-top:14px">
+      <span class="lbl">흔한 오류</span>
+      <div class="why" id="tdErr" style="margin-top:0;padding-top:0;border-top:0"></div>
+    </div>
+  </div>
+
+  <h3>숫자 읽는 법 — 말할 때</h3>
+  <p>초중급 학습자가 회의에서 가장 자주 막히는 지점입니다. 화면에 숫자가 있는데 <strong>입으로 나오지 않습니다.</strong></p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>표기</th><th>읽기</th><th>주의</th></tr></thead>
+      <tbody>
+        <tr><td><span class="mo">1,200</span></td><td>twelve hundred / one thousand two hundred</td><td>구어에서는 twelve hundred가 더 자연스럽습니다</td></tr>
+        <tr><td><span class="mo">$1.8k</span></td><td>eighteen hundred dollars</td><td><span class="x">one point eight thousand</span> 은 쓰지 않습니다</td></tr>
+        <tr><td><span class="mo">99.95%</span></td><td>ninety-nine point nine five percent</td><td>소수점 뒤는 <strong>한 자리씩</strong> 읽습니다</td></tr>
+        <tr><td><span class="mo">0.45</span></td><td>zero point four five / point four five</td><td>영국식은 nought point…도 씁니다</td></tr>
+        <tr><td><span class="mo">2.4x</span></td><td>two point four times</td><td>배수는 <span class="mo">times</span>. <span class="x">two point four X</span> 는 어색합니다</td></tr>
+        <tr><td><span class="mo">p95</span></td><td>p ninety-five / the ninety-fifth percentile</td><td>구어에서는 p ninety-five가 표준입니다</td></tr>
+        <tr><td><span class="mo">40ms</span></td><td>forty milliseconds / forty mils</td><td>mils는 캐주얼. 고객 앞에서는 풀네임</td></tr>
+        <tr><td><span class="mo">3x9s</span></td><td>three nines (= 99.9%)</td><td>가용성 논의의 관용 표현입니다</td></tr>
+        <tr><td><span class="mo">1.2M</span></td><td>one point two million</td><td>한국어 "만" 단위와 어긋나므로 미리 환산해 두십시오</td></tr>
+        <tr><td><span class="mo">Sep 3</span></td><td>September third (US) / the third of September (UK)</td><td>날짜 표기 <span class="mo">9/3</span>은 미·영이 다릅니다. 월 이름을 쓰십시오</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note trap">
+    <div class="t">⚠ percent 와 percentage point</div>
+    <p>전환율이 <strong>5% → 7%</strong>로 바뀌었습니다.<br>
+    · <span class="en">up 2 percentage points</span> ← 정확합니다<br>
+    · <span class="en">up 40%</span> ← 이것도 맞습니다 (5의 40%가 2)<br>
+    · <span class="en">up 2%</span> ← <strong>틀렸습니다.</strong> 5%가 5.1%가 된 것으로 읽힙니다<br>
+    임원 보고에서 이 혼동은 40%를 2%로 축소해 보고하는 사고로 이어집니다.
+    안전한 습관: <strong>from 5% to 7%</strong>라고 쓰고, 필요하면 뒤에 배수를 덧붙이십시오.</p>
+  </div>
+
+  <div class="note tip">
+    <div class="t">인과를 단정하지 마십시오</div>
+    <p>같은 시점에 두 가지가 변했다고 해서 인과는 아닙니다. 영어 보고에서 이 구분은 엄격하게 지켜집니다.<br>
+    · 인과가 확인됨 → <span class="en">The deploy caused the latency spike.</span><br>
+    · 시점만 일치 → <span class="en">The spike coincided with the deploy.</span> / <span class="en">The spike started two minutes after the deploy.</span><br>
+    · 추정 → <span class="en">The most likely cause is the deploy, though we haven't confirmed it.</span><br>
+    확인하지 않은 인과를 <span class="en">caused</span>로 쓰면, 나중에 틀렸을 때 신뢰가 크게 깎입니다.</p>
+  </div>
+
+  <h3>표현 은행 · 숫자와 그래프</h3>
+  <div class="pb">
+    <div class="pb-bar">
+      <button class="pb-tab on">그래프 안내</button>
+      <button class="pb-tab">비교 프레임</button>
+      <button class="pb-tab">추정 · 불확실성</button>
+      <button class="pb-tab">규모 환산</button>
+    </div>
+    <div class="pb-pane on">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The line to watch is the orange one — that's p95 latency.</div><div class="ph-ko">주목할 대상을 지목. <span class="en">As you can see</span>보다 훨씬 낫습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Ignore the first two weeks — that's before the new metric landed.</div><div class="ph-ko">무시할 구간 선언. 질문을 미리 차단합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The x-axis is weeks, and the dotted line is our target.</div><div class="ph-ko">축 설명. 30초를 아끼는 한 문장입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Note the scale is logarithmic — the jump is bigger than it looks.</div><div class="ph-ko">로그 스케일 경고. 반드시 밝히십시오. 안 밝히면 오해를 유도한 것으로 봅니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Up 22% quarter over quarter, and roughly flat year over year.</div><div class="ph-ko">QoQ / YoY 병기. 어느 기준인지 반드시 밝힙니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That's 40% above our target of 200ms.</div><div class="ph-ko">목표 대비 비교. 절대값보다 판단이 쉽습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Compared with the same week last year, volume has doubled.</div><div class="ph-ko">계절성이 있는 지표는 전년 동기와 비교합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">p50 is fine at 45ms — the problem is entirely in the tail.</div><div class="ph-ko">백분위 대비. 평균만 보면 놓치는 문제를 드러냅니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Against baseline, that's a 3x increase.</div><div class="ph-ko">기준선 대비 배수. 가장 직관적인 표현입니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Roughly 8,000 — I'd want to verify before we quote it externally.</div><div class="ph-ko">개략값 + 검증 필요 명시. 정직하고 안전합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This is a back-of-the-envelope estimate, accurate to maybe ±20%.</div><div class="ph-ko">추정의 정확도까지 밝힙니다. 신뢰를 크게 올립니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The spike coincided with the deploy — we haven't confirmed causation yet.</div><div class="ph-ko">시점 일치와 인과를 구분. 영어 보고의 기본 규율입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Two weeks of data isn't enough to call a trend — I'd wait for a month.</div><div class="ph-ko">표본 부족 선언. 성급한 결론을 막습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">My assumption is current traffic; it scales roughly linearly from there.</div><div class="ph-ko">가정 명시. 가정을 밝힌 숫자가 더 신뢰받습니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That's about one engineer's monthly cost.</div><div class="ph-ko">인건비 환산. 임원 대상에서 가장 잘 통합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">In practical terms, that's one extra page per night for whoever's on call.</div><div class="ph-ko">체감 단위 환산. 팀 대상에서 효과적입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">To put it in context, 42 minutes of downtime is about a quarter of our monthly error budget.</div><div class="ph-ko">SLO 예산 환산. 엔지니어링 조직의 공용 언어입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Eight thousand failed payments — that's roughly a full day of transactions for one mid-size merchant.</div><div class="ph-ko">비즈니스 단위 환산. 기술 숫자를 의미로 바꿉니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 15-1</div>
+    <div class="qq">전환율이 5%에서 7%로 올랐습니다. <strong>틀린</strong> 표현은?</div>
+    <button class="opt" data-a="0"><span class="mo">up 2 percentage points</span></button>
+    <button class="opt" data-a="1"><span class="mo">up 40%</span></button>
+    <button class="opt" data-a="2"><span class="mo">up 2%</span></button>
+    <div class="qz-ex" data-ex="2"><b>정답 3번이 틀렸습니다.</b> <span class="en">up 2%</span>는 5%가 5.1%가 된 것으로 읽힙니다. 실제 변화의 20분의 1로 축소 보고하는 셈입니다. 안전한 습관은 <span class="en">from 5% to 7%</span>입니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 15-2</div>
+    <div class="qq">배포 2분 후 지연이 급등했지만 원인 검증은 아직 안 됐습니다. 적절한 표현은?</div>
+    <button class="opt" data-a="0"><span class="mo">The deploy caused the latency spike.</span></button>
+    <button class="opt" data-a="1"><span class="mo">The spike started two minutes after the deploy — we haven't confirmed causation yet.</span></button>
+    <button class="opt" data-a="2"><span class="mo">Maybe something happened. Hard to say.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 시점 일치와 인과는 다릅니다. 1번은 검증 없는 단정이라 나중에 틀리면 신뢰를 잃고, 3번은 정보가 없습니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 15-3</div>
+    <div class="qq"><span class="mo">Latency rose to 12%.</span> 이 문장이 전달하는 뜻은?</div>
+    <button class="opt" data-a="0">12%만큼 증가했다</button>
+    <button class="opt" data-a="1">12%라는 값까지 도달했다</button>
+    <button class="opt" data-a="2">둘 중 어느 쪽인지 알 수 없다</button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> <span class="en">to</span>는 도달값, <span class="en">by</span>는 변화량입니다. 전치사 하나로 뜻이 완전히 바뀝니다. 확신이 없으면 <span class="en">from A to B</span>를 쓰십시오.</div>
+  </div>
+</section>
+
+<!-- ==================== 16 ==================== -->
+<section id="s16">
+  <div class="sec-head">
+    <div class="sec-num">16</div>
+    <div>
+      <h2>협상 영어</h2>
+      <div class="sub">영어 실력이 아니라 순서가 결과를 만듭니다</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 4초 만에 4주가 결정된 순간</div>
+    <div class="msg"><span class="who">고객 미팅</span>Client: "How long will the migration take?"
+
+Jihoon: "Um... maybe two weeks?"
+
+Client: "Great, let's put two weeks in the plan."
+
+<span class="who">실제 필요 기간: 8주</span></div>
+    <div class="rx">지훈은 협상을 <b>시작한 줄도 몰랐습니다.</b> 준비 없이 던진 숫자는 그 즉시 앵커가 되고, 되돌리려면 몇 배의 비용이 듭니다. 협상에서 가장 위험한 순간은 <b>즉답을 요구받는 순간</b>입니다.</div>
+  </div>
+
+  <h3>협상 5원칙</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h5><span class="dot" style="background:var(--cy)"></span>① 3숫자를 미리 준비</h5>
+      <p><strong>Target</strong>(원하는 값) · <strong>Acceptable</strong>(수용 가능) · <strong>Walk-away</strong>(그 이하는 거절). 이게 없으면 협상이 아니라 즉흥입니다.</p>
+      <span class="mo">Target 8주 / Acceptable 6주 / Walk-away 4주 미만은 불가</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--lm)"></span>② 점이 아니라 구간으로</h5>
+      <p>단일 숫자는 즉시 협상 대상이 됩니다. 구간 + 조건으로 답하십시오.</p>
+      <span class="mo">Six to eight weeks, depending on whether we get the peering approval this month.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--am)"></span>③ 무조건 양보 금지</h5>
+      <p>모든 양보에 <strong>대가</strong>를 붙입니다. 대가 없는 양보는 다음 요구를 부릅니다.</p>
+      <span class="mo">We can do writes by week 8, if you can freeze schema changes until then.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--mg)"></span>④ 침묵을 쓰십시오</h5>
+      <p>상대 제안 후 <strong>3초 침묵</strong>. 영어가 전혀 필요 없는데도 가장 효과가 큰 도구입니다. 초중급 학습자에게 특히 유리합니다.</p>
+      <span class="mo">…(3초)… Let me think about that for a second.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--vi)"></span>⑤ 입장 대신 이해를 물으십시오</h5>
+      <p>"4주"는 입장입니다. 그 뒤의 <strong>이유</strong>를 알면 다른 해법이 나옵니다. 이 질문이 협상의 판을 바꿉니다.</p>
+      <span class="mo">What's driving the four weeks?</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--er)"></span>주의 — 즉답의 함정</h5>
+      <p>모르면 답하지 마십시오. <strong>시간을 벌는 것은 약함이 아닙니다.</strong> 오히려 준비된 사람의 신호입니다.</p>
+      <span class="mo">Good question — let me check with the team and come back to you tomorrow.</span>
+    </div>
+  </div>
+
+  <div class="note ok">
+    <div class="t">초중급 학습자에게 가장 유리한 협상 도구 두 개</div>
+    <p><strong>1. 침묵</strong> — 문법도 어휘도 필요 없습니다. 상대 제안 뒤 3초를 견디면 상대가 먼저 조건을 완화하는 일이 실제로 자주 일어납니다. 한국인 학습자가 이 3초를 못 견디고 스스로 양보하는 것이 가장 흔한 손실입니다.<br>
+    <strong>2. 질문</strong> — <span class="en">What's driving that?</span> / <span class="en">How did you arrive at that number?</span> 다섯 단어면 됩니다. 길게 반박하는 것보다 판을 더 크게 바꿉니다.</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Negotiation Tree</div>
+    <div class="lab-s">고객이 4주를 요구합니다. 실제로는 8주가 필요합니다. 선택할 때마다 상대가 반응합니다 — 어떻게 끝나는지 보십시오.</div>
+    <div class="tr" id="ngTree"></div>
+    <button class="tr-reset" id="ngReset">↺ 처음부터 다시</button>
+  </div>
+
+  <h3>표현 은행 · 협상</h3>
+  <div class="pb">
+    <div class="pb-bar">
+      <button class="pb-tab on">시간 벌기</button>
+      <button class="pb-tab">앵커 · 구간</button>
+      <button class="pb-tab">조건부 양보</button>
+      <button class="pb-tab">거절 · 마무리</button>
+    </div>
+    <div class="pb-pane on">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Let me check with the team and come back to you tomorrow.</div><div class="ph-ko">가장 안전한 즉답 회피. 반드시 기한을 붙이십시오.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Before I answer — what's driving the four weeks?</div><div class="ph-ko">입장에서 이해로. 협상의 판을 바꾸는 질문입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">How did you arrive at that number?</div><div class="ph-ko">상대 앵커의 근거를 검증. 대개 근거가 약합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Let me think about that for a second.</div><div class="ph-ko">침묵을 정당화하는 문장. 3초를 확보합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I don't want to give you a number I can't stand behind. Give me until tomorrow.</div><div class="ph-ko">즉답 거절의 명분. 성실함으로 읽힙니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Based on similar migrations, we'd be looking at six to eight weeks.</div><div class="ph-ko">근거 + 구간. 앵커를 먼저 던지는 표준형입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Six to eight weeks, depending on whether the peering approval lands this month.</div><div class="ph-ko">구간 + 변수. 나중에 일정이 밀려도 예고된 상태가 됩니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I can give you a firm date after the technical review, not before.</div><div class="ph-ko">확정 시점을 뒤로 미루기. 고객 대응에서 매우 유용합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That timeline is tight for us. What we could do by then is the read-only path.</div><div class="ph-ko">거절 + 축소 제안. 범위를 조정해 날짜를 지킵니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Just so we're calibrated — is four weeks a hard date, or a preference?</div><div class="ph-ko">고정 여부 확인. 실제로 선호에 불과한 경우가 많습니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">We can do writes by week eight, if you can freeze schema changes until then.</div><div class="ph-ko">조건부 양보의 표준형. if 절을 반드시 붙이십시오.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I can move the date if we cut the analytics view from scope. Which matters more?</div><div class="ph-ko">양보 + 선택 요구. 상대가 우선순위를 정하게 만듭니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That works on our side, provided your team signs off the security review by Sep 3.</div><div class="ph-ko">수락 + 전제 조건. 나중의 책임 소재를 명확히 합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If we're taking on the earlier date, I'd need one more engineer for two sprints.</div><div class="ph-ko">일정 압축의 대가를 자원으로 청구. 사내 협상의 기본입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I'd rather not trade quality for the date. Is there a third option here?</div><div class="ph-ko">양자택일 프레임 거부. 새 옵션을 요구합니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That doesn't work for us, but here's what does.</div><div class="ph-ko">거절 + 대안. 거절만 하면 협상이 끝납니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">We can't commit to that date. I'd rather tell you now than miss it later.</div><div class="ph-ko">명확한 거절 + 명분. 관계를 지키는 프레임입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I think we're stuck on this. What would need to change for it to work?</div><div class="ph-ko">교착 인정 + 조건 정의. 감정 대립을 막습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">So to confirm: read-only reporting by Sep 30, full writes by week eight, and schema frozen until then. I'll send that in writing today.</div><div class="ph-ko">합의 낭독 + 문서화 약속. 협상의 마지막 단계입니다. 절대 생략하지 마십시오.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Before we close — is there anything in this you're not comfortable with?</div><div class="ph-ko">불만 사전 회수. 나중에 나올 이견을 지금 끌어냅니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+  </div>
+
+  <div class="note trap">
+    <div class="t">⚠ Korean Trap · 협상 5종</div>
+    <p>1. <strong>준비 없이 즉답</strong> — 던진 숫자가 그 즉시 앵커가 됩니다. 모르면 내일 답하십시오.<br>
+    2. <span class="en">I'll try my best</span> — 상대는 "된다"로 듣습니다. 협상에서 가장 비싼 문장입니다.<br>
+    3. <strong>침묵을 못 견디고 스스로 양보</strong> — 3초는 상대의 차례입니다. 채우지 마십시오.<br>
+    4. <strong>대가 없는 양보</strong> — 한 번 무조건 양보하면 다음 요구가 반드시 옵니다. 항상 <span class="en">if</span>를 붙이십시오.<br>
+    5. <strong>구두 합의로 끝내기</strong> — 협상 결과는 당일 문서로 남기십시오. 기억은 상대에게 유리하게 변합니다.</p>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 16-1</div>
+    <div class="qq">고객이 "4주 안에 가능합니까?"라고 묻습니다. 실제로는 8주 필요. 첫 대응으로 가장 좋은 것은?</div>
+    <button class="opt" data-a="0"><span class="mo">Before I answer — what's driving the four weeks?</span></button>
+    <button class="opt" data-a="1"><span class="mo">Yes, we'll make it work.</span></button>
+    <button class="opt" data-a="2"><span class="mo">That's impossible. We need eight weeks.</span></button>
+    <div class="qz-ex" data-ex="0"><b>정답 1번.</b> 4주는 <strong>입장</strong>이고, 그 뒤에 이유가 있습니다. 이유를 알면 범위 조정으로 양쪽을 만족시킬 여지가 생깁니다. 3번은 대안 없는 거절이라 협상이 그 자리에서 끝납니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 16-2</div>
+    <div class="qq">일정을 한 주 앞당겨 달라는 요청을 수락합니다. 반드시 붙여야 하는 것은?</div>
+    <button class="opt" data-a="0">감사 인사</button>
+    <button class="opt" data-a="1">대가 또는 조건 — <span class="mo">…if you can freeze schema changes until then.</span></button>
+    <button class="opt" data-a="2">최선을 다하겠다는 약속</button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 대가 없는 양보는 다음 요구를 부릅니다. 조건을 붙이면 양보가 <strong>거래</strong>가 되어 상대도 무게를 인식합니다.</div>
+  </div>
+</section>
+
+<!-- ==================== 17 ==================== -->
+<section id="s17">
+  <div class="sec-head">
+    <div class="sec-num">17</div>
+    <div>
+      <h2>피드백과 갈등 관리</h2>
+      <div class="sub">방어 반응을 만들지 않고 지적하는 구조</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 3초 만에 닫힌 대화</div>
+    <div class="msg"><span class="who">1:1</span>Jihoon: "You always forget the tests. You need to be
+        more careful. It's a bad habit."
+
+Dave:   "I don't ALWAYS forget them. Last sprint I wrote
+        forty tests. And nobody told me the gate changed."
+
+<span class="who">결과</span>· 관계 손상 ✓
+· 행동 변화 ✗
+· 다음 PR에도 테스트 없음 ✓</div>
+    <div class="rx">사실 지훈의 지적은 <b>맞습니다.</b> 그런데 <span class="en">always</span> 한 단어와 성격 판정(<span class="en">bad habit</span>) 때문에 대화가 3초 만에 방어로 전환됐습니다. 피드백의 목적은 <b>내가 옳음을 증명하는 것이 아니라 행동이 바뀌는 것</b>입니다.</div>
+  </div>
+
+  <h3>SBI 3층 구조</h3>
+  <p>
+    피드백은 세 조각으로 조립합니다. <strong>Situation</strong>(언제·어디서) → <strong>Behavior</strong>(관찰된 사실) →
+    <strong>Impact</strong>(그로 인한 결과). 셋 중 하나만 빠져도 방어 반응이 생깁니다.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 760 224" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+      <rect x="24" y="20" width="228" height="94" rx="10" fill="#11141c" stroke="#22d3ee" stroke-opacity=".5"/>
+      <text x="44" y="44" fill="#22d3ee" font-size="11.5" font-weight="700">S · SITUATION</text>
+      <text x="44" y="66" fill="#8b93a1" font-size="9.5">언제, 어디서. 구체적으로.</text>
+      <text x="44" y="88" fill="#69738a" font-size="9">"In yesterday's PR for the</text>
+      <text x="44" y="101" fill="#69738a" font-size="9">settlement service —"</text>
+
+      <rect x="266" y="20" width="228" height="94" rx="10" fill="#11141c" stroke="#a3e635" stroke-opacity=".55"/>
+      <text x="286" y="44" fill="#a3e635" font-size="11.5" font-weight="700">B · BEHAVIOR</text>
+      <text x="286" y="66" fill="#8b93a1" font-size="9.5">관찰된 사실만. 해석 금지.</text>
+      <text x="286" y="88" fill="#69738a" font-size="9">"the tests weren't included"</text>
+      <text x="286" y="101" fill="#fb7185" font-size="9">✗ "you were careless"</text>
+
+      <rect x="508" y="20" width="228" height="94" rx="10" fill="#11141c" stroke="#fbbf24" stroke-opacity=".55"/>
+      <text x="528" y="44" fill="#fbbf24" font-size="11.5" font-weight="700">I · IMPACT ★</text>
+      <text x="528" y="66" fill="#8b93a1" font-size="9.5">결과. 이게 없으면 잔소리.</text>
+      <text x="528" y="88" fill="#69738a" font-size="9">"so QA wrote them and the</text>
+      <text x="528" y="101" fill="#69738a" font-size="9">release slipped a day."</text>
+
+      <rect x="24" y="130" width="712" height="70" rx="10" fill="#0c0e14" stroke="#fb7185" stroke-opacity=".4"/>
+      <text x="44" y="152" fill="#fb7185" font-size="10.5" font-weight="700">피드백을 즉시 무력화하는 단어들</text>
+      <text x="44" y="172" fill="#8b93a1" font-size="9.5">always · never · you're being ~ · attitude · bad habit · careless · lazy · you should know</text>
+      <text x="44" y="190" fill="#69738a" font-size="9">과장(always/never)은 반례 하나로 반박되고, 성격 판정은 행동이 아니라 사람을 공격합니다. 둘 다 대화를 닫습니다.</text>
+    </svg>
+    <figcaption>S와 B는 사실, I는 결과. 해석과 판정은 어디에도 들어가지 않습니다</figcaption>
+  </figure>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Feedback Rewriter</div>
+    <div class="lab-s">상황과 상대를 고르면 비난형과 SBI형이 나란히 나옵니다. 상대에 따라 문장이 어떻게 달라지는지 보십시오.</div>
+    <div class="lab-lb">상황</div>
+    <div class="chips" id="fbCase">
+      <button class="chip on" data-i="0">테스트 누락</button>
+      <button class="chip" data-i="1">리뷰 방치</button>
+      <button class="chip" data-i="2">회의 결정 무시</button>
+    </div>
+    <div class="lab-lb">상대</div>
+    <div class="chips" id="fbWho">
+      <button class="chip on" data-i="0">동료</button>
+      <button class="chip" data-i="1">후배 · 팀원</button>
+      <button class="chip" data-i="2">상사</button>
+    </div>
+    <div id="fbOut"></div>
+    <div class="out" style="margin-top:14px">
+      <span class="lbl">왜 이렇게 바뀌었나</span>
+      <div class="why" id="fbWhy" style="margin-top:0;padding-top:0;border-top:0"></div>
+    </div>
+  </div>
+
+  <h3>피드백을 받는 법</h3>
+  <p>
+    영어권 조직에서 <strong>피드백을 받는 태도</strong>는 주는 능력보다 더 자주 평가됩니다.
+    핵심은 하나입니다. <strong>즉시 반박하지 마십시오.</strong>
+  </p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>상황</th><th>하지 말 것</th><th>대신 이렇게</th></tr></thead>
+      <tbody>
+        <tr><td>지적이 모호할 때</td><td><span class="mo x">I don't think that's true.</span></td>
+          <td><span class="mo o">Can you give me a specific example?</span></td></tr>
+        <tr><td>동의하지 않을 때</td><td><span class="mo x">That's not what happened.</span></td>
+          <td><span class="mo o">Let me sit with that and come back to you tomorrow.</span></td></tr>
+        <tr><td>일부만 맞을 때</td><td><span class="mo x">But you don't understand that…</span></td>
+          <td><span class="mo o">You're right about the tests. On the timeline I saw it differently — can I explain?</span></td></tr>
+        <tr><td>맞는 지적일 때</td><td><span class="mo x">I'm so sorry, I'm terrible at this.</span></td>
+          <td><span class="mo o">Fair. I'll add the tests before the next PR.</span></td></tr>
+        <tr><td>감정이 올라올 때</td><td><span class="mo x">(그 자리에서 반박)</span></td>
+          <td><span class="mo o">I want to respond properly — can we pick this up tomorrow?</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note ok">
+    <div class="t">과잉 사과는 피드백 수용이 아닙니다</div>
+    <p>한국인 학습자가 가장 자주 하는 두 가지 실수는 정반대 방향입니다 — <strong>즉시 반박</strong>과 <strong>과잉 사과</strong>.
+    영어권 조직에서 기대하는 반응은 그 중간입니다. 사실을 인정하고, 조치를 말하고, 넘어갑니다.<br>
+    <span class="en">Fair. I'll add the tests before the next PR.</span> 이 두 문장이 이상적인 반응입니다.
+    <span class="en">I'm terrible at this</span>는 사과가 아니라 <strong>상대에게 위로 노동을 떠넘기는 것</strong>입니다.</p>
+  </div>
+
+  <h3>갈등이 교착됐을 때</h3>
+  <div class="grid g3">
+    <div class="card">
+      <h5><span class="dot" style="background:var(--cy)"></span>이해를 물으십시오</h5>
+      <p>입장 대립은 풀리지 않습니다. 각자 무엇을 지키려는지가 드러나면 제3안이 나옵니다.</p>
+      <span class="mo">What are you optimizing for here?</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--am)"></span>교착을 명명하십시오</h5>
+      <p>막혔다는 사실 자체를 소리 내어 말하면 감정 대립이 문제 해결로 전환됩니다.</p>
+      <span class="mo">I think we're stuck. Should we bring Sarah in?</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--lm)"></span>에스컬레이션 전 문서화</h5>
+      <p>상급자를 부르기 전에 양쪽 입장을 <strong>중립적으로</strong> 정리하십시오. 이게 없으면 감정 싸움으로 보입니다.</p>
+      <span class="mo">Let me write up both positions so Sarah can decide from the same doc.</span>
+    </div>
+  </div>
+
+  <h3>표현 은행 · 피드백과 갈등</h3>
+  <div class="pb">
+    <div class="pb-bar">
+      <button class="pb-tab on">주기</button>
+      <button class="pb-tab">받기</button>
+      <button class="pb-tab">칭찬</button>
+      <button class="pb-tab">갈등 · 수습</button>
+    </div>
+    <div class="pb-pane on">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Can I give you some feedback on yesterday's PR? Now a good time?</div><div class="ph-ko">사전 동의 요청. 준비 안 된 상태의 피드백은 방어만 낳습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">In yesterday's PR the tests weren't included, so QA had to write them and the release slipped a day.</div><div class="ph-ko">SBI 완성형. 사실 · 사실 · 결과. 해석이 없습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I might be missing context — was there a reason the tests were left out?</div><div class="ph-ko">단정 대신 확인. 실제로 이유가 있는 경우가 많습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">What would help you get tests in before review next time?</div><div class="ph-ko">비난에서 지원으로. 행동 변화를 실제로 만드는 질문입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">To be clear, this isn't about the last PR specifically — it's the third one this sprint.</div><div class="ph-ko">패턴을 지적할 때. always 대신 <strong>횟수</strong>를 쓰십시오.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Can you give me a specific example?</div><div class="ph-ko">모호한 지적에. 반박이 아니라 정보 요청입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Fair. I'll add the tests before the next PR.</div><div class="ph-ko">맞는 지적을 받는 이상적인 형태. 인정 + 조치, 두 문장.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">You're right about the tests. On the timeline I saw it differently — can I explain?</div><div class="ph-ko">부분 인정 후 반론. 순서가 핵심입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Let me sit with that and come back to you tomorrow.</div><div class="ph-ko">즉시 반박 회피. 감정이 올라올 때 최선의 선택입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That's useful — I hadn't seen it from the QA side.</div><div class="ph-ko">피드백에 감사. 방어 대신 학습을 보여줍니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Nice catch on the retry logic — I would have missed that.</div><div class="ph-ko">구체적 칭찬. 무엇을 잘했는지 명시하면 반복됩니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The way you laid out the postmortem made it easy to follow. Worth doing that again.</div><div class="ph-ko">행동을 지목한 칭찬. <span class="en">good job</span>보다 훨씬 효과적입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Credit to Minji — she found the pool setting difference.</div><div class="ph-ko">공개 채널에서 공로 배분. 관계 자산이 됩니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That saved us a day. Thank you.</div><div class="ph-ko">영향을 숫자로. 칭찬도 impact가 있으면 무게가 실립니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">What are you optimizing for here? I want to make sure we're solving the same problem.</div><div class="ph-ko">입장에서 이해로. 교착을 푸는 첫 질문입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I think we're stuck on this. Should we bring Sarah in to decide?</div><div class="ph-ko">교착 명명 + 에스컬레이션 제안. 감정 대립을 막습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Let me write up both positions so whoever decides is working from the same doc.</div><div class="ph-ko">중립 문서화. 에스컬레이션 전에 반드시 하십시오.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">That came out sharper than I meant. What I'm trying to say is —</div><div class="ph-ko">말이 세게 나갔을 때 즉시 수습.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I want to separate the technical disagreement from anything personal — I've got no issue with you at all.</div><div class="ph-ko">사람과 문제 분리를 명시. 갈등이 길어질 때 필요합니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+  </div>
+
+  <div class="note trap">
+    <div class="t">⚠ Korean Trap · 피드백 5종</div>
+    <p>1. <span class="en">always</span> · <span class="en">never</span> — 반례 하나로 반박됩니다. <strong>횟수</strong>를 쓰십시오. <span class="en">third one this sprint</span><br>
+    2. <strong>성격 판정</strong> — <span class="en">careless</span> · <span class="en">bad habit</span> · <span class="en">attitude</span>. 행동이 아니라 사람을 공격합니다.<br>
+    3. <strong>Impact 누락</strong> — 결과를 말하지 않으면 잔소리로 들리고 행동이 바뀌지 않습니다.<br>
+    4. <strong>과잉 사과로 피드백 받기</strong> — <span class="en">I'm terrible at this</span>는 상대에게 위로 노동을 떠넘깁니다.<br>
+    5. <strong>즉시 반박</strong> — 감정이 올라오면 <span class="en">Let me sit with that</span>로 하루를 확보하십시오.</p>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 17-1</div>
+    <div class="qq">SBI 구조에 맞는 피드백은?</div>
+    <button class="opt" data-a="0"><span class="mo">You always forget the tests. It's a bad habit.</span></button>
+    <button class="opt" data-a="1"><span class="mo">In yesterday's PR the tests weren't included, so QA had to write them and the release slipped a day.</span></button>
+    <button class="opt" data-a="2"><span class="mo">You need to be more careful with your work.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 상황 · 행동 · 결과 셋이 다 있고, 해석과 성격 판정이 없습니다. 1번은 과장(always)과 판정(bad habit)을 동시에, 3번은 세 조각이 전부 없습니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 17-2</div>
+    <div class="qq">맞는 지적을 받았습니다. 이상적인 반응은?</div>
+    <button class="opt" data-a="0"><span class="mo">I'm so sorry, I'm really terrible at this. I'll try harder.</span></button>
+    <button class="opt" data-a="1"><span class="mo">Fair. I'll add the tests before the next PR.</span></button>
+    <button class="opt" data-a="2"><span class="mo">Well, nobody told me the gate had changed.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 인정 + 조치, 두 문장이면 끝입니다. 1번은 상대에게 위로 노동을 떠넘기고, 3번은 즉시 반박입니다. 사정이 있었다면 인정 뒤에 붙이십시오.</div>
+  </div>
+</section>
+
+<!-- ==================== 18 ==================== -->
+<section id="s18">
+  <div class="sec-head">
+    <div class="sec-num">18</div>
+    <div>
+      <h2>종합 드릴 10문항</h2>
+      <div class="sub">Module IV 전체 범위. 8개 이상이면 Module V로 넘어가십시오</div>
+    </div>
+  </div>
+
+  <div class="qz" data-q data-final>
+    <div class="qn">Q1 · 발표</div>
+    <div class="qq">발표 오프닝에서 "개수와 시간"을 먼저 주는 이유는?</div>
+    <button class="opt" data-a="0">청중이 남은 분량을 계산하며 들을 수 있기 때문</button>
+    <button class="opt" data-a="1">시간을 채우기 위해</button>
+    <button class="opt" data-a="2">격식을 갖추기 위해</button>
+    <div class="qz-ex" data-ex="0"><b>1번.</b> 청중은 내용의 상당 부분을 놓칩니다. 표지판은 놓친 사람이 다시 올라탈 지점입니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q2 · 전치사</div>
+    <div class="qq"><span class="mo">rose by 12%</span> 와 <span class="mo">rose to 12%</span> 의 차이는?</div>
+    <button class="opt" data-a="0">차이 없음</button>
+    <button class="opt" data-a="1">by는 변화량, to는 도달값</button>
+    <button class="opt" data-a="2">by는 도달값, to는 변화량</button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 확신이 없으면 <span class="en">from A to B</span>를 쓰십시오. 오해가 불가능합니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q3 · percentage point</div>
+    <div class="qq">전환율 5% → 7%. 옳은 표현 <strong>두 개</strong> 중 하나가 아닌 것은?</div>
+    <button class="opt" data-a="0"><span class="mo">up 2 percentage points</span></button>
+    <button class="opt" data-a="1"><span class="mo">up 40%</span></button>
+    <button class="opt" data-a="2"><span class="mo">up 2%</span></button>
+    <div class="qz-ex" data-ex="2"><b>3번.</b> <span class="en">up 2%</span>는 5%가 5.1%가 된 것으로 읽힙니다. 실제 변화의 20분의 1로 축소 보고하는 셈입니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q4 · 인과</div>
+    <div class="qq">배포 2분 후 급등, 원인 미검증. 적절한 동사는?</div>
+    <button class="opt" data-a="0"><span class="mo">caused</span></button>
+    <button class="opt" data-a="1"><span class="mo">coincided with</span> 또는 시각으로 서술</button>
+    <button class="opt" data-a="2"><span class="mo">definitely triggered</span></button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 시점 일치와 인과는 다릅니다. 검증 없는 단정은 나중에 틀렸을 때 신뢰를 크게 깎습니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q5 · 숫자 읽기</div>
+    <div class="qq"><span class="mo">$1.8k</span> 를 말로 어떻게 읽습니까?</div>
+    <button class="opt" data-a="0">eighteen hundred dollars</button>
+    <button class="opt" data-a="1">one point eight thousand dollars</button>
+    <button class="opt" data-a="2">one point eight k dollars</button>
+    <div class="qz-ex" data-ex="0"><b>1번.</b> <span class="en">point eight thousand</span> 형태는 쓰지 않습니다. 구어에서는 hundred 단위로 끊어 읽습니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q6 · 협상 첫 수</div>
+    <div class="qq">고객이 무리한 일정을 요구합니다. 첫 대응으로 가장 좋은 것은?</div>
+    <button class="opt" data-a="0"><span class="mo">Before I answer — what's driving that date?</span></button>
+    <button class="opt" data-a="1"><span class="mo">Yes, we'll make it work.</span></button>
+    <button class="opt" data-a="2"><span class="mo">That's impossible.</span></button>
+    <div class="qz-ex" data-ex="0"><b>1번.</b> 날짜는 입장이고 그 뒤에 이유가 있습니다. 이유를 알면 범위 조정으로 양쪽을 만족시킬 여지가 생깁니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q7 · 양보</div>
+    <div class="qq">협상에서 모든 양보에 반드시 붙여야 하는 것은?</div>
+    <button class="opt" data-a="0">감사 표현</button>
+    <button class="opt" data-a="1">대가 또는 조건 (<span class="mo">if…</span>)</button>
+    <button class="opt" data-a="2">최선을 다하겠다는 약속</button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 대가 없는 양보는 반드시 다음 요구를 부릅니다. 조건을 붙이면 양보가 거래가 됩니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q8 · 침묵</div>
+    <div class="qq">상대 제안 직후의 3초 침묵은 협상에서 어떤 역할을 합니까?</div>
+    <button class="opt" data-a="0">무례한 행동이므로 피해야 한다</button>
+    <button class="opt" data-a="1">영어가 필요 없는 강력한 도구 — 상대가 먼저 조건을 완화하는 일이 자주 있다</button>
+    <button class="opt" data-a="2">아무 효과 없다</button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 초중급 학습자에게 특히 유리합니다. 이 3초를 못 견디고 스스로 양보하는 것이 가장 흔한 손실입니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q9 · 피드백</div>
+    <div class="qq">피드백에서 <span class="mo">always</span> · <span class="mo">never</span> 를 쓰지 않는 이유는?</div>
+    <button class="opt" data-a="0">문법적으로 틀리기 때문</button>
+    <button class="opt" data-a="1">반례 하나로 반박되어 대화가 방어로 전환되기 때문</button>
+    <button class="opt" data-a="2">너무 부드럽게 들리기 때문</button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 과장은 즉시 반박됩니다. 대신 <strong>횟수</strong>를 쓰십시오 — <span class="en">the third one this sprint</span>.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q10 · 피드백 받기</div>
+    <div class="qq">감정이 올라와 즉시 반박하고 싶을 때 최선의 대응은?</div>
+    <button class="opt" data-a="0"><span class="mo">Let me sit with that and come back to you tomorrow.</span></button>
+    <button class="opt" data-a="1">그 자리에서 사실관계를 전부 바로잡는다</button>
+    <button class="opt" data-a="2"><span class="mo">I'm so sorry, I'm terrible at this.</span></button>
+    <div class="qz-ex" data-ex="0"><b>1번.</b> 하루를 확보하면 감정이 아니라 사실로 답할 수 있습니다. 2번은 방어, 3번은 상대에게 위로 노동을 떠넘기는 반응입니다.</div>
+  </div>
+  <div class="score" id="finalScore">종합 드릴 <b>0</b> / 10 · 문항을 풀면 점수가 집계됩니다</div>
+</section>
+
+<!-- ==================== 19 ==================== -->
+<section id="s19">
+  <div class="sec-head">
+    <div class="sec-num">19</div>
+    <div>
+      <h2>현장 체크리스트</h2>
+      <div class="sub">발표 · 숫자 · 협상 · 피드백</div>
+    </div>
+  </div>
+
+  <div id="ckList">
+    <div class="ck"><div class="box">✓</div><div class="lb"><strong>발표</strong> — 오프닝에 개수와 시간을 줬는가 (<span class="mo">Three things, about ten minutes</span>)</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">결론이 30초 안에 나오는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">구간이 바뀔 때 <strong>전환 신호</strong>를 넣었는가 (and로 이어붙이지 않았는가)</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">가장 약한 부분을 <strong>내가 먼저</strong> 꺼냈는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">마지막 2분을 Q&amp;A용으로 비워뒀는가</div></div>
+
+    <div class="ck"><div class="box">✓</div><div class="lb"><strong>숫자</strong> — 추이 문장에 <span class="mo">수치 + 기간</span>이 있는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb"><span class="mo">by</span> / <span class="mo">to</span> 를 구분했는가 (헷갈리면 <span class="mo">from A to B</span>)</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">percent 와 percentage point 를 구분했는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">검증 안 된 인과에 <span class="mo">caused</span> 를 쓰지 않았는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">핵심 숫자를 <strong>말로 읽어봤는가</strong> (화면에 있어도 입으로 안 나오면 무용)</div></div>
+
+    <div class="ck"><div class="box">✓</div><div class="lb"><strong>협상</strong> — Target / Acceptable / Walk-away 3숫자를 준비했는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">준비 없이 숫자를 던지지 않았는가 (모르면 내일 답한다)</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">단일 숫자 대신 <strong>구간 + 변수</strong>로 답했는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">상대의 <strong>이유</strong>를 물었는가 (<span class="mo">What's driving that?</span>)</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">모든 양보에 <span class="mo">if</span> 조건을 붙였는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">합의를 <strong>당일 문서로</strong> 남겼는가</div></div>
+
+    <div class="ck"><div class="box">✓</div><div class="lb"><strong>피드백</strong> — S · B · I 세 조각이 다 있는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb"><span class="mo">always</span> / <span class="mo">never</span> / 성격 판정을 지웠는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">받을 때 즉시 반박하지 않았는가 · 과잉 사과하지 않았는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">교착이면 <strong>중립 문서</strong>를 쓴 뒤 에스컬레이션했는가</div></div>
+  </div>
+
+  <div class="next">
+    <div class="t">Next · Module V</div>
+    <h4>커리어 &amp; 문화 (18–20)</h4>
+    <ul>
+      <li><strong>18</strong> 네트워킹 · 콜드 아웃리치 — LinkedIn DM, 커피챗 요청, 인맥 유지</li>
+      <li><strong>19</strong> 면접 · 성과 리뷰 · 연봉 협상 — STAR 답변 빌더, 성과를 자랑 아닌 사실로</li>
+      <li><strong>20</strong> 크로스컬처 &amp; 종합 진단 — 미·영·아시아권 직접성 차이, 최종 진단 25문항 + 수료 리포트</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- clipboard ---------- */
+function copy(text, btn){
+  var done = function(){
+    var old = btn.textContent;
+    btn.textContent = '복사됨'; btn.classList.add('done');
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1400);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+  } else { fallback(text, done); }
+}
+function fallback(text, cb){
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.setAttribute('readonly','');
+  ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); cb(); }catch(e){}
+  document.body.removeChild(ta);
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest('.ph-c');
+  if(!b) return;
+  var row = b.closest('.ph');
+  if(!row) return;
+  var en = row.querySelector('.ph-en');
+  copy(en ? en.textContent.trim() : '', b);
+});
+
+/* ---------- phrase bank tabs ---------- */
+document.querySelectorAll('.pb').forEach(function(pb){
+  var tabs = pb.querySelectorAll('.pb-tab');
+  var panes = pb.querySelectorAll('.pb-pane');
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('on'); });
+      panes.forEach(function(x){ x.classList.remove('on'); });
+      t.classList.add('on');
+      if(panes[i]) panes[i].classList.add('on');
+    });
+  });
+});
+
+/* ---------- chip helpers ---------- */
+function chipGroup(id, onPick){
+  var box = document.getElementById(id);
+  if(!box) return;
+  box.querySelectorAll('.chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      box.querySelectorAll('.chip').forEach(function(x){ x.classList.remove('on'); });
+      c.classList.add('on');
+      onPick(parseInt(c.dataset.i, 10));
+    });
+  });
+}
+function picked(id){
+  var box = document.getElementById(id);
+  var on = box ? box.querySelector('.chip.on') : null;
+  return on ? parseInt(on.dataset.i, 10) : 0;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ---------- 14 Signpost Console ---------- */
+var SP = [
+{n:'기술 제안', s:[
+ {t:["Three things today: why our queue is about to break, the three options we looked at, and the decision I need from you.",
+     "About ten minutes, then questions.",
+     "Short version up front: I recommend self-managed Kafka on EKS."],
+  w:'개수 · 시간 · 결론. 이 세 조각이 오프닝의 전부입니다. 결론을 먼저 주면 청중이 <b>검증하며</b> 듣습니다. 결론을 마지막에 두면 각자 다른 결론을 만들어 놓고 기다립니다.'},
+ {t:["That's the problem. Now, the three options we looked at.",
+     "Second of three —",
+     "So that's the case for Kafka. Now the risk, because it isn't free.",
+     "Before I move on — does the problem framing make sense so far?"],
+  w:'전환 신호는 <b>짧을수록 좋습니다.</b> and로 이어붙이는 순간 청중은 구간을 구분하지 못합니다. 마지막 문장처럼 확인을 붙이면 침묵이 동의로 기록되는 것도 막습니다.'},
+ {t:["This is the number that matters: 2.4x.",
+     "That's $4,300 a month we'd be paying for convenience — roughly one engineer's monthly cost.",
+     "If you remember one thing from this, it's that replay is not optional for us."],
+  w:'강조 신호는 <b>발표당 한 번</b>입니다. 두 번 이상 쓰면 둘 다 무력해집니다. 숫자는 익숙한 단위로 환산해 주십시오 — 2.4x보다 "엔지니어 한 명 월 비용"이 훨씬 잘 남습니다.'},
+ {t:["The obvious objection is ops load, so let me address that now.",
+     "You might be thinking we could just scale the current queue — we tested that, and here's why it doesn't hold.",
+     "The weakest part of my case is ramp-up time. Here's how I'd reduce it.",
+     "This isn't free, and I don't want to pretend otherwise."],
+  w:'반론 선점이 기술 제안에서 <b>가장 효과가 큰 구간</b>입니다. 검토자가 이미 알고 있는 약점을 내가 먼저 꺼내면, 남은 판단을 나에게 맡깁니다. 감췄다가 발견되면 그 순간 신뢰가 무너집니다.'},
+ {t:["So: Kafka, self-managed, three brokers to start.",
+     "Sarah — I need a decision by Sep 3 so we can start next sprint.",
+     "If I don't hear back by then, I'll proceed with the recommendation and note it in the ADR.",
+     "That's it from me. What have I missed?"],
+  w:'Ask에는 <b>이름 · 무엇을 · 언제까지</b>가 들어갑니다. 무응답 대비 문장까지 붙이면 결정이 미뤄져도 일이 멈추지 않습니다.'},
+ {t:["Let me make sure I've got the question — you're asking whether replay covers partial batches?",
+     "I don't have that number in front of me — I'll post it by EOD.",
+     "That's fair. Let me address the ops risk head-on.",
+     "Good question, but outside today's scope — can I take it right after?"],
+  w:'Q&A의 네 가지 기본 대응입니다. 절대 하지 말 것은 <b>추측으로 답하기</b> — 한 번 틀리면 발표 전체가 의심받습니다.'}]},
+{n:'임원 보고', s:[
+ {t:["Three minutes, one decision. Here's where we are.",
+     "Situation: our event volume has doubled since Q2.",
+     "Bottom line: the current queue breaks in about six weeks, and I need a budget call by Sep 3."],
+  w:'임원 보고는 <b>SCQA</b>가 맞습니다. 상황 → 문제 → 질문 → 답. 그리고 결론은 30초 안에 나와야 합니다. 임원은 5분 뒤 다음 회의로 갑니다.'},
+ {t:["That's the situation. The complication is cost.",
+     "Which brings us to the decision you need to make.",
+     "One more thing you should know before you decide —"],
+  w:'임원 대상 전환 신호는 <b>결정으로 향하는 방향</b>을 계속 알려주는 역할입니다. "당신이 무엇을 결정해야 하는지"를 반복적으로 상기시키십시오.'},
+ {t:["The number that drives this is 2.4x — that's the cost premium for the managed option.",
+     "In budget terms, roughly $52k a year.",
+     "To put it in context, that's about half an engineer."],
+  w:'임원에게는 <b>연간 금액과 인력 환산</b>이 가장 잘 전달됩니다. ms · rps · p95 같은 단위는 통역이 필요합니다. 미리 환산해 가십시오.'},
+ {t:["The risk you'll ask about is operational load, so let me pre-empt it.",
+     "If this goes wrong, the failure mode is a slower Q4, not an outage.",
+     "I'd rather flag the uncertainty now than surprise you in November."],
+  w:'임원 앞에서 리스크를 먼저 꺼내는 것은 <b>정치적으로도 유리합니다.</b> 나중에 문제가 생겼을 때 "예고했다"는 기록이 남습니다.'},
+ {t:["What I need from you: approval on the $1.8k monthly line by Sep 3.",
+     "No other decisions today.",
+     "I'll send a one-pager right after this."],
+  w:'요청은 <b>하나만</b> 가져가십시오. 임원 회의에서 요청이 두 개 이상이면 대개 하나도 결정되지 않습니다.'},
+ {t:["Short answer: yes. Longer answer if you want it.",
+     "I don't know, and I don't want to guess — I'll have it to you today.",
+     "That's a good question for the platform team; I'll get you an answer by tomorrow."],
+  w:'임원 Q&A의 핵심은 <b>짧게 먼저</b>입니다. <span style="font-family:var(--mono)">Short answer:</span>로 시작하고 깊이는 상대가 고르게 하십시오.'}]},
+{n:'스프린트 데모', s:[
+ {t:["Two demos, four minutes. Then one thing I need help with.",
+     "What we shipped: the settlement CSV export and the staging gate."],
+  w:'데모는 <b>What → So what → Now what</b>이 맞습니다. 짧은 형식이므로 오프닝도 두 문장이면 충분합니다.'},
+ {t:["That's the export. Now why it matters.",
+     "Next up, the staging gate — this one's small but it prevents last week's incident.",
+     "Last thing, and it's the ask."],
+  w:'짧은 발표에서도 전환 신호는 필요합니다. 4분 안에 두 개를 보여주면 청중은 어디서 하나가 끝났는지 모릅니다.'},
+ {t:["The thing to notice here is that it's now one click instead of a manual query.",
+     "That's about two hours a week back for Finance."],
+  w:'데모의 강조는 <b>절약된 시간</b>이나 <b>줄어든 단계 수</b>로 표현하십시오. 기능 설명보다 훨씬 잘 남습니다.'},
+ {t:["It's not pretty yet — the styling comes next sprint.",
+     "It doesn't handle multi-currency, and that's deliberate for now."],
+  w:'미완성 부분을 먼저 밝히면 질문이 그쪽으로 몰리지 않습니다. 데모에서 특히 효과적입니다.'},
+ {t:["Now what: I need someone from Finance to validate the CSV format by Wednesday.",
+     "Anyone able to take that?"],
+  w:'데모의 Ask는 대개 <b>작은 협조 요청</b>입니다. 이름을 지목하지 못하는 자리라면 마지막처럼 열어두십시오.'},
+ {t:["Good spot — that's a bug. I'll file it after this.",
+     "Not yet, but it's on the list for next sprint.",
+     "Let me show you rather than explain it."],
+  w:'데모 Q&A는 <b>보여주는 것</b>이 가장 빠릅니다. 화면이 이미 열려 있으니 설명하지 말고 클릭하십시오.'}]}
+];
+function spRender(){
+  var d = SP[picked('spType')].s[picked('spSeg')];
+  document.getElementById('spOut').innerHTML = d.t.map(function(x){
+    return '· ' + esc(x);
+  }).join('\n');
+  document.getElementById('spWhy').innerHTML = d.w;
+}
+chipGroup('spType', spRender);
+chipGroup('spSeg', spRender);
+spRender();
+
+/* ---------- 15 Trend Describer ---------- */
+var TD = [
+{ // 급증
+ metric:'p95 latency', unit:'ms', x:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+ v:[118,124,120,131,126,842,905], color:'#fb7185',
+ note:'Fri 21:40 배포 직후 급등',
+ s:[['간단','p95 latency jumped after Friday\'s deploy.','금요일 배포 후 p95 지연이 급등했습니다.'],
+    ['정확','p95 latency spiked from about 125ms to 905ms right after Friday\'s deploy — roughly a 7x increase.','약 125ms에서 905ms로 급등, 대략 7배입니다.'],
+    ['임원용','Response times went up about sevenfold on Friday night. Users on the checkout path would have noticed. The spike started two minutes after a deploy; we rolled it back and we\'re confirming the cause now.','응답 시간이 7배가 됐고 사용자가 체감할 수준입니다. 배포 2분 후 시작됐고, 롤백했으며 원인은 확인 중입니다.']],
+ err:'<b>흔한 오류 1</b> — <span class="en">latency became very big</span>. 수치가 없으면 정보가 아닙니다.<br><b>흔한 오류 2</b> — <span class="en">the deploy caused the spike</span>로 단정. 아직 검증 전이라면 <span class="en">started two minutes after</span>로 서술하십시오.<br><b>동사 선택</b> — 급등 후 롤백으로 되돌아온 형태라면 <span class="en">spike</span>가 정확합니다. 계속 높게 유지된다면 <span class="en">surge</span>나 <span class="en">jump</span>를 쓰십시오.'},
+{ // 꾸준한 성장
+ metric:'daily API calls', unit:'M', x:['Q1','Q2','Q3','Q4','Q1','Q2'],
+ v:[180,206,241,282,330,398], color:'#a3e635',
+ note:'6개 분기 연속 증가 · 분기 평균 +17%',
+ s:[['간단','Daily API calls have grown steadily for six quarters.','일일 API 호출이 6개 분기 연속 꾸준히 증가했습니다.'],
+    ['정확','Daily calls grew from 180 million to 398 million over six quarters — about 17% quarter over quarter, and up 121% year over year.','1억 8천만에서 3억 9,800만으로, 분기 대비 약 17%, 전년 대비 121% 증가했습니다.'],
+    ['임원용','Volume has more than doubled in a year and is still compounding at about 17% a quarter. At this rate we hit our current queue ceiling in roughly six weeks — which is what the Kafka proposal is about.','1년에 2배 이상, 여전히 분기 17%씩 복리로 늘고 있습니다. 이 속도면 6주 내 한계에 닿습니다.']],
+ err:'<b>흔한 오류 1</b> — <span class="en">grew 17%</span>만 쓰고 기준 기간을 빠뜨림. QoQ인지 YoY인지 반드시 밝히십시오. 이 차이는 4배입니다.<br><b>흔한 오류 2</b> — <span class="en">398M</span>을 "삼억 구천팔백만"으로 머릿속에서 환산하다 멈춤. 미리 <span class="en">three hundred ninety-eight million</span>으로 읽어보십시오.<br><b>추천 동사</b> — <span class="en">grew steadily</span> / <span class="en">has been compounding</span>. <span class="en">exploded</span>는 이 기울기에 과합니다.'},
+{ // 정체
+ metric:'checkout conversion', unit:'%', x:['Jan','Feb','Mar','Apr','May','Jun'],
+ v:[3.1,3.2,3.15,3.2,3.18,3.2], color:'#fbbf24',
+ note:'6개월 · 목표 4.0% 미달',
+ s:[['간단','Conversion has been flat for six months.','전환율이 6개월간 평탄합니다.'],
+    ['정확','Conversion has held steady between 3.1% and 3.2% since January — no meaningful movement, and 0.8 percentage points below our 4.0% target.','1월 이후 3.1~3.2%에서 정체, 목표 4.0% 대비 0.8퍼센트포인트 미달입니다.'],
+    ['임원용','Conversion has plateaued at about 3.2% for six months. The three optimisations we shipped in Q1 didn\'t move it, which suggests the constraint isn\'t in the checkout flow. I\'d propose we look at the funnel one step earlier before spending another sprint here.','6개월째 3.2%에서 정체입니다. Q1 개선 3건이 효과가 없었으므로 제약이 체크아웃 단계가 아닐 가능성이 큽니다.']],
+ err:'<b>흔한 오류 1</b> — <span class="en">0.8% below target</span>. 3.2%와 4.0%의 차이는 <b>0.8퍼센트포인트</b>입니다. <span class="en">0.8%</span>라고 쓰면 3.17% 정도로 읽힙니다.<br><b>흔한 오류 2</b> — <span class="en">it is not changing</span>. 현재진행형보다 <span class="en">has held steady</span> / <span class="en">has plateaued</span>가 보고문에 맞습니다.<br><b>뉘앙스</b> — <span class="en">stable</span>은 긍정, <span class="en">plateaued</span>는 부정 함의입니다. 정체가 문제라면 후자를 쓰십시오.'},
+{ // 급락 (개선)
+ metric:'error rate', unit:'%', x:['09:00','09:30','10:00','10:30','11:00','11:30','12:00'],
+ v:[4.2,4.4,4.1,1.2,0.3,0.12,0.09], color:'#22d3ee',
+ note:'10:15 롤백 · 목표 0.5% 이하',
+ s:[['간단','The error rate dropped sharply after the rollback.','롤백 후 오류율이 급감했습니다.'],
+    ['정확','The error rate fell from 4.2% to 0.09% within two hours of the rollback — well inside our 0.5% threshold.','롤백 후 2시간 만에 4.2%에서 0.09%로 감소, 임계값 0.5%를 크게 밑돕니다.'],
+    ['임원용','Errors are back to normal — down from 4.2% to under 0.1% within two hours. We used about a quarter of this month\'s error budget, so we still have room, but I don\'t want to spend more of it on the same failure mode.','오류가 정상 복귀했습니다. 이번 달 오류 예산의 약 4분의 1을 소모했습니다.']],
+ err:'<b>흔한 오류 1</b> — <span class="en">decreased to 4%</span>처럼 <span class="en">to</span>와 <span class="en">by</span>를 뒤섞음. 도달값은 <span class="en">to</span>, 변화량은 <span class="en">by</span>입니다.<br><b>흔한 오류 2</b> — 개선인데 부정적 동사를 씀. <span class="en">collapsed</span>는 이 맥락에서 어색합니다. <span class="en">fell</span> / <span class="en">dropped</span> / <span class="en">came back down</span>을 쓰십시오.<br><b>0.09% 읽기</b> — <span class="en">zero point zero nine percent</span>. 소수점 뒤는 한 자리씩 읽습니다.'},
+{ // V자 회복
+ metric:'availability', unit:'%', x:['W1','W2','W3','W4','W5','W6'],
+ v:[99.98,99.97,99.42,99.61,99.95,99.99], color:'#a78bfa',
+ note:'W3 장애 · W5 이후 SLO 복귀',
+ s:[['간단','Availability dipped in week 3 and has recovered.','3주차에 가용성이 떨어졌다가 회복했습니다.'],
+    ['정확','Availability dropped from 99.98% to 99.42% in week 3, then recovered to 99.99% by week 6 — back above our three-nines SLO for two consecutive weeks.','3주차에 99.42%까지 하락 후 6주차 99.99%로 회복, 2주 연속 SLO를 충족합니다.'],
+    ['임원용','We had one bad week and we\'ve recovered. Availability is back above target and has held there for two weeks. The fix is in place; the remaining work is preventing the same class of failure, which is on the plan for this sprint.','한 주 나빴고 회복했습니다. 목표 위에서 2주 유지 중이며, 재발 방지 작업이 이번 스프린트에 있습니다.']],
+ err:'<b>흔한 오류 1</b> — <span class="en">99.42%</span>를 "약 99%"로 뭉갬. 가용성은 소수점이 전부입니다. 99.9%와 99.42%는 월 다운타임이 <b>13배</b> 차이입니다.<br><b>흔한 오류 2</b> — <span class="en">recovered</span>만 쓰고 <b>얼마나 유지됐는지</b>를 빼먹음. 회복 서술에는 지속 기간이 필요합니다.<br><b>관용 표현</b> — <span class="en">three nines</span> = 99.9%. 가용성 논의에서 표준 표현입니다.'},
+{ // 톱니
+ metric:'queue depth', unit:'k msgs', x:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+ v:[12,48,18,62,22,71,15], color:'#f472b6',
+ note:'배치 작업 시간과 일치 · 피크 71k',
+ s:[['간단','Queue depth swings a lot day to day.','큐 적재량이 일별로 크게 요동칩니다.'],
+    ['정확','Queue depth is volatile, ranging from 12k to 71k messages. The peaks line up with the nightly batch window, so this looks like expected behaviour rather than a leak.','12k~71k 사이에서 변동하며, 피크가 야간 배치 시간과 일치합니다.'],
+    ['임원용','The queue is spiky by design — it fills during the nightly batch and drains by morning. The concern isn\'t the variation, it\'s the peak: at 71k we\'re at about 70% of what the current setup can hold. That\'s the headroom problem.','설계상 변동이 정상입니다. 문제는 피크가 현재 용량의 약 70%에 도달했다는 점입니다.']],
+ err:'<b>흔한 오류 1</b> — <span class="en">up and down</span>으로만 서술. <span class="en">volatile</span> / <span class="en">fluctuates between A and B</span>가 정확합니다.<br><b>흔한 오류 2</b> — 변동을 문제로 보고할 것인지 판단하지 않음. <b>정상 변동인지 이상인지 먼저 말하십시오.</b> 그게 없으면 청중이 불필요하게 긴장합니다.<br><b>강조 대상</b> — 톱니 데이터에서 중요한 것은 평균이 아니라 <b>피크와 여유 용량</b>입니다.'}
+];
+function tdChart(d){
+  var W=700, H=250, L=52, R=16, T=18, B=38;
+  var max = Math.max.apply(null, d.v), min = Math.min.apply(null, d.v);
+  var pad = (max-min)*0.18 || max*0.1;
+  var hi = max+pad, lo = Math.max(0, min-pad);
+  var n = d.v.length;
+  var px = function(i){ return L + (W-L-R) * (n===1?0:i/(n-1)); };
+  var py = function(v){ return T + (H-T-B) * (1 - (v-lo)/(hi-lo||1)); };
+  var pts = d.v.map(function(v,i){ return px(i).toFixed(1)+','+py(v).toFixed(1); }).join(' ');
+  var area = 'M'+px(0).toFixed(1)+','+(H-B)+' L'+d.v.map(function(v,i){
+    return px(i).toFixed(1)+','+py(v).toFixed(1); }).join(' L')+' L'+px(n-1).toFixed(1)+','+(H-B)+' Z';
+  var g='';
+  for(var k=0;k<=3;k++){
+    var yy = T + (H-T-B)*k/3;
+    var val = hi - (hi-lo)*k/3;
+    g += '<line x1="'+L+'" y1="'+yy.toFixed(1)+'" x2="'+(W-R)+'" y2="'+yy.toFixed(1)+'" stroke="#222835" stroke-dasharray="2 4"/>';
+    g += '<text x="'+(L-9)+'" y="'+(yy+3.5).toFixed(1)+'" fill="#69738a" font-size="9.5" text-anchor="end">'+
+         (val>=100?Math.round(val):val.toFixed(val<10?2:1))+'</text>';
+  }
+  var xl='';
+  d.x.forEach(function(lb,i){
+    xl += '<text x="'+px(i).toFixed(1)+'" y="'+(H-B+18)+'" fill="#69738a" font-size="9.5" text-anchor="middle">'+esc(lb)+'</text>';
+  });
+  var dots = d.v.map(function(v,i){
+    var last = (i===n-1);
+    return '<circle cx="'+px(i).toFixed(1)+'" cy="'+py(v).toFixed(1)+'" r="'+(last?4.5:3)+'" fill="'+(last?d.color:'#0c0e14')+'" stroke="'+d.color+'" stroke-width="1.8"/>';
+  }).join('');
+  var lastLbl = '<text x="'+(px(n-1)-8).toFixed(1)+'" y="'+(py(d.v[n-1])-12).toFixed(1)+'" fill="'+d.color+
+    '" font-size="11" font-weight="700" text-anchor="end">'+d.v[n-1]+d.unit+'</text>';
+  return '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">'+
+    '<defs><linearGradient id="tdg" x1="0" y1="0" x2="0" y2="1">'+
+    '<stop offset="0%" stop-color="'+d.color+'" stop-opacity=".22"/>'+
+    '<stop offset="100%" stop-color="'+d.color+'" stop-opacity="0"/></linearGradient></defs>'+
+    g +
+    '<path d="'+area+'" fill="url(#tdg)"/>'+
+    '<polyline points="'+pts+'" fill="none" stroke="'+d.color+'" stroke-width="2.2" stroke-linejoin="round"/>'+
+    dots + lastLbl + xl +
+    '<text x="'+L+'" y="12" fill="#a4aec2" font-size="10.5">'+esc(d.metric)+' ('+esc(d.unit)+')</text>'+
+    '</svg>';
+}
+function tdRender(){
+  var d = TD[picked('tdCase')];
+  document.getElementById('tdChart').innerHTML = tdChart(d);
+  document.getElementById('tdMeta').innerHTML =
+    '<span>'+esc(d.metric)+' · <b>'+d.v[0]+d.unit+' → '+d.v[d.v.length-1]+d.unit+'</b></span>'+
+    '<span>'+esc(d.note)+'</span>';
+  document.getElementById('tdSents').innerHTML = d.s.map(function(s,i){
+    return '<div class="sentlv l'+(i+1)+'"><span class="tag">'+esc(s[0])+'</span>'+
+           '<div class="en2">'+esc(s[1])+'</div><div class="ko2">'+esc(s[2])+'</div></div>';
+  }).join('');
+  document.getElementById('tdErr').innerHTML = d.err;
+}
+chipGroup('tdCase', tdRender);
+tdRender();
+
+/* ---------- 16 Negotiation Tree ---------- */
+var NG = {
+start:{
+  said:'We need this live in four weeks. Can you commit to that?',
+  opts:[
+    {l:'"Yes, we\'ll make it work."', next:'end_yes'},
+    {l:'"Four weeks is tight. Let me check and come back to you tomorrow."', next:'t1a'},
+    {l:'"Before I answer — what\'s driving the four weeks?"', next:'t1b'}
+  ]},
+t1a:{
+  said:'Fine, but I need an answer by tomorrow morning. My board meets Thursday.',
+  opts:[
+    {l:'"Understood. I\'ll send a range with two options and what each one costs."', next:'t1b'},
+    {l:'"Actually, let\'s say six weeks. I think we can do six."', next:'end_midair'}
+  ]},
+t1b:{
+  said:'Our external audit is on the 30th. The audit report has to come out of the new system.',
+  opts:[
+    {l:'"Then we\'ll target the 30th."', next:'end_anchorless'},
+    {l:'"So the fixed thing is the audit report, not the whole migration. We could ship reporting read-only by the 30th, and the rest by week eight."', next:'t2b'},
+    {l:'"That\'s not possible in four weeks."', next:'t2c'}
+  ]},
+t2b:{
+  said:'Read-only reporting could work for the audit. But we\'d need write access soon after — my team can\'t stay read-only for long.',
+  opts:[
+    {l:'"Sure, we can add writes by the 30th as well."', next:'end_creep'},
+    {l:'"We can have writes by week eight, if your team can freeze schema changes until then."', next:'end_best'},
+    {l:'"Let me confirm the exact date with the team and send it to you in writing today."', next:'end_good'}
+  ]},
+t2c:{
+  said:'Then we have a problem. My board is expecting this on the 30th.',
+  opts:[
+    {l:'"I understand. Here\'s what we can deliver by the 30th: the audit report, read-only. Would that satisfy the board?"', next:'end_recover'},
+    {l:'"I\'ll try to make four weeks work."', next:'end_try'}
+  ]},
+
+end_yes:{grade:'bad', title:'BAD · 4주가 확정됐습니다',
+  ls:'준비 없이 수락했습니다. 4주는 이제 <b>계약상 약속</b>이고, 되돌리려면 몇 배의 비용이 듭니다. 협상의 첫 규칙 — <b>즉답을 요구받는 순간이 가장 위험한 순간입니다.</b> 모르면 답하지 마십시오. <span class="en">Let me come back to you tomorrow.</span> 이 한 줄이 8주를 지켜줍니다.'},
+end_midair:{grade:'bad', title:'BAD · 근거 없는 6주',
+  ls:'4주를 6주로 옮겼지만, <b>왜 6주인지 설명할 수 없습니다.</b> 근거 없는 숫자는 다음 회의에서 다시 깎입니다. 게다가 아직 상대가 <b>왜 4주를 원하는지</b> 모릅니다. 숫자를 옮기기 전에 이유를 물어야 했습니다.'},
+end_anchorless:{grade:'mid', title:'OK · 이유는 알았지만 그대로 수락',
+  ls:'좋은 질문을 했고 <b>진짜 제약이 감사 보고서</b>라는 정보를 얻었습니다. 그런데 그 정보를 쓰지 않고 30일을 그대로 받았습니다. 여기서 한 걸음 더 — 고정된 것은 <b>감사 보고서</b>이지 전체 마이그레이션이 아닙니다. 범위를 쪼개면 양쪽이 다 이깁니다.'},
+end_creep:{grade:'bad', title:'BAD · 양보가 누적됐습니다',
+  ls:'범위를 잘 쪼갰는데, 다음 요구에 <b>대가 없이</b> 다시 양보했습니다. 무조건 양보는 반드시 다음 요구를 부릅니다. 모든 양보에 <span class="en">if</span>를 붙이십시오 — <span class="en">We can do writes by week eight, if you can freeze schema changes.</span>'},
+end_best:{grade:'good', title:'BEST · 조건부 합의',
+  ls:'세 가지를 다 했습니다. ① 입장(4주) 뒤의 <b>이유</b>(감사)를 물었고 ② 고정된 것과 아닌 것을 <b>분리</b>해 범위를 쪼갰고 ③ 양보에 <b>대가</b>(스키마 동결)를 붙였습니다. 남은 일은 하나 — <b>오늘 문서로 남기는 것.</b> <span class="en">So to confirm: read-only reporting by Sep 30, full writes by week eight, schema frozen until then. I\'ll send that in writing today.</span>'},
+end_good:{grade:'good', title:'GOOD · 안전한 마무리',
+  ls:'범위를 쪼갰고, 확정을 뒤로 미뤄 <b>즉흥적 약속을 피했습니다.</b> 문서화 의지도 좋습니다. 한 걸음 더 나아간다면 write 접근에 <b>조건</b>을 붙이는 것 — 상대가 이미 추가 요구를 했으므로, 지금이 대가를 청구할 자리였습니다.'},
+end_recover:{grade:'mid', title:'OK · 거절 후 복구',
+  ls:'불가능을 먼저 선언해 분위기가 굳었지만, <b>대안 제시로 복구했습니다.</b> 순서만 바꿨다면 훨씬 나았습니다 — 거절보다 <b>질문</b>이 먼저입니다. <span class="en">That\'s not possible</span>은 협상을 그 자리에서 닫고, <span class="en">What\'s driving that date?</span>는 판을 엽니다.'},
+end_try:{grade:'bad', title:'WORST · I\'ll try',
+  ls:'협상에서 <b>가장 비싼 문장</b>입니다. 상대는 "된다"로 듣고 이사회에 보고합니다. 못 하면 신뢰가 무너지고, 해내면 팀이 무너집니다. 못 하는 일은 <b>지금</b> 말하는 것이 예의입니다.'}
+};
+var ngNode = 'start', ngLog = [];
+function ngRender(){
+  var host = document.getElementById('ngTree');
+  var html = '';
+  ngLog.forEach(function(e){
+    html += '<div class="tr-said"><span class="who">Client</span><div class="tx2">'+esc(e.said)+'</div></div>';
+    html += '<div class="tr-said mine"><span class="who">You</span><div class="tx2">'+esc(e.pick)+'</div></div>';
+  });
+  var n = NG[ngNode];
+  if(n.grade){
+    html += '<div class="tr-end '+n.grade+'"><div class="gr">'+esc(n.title)+'</div><div class="ls">'+n.ls+'</div></div>';
+  } else {
+    html += '<div class="tr-said"><span class="who">Client</span><div class="tx2">'+esc(n.said)+'</div></div>';
+    html += '<div class="lab-lb">당신의 대응</div>';
+    n.opts.forEach(function(o,i){
+      html += '<button class="tr-opt" data-o="'+i+'">'+esc(o.l)+'</button>';
+    });
+  }
+  host.innerHTML = html;
+  host.querySelectorAll('.tr-opt').forEach(function(b){
+    b.addEventListener('click', function(){
+      var o = NG[ngNode].opts[parseInt(b.dataset.o,10)];
+      ngLog.push({said:NG[ngNode].said, pick:o.l.replace(/^"|"$/g,'')});
+      ngNode = o.next;
+      ngRender();
+    });
+  });
+}
+document.getElementById('ngReset').addEventListener('click', function(){
+  ngNode='start'; ngLog=[]; ngRender();
+});
+ngRender();
+
+/* ---------- 17 Feedback Rewriter ---------- */
+var FB = [
+[ // 테스트 누락
+ {b:"You always forget the tests.\nYou need to be more careful.\nIt's a bad habit.",
+  a:"Can I give you some feedback on yesterday's PR?\n\nThe tests weren't included, so QA had to write\nthem and the release slipped a day. That's the\nthird PR this sprint without tests.\n\nI might be missing context — was there a reason?",
+  w:'<b>동료.</b> 사전 동의(<span class="en">Can I give you some feedback?</span>)로 시작하고, <span class="en">always</span>를 <b>횟수</b>(third this sprint)로 바꿨습니다. 마지막 질문이 핵심 — 동료 관계에서는 <b>내가 모르는 사정이 있을 가능성</b>을 열어두는 것이 필수입니다.'},
+ {b:"You always forget the tests.\nThis can't keep happening.\nBe more careful next time.",
+  a:"I want to talk about tests on your PRs.\n\nThree PRs this sprint went up without them, and\neach time QA absorbed the work. Yesterday's cost\nus a day on the release.\n\nWhat would help you get tests in before review?\nIf the staging gate isn't clear, that's on me to fix.",
+  w:'<b>후배 · 팀원.</b> 패턴을 명확히 하되 <b>지원으로 마무리</b>합니다. 마지막 문장이 중요합니다 — 원인이 시스템일 수 있음을 리더가 먼저 인정하면, 상대가 방어 대신 실제 원인을 말합니다.'},
+ {b:"(아무 말도 하지 않는다)\n또는\nYou didn't write the tests again.",
+  a:"Something I want to flag, and tell me if I'm\nreading it wrong.\n\nThe last three PRs from your side went up without\ntests, and QA has been picking them up. Yesterday\nit cost us a day.\n\nI'm raising it because the gate applies to all of\nus and I don't want it to become optional. Is\nthere something about the workflow I'm not seeing?",
+  w:'<b>상사.</b> 가장 어려운 방향입니다. 세 가지가 필요합니다 — ① <b>내 해석이 틀릴 수 있다</b>는 여지 ② 개인 공격이 아니라 <b>규칙의 일관성</b>이라는 명분 ③ 마지막에 상대의 관점을 묻는 질문. 침묵(비난형 첫 줄)이 실제로 가장 흔한 선택이지만, 가장 나쁜 선택입니다.'}],
+[ // 리뷰 방치
+ {b:"You never review my PRs.\nI've been waiting forever.\nThis is blocking me.",
+  a:"My PR from Monday is still open — it's day four.\n\nIt's blocking the cutover work, so I can't start\nthe next piece until it merges.\n\nAre you swamped? Happy to find another reviewer\nif that's easier.",
+  w:'<b>동료.</b> <span class="en">never</span>와 <span class="en">forever</span>를 <b>실제 날짜</b>로 교체했습니다. 마지막 문장이 관계를 지킵니다 — 상대에게 빠져나갈 문을 만들어 주면 방어하지 않고 실제 상황을 말합니다.'},
+ {b:"You're too slow on reviews.\nYou need to prioritize better.",
+  a:"I want to talk about review turnaround.\n\nThree of my PRs this sprint sat for more than\nthree days. Each one held up the next piece of\nwork, so the sprint effectively lost about two days.\n\nWhat's competing for your time right now? If\nreview isn't realistically in your week, I'd rather\nre-assign it than have it slip quietly.",
+  w:'<b>후배 · 팀원.</b> 영향을 <b>팀 단위 손실</b>로 환산했습니다(2일). 그리고 "우선순위를 잘 정하라"는 훈계가 아니라 <b>무엇과 경합하는지</b>를 묻습니다. 대개 진짜 원인은 능력이 아니라 과부하입니다.'},
+ {b:"You're holding up the whole team.\n또는\n(참고 아무 말도 하지 않는다)",
+  a:"Can I raise something about review capacity?\n\nMy last three PRs waited three to four days each,\nwhich pushed the cutover work back by about two\ndays total.\n\nI don't think the bottleneck is you personally —\nyou're the only approver for this service. Could we\nadd a second approver, or would you rather I batch\nthem differently?",
+  w:'<b>상사.</b> 핵심은 <b>문제를 구조로 재정의하는 것</b>입니다 — "당신이 느리다"가 아니라 "승인자가 한 명이다". 그리고 해결책 두 개를 제시해 상대가 고르게 합니다. 상사에게 피드백할 때 <b>선택지를 주는 것</b>이 가장 안전한 형태입니다.'}],
+[ // 회의 결정 무시
+ {b:"We already decided this.\nWhy are you doing it your own way?\nYou never listen in meetings.",
+  a:"Quick check on the queue implementation —\n\nWe landed on Kafka in Tuesday's review, but the\nPR uses RabbitMQ. I might have missed a follow-up\nconversation.\n\nDid something change, or should the PR match the\nADR?",
+  w:'<b>동료.</b> 비난 대신 <b>확인</b>으로 접근합니다. 실제로 후속 논의가 있었을 가능성이 있고, 없다면 이 질문만으로 상대가 스스로 정정합니다. <span class="en">You never listen</span>은 무엇을 얻든 관계 비용이 더 큽니다.'},
+ {b:"You ignored the decision.\nThat's not how we work here.",
+  a:"I want to understand what happened with the\nqueue choice.\n\nTuesday's review landed on Kafka and it's in\nADR-014, but the PR implements RabbitMQ. That\nmeans either the ADR is wrong or the PR is, and\nboth cost us rework.\n\nWalk me through your thinking — if Kafka doesn't\nwork for a reason we missed, I'd rather update the\nADR than have the two diverge.",
+  w:'<b>후배 · 팀원.</b> "우리 방식이 아니다"라는 문화 훈계 대신 <b>구체적 비용</b>(rework)을 제시합니다. 그리고 <b>상대가 옳을 가능성</b>을 진짜로 열어둡니다 — 리더가 이 여지를 주면 팀원이 기술적 이견을 숨기지 않게 됩니다.'},
+ {b:"You overrode the team's decision\nwithout telling anyone.",
+  a:"Can I ask about the queue decision?\n\nThe review on Tuesday landed on Kafka, and it's\nwritten into ADR-014. I saw the plan now points to\nRabbitMQ.\n\nIf the decision changed, I\'d find it helpful to know\nwhy — mostly so the ADR stays accurate and the\nteam isn\'t working from two versions of the plan.\n\nHappy to update it myself if you can tell me the\nreasoning.",
+  w:'<b>상사.</b> 상사가 결정을 뒤집는 것은 <b>권한 내의 일</b>입니다. 그래서 이의가 아니라 <b>기록의 정확성</b>을 명분으로 삼습니다. 그리고 마지막에 내가 일을 가져가겠다고 제안합니다. 이 프레임이면 상사는 방어할 이유가 없고, 당신은 결정 이유를 알게 됩니다.'}]
+];
+function fbRender(){
+  var d = FB[picked('fbCase')][picked('fbWho')];
+  document.getElementById('fbOut').innerHTML =
+    '<div class="ba" style="margin-top:16px">'+
+    '<div class="ba-box b"><div class="hd">비난형 · 대화가 닫힙니다</div><div class="tx">'+esc(d.b)+'</div></div>'+
+    '<div class="ba-box a"><div class="hd">SBI형 · 행동이 바뀝니다</div><div class="tx">'+esc(d.a)+'</div></div>'+
+    '</div>';
+  document.getElementById('fbWhy').innerHTML = d.w;
+}
+chipGroup('fbCase', fbRender);
+chipGroup('fbWho', fbRender);
+fbRender();
+
+/* ---------- quizzes ---------- */
+var finalTotal = document.querySelectorAll('[data-final]').length;
+var finalRight = 0, finalDone = 0;
+document.querySelectorAll('[data-q]').forEach(function(q){
+  var ex = q.querySelector('.qz-ex');
+  var ans = ex ? parseInt(ex.dataset.ex, 10) : -1;
+  var opts = q.querySelectorAll('.opt');
+  opts.forEach(function(o){
+    o.addEventListener('click', function(){
+      if(q.dataset.answered) return;
+      q.dataset.answered = '1';
+      var pick = parseInt(o.dataset.a, 10);
+      opts.forEach(function(x){
+        x.disabled = true;
+        if(parseInt(x.dataset.a,10) === ans) x.classList.add('right');
+      });
+      if(pick !== ans) o.classList.add('wrong');
+      if(ex) ex.classList.add('show');
+      if(q.hasAttribute('data-final')){
+        finalDone++;
+        if(pick === ans) finalRight++;
+        var el = document.getElementById('finalScore');
+        var msg = finalDone < finalTotal
+          ? '· ' + (finalTotal - finalDone) + '문항 남음'
+          : (finalRight >= 8 ? '· Module V로 진행하십시오'
+            : finalRight >= 6 ? '· 틀린 부분만 다시 훑고 넘어가십시오'
+            : '· Korean Trap 박스부터 다시 보십시오');
+        el.innerHTML = '종합 드릴 <b>' + finalRight + '</b> / ' + finalTotal + ' ' + msg;
+      }
+    });
+  });
+});
+
+/* ---------- checklist ---------- */
+document.querySelectorAll('#ckList .ck').forEach(function(c){
+  c.setAttribute('role','button');
+  c.setAttribute('tabindex','0');
+  var toggle = function(){ c.classList.toggle('done'); };
+  c.addEventListener('click', toggle);
+  c.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+  });
+});
+
+/* ---------- progress + active nav ---------- */
+var prog = document.getElementById('prog');
+var links = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+function onScroll(){
+  var h = document.documentElement;
+  var max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  var y = h.scrollTop + 130, idx = 0;
+  secs.forEach(function(s, i){ if(s && s.offsetTop <= y) idx = i; });
+  links.forEach(function(a, i){ a.classList.toggle('on', i === idx); });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll);
+onScroll();
+
+/* ---------- mobile menu ---------- */
+var side = document.getElementById('side');
+var menu = document.getElementById('menu');
+if(menu) menu.addEventListener('click', function(){ side.classList.toggle('open'); });
+document.querySelectorAll('#nav a').forEach(function(a){
+  a.addEventListener('click', function(){ side.classList.remove('open'); });
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIZ.ENG PROTOCOL · Module II 문서 커뮤니케이션 (05–09)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080c; --bg-2:#0c0e14; --panel:#11141c; --panel-2:#171b25;
+  --line:#222835; --line-2:#343c4e;
+  --ink:#e9edf5; --ink-2:#a4aec2; --ink-3:#69738a;
+  --cy:#22d3ee; --cy-dim:#0e7490; --mg:#f472b6; --lm:#a3e635;
+  --am:#fbbf24; --er:#fb7185; --vi:#a78bfa;
+  --mono:'JetBrains Mono','D2Coding',Consolas,monospace;
+  --disp:'Chakra Petch','Pretendard Variable',sans-serif;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --sbw:284px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.78;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(880px 520px at 82% -10%, rgba(34,211,238,.11), transparent 62%),
+    radial-gradient(720px 480px at 4% 106%, rgba(244,114,182,.075), transparent 60%)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.5;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px)}
+
+.shell{display:flex;position:relative;z-index:1}
+aside{width:var(--sbw);flex:0 0 var(--sbw);height:100vh;position:sticky;top:0;
+  border-right:1px solid var(--line);background:rgba(9,11,16,.9);
+  backdrop-filter:blur(12px);overflow-y:auto;padding:26px 0 60px}
+aside::-webkit-scrollbar{width:6px}
+aside::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+.brand{padding:0 24px 20px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.brand .mark{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:700;
+  font-size:12.5px;letter-spacing:.22em;color:var(--cy);text-transform:uppercase}
+.brand h2{font-size:17px;font-weight:800;margin-top:10px;letter-spacing:-.02em;line-height:1.38}
+.brand p{font-size:11.5px;color:var(--ink-3);margin-top:6px;font-family:var(--mono)}
+nav{padding:0 14px}
+nav .grp{font-family:var(--mono);font-size:10px;letter-spacing:.17em;color:var(--ink-3);
+  text-transform:uppercase;padding:16px 10px 7px}
+nav a{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border-radius:7px;
+  color:var(--ink-2);text-decoration:none;font-size:13.5px;line-height:1.45;transition:background .14s,color .14s}
+nav a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:22px;flex:0 0 22px}
+nav a:hover{background:var(--panel);color:var(--ink)}
+nav a.on{background:linear-gradient(90deg,rgba(34,211,238,.17),transparent);color:#fff;font-weight:600}
+nav a.on .n{color:var(--cy)}
+main{flex:1;min-width:0;padding:0 0 130px}
+.wrap{max-width:940px;margin:0 auto;padding:0 34px}
+
+.hero{border-bottom:1px solid var(--line);padding:76px 0 58px;margin-bottom:10px;
+  background:linear-gradient(180deg,rgba(34,211,238,.05),transparent)}
+.eyebrow{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.28em;color:var(--cy);
+  text-transform:uppercase;display:flex;align-items:center;gap:13px}
+.eyebrow::after{content:'';height:1px;flex:1;background:linear-gradient(90deg,var(--cy-dim),transparent)}
+.hero h1{font-size:clamp(31px,5vw,52px);font-weight:900;line-height:1.16;letter-spacing:-.045em;margin:22px 0 0}
+.hero h1 em{font-style:normal;color:var(--cy)}
+.hero h1 span.mg{color:var(--mg)}
+.hero .lede{font-size:17px;color:var(--ink-2);margin-top:20px;max-width:668px;line-height:1.82}
+.facts{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+.fact{border:1px solid var(--line);background:var(--panel);border-radius:9px;
+  padding:9px 14px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.fact b{color:var(--am);font-weight:700}
+
+section{padding:58px 0 8px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:12px;color:var(--cy);border:1px solid var(--cy-dim);
+  border-radius:7px;padding:4px 9px;flex:0 0 auto;margin-top:8px;background:rgba(34,211,238,.07)}
+.sec-head h2{font-size:clamp(23px,3.3vw,31px);font-weight:800;letter-spacing:-.035em;line-height:1.26}
+.sec-head .sub{color:var(--ink-3);font-size:14px;margin-top:6px;line-height:1.6}
+h3{font-size:19px;font-weight:700;letter-spacing:-.022em;margin:40px 0 12px;
+  padding-left:12px;border-left:3px solid var(--cy)}
+h4{font-size:15.5px;font-weight:700;margin:24px 0 9px;color:var(--ink)}
+p{color:var(--ink-2);margin:11px 0}
+p strong,li strong{color:var(--ink);font-weight:700}
+ul,ol{margin:12px 0 12px 20px;color:var(--ink-2)}
+li{margin:7px 0}
+.en{font-family:var(--mono);font-size:.9em;color:#8fe8ff;background:var(--panel-2);
+  border:1px solid var(--line);border-radius:5px;padding:1.5px 6px}
+
+.cold{border:1px solid var(--line);border-radius:13px;background:var(--bg-2);
+  padding:18px 20px;margin:22px 0;position:relative;overflow:hidden}
+.cold::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--er),var(--am))}
+.cold .cl{font-family:var(--disp);font-weight:600;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--er);margin-bottom:9px}
+.cold .msg{font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--ink-2);
+  background:#05060a;border:1px solid var(--line);border-radius:8px;padding:12px 14px;white-space:pre-wrap}
+.cold .msg .who{color:var(--cy);display:block;font-size:11px;margin-bottom:5px}
+.cold .rx{font-size:14px;color:var(--ink-3);margin-top:11px}
+.cold .rx b{color:var(--am)}
+
+.pb{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:18px 0;background:#0a0c11}
+.pb-bar{display:flex;align-items:center;gap:2px;background:var(--panel);
+  border-bottom:1px solid var(--line);padding:0 8px 0 0;overflow-x:auto}
+.pb-bar::-webkit-scrollbar{height:0}
+.pb-tab{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);background:none;border:0;
+  padding:12px 15px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.14s}
+.pb-tab:hover{color:var(--ink-2)}
+.pb-tab.on{color:var(--ink);border-bottom-color:var(--cy)}
+.pb-pane{display:none;padding:6px 0}
+.pb-pane.on{display:block}
+.ph{display:flex;align-items:flex-start;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(34,40,53,.6)}
+.ph:last-child{border-bottom:0}
+.ph:hover{background:rgba(34,211,238,.03)}
+.ph-txt{flex:1;min-width:0}
+.ph-en{font-family:var(--mono);font-size:13.5px;line-height:1.68;color:#cfe8f5;word-break:break-word}
+.ph-ko{font-size:12.5px;color:var(--ink-3);margin-top:4px;line-height:1.6}
+.ph-c{font-family:var(--mono);font-size:10px;color:var(--ink-3);background:var(--panel-2);
+  border:1px solid var(--line);border-radius:6px;padding:4px 8px;cursor:pointer;flex:0 0 auto;
+  margin-top:2px;transition:.14s}
+.ph-c:hover{color:var(--ink);border-color:var(--line-2)}
+.ph-c.done{color:var(--lm);border-color:var(--lm)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--cy);background:var(--panel);
+  border-radius:0 11px 11px 0;padding:15px 18px;margin:18px 0}
+.note .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cy);margin-bottom:6px;font-weight:700}
+.note p{margin:5px 0;font-size:14.5px}
+.note.warn{border-left-color:var(--am)} .note.warn .t{color:var(--am)}
+.note.trap{border-left-color:var(--er);background:linear-gradient(90deg,rgba(251,113,133,.06),var(--panel))}
+.note.trap .t{color:var(--er)}
+.note.ok{border-left-color:var(--lm)} .note.ok .t{color:var(--lm)}
+.note.tip{border-left-color:var(--vi)} .note.tip .t{color:var(--vi)}
+
+.tw{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:11px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:540px}
+th{background:var(--panel);text-align:left;padding:11px 14px;font-size:11px;
+  font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:rgba(34,211,238,.03)}
+td .mo{font-family:var(--mono);font-size:12.5px;color:#cfe8f5}
+td .x{color:var(--er)} td .o{color:var(--lm)}
+
+figure{margin:24px 0;border:1px solid var(--line);border-radius:13px;background:var(--bg-2);
+  padding:20px 18px 14px;overflow:hidden}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:center;
+  margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+
+.grid{display:grid;gap:13px;margin:18px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(252px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:16px}
+.card h5{font-size:14.5px;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin:4px 0;line-height:1.68}
+.card .mo{font-family:var(--mono);font-size:12px;color:#cfe8f5;display:block;margin-top:7px}
+.dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+
+.lab{border:1px solid var(--line-2);border-radius:15px;background:var(--panel);padding:21px;margin:24px 0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
+.lab-h{font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--am);margin-bottom:5px}
+.lab-s{font-size:13.5px;color:var(--ink-3);margin-bottom:17px}
+.lab-lb{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;
+  text-transform:uppercase;margin:14px 0 7px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:12px;padding:7px 13px;border-radius:20px;cursor:pointer;
+  border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink-2);transition:.15s}
+.chip:hover{border-color:var(--cy);color:var(--ink)}
+.chip.on{background:var(--cy);border-color:var(--cy);color:#04141a;font-weight:700}
+.out{font-family:var(--mono);font-size:13.5px;background:#05060a;border:1px solid var(--line);
+  border-radius:11px;padding:16px 17px;margin-top:16px;overflow-x:auto}
+.out .lbl{color:var(--ink-3);display:block;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:8px}
+.out .sent{color:#d8f4ff;line-height:1.72;font-size:13.5px;white-space:pre-wrap}
+.out .why{color:var(--ink-3);font-size:12px;margin-top:12px;padding-top:11px;
+  border-top:1px dashed var(--line);line-height:1.7;font-family:var(--sans)}
+.out .why b{color:var(--am)}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;
+  padding:3px 9px;border-radius:11px;margin-bottom:10px}
+.badge.f{background:rgba(244,114,182,.15);color:var(--mg)}
+.badge.n{background:rgba(34,211,238,.15);color:var(--cy)}
+.badge.c{background:rgba(163,230,53,.15);color:var(--lm)}
+.badge.w{background:rgba(251,191,36,.15);color:var(--am)}
+.badge.e{background:rgba(251,113,133,.15);color:var(--er)}
+
+.dial-wrap{margin:6px 0 4px}
+.dial-scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.1em;margin-bottom:9px}
+.dial-scale span:nth-child(1){color:var(--ink-3)}
+.dial-scale span:nth-child(2){color:var(--cy)}
+.dial-scale span:nth-child(3){color:var(--mg)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;
+  background:linear-gradient(90deg,var(--ink-3),var(--cy),var(--mg));outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;
+  background:#0a0c11;border:2.5px solid var(--ink);box-shadow:0 0 12px rgba(34,211,238,.6);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;background:#0a0c11;
+  border:2.5px solid var(--ink);box-shadow:0 0 12px rgba(34,211,238,.6);cursor:pointer}
+input[type=range]:focus-visible{outline:2px solid var(--cy);outline-offset:4px}
+
+.tl{display:grid;gap:8px;margin-top:15px}
+.tl-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;
+  border:1px solid var(--line);background:var(--bg-2);font-size:13.5px;transition:.2s}
+.tl-row .st{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  padding:3px 8px;border-radius:11px;flex:0 0 auto;min-width:74px;text-align:center}
+.tl-row .tp{flex:0 0 auto;font-weight:600;color:var(--ink);min-width:112px}
+.tl-row .rs{color:var(--ink-3);font-size:12.5px;line-height:1.6}
+.tl-row.go{border-color:rgba(163,230,53,.32);background:rgba(163,230,53,.05)}
+.tl-row.go .st{background:rgba(163,230,53,.16);color:var(--lm)}
+.tl-row.cau{border-color:rgba(251,191,36,.32);background:rgba(251,191,36,.05)}
+.tl-row.cau .st{background:rgba(251,191,36,.16);color:var(--am)}
+.tl-row.stop{border-color:rgba(251,113,133,.34);background:rgba(251,113,133,.06)}
+.tl-row.stop .st{background:rgba(251,113,133,.16);color:var(--er)}
+
+.ba{display:grid;gap:13px;margin:20px 0;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.ba-box{border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:var(--bg-2)}
+.ba-box.b{border-left:3px solid var(--er)}
+.ba-box.a{border-left:3px solid var(--lm)}
+.ba-box .hd{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:10px;font-weight:700}
+.ba-box.b .hd{color:var(--er)} .ba-box.a .hd{color:var(--lm)}
+.ba-box .tx{font-family:var(--mono);font-size:12.5px;line-height:1.78;color:var(--ink-2);white-space:pre-wrap}
+.ba-box .nt{font-size:12.5px;color:var(--ink-3);margin-top:11px;padding-top:10px;border-top:1px dashed var(--line)}
+
+.lad{display:flex;flex-direction:column;gap:6px;margin:18px 0}
+.rung{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;
+  border:1px solid var(--line);background:var(--bg-2);transition:.2s}
+.rung:hover{border-color:var(--line-2)}
+.rung .lv{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;
+  flex:0 0 auto;background:var(--panel-2);color:var(--ink-3);border:1px solid var(--line);min-width:64px;text-align:center}
+.rung .sen{flex:1;min-width:0;font-family:var(--mono);font-size:12.5px;color:#cfe8f5;line-height:1.6}
+.rung .use{font-size:11.5px;color:var(--ink-3);flex:0 0 auto;text-align:right;max-width:186px;line-height:1.5}
+.rung.hi{border-color:var(--cy);background:rgba(34,211,238,.07);box-shadow:0 0 22px rgba(34,211,238,.09)}
+.rung.hi .lv{background:var(--cy);color:#04141a;border-color:var(--cy)}
+
+.tmpl{border:1px solid var(--line);border-left:3px solid var(--cy);border-radius:0 11px 11px 0;
+  background:#05060a;padding:15px 17px;margin:18px 0;font-family:var(--mono);font-size:12.5px;
+  line-height:1.85;color:#cfe8f5;white-space:pre-wrap;overflow-x:auto}
+.tmpl .k{color:var(--am);font-weight:700}
+.tmpl .g{color:var(--ink-3)}
+
+.qz{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:19px;margin:14px 0}
+.qz .qn{font-family:var(--mono);font-size:10.5px;color:var(--cy);letter-spacing:.13em;margin-bottom:8px}
+.qz .qq{font-size:15.5px;font-weight:700;margin-bottom:14px;letter-spacing:-.02em;line-height:1.58}
+.qz .qq .mo{font-family:var(--mono);font-size:14px;color:#cfe8f5;font-weight:400}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg-2);
+  color:var(--ink-2);border-radius:9px;padding:11px 14px;margin:7px 0;cursor:pointer;
+  font-family:var(--sans);font-size:14px;transition:.14s;line-height:1.58}
+.opt .mo{font-family:var(--mono);font-size:13px}
+.opt:hover:not(:disabled){border-color:var(--cy);color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--lm);background:rgba(163,230,53,.1);color:var(--ink)}
+.opt.wrong{border-color:var(--er);background:rgba(251,113,133,.09);color:var(--ink)}
+.qz-ex{display:none;margin-top:13px;padding:13px 15px;border-radius:9px;background:var(--bg-2);
+  border-left:3px solid var(--lm);font-size:14px;color:var(--ink-2);line-height:1.72}
+.qz-ex.show{display:block}
+.qz-ex b{color:var(--lm)}
+.score{border:1px solid var(--line-2);border-radius:12px;background:var(--panel-2);padding:18px 20px;
+  margin-top:18px;font-family:var(--mono);font-size:14px;text-align:center;color:var(--ink-2)}
+.score b{color:var(--am);font-size:23px}
+
+.ck{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);
+  border-radius:9px;background:var(--panel);margin:7px 0;cursor:pointer;transition:.14s}
+.ck:hover{border-color:var(--line-2)}
+.ck.done{background:rgba(163,230,53,.055);border-color:rgba(163,230,53,.3)}
+.ck .box{width:17px;height:17px;border:1.5px solid var(--line-2);border-radius:5px;flex:0 0 auto;
+  margin-top:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+.ck.done .box{background:var(--lm);border-color:var(--lm);color:#08110a}
+.ck .lb{font-size:14px;color:var(--ink-2);line-height:1.62}
+.ck .lb .mo{font-family:var(--mono);font-size:12.5px;color:#cfe8f5}
+.ck.done .lb{color:var(--ink-3);text-decoration:line-through}
+
+.next{border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(135deg,rgba(34,211,238,.06),rgba(244,114,182,.04));
+  padding:24px 26px;margin:34px 0 0}
+.next .t{font-family:var(--disp);font-weight:600;letter-spacing:.2em;font-size:11px;
+  text-transform:uppercase;color:var(--cy);margin-bottom:10px}
+.next h4{margin:0 0 10px;font-size:19px}
+.next ul{margin-left:18px}
+
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--cy),var(--mg));
+  z-index:99;width:0;transition:width .08s linear}
+#menu{display:none;position:fixed;bottom:20px;right:20px;z-index:100;width:52px;height:52px;
+  border-radius:50%;border:1px solid var(--line-2);background:var(--cy);color:#04141a;
+  font-size:20px;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.55)}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+@media(max-width:900px){
+  aside{position:fixed;left:0;top:0;z-index:98;transform:translateX(-100%);
+    transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.65)}
+  aside.open{transform:translateX(0)}
+  #menu{display:block}
+  .wrap{padding:0 17px}
+  .hero{padding:50px 0 38px}
+  .sec-head{gap:11px}
+  .tl-row{flex-wrap:wrap}
+  .tl-row .tp{min-width:0}
+  .rung{flex-wrap:wrap}
+  .rung .use{text-align:left;max-width:100%}
+  .ph{flex-direction:column;gap:8px}
+  .ph-c{align-self:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<button id="menu" aria-label="목차 열기">☰</button>
+
+<div class="shell">
+<aside id="side">
+  <div class="brand">
+    <div class="mark">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <rect x="4" y="3" width="13" height="17" rx="2"/><path d="M8 8h5M8 12h5M8 16h3" stroke-linecap="round"/>
+        <path d="M17 7l3 2v10a2 2 0 0 1-2 2H9" stroke-linecap="round"/>
+      </svg>
+      BIZ.ENG
+    </div>
+    <h2>Module II · 문서 커뮤니케이션</h2>
+    <p>for IT / cloud engineers</p>
+  </div>
+  <nav id="nav">
+    <div class="grp">Lessons</div>
+    <a href="#s5"><span class="n">05</span><span>요청 · 문의 · 리마인더</span></a>
+    <a href="#s6"><span class="n">06</span><span>거절 · 사과 · 나쁜 소식</span></a>
+    <a href="#s7"><span class="n">07</span><span>Slack · Teams 메신저</span></a>
+    <a href="#s8"><span class="n">08</span><span>보고서 & 요약</span></a>
+    <a href="#s9"><span class="n">09</span><span>제안서 · 기획서</span></a>
+    <div class="grp">Wrap-up</div>
+    <a href="#s10"><span class="n">10</span><span>종합 드릴 10문항</span></a>
+    <a href="#s11"><span class="n">11</span><span>현장 체크리스트</span></a>
+  </nav>
+</aside>
+
+<main>
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">Module II / 05–09</div>
+  <h1>글은 남습니다<br><em>“말투”</em>가 아니라 <span class="mg">기록입니다</span></h1>
+  <p class="lede">
+    Module I이 톤을 다뤘다면, Module II는 <strong>구조</strong>입니다.
+    답이 안 오는 메일을 어떻게 올릴지, 나쁜 소식을 어떻게 앞으로 가져올지,
+    슬랙에서 무엇을 스레드로 내릴지, 15문단 보고를 4줄로 어떻게 접을지.
+    실무에서 신뢰를 만드는 건 유창함이 아니라 <strong>읽는 사람의 시간을 아껴주는 형식</strong>입니다.
+  </p>
+  <div class="facts">
+    <div class="fact">학습 시간 <b>약 85분</b></div>
+    <div class="fact">실전 표현 <b>118개</b></div>
+    <div class="fact">인터랙티브 랩 <b>5종</b></div>
+    <div class="fact">템플릿 <b>7종</b></div>
+    <div class="fact">Korean Trap <b>22선</b></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+
+<!-- ==================== 05 ==================== -->
+<section id="s5">
+  <div class="sec-head">
+    <div class="sec-num">05</div>
+    <div>
+      <h2>요청 · 문의 · 리마인더</h2>
+      <div class="sub">답이 없을 때 관계를 태우지 않고 압박을 올리는 방법</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 4번째 메일에서 폭발</div>
+    <div class="msg"><span class="who">Subject: Re: Re: Re: IAM role request</span>John,
+
+This is my 4th email. I have sent you 3 emails since Aug 19
+and got no answer. Why haven't you replied?
+Please reply ASAP. This is very urgent!!!</div>
+    <div class="rx">1~3번째 메일은 <b>전부 똑같은 톤</b>이었고, 4번째에서 갑자기 터졌습니다. 이건 압박을 올린 게 아니라 <b>관계를 태운 것</b>입니다. 영어권 실무에서 리마인더는 단계별로 <b>사안의 영향(impact)</b>을 올립니다. 사람을 탓하는 문장은 어느 단계에도 없습니다.</div>
+  </div>
+
+  <h3>Nudge Escalation · 4단계</h3>
+  <p>
+    핵심 원리 하나만 기억하십시오. <strong>올라가는 것은 사안의 무게이지, 상대에 대한 불만이 아닙니다.</strong>
+    각 단계에서 새로 추가되는 정보가 정해져 있습니다.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+      <line x1="40" y1="216" x2="740" y2="216" stroke="#222835"/>
+      <text x="40" y="238" fill="#69738a" font-size="10">D+0 발송</text>
+      <text x="212" y="238" fill="#69738a" font-size="10" text-anchor="middle">D+3</text>
+      <text x="380" y="238" fill="#69738a" font-size="10" text-anchor="middle">D+6</text>
+      <text x="548" y="238" fill="#69738a" font-size="10" text-anchor="middle">D+9</text>
+      <text x="716" y="238" fill="#69738a" font-size="10" text-anchor="end">D+12</text>
+
+      <rect x="140" y="164" width="144" height="44" rx="8" fill="#11141c" stroke="#a3e635" stroke-opacity=".45"/>
+      <text x="212" y="182" fill="#a3e635" font-size="10.5" text-anchor="middle" font-weight="700">N1 · 가볍게 올리기</text>
+      <text x="212" y="198" fill="#8b93a1" font-size="9" text-anchor="middle">추가 정보: 없음</text>
+
+      <rect x="308" y="118" width="144" height="62" rx="8" fill="#11141c" stroke="#22d3ee" stroke-opacity=".5"/>
+      <text x="380" y="136" fill="#22d3ee" font-size="10.5" text-anchor="middle" font-weight="700">N2 · 영향 명시</text>
+      <text x="380" y="152" fill="#8b93a1" font-size="9" text-anchor="middle">추가: 무엇이 막혔는지</text>
+      <text x="380" y="168" fill="#8b93a1" font-size="9" text-anchor="middle">"This is blocking ..."</text>
+
+      <rect x="476" y="70" width="144" height="80" rx="8" fill="#11141c" stroke="#fbbf24" stroke-opacity=".5"/>
+      <text x="548" y="88" fill="#fbbf24" font-size="10.5" text-anchor="middle" font-weight="700">N3 · 기한 + 대안</text>
+      <text x="548" y="104" fill="#8b93a1" font-size="9" text-anchor="middle">추가: 무응답 시</text>
+      <text x="548" y="119" fill="#8b93a1" font-size="9" text-anchor="middle">내가 뭘 할지 예고</text>
+      <text x="548" y="137" fill="#8b93a1" font-size="9" text-anchor="middle">"I'll proceed with X"</text>
+
+      <rect x="644" y="26" width="96" height="96" rx="8" fill="#11141c" stroke="#fb7185" stroke-opacity=".5"/>
+      <text x="692" y="44" fill="#fb7185" font-size="10.5" text-anchor="middle" font-weight="700">N4 · 상향</text>
+      <text x="692" y="60" fill="#8b93a1" font-size="9" text-anchor="middle">추가: 리드 CC</text>
+      <text x="692" y="75" fill="#8b93a1" font-size="9" text-anchor="middle">"Looping in ..."</text>
+      <text x="692" y="94" fill="#69738a" font-size="8.5" text-anchor="middle">여전히 비난 없음</text>
+      <text x="692" y="108" fill="#69738a" font-size="8.5" text-anchor="middle">사실만 나열</text>
+
+      <text x="40" y="30" fill="#e9edf5" font-size="11" font-weight="700">압박 강도</text>
+      <line x1="40" y1="38" x2="40" y2="216" stroke="#222835"/>
+      <text x="40" y="60" fill="#69738a" font-size="9">높음</text>
+      <text x="40" y="200" fill="#69738a" font-size="9">낮음</text>
+    </svg>
+    <figcaption>단계마다 “새로 추가되는 정보”가 정해져 있습니다</figcaption>
+  </figure>
+
+  <div class="lad" id="escLad">
+    <div class="rung"><span class="lv">N1</span><span class="sen">Just checking in on the IAM role request from Tuesday — is that still on your radar?</span><span class="use">D+3 · 정보 추가 없음</span></div>
+    <div class="rung"><span class="lv">N2</span><span class="sen">Following up on the IAM request. This is now blocking our CI pipeline, so integration tests are on hold. Any idea on timing?</span><span class="use">D+6 · 영향 추가</span></div>
+    <div class="rung"><span class="lv">N3</span><span class="sen">Still waiting on the IAM role from Aug 19. If I don't hear back by Thursday 6pm KST, I'll open a ticket with the platform team as a fallback.</span><span class="use">D+9 · 기한 + 대안</span></div>
+    <div class="rung"><span class="lv">N4</span><span class="sen">Looping in Sarah for visibility. The IAM request from Aug 19 is still open and is now holding up the Sep 5 cutover. Happy to jump on a call today if that's the fastest path.</span><span class="use">D+12 · 리드 CC</span></div>
+  </div>
+
+  <div class="note ok">
+    <div class="t">N3의 “대안 예고”가 결정적입니다</div>
+    <p><span class="en">If I don't hear back by X, I'll do Y.</span>
+    이 문장은 상대에게 <strong>결정을 강요하지 않으면서 침묵의 비용을 알려줍니다.</strong>
+    실무에서 가장 효과적인 리마인더 문장이며, 무응답을 합의로 전환시켜 일을 진행시킬 수 있습니다.
+    조건은 하나 — Y가 정말로 합리적인 대안이어야 합니다. 협박용으로 쓰면 한 번에 들킵니다.</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Nudge Escalator</div>
+    <div class="lab-s">경과 일수와 사안의 무게를 고르면 지금 보낼 메시지가 나옵니다. 강도를 왜 그렇게 잡았는지도 함께 표시됩니다.</div>
+    <div class="lab-lb">첫 요청 이후 경과</div>
+    <div class="chips" id="neDay">
+      <button class="chip on" data-i="0">D+3</button>
+      <button class="chip" data-i="1">D+6</button>
+      <button class="chip" data-i="2">D+9</button>
+      <button class="chip" data-i="3">D+12</button>
+    </div>
+    <div class="lab-lb">사안의 무게</div>
+    <div class="chips" id="neWt">
+      <button class="chip" data-i="0">있으면 좋음</button>
+      <button class="chip on" data-i="1">일정에 영향</button>
+      <button class="chip" data-i="2">릴리즈 블로킹</button>
+    </div>
+    <div class="out">
+      <span class="lbl">Message</span>
+      <div id="neBadge"></div>
+      <div class="sent" id="neSent"></div>
+      <div class="why" id="neWhy"></div>
+      <button class="ph-c" id="neCopy" style="margin-top:14px">복사</button>
+    </div>
+  </div>
+
+  <h3>문의 메일 · 답하기 쉽게 만드는 3가지</h3>
+  <div class="grid g3">
+    <div class="card">
+      <h5><span class="dot" style="background:var(--cy)"></span>개수를 먼저 밝히기</h5>
+      <p>몇 개인지 알면 상대가 시간을 계산할 수 있습니다. 그러면 답이 옵니다.</p>
+      <span class="mo">Two quick questions:</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--lm)"></span>번호를 붙이기</h5>
+      <p>번호가 있으면 상대가 인라인으로 답할 수 있습니다. 문단 안에 묻힌 질문은 하나만 답변받습니다.</p>
+      <span class="mo">1. … 2. … 3. …</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--am)"></span>내 추측을 함께 쓰기</h5>
+      <p>Yes/No로 답할 수 있게 만들면 응답 속도가 몇 배 빨라집니다.</p>
+      <span class="mo">My assumption is X — is that right?</span>
+    </div>
+  </div>
+
+  <div class="tmpl"><span class="k">Subject:</span> Two questions re: gateway rate limits
+
+Hi John,
+
+<span class="g">// 개수를 먼저, 번호를 붙이고, 내 추측을 함께</span>
+Two quick questions about the rate limit config:
+
+1. Is the 100 rps limit per client or per endpoint?
+   My assumption is per client — is that right?
+2. Does the counter reset on a rolling or fixed window?
+
+No rush — whenever you get a chance this week.
+
+Thanks,
+Jihoon</div>
+
+  <h3>표현 은행 · 요청 / 문의 / 리마인더</h3>
+  <div class="pb">
+    <div class="pb-bar">
+      <button class="pb-tab on">요청</button>
+      <button class="pb-tab">문의</button>
+      <button class="pb-tab">리마인더 N1–N2</button>
+      <button class="pb-tab">리마인더 N3–N4</button>
+    </div>
+    <div class="pb-pane on">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Could you send us the staging credentials by Thursday 6pm KST?</div><div class="ph-ko">요청 + 시각 + 타임존. 기본형입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Would you be able to review the IAM policy before Friday's cutover?</div><div class="ph-ko">한 단계 위. 마감의 이유(cutover)를 붙였습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Who owns the VPC peering process these days? Happy to file it myself if you point me at the form.</div><div class="ph-ko">담당자 확인 + 내가 하겠다는 의사. 가장 잘 통하는 요청 방식입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If it's easier, I can draft it and you just review — let me know which you prefer.</div><div class="ph-ko">상대의 부담을 내가 가져오는 제안. 응답률이 크게 올라갑니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This is blocking the release, so I'd like to get it sorted today if possible.</div><div class="ph-ko">긴급도 상향. 사람이 아니라 사안을 압박합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">No action needed if it's already in the queue — just let me know.</div><div class="ph-ko">이미 처리 중일 가능성을 열어둠. 상대가 방어적으로 답하지 않게 됩니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Two quick questions about the deployment pipeline:</div><div class="ph-ko">개수 예고. 문의 메일의 첫 문장 기본형.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">My assumption is that the retry is client-side — could you confirm?</div><div class="ph-ko">추측 + 확인 요청. Yes/No로 답할 수 있게 만듭니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I couldn't find this in the docs — is there a page I'm missing?</div><div class="ph-ko">문서를 찾아봤다는 사실을 먼저 밝힙니다. 태도가 달라 보입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Just to make sure I'm not misreading it — does "soft delete" here mean the row stays?</div><div class="ph-ko">용어 확인. 오해를 내 쪽 문제로 돌리는 완충 표현.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If there's a better channel for this kind of question, happy to move it there.</div><div class="ph-ko">채널이 맞는지 확인. 타팀에 처음 문의할 때 유용합니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Just checking in on this — is it still on your radar?</div><div class="ph-ko">N1의 표준. "잊었냐"를 가장 부드럽게 묻는 관용구입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Bumping this up in case it got buried.</div><div class="ph-ko">N1. 상대 잘못이 아니라 메일함 탓으로 돌립니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Following up — this is now blocking the integration tests.</div><div class="ph-ko">N2. 영향을 추가하는 단계.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Any update on this? Happy to help if something's stuck on your side.</div><div class="ph-ko">N2. 압박과 지원을 같이 제시합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Is there anything you need from me to unblock this?</div><div class="ph-ko">N2. 공을 나에게 되돌려 상대의 방어를 낮춥니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If I don't hear back by Thursday 6pm KST, I'll go ahead with the fallback and note it in the ticket.</div><div class="ph-ko">N3의 핵심 문장. 침묵의 비용을 알려줍니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This has been open since Aug 19 and is now holding up the Sep 5 cutover.</div><div class="ph-ko">N3. 날짜 두 개로 사실만 진술합니다. 비난이 없습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Looping in Sarah for visibility — no action needed from her unless we're stuck.</div><div class="ph-ko">N4. CC의 이유를 밝히면 상대가 저격으로 느끼지 않습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If this isn't your area anymore, could you point me to the right owner?</div><div class="ph-ko">N4. 상대에게 빠져나갈 문을 만들어 줍니다. 매우 효과적입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Happy to jump on a 10-minute call today if that's the fastest way to close this out.</div><div class="ph-ko">N4. 채널을 바꿔 교착을 깹니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+  </div>
+
+  <div class="note trap">
+    <div class="t">⚠ Korean Trap · 리마인더 5종</div>
+    <p>1. <span class="en">Why haven't you replied?</span> — 상대를 피고로 만듭니다. 사안만 다시 올리십시오.<br>
+    2. <span class="en">As I mentioned before,</span> / <span class="en">As I already said,</span> — 수동 공격으로 읽힙니다. 지우십시오.<br>
+    3. <span class="en">Did you receive my email?</span> — 받았습니다. 이 질문은 답을 안 준 걸 지적하는 우회로일 뿐입니다.<br>
+    4. <span class="en">Please reply ASAP!!!</span> — 느낌표 개수가 긴급도를 만들지 않습니다. 날짜와 영향이 만듭니다.<br>
+    5. 매번 같은 톤으로 3번 보내고 4번째에 폭발 — 단계마다 <strong>정보를 추가</strong>해야 압박이 올라갑니다.</p>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 05-1</div>
+    <div class="qq">첫 요청 후 6일, 답이 없고 CI가 막혔습니다. 가장 좋은 메시지는?</div>
+    <button class="opt" data-a="0"><span class="mo">Did you receive my email from last Tuesday?</span></button>
+    <button class="opt" data-a="1"><span class="mo">Following up on the IAM request — this is now blocking our integration tests. Any idea on timing?</span></button>
+    <button class="opt" data-a="2"><span class="mo">As I mentioned before, I need the IAM role. Please reply ASAP.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> N2 단계는 <strong>영향을 추가</strong>하는 자리입니다. 1번은 무의미한 질문, 3번은 두 개의 트랩(<span class="en">as I mentioned</span> + <span class="en">ASAP</span>)을 동시에 밟았습니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 05-2</div>
+    <div class="qq"><span class="mo">If I don't hear back by Thursday, I'll proceed with the fallback.</span> 이 문장의 효과는?</div>
+    <button class="opt" data-a="0">상대를 압박해서 죄책감을 준다</button>
+    <button class="opt" data-a="1">무응답에도 일이 진행되게 만들고, 침묵의 비용을 알려준다</button>
+    <button class="opt" data-a="2">책임을 상대에게 넘긴다</button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 상대의 결정을 기다리지 않고도 진행 가능한 상태를 만드는 것이 목적입니다. 단, 예고한 대안은 반드시 합리적이고 실제로 실행할 것이어야 합니다.</div>
+  </div>
+</section>
+
+<!-- ==================== 06 ==================== -->
+<section id="s6">
+  <div class="sec-head">
+    <div class="sec-num">06</div>
+    <div>
+      <h2>거절 · 사과 · 나쁜 소식</h2>
+      <div class="sub">숨기지 않고, 그러나 관계를 지키면서 전하기</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 나쁜 소식이 전달되지 않은 메일</div>
+    <div class="msg"><span class="who">Subject: Migration update</span>Hi all,
+
+Hope everyone is doing well. Thanks for all the hard work
+on the migration so far. The team has done a great job.
+
+We had some discussions with the platform team last week
+and there were a few technical considerations regarding
+the network configuration...
+
+It may be a little delayed maybe, possibly by some weeks.
+
+Anyway, we will try our best. Thank you!</div>
+    <div class="rx">이 메일을 읽은 임원은 <b>일정이 밀렸다는 사실을 인지하지 못했습니다.</b> <span class="en">may be a little delayed maybe, possibly</span> — 헤지를 네 겹 쌓으면 정보가 사라집니다. 나쁜 소식에서 <b>모호함은 배려가 아니라 사고</b>입니다.</div>
+  </div>
+
+  <h3>나쁜 소식도 BLUF입니다</h3>
+  <p>
+    “나쁜 소식은 완충재로 감싸라”는 조언은 절반만 맞습니다.
+    완충재는 <strong>한 겹</strong>이고, 그다음 문장에 <strong>사실이 직설로</strong> 나와야 합니다.
+    영어권 비즈니스에서 가장 중요한 층은 완충재가 아니라 <strong>④ 해결책</strong>입니다.
+  </p>
+
+  <figure>
+    <svg viewBox="0 0 760 258" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+      <rect x="150" y="18" width="460" height="34" rx="7" fill="#171b25" stroke="#343c4e"/>
+      <text x="170" y="39" fill="#69738a" font-size="10" font-weight="700">① CUSHION · 1줄</text>
+      <text x="590" y="39" fill="#69738a" font-size="9.5" text-anchor="end">"Thanks for the quick review yesterday."</text>
+
+      <rect x="150" y="58" width="460" height="42" rx="7" fill="#171b25" stroke="#fb7185" stroke-opacity=".6"/>
+      <text x="170" y="76" fill="#fb7185" font-size="10" font-weight="700">② BAD NEWS · 직설 1줄</text>
+      <text x="170" y="92" fill="#8b93a1" font-size="9.5">"The Sep 5 cutover will slip by one week, to Sep 12."</text>
+      <text x="590" y="76" fill="#69738a" font-size="9" text-anchor="end">헤지 금지 · 날짜 명시</text>
+
+      <rect x="150" y="106" width="460" height="40" rx="7" fill="#171b25" stroke="#343c4e"/>
+      <text x="170" y="124" fill="#69738a" font-size="10" font-weight="700">③ CAUSE · 2줄 이내</text>
+      <text x="170" y="139" fill="#8b93a1" font-size="9.5">"The VPC peering approval is still pending with NetOps."</text>
+
+      <rect x="150" y="152" width="460" height="52" rx="7" fill="#171b25" stroke="#a3e635" stroke-opacity=".65"/>
+      <text x="170" y="170" fill="#a3e635" font-size="10" font-weight="700">④ FIX / OPTIONS ★ 가장 중요</text>
+      <text x="170" y="185" fill="#8b93a1" font-size="9.5">"Two options: ship read-only on Sep 5, or move the full</text>
+      <text x="170" y="198" fill="#8b93a1" font-size="9.5">cutover to Sep 12. I'd recommend the second."</text>
+
+      <rect x="150" y="210" width="460" height="34" rx="7" fill="#171b25" stroke="#22d3ee" stroke-opacity=".5"/>
+      <text x="170" y="231" fill="#22d3ee" font-size="10" font-weight="700">⑤ OWNERSHIP · 1줄</text>
+      <text x="590" y="231" fill="#69738a" font-size="9.5" text-anchor="end">"I'll have the revised plan by Wed."</text>
+
+      <text x="30" y="60" fill="#fb7185" font-size="10.5" font-weight="700">절대 하지 말 것</text>
+      <text x="30" y="80" fill="#8b93a1" font-size="9.5">· ②를 문단 4개 뒤에</text>
+      <text x="30" y="96" fill="#8b93a1" font-size="9.5">  묻어두기</text>
+      <text x="30" y="118" fill="#8b93a1" font-size="9.5">· ④ 없이 ②만 던지기</text>
+      <text x="30" y="140" fill="#8b93a1" font-size="9.5">· 수동태로 주체 숨기기</text>
+      <text x="30" y="162" fill="#8b93a1" font-size="9.5">· ①을 3줄로 늘리기</text>
+      <text x="30" y="196" fill="#a3e635" font-size="10.5" font-weight="700">기억할 것</text>
+      <text x="30" y="216" fill="#8b93a1" font-size="9.5">신뢰는 ②가 아니라</text>
+      <text x="30" y="230" fill="#8b93a1" font-size="9.5">④에서 만들어집니다</text>
+    </svg>
+    <figcaption>완충재는 한 겹 · 사실은 위로 · 해결책이 본체</figcaption>
+  </figure>
+
+  <div class="note trap">
+    <div class="t">⚠ 헤지(hedge)의 함정</div>
+    <p><span class="en">may</span> · <span class="en">might</span> · <span class="en">possibly</span> · <span class="en">a little</span> · <span class="en">maybe</span> —
+    한국어에서는 완곡함이지만 영어 보고에서는 <strong>정보의 삭제</strong>입니다.
+    확실하지 않다면 <strong>불확실성 자체를 정확히</strong> 쓰십시오.
+    <span class="en">It may be delayed</span>가 아니라
+    <span class="en">We'll know by Wednesday whether this slips; current estimate is one week.</span></p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Bad-news Composer</div>
+    <div class="lab-s">상황과 수신자를 고르면 5층 구조로 조립된 메일이 나옵니다. 그대로 복사해 쓰십시오.</div>
+    <div class="lab-lb">상황</div>
+    <div class="chips" id="bnCase">
+      <button class="chip on" data-i="0">일정 지연</button>
+      <button class="chip" data-i="1">기능 축소</button>
+      <button class="chip" data-i="2">장애 발생</button>
+      <button class="chip" data-i="3">요청 거절</button>
+    </div>
+    <div class="lab-lb">수신자</div>
+    <div class="chips" id="bnAud">
+      <button class="chip" data-i="0">팀 채널</button>
+      <button class="chip on" data-i="1">사내 임원</button>
+      <button class="chip" data-i="2">사외 고객</button>
+    </div>
+    <div class="out">
+      <span class="lbl">Draft</span>
+      <div class="sent" id="bnOut"></div>
+      <button class="ph-c" id="bnCopy" style="margin-top:14px">전체 복사</button>
+    </div>
+  </div>
+
+  <h3>거절의 4가지 형태</h3>
+  <p>영어권 실무에서 <span class="en">No</span>는 무례가 아닙니다. 무례한 것은 <strong>못 할 일을 하겠다고 하는 것</strong>입니다.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>형태</th><th>구조</th><th>예문</th><th>언제</th></tr></thead>
+      <tbody>
+        <tr><td><strong>대안 제시</strong></td><td>No + 언제/무엇이면 가능</td>
+          <td><span class="mo o">I can't make Wednesday, but Friday works.</span></td><td>일정 문제일 때</td></tr>
+        <tr><td><strong>선택 요구</strong></td><td>A or B, not both</td>
+          <td><span class="mo o">I can take the audit or the cutover this sprint, not both. Which matters more?</span></td><td>용량 문제일 때 · 가장 강력</td></tr>
+        <tr><td><strong>조건부 수락</strong></td><td>Yes, if we drop X</td>
+          <td><span class="mo o">We can hit Sep 5 if we ship read-only and defer writes.</span></td><td>범위 조정이 가능할 때</td></tr>
+        <tr><td><strong>담당 연결</strong></td><td>Not mine + who owns it</td>
+          <td><span class="mo o">That's outside my area — Minji owns the network side.</span></td><td>영역 밖일 때</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>사과의 3요소</h3>
+  <p><span class="en">I'm so sorry, I'm really sorry, sorry again</span>을 다섯 번 쓰는 것은 사과가 아닙니다. 세 요소가 다 있어야 사과가 됩니다.</p>
+  <div class="grid g3">
+    <div class="card">
+      <h5><span class="dot" style="background:var(--cy)"></span>① 사실 인정</h5>
+      <p>무엇이 언제, 누구에게 영향을 줬는지. 숫자와 시각으로.</p>
+      <span class="mo">The API returned 503s for 42 minutes, affecting all checkout traffic.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--am)"></span>② 원인</h5>
+      <p>수동태로 숨기지 마십시오. 주체가 없는 문장은 책임 회피로 읽힙니다.</p>
+      <span class="mo">We pushed a config change without a staging check.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--lm)"></span>③ 재발 방지</h5>
+      <p>여기가 사과의 본체입니다. 없으면 “또 그럴 것”으로 읽힙니다.</p>
+      <span class="mo">We've added a required staging gate to the pipeline, merged this morning.</span>
+    </div>
+  </div>
+
+  <div class="ba">
+    <div class="ba-box b">
+      <div class="hd">Before · 사과만 5번</div>
+      <div class="tx">I am so sorry for the incident.
+I sincerely apologize for the inconvenience.
+It was my fault. I am really sorry.
+I will try my best not to repeat it.
+Sorry again for the trouble.</div>
+      <div class="nt">감정은 전달되지만 정보가 0입니다. 상대는 "다음에도 그럴 것"으로 받아들입니다.</div>
+    </div>
+    <div class="ba-box a">
+      <div class="hd">After · 3요소</div>
+      <div class="tx">Apologies for the disruption this morning.
+
+The checkout API returned 503s for 42 minutes
+(09:12–09:54 KST), affecting all card payments.
+
+Cause: we pushed a timeout config change
+without a staging check.
+
+Fix: the pipeline now requires a staging pass
+before prod. Merged and verified at 11:30.</div>
+      <div class="nt">사과는 한 줄. 나머지는 사실 · 원인 · 조치. 이게 신뢰를 복구합니다.</div>
+    </div>
+  </div>
+
+  <div class="note trap">
+    <div class="t">⚠ Korean Trap · 나쁜 소식 6종</div>
+    <p>1. 헤지 4겹 — <span class="en">may be a little delayed maybe</span>. 정보가 사라집니다.<br>
+    2. 나쁜 소식을 문단 4개 뒤에 묻기 — 상대가 인지하지 못합니다.<br>
+    3. 수동태로 주체 숨기기 — <span class="en">It was decided that…</span> → <span class="en">We decided to…</span><br>
+    4. <span class="en">I will try my best</span> — 상대는 "된다"로 듣습니다. 못 하면 신뢰가 무너집니다.<br>
+    5. 해결책 없이 문제만 전달 — 옵션 2개는 반드시 준비해서 가십시오.<br>
+    6. <span class="en">sorry</span> 남발 — 사과 횟수와 신뢰는 반비례합니다. 한 번, 그리고 조치.</p>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 06-1</div>
+    <div class="qq">일정이 1주 밀렸습니다. 임원 보고 메일의 두 번째 문장으로 적절한 것은?</div>
+    <button class="opt" data-a="0"><span class="mo">There may possibly be a slight delay, maybe.</span></button>
+    <button class="opt" data-a="1"><span class="mo">The Sep 5 cutover will slip one week, to Sep 12.</span></button>
+    <button class="opt" data-a="2"><span class="mo">The team has worked very hard on this project.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 나쁜 소식은 완충재 한 겹 뒤에 <strong>직설과 날짜</strong>로 옵니다. 1번은 헤지로 정보를 지웠고, 3번은 완충재를 두 겹 쌓아 사실을 밀어냅니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 06-2</div>
+    <div class="qq">두 요청이 겹쳤고 둘 다는 불가능합니다. 가장 효과적인 거절 형태는?</div>
+    <button class="opt" data-a="0">대안 제시 — <span class="mo">Not Wednesday, but Friday.</span></button>
+    <button class="opt" data-a="1">선택 요구 — <span class="mo">A or B this sprint, not both. Which matters more?</span></button>
+    <button class="opt" data-a="2">담당 연결 — <span class="mo">That's outside my area.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 용량 문제이므로 선택 요구가 맞습니다. 이 형태는 거절을 <strong>상대의 우선순위 결정</strong>으로 전환시켜, 거절하면서도 협력적으로 보입니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 06-3</div>
+    <div class="qq">장애 사후 보고에서 <strong>가장 중요한</strong> 요소는?</div>
+    <button class="opt" data-a="0">진심 어린 사과 표현의 강도</button>
+    <button class="opt" data-a="1">재발 방지 조치와 그 완료 시점</button>
+    <button class="opt" data-a="2">장애가 불가피했다는 설명</button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 상대가 알고 싶은 것은 "미안한가"가 아니라 <strong>"또 일어날까"</strong>입니다. 3번은 최악입니다. 변명은 원인 분석과 다릅니다.</div>
+  </div>
+</section>
+
+<!-- ==================== 07 ==================== -->
+<section id="s7">
+  <div class="sec-head">
+    <div class="sec-num">07</div>
+    <div>
+      <h2>Slack · Teams 메신저 영어</h2>
+      <div class="sub">비동기 협업의 문법 — 무엇을 어디에 쓸지</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 알림 8번</div>
+    <div class="msg"><span class="who">DM · 09:02</span>Hi
+<span class="who">09:02</span>Good morning
+<span class="who">09:03</span>Are you there?
+<span class="who">09:05</span>I have a question
+<span class="who">09:05</span>about the deploy
+<span class="who">09:06</span>the staging one
+<span class="who">09:07</span>can I ask?
+<span class="who">09:09</span>hello?</div>
+    <div class="rx">알림 <b>8번</b>, 전달된 정보 <b>0개</b>. 상대는 아직 질문을 듣지 못했습니다. 영어권 엔지니어링 문화에는 이걸 가리키는 이름까지 있습니다 — <b>nohello</b>. 인사와 용건은 한 메시지에 넣습니다.</div>
+  </div>
+
+  <h3>메신저 6원칙</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h5><span class="dot" style="background:var(--er)"></span>① no hello</h5>
+      <p>인사 + 용건 + 필요한 시점을 <strong>한 메시지</strong>에. 줄바꿈은 <code>Shift+Enter</code>입니다.</p>
+      <span class="mo">Morning! Quick one on the staging deploy — does the 30s timeout apply to the health check too? No rush, today is fine.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--am)"></span>② 언제까지 필요한지 쓰기</h5>
+      <p>비동기가 기본입니다. 마감을 안 쓰면 상대는 지금 답해야 하는지 알 수 없습니다.</p>
+      <span class="mo">No rush · today if possible · need this in the next 30 min (blocking)</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--cy)"></span>③ 스레드가 기본</h5>
+      <p>채널 본문은 <strong>새 주제만</strong>. 이어지는 대화는 전부 스레드로 내립니다.</p>
+      <span class="mo">Moving this to a thread to keep the channel clean.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--vi)"></span>④ @here의 실제 비용</h5>
+      <p>50명 채널의 <code>@here</code>는 50명의 집중을 끊습니다. 프로덕션 장애급에만 쓰십시오.</p>
+      <span class="mo">@here prod checkout API down since 09:12 KST — need DB on-call now.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--lm)"></span>⑤ 결정은 채널에</h5>
+      <p>DM에서 결정하면 기록이 사라집니다. 결론은 반드시 채널로 옮기십시오.</p>
+      <span class="mo">Summarizing our DM here for the record: we're going with Redis.</span>
+    </div>
+    <div class="card">
+      <h5><span class="dot" style="background:var(--mg)"></span>⑥ 길어지면 채널을 바꾸기</h5>
+      <p>메시지 5개를 넘기면 형식이 잘못된 것입니다. 문서나 통화로 옮기십시오.</p>
+      <span class="mo">This is getting long — mind a 10-min call?</span>
+    </div>
+  </div>
+
+  <div class="ba">
+    <div class="ba-box b">
+      <div class="hd">Before · 8개 메시지</div>
+      <div class="tx">Hi
+Good morning
+Are you there?
+I have a question
+about the deploy
+the staging one
+can I ask?
+hello?</div>
+      <div class="nt">알림 8번. 상대는 답할 내용이 없어 아무것도 못 합니다.</div>
+    </div>
+    <div class="ba-box a">
+      <div class="hd">After · 1개 메시지</div>
+      <div class="tx">Morning! Question on the staging deploy —
+does the new 30s timeout apply to the
+health check endpoint too, or just to
+the API routes?
+
+Context: our probe is failing at 12s.
+No rush, sometime today is fine.</div>
+      <div class="nt">알림 1번. 질문 · 배경 · 필요 시점이 다 있어 상대가 한 번에 답할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Channel Router</div>
+    <div class="lab-s">이 내용은 어디에 써야 할까요? 상황을 고르면 채널 판정과 예문이 나옵니다.</div>
+    <div class="lab-lb">상황</div>
+    <div class="chips" id="crCase">
+      <button class="chip on" data-i="0">단순 기술 질문</button>
+      <button class="chip" data-i="1">프로덕션 장애</button>
+      <button class="chip" data-i="2">동료 성과 피드백</button>
+      <button class="chip" data-i="3">아키텍처 결정</button>
+      <button class="chip" data-i="4">일정 지연 공유</button>
+      <button class="chip" data-i="5">코드 리뷰 지적</button>
+      <button class="chip" data-i="6">고객사 공식 답변</button>
+      <button class="chip" data-i="7">30분째 오가는 논쟁</button>
+    </div>
+    <div class="tl" id="crOut"></div>
+  </div>
+
+  <h3>코드 리뷰 코멘트 · 태그 3종</h3>
+  <p>
+    영어권 팀에서 가장 흔한 리뷰 마찰은 <strong>“이게 꼭 고쳐야 하는 건지 모르겠다”</strong>입니다.
+    태그 하나로 해결됩니다. 이건 관례이므로 그냥 쓰면 됩니다.
+  </p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>태그</th><th>뜻</th><th>예문</th></tr></thead>
+      <tbody>
+        <tr><td><span class="mo" style="color:var(--lm)">nit:</span></td><td>고쳐도 좋지만 머지를 막지 않음</td>
+          <td><span class="mo">nit: could we name this <code>retryCount</code> for consistency?</span></td></tr>
+        <tr><td><span class="mo" style="color:var(--cy)">question:</span></td><td>지적이 아니라 진짜 질문</td>
+          <td><span class="mo">question: is the lock released if this throws?</span></td></tr>
+        <tr><td><span class="mo" style="color:var(--er)">blocking:</span></td><td>고쳐야 머지 가능</td>
+          <td><span class="mo">blocking: this drops the tenant filter — cross-tenant read.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note tip">
+    <div class="t">리뷰는 코드에게, 칭찬은 사람에게</div>
+    <p><span class="en">You forgot the null check.</span> 대신 <span class="en">This path can hit a null here.</span>
+    주어를 사람에서 코드로 바꾸면 방어 반응이 사라집니다.
+    반대로 <strong>칭찬은 사람에게</strong> 돌리십시오. <span class="en">Nice catch on the retry logic — I would have missed that.</span></p>
+  </div>
+
+  <h3>축약어 · 허용선</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>구분</th><th>표현</th><th>뜻 · 주의</th></tr></thead>
+      <tbody>
+        <tr><td><span class="o">써도 됨</span></td><td><span class="mo">FYI · ICYMI · TL;DR · EOD · ETA · OOO · WFH</span></td>
+          <td>공유 · 놓쳤을까봐 · 요약 · 퇴근 전 · 예상 시각 · 부재 · 재택</td></tr>
+        <tr><td><span class="o">써도 됨</span></td><td><span class="mo">LGTM · PTAL · SGTM · +1 · IMO · AFAIK</span></td>
+          <td>리뷰 통과 · 다시 봐줘 · 좋아 보임 · 동의 · 내 생각엔 · 내가 아는 한</td></tr>
+        <tr><td><span class="cau" style="color:var(--am)">사내만</span></td><td><span class="mo">ping · bump · nit · ship it · +1</span></td>
+          <td>사외 메일에는 쓰지 않습니다. 고객이 못 알아듣습니다.</td></tr>
+        <tr><td><span class="x">쓰지 말 것</span></td><td><span class="mo">u · ur · plz · thx · asap · pls chk</span></td>
+          <td>업무 맥락에서 성의 부족으로 읽힙니다. 특히 사외.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>표현 은행 · 메신저</h3>
+  <div class="pb">
+    <div class="pb-bar">
+      <button class="pb-tab on">스레드 열기</button>
+      <button class="pb-tab">상태 공유</button>
+      <button class="pb-tab">도움 요청</button>
+      <button class="pb-tab">온콜 · 장애</button>
+    </div>
+    <div class="pb-pane on">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Quick one on the staging deploy — no rush, today is fine.</div><div class="ph-ko">용건 + 마감을 한 줄에. 메신저 질문의 기본형입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Dropping this in a thread so we don't spam the channel.</div><div class="ph-ko">스레드로 내리는 이유를 밝힙니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Not urgent — just parking this here for whoever picks it up.</div><div class="ph-ko">지금 답을 요구하지 않음을 명시.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Summarizing our DM here for the record: we're going with Redis.</div><div class="ph-ko">DM 결정을 채널로 올리기. 기록 보존의 핵심 습관입니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">ICYMI: the staging DB was rotated this morning — new creds in 1Password.</div><div class="ph-ko">놓쳤을 수 있는 정보 공유. 채널 본문에 적합합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Heads-up: I'm OOO Thursday. Minji is covering on-call.</div><div class="ph-ko">부재 공지 + 대체 담당. 두 번째 문장이 핵심입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Status: 12 of 18 services migrated. On track for Friday.</div><div class="ph-ko">숫자 + 판정. 상태 공유는 이 두 조각으로 충분합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">ETA on my side is about 2 hours. Will post here when it's done.</div><div class="ph-ko">예상 시각 + 후속 공지 약속.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Anyone familiar with the Istio sidecar config? Hitting a 503 I can't place.</div><div class="ph-ko">채널에 도움을 구할 때. 특정인을 지목하지 않습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I've been stuck on this for an hour — happy to share my screen if that's faster.</div><div class="ph-ko">막힌 시간을 밝히고 채널 전환을 제안합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Here's what I've tried so far: 1) bumped the timeout 2) checked the probe path.</div><div class="ph-ko">시도한 것을 먼저 적으면 답이 훨씬 빨리 옵니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This is getting long — mind a 10-min call?</div><div class="ph-ko">채널 전환 신호. 5개 넘어가면 이 문장을 쓰십시오.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">@here prod checkout API returning 503s since 09:12 KST. All card payments affected. I'm on it — need someone on the DB side.</div><div class="ph-ko">장애 첫 메시지. 증상 · 시각 · 영향 · 필요한 도움 4조각.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Taking incident command. Updates in this thread every 15 min.</div><div class="ph-ko">지휘 선언 + 업데이트 주기. 혼선을 막습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Mitigated at 09:54 — rolled back the timeout config. Root cause still under investigation.</div><div class="ph-ko">완화와 원인 규명을 구분해 씁니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Resolved. Postmortem doc will be up by tomorrow EOD.</div><div class="ph-ko">종료 선언 + 후속 약속.</div></div><button class="ph-c">복사</button></div>
+    </div>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 07-1</div>
+    <div class="qq">50명이 있는 팀 채널. <code>@here</code>를 써도 되는 상황은?</div>
+    <button class="opt" data-a="0">내 PR 리뷰가 이틀째 안 됐을 때</button>
+    <button class="opt" data-a="1">프로덕션 결제 API가 죽어서 온콜 담당이 필요할 때</button>
+    <button class="opt" data-a="2">점심 메뉴를 정할 때</button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> <code>@here</code>는 50명의 집중을 끊는 비용을 지불합니다. PR 리뷰는 담당자 DM이나 스레드 bump로, 나머지는 그냥 채널 본문으로 충분합니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 07-2</div>
+    <div class="qq">동료의 PR에서 테넌트 필터가 빠져 데이터 격리가 깨집니다. 코멘트 첫 단어는?</div>
+    <button class="opt" data-a="0"><span class="mo">nit:</span></button>
+    <button class="opt" data-a="1"><span class="mo">question:</span></button>
+    <button class="opt" data-a="2"><span class="mo">blocking:</span></button>
+    <div class="qz-ex" data-ex="2"><b>정답 3번.</b> 보안·데이터 격리 문제는 머지를 막아야 합니다. <span class="en">nit:</span>을 붙이면 상대가 무시하고 머지해도 당신에게 책임이 옵니다. 태그는 <strong>심각도의 선언</strong>입니다.</div>
+  </div>
+</section>
+
+<!-- ==================== 08 ==================== -->
+<section id="s8">
+  <div class="sec-head">
+    <div class="sec-num">08</div>
+    <div>
+      <h2>보고서 & Executive Summary</h2>
+      <div class="sub">15문단을 4줄로 접는 기술</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 시간순 서술</div>
+    <div class="msg"><span class="who">Weekly report to VP Engineering</span>Last Monday we had a kickoff meeting with the platform team.
+On Tuesday we reviewed the network topology. On Wednesday
+there was a discussion about the peering request and we
+decided to check with NetOps. On Thursday we sent the
+request. On Friday we did not receive a response...
+
+[10 more paragraphs]
+
+Therefore the cutover date might need to be adjusted.</div>
+    <div class="rx">이건 보고가 아니라 <b>일지</b>입니다. 임원이 알고 싶은 건 순서가 아니라 <b>지금 상태 · 리스크 · 내가 할 결정</b> 세 개입니다. 시간순은 필요할 때만, 맨 아래에.</div>
+  </div>
+
+  <h3>BLUF 4줄 템플릿</h3>
+  <p>모든 상태 보고는 이 네 줄로 시작합니다. 상세는 그 아래로 내려갑니다.</p>
+
+  <div class="tmpl"><span class="k">L1 · 판정</span>   한 단어로. On track / At risk / Blocked / Done
+<span class="k">L2 · 근거</span>   숫자 하나. "12 of 18 services migrated."
+<span class="k">L3 · 리스크</span> 무엇이 어긋나면 무엇이 깨지는지.
+<span class="k">L4 · 요청</span>   누가 · 무엇을 · 언제까지 결정하거나 해야 하는지.
+
+<span class="g">// 실제 적용</span>
+<span class="k">Status: At risk.</span>
+12 of 18 services are on EKS; staging is fully cut over.
+The VPC peering approval has been pending with NetOps
+since Aug 19. If it isn't approved by Friday, the Sep 5
+cutover slips by one week.
+<span class="k">Ask:</span> Sarah — could you escalate the peering request
+with NetOps by Thursday?</div>
+
+  <div class="note ok">
+    <div class="t">판정 단어를 정의해서 쓰십시오</div>
+    <p><span class="en">At risk</span>가 사람마다 다른 뜻이면 보고가 무용해집니다. 팀에서 한 번 합의하십시오.<br>
+    <strong>On track</strong> — 현재 계획으로 기한 준수 가능 ·
+    <strong>At risk</strong> — 외부 조건 하나가 어긋나면 기한 미준수 ·
+    <strong>Blocked</strong> — 내 힘으로 진행 불가, 남의 조치 필요 ·
+    <strong>Done</strong> — 검증까지 완료</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · BLUF Compressor</div>
+    <div class="lab-s">늘어진 보고문이 4줄로 접히는 과정을 케이스별로 확인하십시오.</div>
+    <div class="lab-lb">케이스</div>
+    <div class="chips" id="bcCase">
+      <button class="chip on" data-i="0">주간 상태 보고</button>
+      <button class="chip" data-i="1">장애 사후 보고</button>
+      <button class="chip" data-i="2">기술 검토 결과</button>
+      <button class="chip" data-i="3">인력 · 예산 요청</button>
+    </div>
+    <div id="bcOut"></div>
+  </div>
+
+  <h3>문장을 짧게 만드는 치환표</h3>
+  <p>영어 보고문이 길어지는 이유는 어휘가 아니라 <strong>명사화와 늘어진 관용구</strong>입니다. 아래만 치환해도 분량이 30% 줄어듭니다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>늘어진 표현</th><th>치환</th><th>늘어진 표현</th><th>치환</th></tr></thead>
+      <tbody>
+        <tr><td><span class="mo x">in order to</span></td><td><span class="mo o">to</span></td>
+            <td><span class="mo x">due to the fact that</span></td><td><span class="mo o">because</span></td></tr>
+        <tr><td><span class="mo x">at this point in time</span></td><td><span class="mo o">now</span></td>
+            <td><span class="mo x">has the ability to</span></td><td><span class="mo o">can</span></td></tr>
+        <tr><td><span class="mo x">make a decision on</span></td><td><span class="mo o">decide</span></td>
+            <td><span class="mo x">provide an explanation</span></td><td><span class="mo o">explain</span></td></tr>
+        <tr><td><span class="mo x">conduct an analysis of</span></td><td><span class="mo o">analyze</span></td>
+            <td><span class="mo x">in the event that</span></td><td><span class="mo o">if</span></td></tr>
+        <tr><td><span class="mo x">it is our expectation that</span></td><td><span class="mo o">we expect</span></td>
+            <td><span class="mo x">a large number of</span></td><td><span class="mo o">many · 숫자</span></td></tr>
+        <tr><td><span class="mo x">It was decided that…</span></td><td><span class="mo o">We decided to…</span></td>
+            <td><span class="mo x">There is a possibility that</span></td><td><span class="mo o">X may…</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>주간 보고 4블록</h3>
+  <div class="tmpl"><span class="k">DONE</span>          이번 주 완료. 검증까지 끝난 것만.
+<span class="k">NEXT</span>          다음 주 계획. 3개 이하.
+<span class="k">BLOCKED</span>       막힌 것 + 누가 풀어야 하는지.
+<span class="k">NEEDS DECISION</span> 내가 아니라 <span class="g">읽는 사람이</span> 결정할 것.
+
+<span class="g">// NEEDS DECISION 이 비어 있는 주간 보고는 대체로 정보가 없는 보고입니다.</span>
+<span class="g">// 읽는 사람이 할 일이 없으면 그 사람은 다음 주부터 읽지 않습니다.</span></div>
+
+  <h3>장애 사후 보고 5블록</h3>
+  <div class="tmpl"><span class="k">IMPACT</span>      누가 · 얼마나 · 언제부터 언제까지. 숫자로.
+<span class="k">TIMELINE</span>    탐지 → 완화 → 복구. 시각 기준.
+<span class="k">ROOT CAUSE</span>  왜 일어났는지. 사람 이름을 쓰지 않습니다.
+<span class="k">FIX</span>         지금 무엇이 바뀌었는지 + 머지 시각.
+<span class="k">PREVENTION</span>  재발 방지 항목 + 담당 + 기한.
+
+<span class="g">// 영어권 포스트모템 문화의 핵심은 blameless 입니다.</span>
+<span class="g">// "Jihoon pushed a bad config" 대신 "A config change reached prod</span>
+<span class="g">// without a staging check" — 시스템의 결함으로 기술합니다.</span></div>
+
+  <div class="note trap">
+    <div class="t">⚠ Korean Trap · 보고서 5종</div>
+    <p>1. 시간순 서술 — 임원은 순서가 아니라 상태를 봅니다.<br>
+    2. 결론이 마지막 문단 — 아무도 거기까지 읽지 않습니다.<br>
+    3. 노력 서술 — <span class="en">The team worked very hard</span>는 정보가 아닙니다. 숫자를 쓰십시오.<br>
+    4. 리스크 누락 — 좋은 소식만 있는 보고는 신뢰를 깎습니다. 리스크를 먼저 말하는 사람이 신뢰를 얻습니다.<br>
+    5. 요청 없음 — 읽는 사람이 할 일이 없으면 그 보고는 다음 주부터 열리지 않습니다.</p>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 08-1</div>
+    <div class="qq">주간 보고의 첫 줄로 가장 좋은 것은?</div>
+    <button class="opt" data-a="0"><span class="mo">Last Monday we had a kickoff meeting with the platform team.</span></button>
+    <button class="opt" data-a="1"><span class="mo">Status: At risk — VPC peering pending since Aug 19.</span></button>
+    <button class="opt" data-a="2"><span class="mo">The team has been working very hard on the migration.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 판정 + 근거가 첫 줄에 옵니다. 1번은 일지, 3번은 정보가 없습니다. 첫 줄만 읽고 나가는 사람도 상태를 알 수 있어야 합니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 08-2</div>
+    <div class="qq">Blameless postmortem 원칙에 맞는 원인 서술은?</div>
+    <button class="opt" data-a="0"><span class="mo">Jihoon pushed a bad config without checking.</span></button>
+    <button class="opt" data-a="1"><span class="mo">A config change reached production without a staging check, because the pipeline had no gate for it.</span></button>
+    <button class="opt" data-a="2"><span class="mo">There were some unexpected issues.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 개인이 아니라 <strong>시스템의 결함</strong>으로 기술합니다. 사람을 지목하면 다음 장애를 숨기게 됩니다. 3번은 원인 서술이 아니라 회피입니다.</div>
+  </div>
+</section>
+
+<!-- ==================== 09 ==================== -->
+<section id="s9">
+  <div class="sec-head">
+    <div class="sec-num">09</div>
+    <div>
+      <h2>제안서 · 기획서</h2>
+      <div class="sub">결정을 받아내는 글의 5부 구조</div>
+    </div>
+  </div>
+
+  <div class="cold">
+    <div class="cl">Cold Open · 결정이 나지 않는 제안</div>
+    <div class="msg"><span class="who">Slack · #arch-review</span>I think maybe we could consider possibly using Kafka
+for the event pipeline. It might be good, I guess.
+But RabbitMQ could also be okay. What do you think?</div>
+    <div class="rx">아무도 결정하지 못합니다. 제안한 사람조차 무엇을 제안했는지 불분명합니다. 제안서에서 <b>약한 언어는 겸손이 아니라 책임 회피</b>로 읽힙니다. 결정을 요청하려면 <b>먼저 결정을 내려야</b> 합니다.</div>
+  </div>
+
+  <h3>제안 5부 구조</h3>
+  <figure>
+    <svg viewBox="0 0 760 264" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+      <rect x="24" y="20" width="712" height="42" rx="8" fill="#171b25" stroke="#22d3ee" stroke-opacity=".6"/>
+      <text x="44" y="38" fill="#22d3ee" font-size="10.5" font-weight="700">① RECOMMENDATION · 한 줄, 단정형</text>
+      <text x="44" y="54" fill="#8b93a1" font-size="9.5">"I recommend we use Kafka for the event pipeline."</text>
+
+      <rect x="24" y="68" width="712" height="42" rx="8" fill="#171b25" stroke="#343c4e"/>
+      <text x="44" y="86" fill="#69738a" font-size="10.5" font-weight="700">② WHY NOW · 왜 지금 결정해야 하는가</text>
+      <text x="44" y="102" fill="#8b93a1" font-size="9.5">"Our current queue hits its throughput ceiling in about 6 weeks at present growth."</text>
+
+      <rect x="24" y="116" width="712" height="56" rx="8" fill="#171b25" stroke="#fbbf24" stroke-opacity=".5"/>
+      <text x="44" y="134" fill="#fbbf24" font-size="10.5" font-weight="700">③ OPTIONS CONSIDERED · 2~3개 + 탈락 이유 ★ 신뢰의 원천</text>
+      <text x="44" y="150" fill="#8b93a1" font-size="9.5">"RabbitMQ — simpler ops, but no replay, which we need for the settlement retry."</text>
+      <text x="44" y="164" fill="#8b93a1" font-size="9.5">"Kinesis — managed, but 2.4x the cost at our volume."</text>
+
+      <rect x="24" y="178" width="712" height="42" rx="8" fill="#171b25" stroke="#fb7185" stroke-opacity=".5"/>
+      <text x="44" y="196" fill="#fb7185" font-size="10.5" font-weight="700">④ COST & RISK · 숨기지 않는다</text>
+      <text x="44" y="212" fill="#8b93a1" font-size="9.5">"Adds ~$1.8k/mo and one new system to operate. No one on the team runs Kafka today."</text>
+
+      <rect x="24" y="226" width="712" height="34" rx="8" fill="#171b25" stroke="#a3e635" stroke-opacity=".55"/>
+      <text x="44" y="247" fill="#a3e635" font-size="10.5" font-weight="700">⑤ ASK · 누가 · 무엇을 · 언제까지</text>
+      <text x="716" y="247" fill="#8b93a1" font-size="9.5" text-anchor="end">"Sarah — decision by Sep 3 so we can start in the next sprint."</text>
+    </svg>
+    <figcaption>③과 ④를 빼면 제안이 아니라 희망사항이 됩니다</figcaption>
+  </figure>
+
+  <div class="note ok">
+    <div class="t">리스크를 먼저 쓰는 사람이 승인을 받습니다</div>
+    <p>③ 대안 검토와 ④ 비용·리스크가 <strong>신뢰를 만드는 유일한 부분</strong>입니다.
+    “리스크 없습니다”라고 쓴 제안서는 검토자에게 <strong>“검토를 안 했다”</strong>로 읽힙니다.
+    반대로 리스크를 먼저 꺼내면 검토자는 남은 판단을 당신에게 맡깁니다.</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Interactive · Conviction Dial</div>
+    <div class="lab-s">확신도를 조절해 보십시오. 문장이 바뀌고, 그 강도를 언제 써야 하는지도 표시됩니다.</div>
+    <div class="lab-lb">제안 종류</div>
+    <div class="chips" id="cdCase">
+      <button class="chip on" data-i="0">기술 선택</button>
+      <button class="chip" data-i="1">일정 연장</button>
+      <button class="chip" data-i="2">인력 충원</button>
+    </div>
+    <div class="lab-lb">확신도</div>
+    <div class="dial-wrap">
+      <div class="dial-scale"><span>◀ 약함</span><span>중간</span><span>강함 ▶</span></div>
+      <input type="range" id="cdDial" min="0" max="2" step="1" value="2" aria-label="확신도 조절">
+    </div>
+    <div class="out">
+      <span class="lbl">Output</span>
+      <div id="cdBadge"></div>
+      <div class="sent" id="cdSent"></div>
+      <div class="why" id="cdWhy"></div>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <div class="t">약한 언어를 써야 하는 유일한 경우</div>
+    <p>데이터가 부족할 때입니다. 그때는 <strong>약하게 쓰되, 왜 약한지 명시</strong>하십시오.
+    <span class="en">I'd lean toward Kafka, but I want the load test numbers before committing. I'll have them Thursday.</span>
+    “아직 모른다”와 “결정하고 싶지 않다”는 완전히 다르게 읽힙니다. 전자는 성실함, 후자는 회피입니다.</p>
+  </div>
+
+  <h3>ADR · 결정 기록 템플릿</h3>
+  <p>구두로 끝난 결정은 3개월 뒤에 반드시 다시 논쟁이 됩니다. 한 페이지로 남기십시오.</p>
+  <div class="tmpl"><span class="k"># ADR-014: Event pipeline — Kafka</span>
+
+<span class="k">Status:</span>   Accepted · 2026-09-03
+<span class="k">Context:</span>  Current queue reaches its throughput ceiling in ~6 weeks.
+          Settlement retry requires message replay, which we lack today.
+<span class="k">Decision:</span> We will use self-managed Kafka on EKS (3 brokers, MSK later
+          if ops load proves too high).
+<span class="k">Alternatives:</span>
+          RabbitMQ  — rejected: no replay
+          Kinesis   — rejected: 2.4x cost at our volume
+<span class="k">Consequences:</span>
+          + Replay unlocks the settlement retry work in Q4
+          − New system to operate; one engineer needs ramp-up time
+          − ~$1.8k/mo added infra cost
+<span class="k">Revisit:</span>  Q1 2027, or if broker ops exceeds 4 hrs/week</div>
+
+  <h3>표현 은행 · 제안</h3>
+  <div class="pb">
+    <div class="pb-bar">
+      <button class="pb-tab on">추천</button>
+      <button class="pb-tab">근거 · 대안</button>
+      <button class="pb-tab">리스크</button>
+      <button class="pb-tab">승인 요청</button>
+    </div>
+    <div class="pb-pane on">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">I recommend we go with Kafka for the event pipeline.</div><div class="ph-ko">강한 확신. 제안서 첫 문장의 기본형입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">My recommendation is option B — self-managed Kafka on EKS.</div><div class="ph-ko">선택지가 있을 때. 어느 것인지 명확히 지목합니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">On balance, I'd lean toward Kafka, mainly for the replay capability.</div><div class="ph-ko">중간 확신 + 결정 요인 하나를 밝힙니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The cheapest reversible option is to start with RabbitMQ and migrate later if we need replay.</div><div class="ph-ko">가역성을 근거로 삼는 방식. 임원이 좋아하는 프레임입니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Our current queue hits its throughput ceiling in about six weeks at present growth.</div><div class="ph-ko">Why now. 시점을 숫자로 못박습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">We looked at three options; here's why the other two didn't make it.</div><div class="ph-ko">대안 검토 선언. 신뢰가 여기서 만들어집니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">RabbitMQ is simpler to operate, but it has no replay, which the settlement retry depends on.</div><div class="ph-ko">탈락 이유는 장점을 먼저 인정한 뒤에 씁니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Kinesis would work, but at our volume it comes to roughly 2.4x the cost.</div><div class="ph-ko">배수 표현. 절대값보다 판단이 쉽습니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">The main risk is operational: no one on the team runs Kafka today.</div><div class="ph-ko">리스크를 먼저, 정확히. 감추면 신뢰를 잃습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">To mitigate that, we'd start with three brokers and move to MSK if ops load exceeds four hours a week.</div><div class="ph-ko">리스크에는 반드시 완화책을 붙입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This adds about $1.8k a month. I've assumed current traffic; it scales roughly linearly.</div><div class="ph-ko">비용 + 가정. 가정을 밝히면 숫자가 신뢰를 얻습니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">This decision is reversible within about a quarter — after that, migration cost rises sharply.</div><div class="ph-ko">가역성의 유효기간. 결정 속도를 만드는 문장입니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+    <div class="pb-pane">
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Sarah — could you make the call by Sep 3 so we can start in the next sprint?</div><div class="ph-ko">누가 · 언제까지 · 왜 그 날짜인지. 요청의 완성형입니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If you'd rather discuss it live, I can walk through it in 15 minutes this week.</div><div class="ph-ko">채널 선택권을 줍니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">If I don't hear back by Sep 3, I'll proceed with the recommendation and note it in the ADR.</div><div class="ph-ko">무응답 대비. 결정이 미뤄져도 일이 진행됩니다.</div></div><button class="ph-c">복사</button></div>
+      <div class="ph"><div class="ph-txt"><div class="ph-en">Happy to be talked out of this if you're seeing something I'm not.</div><div class="ph-ko">강한 제안 뒤의 완충. 고집스럽게 보이지 않게 합니다.</div></div><button class="ph-c">복사</button></div>
+    </div>
+  </div>
+
+  <h3>드릴</h3>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 09-1</div>
+    <div class="qq">아키텍처 제안서의 첫 문장으로 가장 좋은 것은?</div>
+    <button class="opt" data-a="0"><span class="mo">I think maybe we could consider possibly using Kafka.</span></button>
+    <button class="opt" data-a="1"><span class="mo">I recommend we use Kafka for the event pipeline.</span></button>
+    <button class="opt" data-a="2"><span class="mo">There are several options for the event pipeline. What do you think?</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 결정을 요청하려면 먼저 결정을 내려야 합니다. 3번은 검토자에게 일을 떠넘기는 것이고, 1번은 제안한 사람조차 무엇을 제안했는지 불분명합니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 09-2</div>
+    <div class="qq">제안서에서 <strong>신뢰를 만드는</strong> 부분은?</div>
+    <button class="opt" data-a="0">추천안의 장점을 최대한 많이 나열한 부분</button>
+    <button class="opt" data-a="1">탈락한 대안의 이유와 이 안의 비용·리스크를 밝힌 부분</button>
+    <button class="opt" data-a="2">"리스크는 없습니다"라고 단언한 부분</button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 검토자는 장점 목록이 아니라 <strong>당신이 무엇을 검토했는지</strong>를 봅니다. 3번은 즉시 신뢰를 잃습니다 — 리스크 없는 기술 결정은 존재하지 않습니다.</div>
+  </div>
+  <div class="qz" data-q>
+    <div class="qn">DRILL 09-3</div>
+    <div class="qq">아직 부하 테스트 결과가 없습니다. 이때 적절한 표현은?</div>
+    <button class="opt" data-a="0"><span class="mo">I recommend Kafka.</span></button>
+    <button class="opt" data-a="1"><span class="mo">I'd lean toward Kafka, but I want the load test numbers before committing. I'll have them Thursday.</span></button>
+    <button class="opt" data-a="2"><span class="mo">Maybe Kafka. Or maybe not. Hard to say.</span></button>
+    <div class="qz-ex" data-ex="1"><b>정답 2번.</b> 약하게 쓰되 <strong>왜 약한지와 언제 확정할지</strong>를 밝힙니다. "아직 모른다"는 성실함이지만 "결정하고 싶지 않다"(3번)는 회피로 읽힙니다.</div>
+  </div>
+</section>
+
+<!-- ==================== 10 ==================== -->
+<section id="s10">
+  <div class="sec-head">
+    <div class="sec-num">10</div>
+    <div>
+      <h2>종합 드릴 10문항</h2>
+      <div class="sub">Module II 전체 범위. 8개 이상이면 Module III로 넘어가십시오</div>
+    </div>
+  </div>
+
+  <div class="qz" data-q data-final>
+    <div class="qn">Q1 · 리마인더</div>
+    <div class="qq">D+3 첫 리마인더에서 추가해야 하는 정보는?</div>
+    <button class="opt" data-a="0">없음 — 사안만 가볍게 다시 올린다</button>
+    <button class="opt" data-a="1">무응답 시 내가 할 대안</button>
+    <button class="opt" data-a="2">리드를 CC에 넣는다</button>
+    <div class="qz-ex" data-ex="0"><b>1번.</b> N1은 정보를 추가하지 않습니다. <span class="en">Just checking in — still on your radar?</span> 정도면 충분합니다. 첫 리마인더에서 압박을 올리면 남은 단계가 사라집니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q2 · 나쁜 소식</div>
+    <div class="qq">일정 지연 보고에서 가장 중요한 층은?</div>
+    <button class="opt" data-a="0">완충재(cushion)</button>
+    <button class="opt" data-a="1">지연 사유의 상세 설명</button>
+    <button class="opt" data-a="2">해결책 또는 옵션 2개</button>
+    <div class="qz-ex" data-ex="2"><b>3번.</b> 읽는 사람이 결정할 수 있게 만드는 것이 목적입니다. 문제만 던지는 보고는 상대의 일을 늘립니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q3 · 헤지</div>
+    <div class="qq"><span class="mo">It may be a little delayed maybe.</span> 의 문제는?</div>
+    <button class="opt" data-a="0">문법이 틀렸다</button>
+    <button class="opt" data-a="1">헤지가 겹쳐 정보가 사라졌다</button>
+    <button class="opt" data-a="2">너무 직설적이다</button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 얼마나 · 언제 · 확실한지가 전부 빠졌습니다. 불확실할 때는 <strong>불확실성 자체를 정확히</strong> 쓰십시오.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q4 · 메신저</div>
+    <div class="qq"><span class="mo">Hi</span> 만 보내고 기다리는 습관을 부르는 이름은?</div>
+    <button class="opt" data-a="0">nohello</button>
+    <button class="opt" data-a="1">bikeshedding</button>
+    <button class="opt" data-a="2">rubber ducking</button>
+    <div class="qz-ex" data-ex="0"><b>1번.</b> 인사 · 용건 · 필요 시점을 한 메시지에 넣는 것이 규범입니다. 알림 횟수는 그대로 동료의 집중 비용입니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q5 · 코드 리뷰</div>
+    <div class="qq">머지를 막지 않는 스타일 제안에 붙이는 태그는?</div>
+    <button class="opt" data-a="0"><span class="mo">blocking:</span></button>
+    <button class="opt" data-a="1"><span class="mo">nit:</span></button>
+    <button class="opt" data-a="2"><span class="mo">urgent:</span></button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> <span class="en">nit:</span>은 "고쳐도 좋지만 막지 않음"의 관례 태그입니다. 태그를 붙이지 않으면 상대가 심각도를 추측해야 합니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q6 · 보고서</div>
+    <div class="qq">BLUF 4줄에서 L1에 오는 것은?</div>
+    <button class="opt" data-a="0">지난주 진행 경과</button>
+    <button class="opt" data-a="1">판정 한 단어 — On track / At risk / Blocked</button>
+    <button class="opt" data-a="2">감사 인사</button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 첫 줄만 읽고 나가는 사람도 상태를 알 수 있어야 합니다. 판정 단어는 팀에서 뜻을 합의해 두십시오.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q7 · 포스트모템</div>
+    <div class="qq">blameless 원칙에 맞는 원인 서술은?</div>
+    <button class="opt" data-a="0"><span class="mo">A config change reached prod without a staging gate.</span></button>
+    <button class="opt" data-a="1"><span class="mo">Jihoon forgot to check staging.</span></button>
+    <button class="opt" data-a="2"><span class="mo">There were unexpected issues.</span></button>
+    <div class="qz-ex" data-ex="0"><b>1번.</b> 개인이 아니라 시스템의 결함으로 씁니다. 사람을 지목하는 문화에서는 다음 장애가 숨겨집니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q8 · 제안서</div>
+    <div class="qq">제안서에서 검토자의 신뢰를 만드는 부분은?</div>
+    <button class="opt" data-a="0">장점 목록의 길이</button>
+    <button class="opt" data-a="1">탈락 대안의 이유 + 비용 · 리스크</button>
+    <button class="opt" data-a="2">"리스크 없음" 선언</button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 검토자는 결론보다 <strong>검토의 흔적</strong>을 봅니다. 리스크를 먼저 꺼내는 사람이 결정권을 얻습니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q9 · 거절</div>
+    <div class="qq">용량 부족으로 두 요청 중 하나만 가능할 때 최선의 형태는?</div>
+    <button class="opt" data-a="0"><span class="mo">I will try my best.</span></button>
+    <button class="opt" data-a="1"><span class="mo">A or B this sprint, not both. Which matters more to you?</span></button>
+    <button class="opt" data-a="2"><span class="mo">Sorry, I'm too busy.</span></button>
+    <div class="qz-ex" data-ex="1"><b>2번.</b> 거절을 상대의 우선순위 결정으로 전환합니다. 1번은 최악입니다 — 상대는 "된다"로 듣고 계획을 세웁니다.</div>
+  </div>
+  <div class="qz" data-q data-final>
+    <div class="qn">Q10 · 압축</div>
+    <div class="qq"><span class="mo">It was decided that a decision would be made at this point in time.</span> 를 압축하면?</div>
+    <button class="opt" data-a="0"><span class="mo">A decision has been made now.</span></button>
+    <button class="opt" data-a="1"><span class="mo">We decided now.</span></button>
+    <button class="opt" data-a="2"><span class="mo">We decided to move ahead today.</span></button>
+    <div class="qz-ex" data-ex="2"><b>3번.</b> 수동태를 능동으로, 명사화(<span class="en">make a decision</span>)를 동사로, <span class="en">at this point in time</span>을 <span class="en">today</span>로. 주체와 행위가 살아납니다.</div>
+  </div>
+  <div class="score" id="finalScore">종합 드릴 <b>0</b> / 10 · 문항을 풀면 점수가 집계됩니다</div>
+</section>
+
+<!-- ==================== 11 ==================== -->
+<section id="s11">
+  <div class="sec-head">
+    <div class="sec-num">11</div>
+    <div>
+      <h2>현장 체크리스트</h2>
+      <div class="sub">문서를 보내기 전 10초</div>
+    </div>
+  </div>
+
+  <div id="ckList">
+    <div class="ck"><div class="box">✓</div><div class="lb">리마인더에 <strong>새 정보</strong>가 추가됐는가? (같은 톤 반복은 압박이 아니다)</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb"><span class="mo">Why haven't you replied</span> · <span class="mo">As I mentioned before</span>를 지웠는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">나쁜 소식이 <strong>두 번째 문장 안</strong>에 직설로 나오는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">헤지(<span class="mo">may · might · maybe · a little</span>)가 겹쳐 있지 않은가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">문제만 던지지 않고 <strong>옵션 2개</strong>를 함께 넣었는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">사과에 <strong>사실 · 원인 · 재발 방지</strong> 세 요소가 다 있는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">못 하는 일에 <span class="mo">I will try my best</span>로 답하지 않았는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">메신저: 인사와 용건이 <strong>한 메시지</strong>에 있는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">메신저: 언제까지 필요한지 썼는가 (<span class="mo">no rush</span> / <span class="mo">today</span> / <span class="mo">blocking</span>)</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">DM에서 내린 결정을 <strong>채널로 옮겼는가</strong></div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">보고서 첫 줄에 <strong>판정 한 단어</strong>가 있는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">보고서에 <strong>읽는 사람이 할 결정</strong>이 있는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">포스트모템에서 사람 이름이 아니라 <strong>시스템</strong>을 원인으로 썼는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">제안서에 <strong>탈락 대안</strong>과 <strong>비용 · 리스크</strong>가 있는가</div></div>
+    <div class="ck"><div class="box">✓</div><div class="lb">제안서 첫 문장이 단정형인가 (<span class="mo">I recommend…</span>)</div></div>
+  </div>
+
+  <div class="next">
+    <div class="t">Next · Module III</div>
+    <h4>회의 & 통화 (10–13)</h4>
+    <ul>
+      <li><strong>10</strong> 회의 열기와 진행 — Agenda 설정, 발언권 가져오기·넘기기</li>
+      <li><strong>11</strong> 동의 · 반대 · 유보 — 세게 반박하지 않고 이기는 표현 (Disagreement Meter)</li>
+      <li><strong>12</strong> 화상회의 생존 영어 — 안 들릴 때 / 끊길 때 / 끼어들 때 트러블 15선</li>
+      <li><strong>13</strong> 마무리와 팔로업 — Action item 배분과 Recap 메일 생성기</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- clipboard ---------- */
+function copy(text, btn){
+  var done = function(){
+    var old = btn.textContent;
+    btn.textContent = '복사됨'; btn.classList.add('done');
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1400);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+  } else { fallback(text, done); }
+}
+function fallback(text, cb){
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.setAttribute('readonly','');
+  ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); cb(); }catch(e){}
+  document.body.removeChild(ta);
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest('.ph-c');
+  if(!b) return;
+  if(b.id === 'neCopy' || b.id === 'bnCopy') return;
+  var row = b.closest('.ph');
+  if(!row) return;
+  var en = row.querySelector('.ph-en');
+  copy(en ? en.textContent.trim() : '', b);
+});
+
+/* ---------- phrase bank tabs ---------- */
+document.querySelectorAll('.pb').forEach(function(pb){
+  var tabs = pb.querySelectorAll('.pb-tab');
+  var panes = pb.querySelectorAll('.pb-pane');
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('on'); });
+      panes.forEach(function(x){ x.classList.remove('on'); });
+      t.classList.add('on');
+      if(panes[i]) panes[i].classList.add('on');
+    });
+  });
+});
+
+/* ---------- chip helpers ---------- */
+function chipGroup(id, onPick){
+  var box = document.getElementById(id);
+  if(!box) return;
+  box.querySelectorAll('.chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      box.querySelectorAll('.chip').forEach(function(x){ x.classList.remove('on'); });
+      c.classList.add('on');
+      onPick(parseInt(c.dataset.i, 10));
+    });
+  });
+}
+function picked(id){
+  var box = document.getElementById(id);
+  var on = box ? box.querySelector('.chip.on') : null;
+  return on ? parseInt(on.dataset.i, 10) : 0;
+}
+
+/* ---------- 05 Nudge Escalator ---------- */
+var NE_MSG = [
+"Hi John,\n\nJust checking in on the IAM role request from Tuesday — is that still on your radar?\n\nNo rush if it's queued, just want to make sure it didn't get buried.\n\nThanks,\nJihoon",
+"Hi John,\n\nFollowing up on the IAM role request from Aug 19.\n\nThis is now blocking our CI pipeline, so integration tests are on hold. Any idea on timing? And is there anything you need from me to unblock it?\n\nThanks,\nJihoon",
+"Hi John,\n\nThe IAM role request from Aug 19 is still open, and it's now holding up the Sep 5 cutover.\n\nIf I don't hear back by Thursday 6pm KST, I'll open a fallback ticket with the platform team and note it in the migration doc.\n\nIf this isn't your area anymore, could you point me to the right owner?\n\nThanks,\nJihoon",
+"Hi John — looping in Sarah for visibility.\n\nThe IAM role request from Aug 19 has been open for 12 days and is now the only blocker on the Sep 5 cutover. Integration tests have been paused since Aug 25.\n\nHappy to jump on a 10-minute call today if that's the fastest way to close this out.\n\nThanks,\nJihoon"
+];
+var NE_BADGE = [
+'<span class="badge c">N1 · 가볍게 올리기</span>',
+'<span class="badge n">N2 · 영향 명시</span>',
+'<span class="badge w">N3 · 기한 + 대안</span>',
+'<span class="badge e">N4 · 상향</span>'
+];
+function neRender(){
+  var day = picked('neDay'), wt = picked('neWt');
+  var lvl = day;
+  if(wt === 0) lvl = Math.max(0, lvl - 1);
+  if(wt === 2) lvl = Math.min(3, lvl + 1);
+  document.getElementById('neBadge').innerHTML = NE_BADGE[lvl];
+  document.getElementById('neSent').textContent = NE_MSG[lvl];
+  var wtTxt = ['있으면 좋은 사안','일정에 영향','릴리즈 블로킹'][wt];
+  var dayTxt = ['D+3','D+6','D+9','D+12'][day];
+  var why;
+  if(wt === 0){
+    why = '<b>' + dayTxt + ' · ' + wtTxt + '</b> → 한 단계 내렸습니다. 급하지 않은 사안에 강한 리마인더를 쓰면 다음번 진짜 급한 요청의 무게가 사라집니다.';
+  } else if(wt === 2){
+    why = '<b>' + dayTxt + ' · ' + wtTxt + '</b> → 한 단계 올렸습니다. 릴리즈가 걸려 있으면 시간을 더 기다릴 여유가 없습니다. 단, 올라간 것은 <b>사안의 무게</b>일 뿐 상대에 대한 불만이 아니라는 점은 그대로입니다.';
+  } else {
+    why = '<b>' + dayTxt + ' · ' + wtTxt + '</b> → 기본 단계입니다. ' +
+      ['새 정보를 추가하지 않고 사안만 다시 올립니다.',
+       '이번 단계에서 추가되는 것은 <b>무엇이 막혔는지</b>입니다.',
+       '이번 단계의 핵심은 <b>무응답 시 내가 할 일</b>을 예고하는 것입니다.',
+       '리드를 CC에 넣되 <b>CC의 이유</b>를 밝혀 저격으로 보이지 않게 합니다.'][lvl];
+  }
+  document.getElementById('neWhy').innerHTML = why;
+  document.querySelectorAll('#escLad .rung').forEach(function(r, i){
+    r.classList.toggle('hi', i === lvl);
+  });
+}
+chipGroup('neDay', neRender);
+chipGroup('neWt', neRender);
+neRender();
+var neCopy = document.getElementById('neCopy');
+if(neCopy) neCopy.addEventListener('click', function(){
+  copy(document.getElementById('neSent').textContent, neCopy);
+});
+
+/* ---------- 06 Bad-news Composer ---------- */
+var BN = {
+0:{ // 일정 지연
+ 0:"Heads-up: the Sep 5 cutover is slipping to Sep 12.\n\nThe VPC peering approval is still pending with NetOps (open since Aug 19), and we can't run the dry run without it.\n\nTwo options: ship read-only on Sep 5 and defer writes, or move the full cutover to Sep 12. I'd go with the second — the read-only path needs work we haven't scoped.\n\nI'll have a revised plan in the channel by Wednesday. Shout if you see a third option.",
+ 1:"Hi Sarah,\n\nThanks for clearing the review slot last week.\n\nThe Sep 5 cutover will slip by one week, to Sep 12.\n\nThe VPC peering approval has been pending with NetOps since Aug 19, and the dry run can't start without it. Everything else is on track — 12 of 18 services are migrated and staging is fully cut over.\n\nTwo options:\n1. Ship read-only on Sep 5 and defer writes to Sep 12 — lower risk on the date, but adds about a week of unscoped work.\n2. Move the full cutover to Sep 12 — my recommendation.\n\nI'll have the revised plan to you by Wednesday. If you can escalate the peering request with NetOps, option 2 becomes much safer.\n\nThanks,\nJihoon",
+ 2:"Dear Mr. Smith,\n\nThank you for your team's support during the migration testing.\n\nI am writing to inform you that the cutover scheduled for 5 September will be moved to 12 September.\n\nThe delay is caused by a pending network approval on our side, which is required before the final dry run can be completed. All other workstreams remain on schedule; 12 of 18 services have been migrated and the staging environment is fully cut over.\n\nTo protect your timeline, we would like to propose two options: a read-only release on 5 September with write traffic following on 12 September, or a single full cutover on 12 September. We recommend the latter, as it carries lower operational risk for your users.\n\nWe will provide a revised plan by Wednesday, 27 August. Please let us know if you would like to discuss the options on a call.\n\nBest regards,\nJihoon Lee\nPayments Platform Team"
+},
+1:{ // 기능 축소
+ 0:"Update on the settlement dashboard: the per-merchant breakdown won't make the first release.\n\nThe aggregation query is too slow at our data volume — 14s p95 on real data, and the fix needs a schema change we can't land this sprint.\n\nWhat ships instead: daily totals and CSV export, which covers the audit use case. Per-merchant lands in the next sprint.\n\nIf per-merchant is the whole point for someone, tell me now and I'll re-plan.",
+ 1:"Hi Sarah,\n\nOne scope change on the settlement dashboard.\n\nThe per-merchant breakdown won't be in the first release. It's moving to the sprint starting Sep 8.\n\nThe aggregation query runs at 14s p95 on production-scale data, well past our 2s target. Making it viable needs a schema change that we can't safely land this sprint alongside the cutover.\n\nWhat ships on time: daily totals and CSV export — which covers the audit requirement, the one hard commitment we made to Finance.\n\nIf the per-merchant view is what Finance actually needs first, let me know by Thursday and I'll swap the order — but that pushes the audit export by a sprint.\n\nThanks,\nJihoon",
+ 2:"Dear Mr. Smith,\n\nI would like to update you on the scope of the settlement dashboard.\n\nThe per-merchant breakdown will not be included in the initial release and is now scheduled for the following sprint, beginning 8 September.\n\nDuring performance testing, the aggregation query returned a 95th-percentile response time of 14 seconds against production-scale data, against a target of 2 seconds. Addressing this requires a schema change that cannot be safely delivered alongside the migration cutover.\n\nThe initial release will include daily totals and CSV export, which fulfils the audit reporting requirement agreed in July.\n\nIf the per-merchant view is the higher priority for your team, we can reverse the order, though this would defer the audit export by one sprint. Please let us know your preference by Thursday.\n\nBest regards,\nJihoon Lee"
+},
+2:{ // 장애
+ 0:"Postmortem for this morning's incident.\n\nImpact: checkout API returned 503s for 42 minutes (09:12–09:54 KST). All card payments failed during that window — roughly 8,400 attempts.\n\nCause: a timeout config change reached prod without a staging check. The pipeline had no gate for config-only changes.\n\nFix: staging gate is now required for all changes including config. Merged and verified at 11:30.\n\nPrevention: adding an alert on 5xx rate above 1% (me, by Friday). Full doc in the incident channel.",
+ 1:"Hi Sarah,\n\nSummary of this morning's checkout incident. Full postmortem doc is linked at the bottom.\n\nImpact: the checkout API returned 503s for 42 minutes, 09:12–09:54 KST. All card payments failed in that window — approximately 8,400 attempts, roughly ₩120M in delayed volume. No data loss; no manual reconciliation needed.\n\nCause: a timeout configuration change reached production without passing through staging. Our pipeline gated code changes but not config-only changes.\n\nFix: the staging gate now applies to all changes, config included. Merged and verified at 11:30 today.\n\nPrevention: I'm adding an alert on 5xx rate above 1% by Friday, and we're auditing the remaining ungated paths next sprint.\n\nHappy to walk through it live if you'd like more detail.\n\nThanks,\nJihoon",
+ 2:"Dear Mr. Smith,\n\nWe sincerely apologise for the service disruption that affected checkout on 26 August.\n\nImpact: the checkout API returned HTTP 503 errors for 42 minutes, from 09:12 to 09:54 KST. All card payment attempts during this window failed. No customer data was lost, and no manual reconciliation is required on your side.\n\nRoot cause: a timeout configuration change was deployed to production without passing through our staging environment. Our release pipeline validated code changes but did not gate configuration-only changes.\n\nRemediation: the staging gate now applies to all changes, including configuration. This was deployed and verified at 11:30 KST on the same day.\n\nPrevention: we are adding automated alerting on elevated error rates by 28 August, and will complete an audit of remaining ungated deployment paths within the next two weeks.\n\nThe full root cause analysis is attached. We are available at your convenience to discuss it in detail.\n\nBest regards,\nJihoon Lee\nPayments Platform Team"
+},
+3:{ // 요청 거절
+ 0:"On the audit support request — I can't take it this sprint.\n\nIt lands the same week as the EKS cutover, which has a fixed date.\n\nI can do one of two things: pick it up in the sprint starting Sep 8, or hand it to Minji now if it can't wait. Which works better for you?",
+ 1:"Hi Sarah,\n\nThanks for thinking of me for the audit support.\n\nI can take either the audit or the EKS cutover this sprint, but not both — they fall in the same week and the cutover date is fixed with the customer.\n\nTwo options:\n1. I pick up the audit in the sprint starting Sep 8 — my recommendation.\n2. Minji takes the audit now; she'd need about two days of ramp-up on the settlement flow.\n\nIf the audit deadline is genuinely immovable, tell me and I'll re-plan the cutover with my lead rather than let the audit slip quietly.\n\nWhich would you prefer?\n\nThanks,\nJihoon",
+ 2:"Dear Mr. Smith,\n\nThank you for the request regarding audit support.\n\nUnfortunately, we are not able to accommodate this within the current sprint. The requested window coincides with the EKS migration cutover, which is fixed by prior commitment.\n\nWe would like to propose two alternatives. First, our team could take on the audit support in the sprint commencing 8 September. Second, a colleague could begin immediately, with approximately two days of onboarding on the settlement workflow.\n\nWe recommend the first option, as it allows continuity of the engineer already familiar with the systems in scope. Should the audit deadline be fixed, please let us know and we will review the cutover schedule with our engineering lead.\n\nBest regards,\nJihoon Lee\nPayments Platform Team"
+}};
+function bnRender(){
+  var c = picked('bnCase'), a = picked('bnAud');
+  document.getElementById('bnOut').textContent = BN[c][a];
+}
+chipGroup('bnCase', bnRender);
+chipGroup('bnAud', bnRender);
+bnRender();
+var bnCopy = document.getElementById('bnCopy');
+if(bnCopy) bnCopy.addEventListener('click', function(){
+  copy(document.getElementById('bnOut').textContent, bnCopy);
+});
+
+/* ---------- 07 Channel Router ---------- */
+var CR = [
+ {t:'단순 기술 질문', rows:[
+   ['go','팀 채널','누군가 이미 답을 아는 문제입니다. DM보다 채널이 빠르고 기록도 남습니다.'],
+   ['cau','DM','상대가 확실한 담당일 때만. 답이 채널에 남지 않는 손실이 있습니다.'],
+   ['stop','@here','알림 비용이 질문의 무게를 훨씬 넘습니다.']],
+  ex:'Anyone know if the 30s timeout applies to health checks too? No rush.'},
+ {t:'프로덕션 장애', rows:[
+   ['go','@here 또는 온콜 호출','알림 비용을 지불해야 하는 정확히 그 상황입니다. 증상 · 시각 · 영향 · 필요한 도움 4조각.'],
+   ['cau','인시던트 채널 개설','15분 넘어갈 규모면 전용 채널로 분리하고 15분 주기로 업데이트.'],
+   ['stop','이메일','비동기 채널입니다. 장애 대응 속도를 못 맞춥니다.']],
+  ex:'@here prod checkout API 503s since 09:12 KST. All card payments affected. I\'m on it — need DB on-call now.'},
+ {t:'동료 성과 피드백', rows:[
+   ['go','1:1 통화 또는 대면','톤이 90%인 대화입니다. 텍스트로는 반드시 더 차갑게 읽힙니다.'],
+   ['cau','DM','일정 조율 목적으로만. 피드백 본문을 DM에 쓰지 마십시오.'],
+   ['stop','공개 채널','공개 지적은 내용이 맞아도 관계를 태웁니다.']],
+  ex:'Do you have 15 minutes today or tomorrow? Want to talk through the review process — nothing urgent.'},
+ {t:'아키텍처 결정', rows:[
+   ['go','문서 + 채널 링크','논거가 5줄을 넘으면 문서입니다. ADR로 남기고 채널에 링크만.'],
+   ['cau','채널 스레드','옵션이 2개 이하이고 논쟁이 짧을 때만.'],
+   ['stop','DM','기록이 사라집니다. 3개월 뒤 같은 논쟁을 처음부터 다시 합니다.']],
+  ex:'ADR draft for the event pipeline — Kafka vs RabbitMQ vs Kinesis. Comments by Sep 3, please.'},
+ {t:'일정 지연 공유', rows:[
+   ['go','이메일 (영향 받는 사람 To)','기록으로 남아야 합니다. 나중에 "몰랐다"가 나오지 않게.'],
+   ['cau','채널 공지','사내 팀 범위라면 충분. 단 임원·고객이 있으면 이메일로.'],
+   ['stop','DM','영향 받는 사람이 여러 명이면 DM은 정보 격차를 만듭니다.']],
+  ex:'The Sep 5 cutover will slip one week, to Sep 12. Cause and two options below.'},
+ {t:'코드 리뷰 지적', rows:[
+   ['go','PR 코멘트 + 태그','코드 옆에 붙어야 맥락이 살아있습니다. nit: / question: / blocking: 태그 필수.'],
+   ['cau','스레드','논의가 5턴 넘어가면 통화로 옮기십시오.'],
+   ['stop','채널 본문','공개 저격으로 읽힙니다.']],
+  ex:'blocking: this drops the tenant filter — cross-tenant read is possible here.'},
+ {t:'고객사 공식 답변', rows:[
+   ['go','이메일','계약·기록 대상입니다. 반드시 이메일로.'],
+   ['cau','고객 공유 채널','일상 문의는 가능. 약속·일정·금액은 이메일로 백업.'],
+   ['stop','약어 사용','LGTM · nit · ping 은 고객이 못 알아듣습니다.']],
+  ex:'Dear Mr. Smith,\n\nThank you for your patience. Please find our response below...'},
+ {t:'30분째 오가는 논쟁', rows:[
+   ['go','10분 통화','텍스트로 풀리지 않는 것은 형식이 잘못된 것입니다.'],
+   ['cau','문서로 전환','비동기가 필수라면 각자 논거를 문서에 쓰고 다시 만납니다.'],
+   ['stop','계속 타이핑','메시지 5개를 넘으면 채널을 바꿀 신호입니다.']],
+  ex:'This is getting long — mind a 10-min call? I\'ll post the outcome back here.'}
+];
+var CRLB = {go:'USE THIS', cau:'MAYBE', stop:'AVOID'};
+function crRender(){
+  var d = CR[picked('crCase')];
+  var html = d.rows.map(function(r){
+    return '<div class="tl-row '+r[0]+'"><span class="st">'+CRLB[r[0]]+'</span>'+
+           '<span class="tp">'+r[1]+'</span><span class="rs">'+r[2]+'</span></div>';
+  }).join('');
+  html += '<div class="out" style="margin-top:6px"><span class="lbl">예문</span><div class="sent">'+
+          d.ex.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div></div>';
+  document.getElementById('crOut').innerHTML = html;
+}
+chipGroup('crCase', crRender);
+crRender();
+
+/* ---------- 08 BLUF Compressor ---------- */
+var BC = [
+ {b:"Last Monday we had a kickoff meeting with the platform team.\nOn Tuesday we reviewed the network topology. On Wednesday\nthere was a discussion about the peering request and we\ndecided to check with NetOps. On Thursday we sent the\nrequest. On Friday we did not receive a response. This week\nwe continued the service migration work and made good\nprogress. The team has been working very hard. Therefore\nthe cutover date might need to be adjusted.",
+  bn:'시간순 15줄. 임원은 마지막 줄까지 읽어야 상태를 알 수 있고, 그 줄마저 헤지로 흐립니다.',
+  a:"Status: At risk.\n\n12 of 18 services are on EKS; staging is fully cut over.\n\nThe VPC peering approval has been pending with NetOps\nsince Aug 19. If it isn't approved by Friday, the Sep 5\ncutover slips one week.\n\nAsk: Sarah — could you escalate with NetOps by Thursday?",
+  an:'판정 · 근거 · 리스크 · 요청. 첫 줄만 읽어도 상태를 알 수 있습니다.'},
+ {b:"This morning there was an issue with the checkout service.\nWe noticed some errors and started investigating. After some\ntime we found that a configuration change had been deployed.\nWe rolled it back and the service recovered. We are very sorry\nfor the inconvenience caused. We will try our best to prevent\nthis from happening again in the future.",
+  bn:'무엇이 얼마나 영향받았는지 숫자가 없고, 재발 방지가 "노력하겠다"로 끝납니다.',
+  a:"Impact: checkout API 503s for 42 min (09:12–09:54 KST).\nAll card payments failed — ~8,400 attempts. No data loss.\n\nCause: a config change reached prod without a staging check;\nthe pipeline had no gate for config-only changes.\n\nFix: staging gate now applies to config. Merged 11:30 today.\n\nPrevention: 5xx-rate alert above 1% — me, by Friday.",
+  an:'Impact · Cause · Fix · Prevention. 사람 이름 대신 시스템의 결함으로 기술했습니다.'},
+ {b:"We conducted an analysis of the available options for the\nevent pipeline. There are several possibilities. Kafka is one\noption that has some good features. RabbitMQ is also\nsomething we could consider. Kinesis might be a possibility\nas well. Each has advantages and disadvantages. It is our\nexpectation that a decision will be made at some point.",
+  bn:'검토는 했는데 결론이 없습니다. 읽는 사람이 결정을 대신 내려야 합니다.',
+  a:"Recommendation: Kafka, self-managed on EKS.\n\nWhy now: the current queue hits its throughput ceiling in\n~6 weeks at present growth.\n\nRejected: RabbitMQ (no replay, which settlement retry needs),\nKinesis (2.4x cost at our volume).\n\nCost & risk: +$1.8k/mo, and no one on the team runs Kafka\ntoday. Mitigation: start with 3 brokers, move to MSK if ops\nexceeds 4 hrs/week.\n\nAsk: Sarah — decision by Sep 3 to start next sprint.",
+  an:'추천을 단정형으로 먼저. 탈락 이유와 리스크가 신뢰를 만듭니다.'},
+ {b:"As you know, our team has been very busy recently. The\nworkload has increased significantly due to the fact that\nthere are a large number of new requirements. We are doing\nour best but it is becoming difficult. It would be helpful if\nwe could have some additional resources. Please consider\nthis request when possible.",
+  bn:'"바쁘다"는 정보가 아닙니다. 숫자도, 구체적 요청도, 기한도 없습니다.',
+  a:"Ask: one backend engineer for Q4, starting Oct 1.\n\nWhy: on-call load is 14 pages/week per engineer, up from 4\nin Q2. Two of six sprint commitments slipped last quarter.\n\nWithout it: we hold feature work and cover on-call only —\nthe settlement retry project moves to Q1.\n\nAlternative considered: contractor for 3 months — rejected,\nramp-up on settlement flow is ~6 weeks.\n\nDecision needed by Sep 15 for an Oct 1 start.",
+  an:'요청을 첫 줄에. 숫자로 근거를 대고, 승인하지 않을 경우의 결과까지 명시합니다.'}
+];
+function bcRender(){
+  var d = BC[picked('bcCase')];
+  var esc = function(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); };
+  document.getElementById('bcOut').innerHTML =
+    '<div class="ba" style="margin-top:16px">' +
+    '<div class="ba-box b"><div class="hd">Before · 늘어진 원문</div>' +
+      '<div class="tx">'+esc(d.b)+'</div><div class="nt">'+d.bn+'</div></div>' +
+    '<div class="ba-box a"><div class="hd">After · BLUF</div>' +
+      '<div class="tx">'+esc(d.a)+'</div><div class="nt">'+d.an+'</div></div>' +
+    '</div>';
+}
+chipGroup('bcCase', bcRender);
+bcRender();
+
+/* ---------- 09 Conviction Dial ---------- */
+var CD = [
+ {n:'기술 선택',
+  s:['One option is Kafka for the event pipeline — it would give us replay. Worth discussing.',
+     "On balance, I'd lean toward Kafka, mainly for the replay capability. I want the load test numbers before committing — I'll have them Thursday.",
+     'I recommend we use Kafka for the event pipeline. Replay is a hard requirement for settlement retry, and neither alternative provides it.'],
+  w:['<b>약함.</b> 브레인스토밍 단계나 남의 영역에 의견을 얹을 때만. 제안서 첫 문장으로 쓰면 결정이 나지 않습니다.',
+     '<b>중간.</b> 데이터가 아직 없을 때의 정답입니다. 왜 약한지(부하 테스트)와 언제 확정할지(목요일)를 함께 밝혔습니다.',
+     '<b>강함.</b> 제안서의 기본값입니다. 근거가 있으면 단정형으로 쓰십시오. 결정을 요청하려면 먼저 결정해야 합니다.']},
+ {n:'일정 연장',
+  s:['It might be worth considering pushing the date, maybe by a week or so.',
+     "I think we should move the cutover to Sep 12. I'd want to confirm the peering timeline with NetOps first — checking today.",
+     'I recommend we move the cutover to Sep 12. The peering approval will not land in time, and a partial cutover costs more than the one-week delay.'],
+  w:['<b>약함.</b> 일정 변경에서는 <b>거의 항상 잘못된 선택</b>입니다. 모호한 지연 신호는 상대가 대응할 수 없습니다.',
+     '<b>중간.</b> 확인이 하나 남았을 때 적절합니다. 언제 확정할지를 반드시 붙이십시오.',
+     '<b>강함.</b> 권장. 일정은 결정 사항이므로 단정형 + 근거 + 대안 비용까지 씁니다.']},
+ {n:'인력 충원',
+  s:['It would be helpful if we could get some additional resources at some point.',
+     "I'd like to request one backend engineer for Q4. Let me pull the on-call numbers before we discuss — by Friday.",
+     'Ask: one backend engineer for Q4, starting Oct 1. On-call load is 14 pages/week per engineer, up from 4 in Q2. Without it, the settlement retry project moves to Q1.'],
+  w:['<b>약함.</b> 예산 요청에서 이 톤은 통과되지 않습니다. 숫자도 기한도 없어 검토조차 시작되지 않습니다.',
+     '<b>중간.</b> 데이터를 모으는 중이라면 정직한 선택입니다. 언제 가져올지 밝힌 점이 핵심입니다.',
+     '<b>강함.</b> 권장. 숫자 · 시작일 · 승인하지 않을 경우의 결과까지. 예산 요청은 이 강도가 기본입니다.']}
+];
+var CDB = ['<span class="badge c">WEAK · 탐색</span>','<span class="badge n">MEDIUM · 조건부</span>','<span class="badge f">STRONG · 단정</span>'];
+var cdLv = 2;
+function cdRender(){
+  var d = CD[picked('cdCase')];
+  document.getElementById('cdBadge').innerHTML = CDB[cdLv] + ' <span style="font-family:var(--mono);font-size:10px;color:var(--ink-3)">· ' + d.n + '</span>';
+  document.getElementById('cdSent').textContent = d.s[cdLv];
+  document.getElementById('cdWhy').innerHTML = d.w[cdLv];
+}
+chipGroup('cdCase', cdRender);
+var cdDial = document.getElementById('cdDial');
+if(cdDial) cdDial.addEventListener('input', function(){ cdLv = parseInt(cdDial.value,10); cdRender(); });
+cdRender();
+
+/* ---------- quizzes ---------- */
+var finalTotal = document.querySelectorAll('[data-final]').length;
+var finalRight = 0, finalDone = 0;
+document.querySelectorAll('[data-q]').forEach(function(q){
+  var ex = q.querySelector('.qz-ex');
+  var ans = ex ? parseInt(ex.dataset.ex, 10) : -1;
+  var opts = q.querySelectorAll('.opt');
+  opts.forEach(function(o){
+    o.addEventListener('click', function(){
+      if(q.dataset.answered) return;
+      q.dataset.answered = '1';
+      var pick = parseInt(o.dataset.a, 10);
+      opts.forEach(function(x){
+        x.disabled = true;
+        if(parseInt(x.dataset.a,10) === ans) x.classList.add('right');
+      });
+      if(pick !== ans) o.classList.add('wrong');
+      if(ex) ex.classList.add('show');
+      if(q.hasAttribute('data-final')){
+        finalDone++;
+        if(pick === ans) finalRight++;
+        var el = document.getElementById('finalScore');
+        var msg = finalDone < finalTotal
+          ? '· ' + (finalTotal - finalDone) + '문항 남음'
+          : (finalRight >= 8 ? '· Module III로 진행하십시오'
+            : finalRight >= 6 ? '· 틀린 부분만 다시 훑고 넘어가십시오'
+            : '· Korean Trap 박스부터 다시 보십시오');
+        el.innerHTML = '종합 드릴 <b>' + finalRight + '</b> / ' + finalTotal + ' ' + msg;
+      }
+    });
+  });
+});
+
+/* ---------- checklist ---------- */
+document.querySelectorAll('#ckList .ck').forEach(function(c){
+  c.setAttribute('role','button');
+  c.setAttribute('tabindex','0');
+  var toggle = function(){ c.classList.toggle('done'); };
+  c.addEventListener('click', toggle);
+  c.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+  });
+});
+
+/* ---------- progress + active nav ---------- */
+var prog = document.getElementById('prog');
+var links = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+function onScroll(){
+  var h = document.documentElement;
+  var max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  var y = h.scrollTop + 130, idx = 0;
+  secs.forEach(function(s, i){ if(s && s.offsetTop <= y) idx = i; });
+  links.forEach(function(a, i){ a.classList.toggle('on', i === idx); });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll);
+onScroll();
+
+/* ---------- mobile menu ---------- */
+var side = document.getElementById('side');
+var menu = document.getElementById('menu');
+if(menu) menu.addEventListener('click', function(){ side.classList.toggle('open'); });
+document.querySelectorAll('#nav a').forEach(function(a){
+  a.addEventListener('click', function(){ side.classList.remove('open'); });
+});
+})();
+</script>
+</body>
+</html>
