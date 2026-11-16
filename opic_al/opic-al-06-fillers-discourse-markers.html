@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 6강 · 필러와 담화 표지어</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* hero strip */
+.strip{display:flex;flex-wrap:wrap;gap:3px;align-items:center;min-height:140px;background:var(--surface2);border-radius:12px;padding:12px}
+.strip span{font-family:var(--serif);font-size:14.5px;padding:2px 6px;border-radius:5px;line-height:1.5}
+.strip .w{background:var(--teal-soft);color:var(--text)}
+.strip .f{background:var(--violet);color:#14112a;font-family:var(--sans);font-size:12.5px;font-weight:600}
+.strip .z{background:repeating-linear-gradient(45deg,var(--line) 0 5px,transparent 5px 10px);color:var(--faint);font-family:var(--sans);font-size:12px;min-width:56px;text-align:center}
+.strip .m{background:var(--amber);color:#1b1500;font-weight:600}
+:root[data-theme="light"] .strip .f{color:#fff}
+.hstats{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+.hstats div{font-size:13px;color:var(--muted)}
+.hstats b{display:block;font-family:var(--serif);font-size:26px;line-height:1.1;color:var(--text);font-weight:600}
+
+/* compare */
+.cmpbox{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:20px 24px}
+.cmpbox .txt{font-family:var(--serif);font-size:18px;line-height:1.9}
+.cmpbox .f{background:var(--violet-soft);box-shadow:inset 0 -2px 0 var(--violet);border-radius:3px}
+.cmpbox .z{background:var(--rose-soft);color:var(--rose);font-family:var(--sans);font-size:13px;border-radius:3px;padding:0 3px}
+.cmpbox .m{background:var(--amber-soft);box-shadow:inset 0 -2px 0 var(--amber);border-radius:3px}
+.mrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:14px}
+.mrow div{background:var(--bg);border-radius:10px;padding:8px 12px;border-top:3px solid var(--lc,var(--line))}
+.mrow small{display:block;font-size:12.5px;color:var(--muted)}
+.mrow b{font-family:var(--serif);font-size:22px;font-weight:600}
+
+/* function map */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin:20px 0 12px}
+.fgrid button{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px;text-align:left;cursor:pointer;border-left:4px solid var(--cc)}
+.fgrid button b{display:block;font-size:16px}
+.fgrid button span{display:block;font-size:13px;color:var(--muted);margin-top:2px;font-family:var(--serif)}
+.fgrid button[aria-pressed="true"]{background:color-mix(in srgb,var(--cc) 13%,var(--surface));border-color:var(--cc)}
+.fdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 24px}
+.fdetail h4{margin:0 0 6px;font-size:21px}
+.mk{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;margin:12px 0}
+.mk div{background:var(--surface2);border-radius:12px;padding:12px 14px}
+.mk b{font-family:var(--serif);font-size:18px;display:block;margin-bottom:4px}
+.mk p{font-family:var(--serif);font-size:15.5px;margin:0 0 4px;color:var(--text)}
+.mk small{color:var(--muted);font-size:13px;display:block}
+
+/* three layers */
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+@media (max-width:760px){.layers{grid-template-columns:1fr}}
+.layers div{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--surface)}
+.layers .n{font-family:var(--serif);font-size:30px;color:var(--amber);line-height:1}
+.layers h4{margin:6px 0 6px;font-size:17px}
+.layers p{font-size:15px;margin:0 0 8px}
+.layers .ex{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:8px 12px}
+
+/* pause drill */
+.pd{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.ps{font-family:var(--serif);font-size:20px;line-height:2.4;display:flex;flex-wrap:wrap;align-items:center}
+.ps .gap{width:22px;height:30px;border:0;background:transparent;cursor:pointer;position:relative;padding:0}
+.ps .gap::after{content:"";position:absolute;left:10px;top:6px;width:2px;height:18px;background:var(--line);border-radius:1px}
+.ps .gap:hover::after{background:var(--faint)}
+.ps .gap[aria-pressed="true"]::after{left:4px;width:14px;height:14px;top:8px;border-radius:50%;background:var(--amber)}
+.ps .gap.good::after{background:var(--teal)!important}
+.ps .gap.bad::after{background:var(--rose)!important}
+.ps .gap.miss::after{left:4px;width:14px;height:14px;top:8px;border-radius:50%;background:transparent;border:2px dashed var(--teal)}
+.pfb{font-size:15.5px;margin-top:10px;min-height:1.5em}
+
+/* circumlocution */
+.circ{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:820px){.circ{grid-template-columns:1fr}}
+.ccard{background:linear-gradient(135deg,var(--amber-soft),var(--violet-soft));border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.ccard .ko{font-size:34px;font-weight:700;line-height:1.2}
+.ccard .hint{font-size:14px;color:var(--muted)}
+.ccard textarea{width:100%;min-height:90px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:16.5px/1.6 var(--serif);padding:10px 12px;resize:vertical}
+.ccard .reveal{display:none;background:var(--surface);border-radius:12px;padding:12px 14px}
+.ccard .reveal.on{display:block}
+.ccard .reveal p{font-family:var(--serif);font-size:16.5px;margin:0 0 6px}
+.ctpl{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px}
+.ctpl ul{list-style:none;padding:0;margin:8px 0 0}
+.ctpl li{font-family:var(--serif);font-size:16.5px;padding:8px 0;border-bottom:1px solid var(--line)}
+.ctpl li small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted)}
+
+/* overuse */
+.over{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:20px 0}
+.over div{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--surface);border-top:4px solid var(--rose)}
+.over h4{margin:0 0 6px;font-family:var(--serif);font-size:21px}
+.over p{font-size:14.5px;margin:0 0 8px}
+.over .quota{display:inline-block;font-size:12.5px;border:1px solid var(--amber);color:var(--amber);border-radius:999px;padding:1px 10px;margin-bottom:8px}
+.over .alt{font-family:var(--serif);font-size:15px;background:var(--surface2);border-radius:10px;padding:8px 12px}
+
+/* replace drill */
+.rd{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.rd .txt{font-family:var(--serif);font-size:19px;line-height:2.2}
+.rd select{font:16px var(--serif);padding:3px 6px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);color:var(--text);margin:0 2px}
+.rd select.ok{border-color:var(--teal);background:var(--teal-soft)}
+.rd select.ng{border-color:var(--rose);background:var(--rose-soft)}
+.rdfb{margin-top:12px;font-size:15px}
+.rdfb li{margin-bottom:5px}
+
+/* bank */
+.bank{display:grid;grid-template-columns:220px minmax(0,1fr);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:20px 0}
+@media (max-width:720px){.bank{grid-template-columns:1fr}}
+.bank ul{list-style:none;margin:0;padding:10px;background:var(--surface2)}
+.bank ul button{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:10px;padding:10px 12px;cursor:pointer;color:var(--muted);font-size:15px}
+.bank ul button[aria-selected="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bank .bb{padding:20px 24px}
+.bank .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media (max-width:560px){.bank .pair{grid-template-columns:1fr}}
+.bank .pair div{border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.bank .pair small{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.bank .pair p{font-family:var(--serif);font-size:17px;margin:0}
+.bank .all{font-size:14px;color:var(--muted)}
+.bank .all span{font-family:var(--serif);font-size:15px;color:var(--text)}
+
+/* tally */
+.tally{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:820px){.tally{grid-template-columns:1fr}}
+.tbox{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px}
+.tprompt{font-family:var(--serif);font-size:21px;line-height:1.5;margin:6px 0 12px}
+.tclock{font-family:var(--serif);font-size:44px;font-variant-numeric:tabular-nums;line-height:1}
+.counters{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
+.counters button{border:1px solid var(--line);background:var(--surface2);border-radius:14px;padding:12px;cursor:pointer;text-align:left;border-left:4px solid var(--cc)}
+.counters button b{display:block;font-family:var(--serif);font-size:30px;line-height:1.1}
+.counters button span{font-size:13px;color:var(--muted)}
+.hist{display:flex;align-items:flex-end;gap:6px;height:130px;border-bottom:1px solid var(--line);padding-top:10px}
+.hist div{flex:1;max-width:38px;border-radius:5px 5px 0 0;background:var(--violet);position:relative;min-height:3px}
+.hist div span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
+.hist div.good{background:var(--teal)}
+.hist-x{display:flex;gap:6px;font-size:11px;color:var(--faint);margin-top:4px}
+.hist-x span{flex:1;max-width:38px;text-align:center}
+.goalline{font-size:12.5px;color:var(--faint);margin-top:6px}
+
+/* integration */
+.integ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:16.5px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;2주차 6강&nbsp;&nbsp;필러와 담화 표지어</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">필러는 왜 생기는가</a></li>
+      <li><a href="#diff">필러와 표지어의 차이</a></li>
+      <li><a href="#map">담화 표지어 기능 지도</a></li>
+      <li><a href="#stall">시간을 버는 세 가지 기술</a></li>
+      <li><a href="#pause">쉼의 위치</a></li>
+      <li><a href="#circ">돌려 말하기</a></li>
+      <li><a href="#overuse">과용 경보</a></li>
+      <li><a href="#replace">표지어 고르기 훈련</a></li>
+      <li><a href="#bank">시작과 마무리 문장 은행</a></li>
+      <li><a href="#tally">필러 카운터 훈련</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">2주차 정리와 과제</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">2주차 AL급 문장 뼈대 만들기 · 6강</p>
+      <h1>생각할 시간은 그대로 두고, 그 시간에 할 말을 바꾸세요</h1>
+      <p class="lede">필러를 없애려고 애쓰면 침묵이 늘어납니다. 생각할 시간은 누구에게나 필요하기 때문입니다. 이번 강의의 목표는 그 시간을 um과 침묵 대신 의미 있는 표현으로 채우는 것입니다. Well, Actually, The thing is, What I mean is. 같은 몇 초가 망설임이 아니라 말하기 능력으로 들리게 만드는 도구들입니다.</p>
+      <div class="meta-row"><span>학습 시간 약 80분</span><span>선수 강의: 3강 진단</span><span>목표: 필러 분당 4회 미만, 긴 침묵 0</span></div>
+    </div>
+    <div class="wave-card" aria-label="필러형과 표지어형 비교">
+      <div class="wave-switch" role="group" aria-label="버전 선택">
+        <button type="button" data-v="f" aria-pressed="true">필러로 채운 15초</button>
+        <button type="button" data-v="m" aria-pressed="false">표지어로 채운 15초</button>
+      </div>
+      <div class="strip" id="strip"></div>
+      <div class="hstats">
+        <div><b id="hF">9</b>필러</div><div><b id="hZ">2</b>긴 침묵</div><div><b id="hM">0</b>담화 표지어</div><div><b id="hW">27</b>내용 단어</div>
+      </div>
+      <p class="wave-cap" id="hCap" style="min-height:2.6em"></p>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>3강 처방전에서 ‘필러와 침묵’이 상위에 올라왔다면 이 강의가 처방입니다. 4강이 문장 안을, 5강이 시간 축을 다뤘다면, 6강은 문장과 문장 사이의 ‘틈’을 다룹니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>필러가 생기는 이유를 이해하고, 필러를 없애는 것이 아니라 바꾸는 것이 목표임을 설명할 수 있다.</li>
+      <li>담화 표지어를 기능별(시간 벌기, 시작, 태도, 바꿔 말하기, 전환, 예시, 마무리, 청자 끌어들이기)로 구분해 쓸 수 있다.</li>
+      <li>질문 되받기, 시간 버는 표현, 구조 예고로 생각할 시간을 확보할 수 있다.</li>
+      <li>쉼을 구의 한가운데가 아니라 의미 단위의 경계에 둘 수 있다.</li>
+      <li>단어를 모를 때 멈추지 않고 돌려 말할 수 있다.</li>
+      <li>Actually, Like, You know 같은 표현의 과용을 알아차리고 줄일 수 있다.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>필러는 왜 생기는가</h2>
+    <p>말을 할 때 머릿속에서는 세 가지 일이 거의 동시에 일어납니다. 무엇을 말할지 정하고(내용 구상), 그것을 단어와 문법으로 조립하고(언어화), 소리로 내보냅니다(발화). 모국어에서는 조립이 거의 자동이라 세 단계가 매끄럽게 겹치지만, 외국어에서는 조립에 시간이 걸립니다. 입은 다음 말을 기다리는데 조립이 끝나지 않으면, 그 틈이 um, uh 또는 침묵으로 나옵니다.</p>
+    <p>중요한 사실은 <strong>원어민도 필러를 쓴다</strong>는 것입니다. 필러 자체는 자연스러운 말하기의 일부입니다. 문제가 되는 것은 세 가지입니다. 너무 <em>자주</em> 나올 때, 구의 <em>한가운데</em>에 나올 때(<span class="en">the, um, park</span>), 그리고 필러조차 없이 <em>긴 침묵</em>이 될 때입니다. 1강에서 본 것처럼 AL 기준표는 망설임을 허용하지만, 망설임이 담화를 끊어 버리면 ‘문단을 유지한다’는 인상이 무너집니다.</p>
+    <div class="callout">
+      <strong>3강 지표로 다시 보기</strong>
+      <p>필러 빈도의 목표는 분당 4회 미만, 긴 침묵(3초 이상)은 0회였습니다. 이 강의의 전략은 단순합니다. 생각하는 시간의 총량은 줄이지 않고, 그 시간을 담화 표지어로 덮어서 필러와 침묵의 숫자만 줄입니다. 그래서 ‘빨리 말하기’ 연습이 아니라 ‘틈을 채우는 표현’ 연습이 됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="diff">
+    <p class="sec-no">2</p>
+    <h2>필러와 표지어의 차이</h2>
+    <p>필러(um, uh)는 소리일 뿐 의미가 없습니다. 담화 표지어(Well, Actually, The thing is)는 생각할 시간을 벌어 주면서 동시에 <em>의미</em>를 전달합니다. 지금부터 의견을 말하겠다, 앞 말과 반대되는 이야기를 하겠다, 방금 한 말을 고쳐 말하겠다, 이제 정리하겠다. 듣는 사람은 이 신호 덕분에 이야기의 구조를 따라갈 수 있고, 그래서 표지어는 말을 끊는 것이 아니라 오히려 담화를 잇는 것으로 들립니다.</p>
+    <p>아래는 3강 분석기 예시 답변을 두 가지 방식으로 비교한 것입니다. 내용과 문장은 거의 그대로 두고 틈을 채우는 방식만 바꿨습니다.</p>
+    <div class="tabs" role="tablist" id="cmpTabs"></div>
+    <div class="cmpbox" id="cmpBox" role="tabpanel"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="map">
+    <p class="sec-no">3</p>
+    <h2>담화 표지어 기능 지도</h2>
+    <p>표지어는 기능별로 묶어 익혀야 필요한 순간에 꺼낼 수 있습니다. 여덟 가지 기능을 눌러 대표 표현, 예문, 쓰는 자리를 확인하세요. 처음부터 다 외울 필요는 없습니다. 각 기능에서 <strong>내 것으로 쓸 표현 하나씩</strong>만 골라 몸에 붙이는 것이 목표입니다.</p>
+    <div class="fgrid" id="fGrid" role="group" aria-label="기능 선택"></div>
+    <div class="fdetail" id="fDetail" aria-live="polite"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="stall">
+    <p class="sec-no">4</p>
+    <h2>시간을 버는 세 가지 기술</h2>
+    <p>OPIc에서 가장 긴 침묵은 대부분 질문을 들은 직후, 첫 문장을 찾는 순간에 나옵니다. 이 순간을 위한 기술이 세 겹 있습니다. 각각 2~5초 정도를 벌어 주며, 셋을 이어 쓰면 10초 가까이 자연스럽게 생각할 수 있습니다.</p>
+    <div class="layers">
+      <div><div class="n">1</div><h4>질문 되받기</h4><p>질문의 핵심 단어를 되뇌며 반응합니다. 질문을 이해했다는 신호이자, 가장 쉬운 시간 벌기입니다.</p><div class="ex">My favorite park? Hmm, that’s a good question.</div></div>
+      <div><div class="n">2</div><h4>시간 버는 표현</h4><p>떠올리는 중이라는 것을 말로 보여 줍니다. 침묵 대신 이 표현을 말하는 동안 첫 문장을 고릅니다.</p><div class="ex">Let me think… Okay, I’d have to say the one near my office.</div></div>
+      <div><div class="n">3</div><h4>구조 예고</h4><p>앞으로 말할 구조를 먼저 약속합니다. 내용을 다 정하지 않아도 틀이 생기고, 평가자에게는 조직된 답변으로 들립니다.</p><div class="ex">There are a couple of reasons I like it. First of all…</div></div>
+    </div>
+    <div class="callout teal">
+      <strong>4강 분열문도 시간 벌기 도구입니다</strong>
+      <p><span class="en">What I like most about it is…</span>, <span class="en">The reason I go there is that…</span>는 말하는 동안 다음 내용을 고를 시간을 줍니다. 경험 문항이라면 <span class="en">Oh, there’s one time I’ll never forget.</span>로 시작하면 이야기를 고를 2~3초를 벌면서 동시에 경험 서사가 시작된다는 신호를 줍니다.</p>
+    </div>
+    <div class="callout rose">
+      <strong>시간 벌기의 한계</strong>
+      <p>같은 표현을 매 답변 첫머리에 반복하면 외운 패턴으로 들립니다. 한 답변에 시간 버는 표현은 한두 번, 15문항 전체에서 같은 문장은 두세 번까지가 적당합니다. 9절 문장 은행에서 유형별로 여러 개를 준비해 돌려 쓰세요.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="pause">
+    <p class="sec-no">5</p>
+    <h2>쉼의 위치</h2>
+    <p>같은 길이의 쉼도 어디에 오느냐에 따라 다르게 들립니다. 의미 단위의 경계(쉼표가 올 자리, 절과 절 사이, 표지어 뒤)에서 쉬면 생각을 정리하는 자연스러운 호흡으로 들립니다. 구의 한가운데(관사와 명사 사이, 동사와 목적어 사이)에서 쉬면 단어를 못 찾는 막힘으로 들립니다. 아래 문장에서 쉬어도 자연스러운 자리를 모두 눌러 표시한 뒤 ‘확인’을 누르세요.</p>
+    <div class="pd">
+      <div class="drill-head" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px"><strong id="pdNo"></strong><span class="small muted">세로줄을 누르면 쉼 표시가 생깁니다</span></div>
+      <div class="ps" id="ps"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn primary" id="pdCheck">확인</button><button type="button" class="btn" id="pdNext">다음 문장</button><button type="button" class="reset" id="pdReset">다시 표시</button></div>
+      <div class="pfb" id="pfb"></div>
+    </div>
+    <p>훈련 팁: 3강 녹음을 다시 들으며 필러와 침묵이 나온 위치에 표시해 보세요. 경계에서 나온 것은 표지어로 바꾸면 되고, 구의 한가운데에서 나온 것은 단어를 찾는 문제이므로 다음 절의 돌려 말하기가 처방입니다.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="circ">
+    <p class="sec-no">6</p>
+    <h2>돌려 말하기</h2>
+    <p>긴 침묵의 가장 큰 원인은 단어를 모르는 순간입니다. 1강에서 AL 화자의 특징으로 <span class="term" data-tip="정확한 단어를 모를 때 설명이나 다른 표현으로 의미를 전달하는 기술. ACTFL 기준표가 AL 화자의 특징으로 직접 언급한다.">돌려 말하기</span>를 들었습니다. 단어 하나를 몰라도 멈추지 않고 그 대상을 설명해 버리는 능력이며, 평가자에게는 오히려 ‘의사소통을 끝까지 해내는 사람’으로 들립니다. 오른쪽 틀을 써서 왼쪽 카드의 대상을 영어로 설명해 보세요. 먼저 소리 내어 말하고, 그다음 입력해서 모범 설명과 비교합니다.</p>
+    <div class="circ">
+      <div class="ccard" id="ccard"></div>
+      <div class="ctpl"><strong>돌려 말하기 틀</strong>
+        <ul>
+          <li>It’s kind of a … / It’s like a … but …<small>비슷한 것에 빗대기</small></li>
+          <li>It’s the thing you use to …<small>용도로 설명하기</small></li>
+          <li>It’s where you … / It’s when you …<small>장소나 상황으로 설명하기</small></li>
+          <li>You know, the … that …<small>특징으로 좁혀 가기</small></li>
+          <li>I don’t remember the exact word, but it’s …<small>모른다고 인정하고 바로 설명으로</small></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="overuse">
+    <p class="sec-no">7</p>
+    <h2>과용 경보</h2>
+    <p>표지어도 지나치면 필러가 됩니다. 의미 없이 반복되는 순간 듣는 사람에게는 um과 다를 바 없어집니다. 한국어 화자에게서 특히 자주 들리는 다섯 가지와 적정량입니다.</p>
+    <div class="over">
+      <div><h4>Actually</h4><span class="quota">답변당 1~2회</span><p>뜻은 ‘예상과 달리, 사실은’입니다. 앞 내용이나 상대의 예상과 대비될 때 씁니다. 한국어 ‘사실’을 습관적으로 옮겨 모든 답변을 Actually로 시작하면 의미가 흐려집니다.</p><div class="alt">I thought it’d be boring, but <b>actually</b> it was amazing. ✓<br>Actually, I like parks. △ → Oh, I really like parks.</div></div>
+      <div><h4>Like</h4><span class="quota">필러로는 최소화</span><p>예시(<span class="en">things like hiking</span>)나 인용(<span class="en">he was like, “No way”</span>)은 자연스럽지만, 문장마다 끼우는 필러형 like는 어리게 들립니다.</p><div class="alt">It was, like, really, like, crowded. → It was <b>really</b> crowded.</div></div>
+      <div><h4>You know</h4><span class="quota">답변당 1회</span><p>상대가 공감할 만한 내용을 꺼낼 때 쓰면 효과적이지만, 매 문장 끝에 붙으면 말버릇이 됩니다.</p><div class="alt">It’s that feeling, <b>you know</b>, when you finally get home. ✓</div></div>
+      <div><h4>So (문장 시작)</h4><span class="quota">연속 2회까지</span><p>결과나 전환을 알리는 좋은 표지어지만, 모든 문장을 So로 시작하면 리듬이 단조로워집니다. 4강의 연결어 세트와 섞으세요.</p><div class="alt">So… So… So… → So … Then … That’s why …</div></div>
+      <div><h4>How can I say</h4><span class="quota">시험 전체 1~2회</span><p>한국어 ‘뭐라고 해야 되지’의 직역입니다. 한두 번은 괜찮지만 반복되면 단어를 못 찾는다는 신호를 계속 보내는 셈입니다.</p><div class="alt">How can I say… → How should I put it… / Let me put it this way…</div></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="replace">
+    <p class="sec-no">8</p>
+    <h2>표지어 고르기 훈련</h2>
+    <p>각 빈칸에 문맥에 가장 잘 맞는 표지어를 고르고 ‘채점’을 누르세요. 모든 표지어가 아무 데나 들어갈 수 있는 것이 아니라는 점, 즉 표지어에는 의미가 있다는 것을 확인하는 훈련입니다.</p>
+    <div class="rd">
+      <div class="txt" id="rdText"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn primary" id="rdCheck">채점</button><button type="button" class="btn" id="rdNext">다른 지문</button></div>
+      <ul class="rdfb" id="rdFb"></ul>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="bank">
+    <p class="sec-no">9</p>
+    <h2>시작과 마무리 문장 은행</h2>
+    <p>답변의 첫 문장과 마지막 문장은 평가자에게 ‘조직된 담화’라는 인상을 주는 가장 쉬운 자리입니다. 문항 유형별로 시작과 마무리 표현을 정리했습니다. ‘섞기’를 누르면 다른 조합이 나옵니다. 유형마다 두세 개를 골라 내 것으로 만드세요. 그리고 다음 세 가지 마무리는 피하세요: <span class="en">That’s all.</span>, <span class="en">Thank you.</span>, <span class="en">The end.</span> 모두 담화를 스스로 끊는 신호로 들립니다.</p>
+    <div class="bank">
+      <ul id="bankList" role="tablist"></ul>
+      <div class="bb" id="bankBody" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="tally">
+    <p class="sec-no">10</p>
+    <h2>필러 카운터 훈련</h2>
+    <p>말하면서 자기 필러를 세기는 어렵습니다. 그래서 이렇게 합니다. 주제 카드를 보고 휴대폰으로 녹음하면서 60초 동안 말합니다. 그다음 녹음을 들으며 들릴 때마다 해당 카운터를 누릅니다. ‘기록 저장’을 누르면 분당 필러 수가 그래프에 쌓입니다. 하루 두세 번, 일주일이면 막대가 내려가는 것이 보입니다.</p>
+    <div class="tally">
+      <div class="tbox">
+        <div class="small muted">주제 카드</div>
+        <div class="tprompt" id="tPrompt"></div>
+        <div class="ctrl" style="margin-bottom:12px"><button type="button" class="btn" id="tShuffle">다른 주제</button></div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><div class="tclock" id="tClock">1:00</div><button type="button" class="btn primary" id="tStart">60초 시작</button><button type="button" class="btn" id="tStop">초기화</button></div>
+        <p class="small muted" id="tHint" style="margin:10px 0 0">시작 전에 녹음을 켜세요. 처음 3초 안에 질문 되받기나 시간 버는 표현으로 시작합니다.</p>
+      </div>
+      <div class="tbox">
+        <div class="small muted">녹음을 들으며 누르기</div>
+        <div class="counters" id="counters"></div>
+        <div class="ctrl"><button type="button" class="btn primary" id="tSave">기록 저장</button><button type="button" class="reset" id="tClear">카운터 0으로</button><button type="button" class="reset" id="tHistClear">기록 전체 삭제</button></div>
+        <div style="margin-top:16px"><div class="small muted">분당 필러 + 침묵 기록 (최근 12회)</div><div class="hist" id="hist"></div><div class="hist-x" id="histX"></div><div class="goalline">초록 막대는 목표(분당 4회 미만, 긴 침묵 0)를 달성한 기록입니다.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">11</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">12</p>
+    <h2>2주차 정리와 과제</h2>
+    <p>2주차는 AL급 문장의 뼈대를 만드는 주였습니다. 4강에서 문장 안을 묶고, 5강에서 시간 축을 지키고, 6강에서 문장 사이의 틈을 채웠습니다. 세 가지가 한 답변 안에서 동시에 작동해야 3주차부터 시작하는 유형별 훈련이 의미를 갖습니다.</p>
+    <div class="assign">
+      <h3 style="margin-top:0">6강 과제와 2주차 통합 점검</h3>
+      <ol>
+        <li>3절 기능 지도에서 기능마다 내 표현 하나씩, 총 여덟 개를 골라 메모해 둡니다.</li>
+        <li>5절 쉼 훈련, 6절 돌려 말하기 카드, 8절 고르기 훈련을 모두 마칩니다.</li>
+        <li>9절 은행에서 유형별 시작·마무리 문장을 두세 개씩 고릅니다.</li>
+        <li>10절 필러 카운터를 하루 두 번, 최소 6회 기록합니다.</li>
+        <li><strong>2주차 통합 녹음</strong>: 2강 코어 스토리 4번(계획이 틀어진 날)을 90초로 말하고 녹음해 받아 적습니다. 아래 통합 점검기에 붙여 넣어 4~6강 목표를 한 번에 확인합니다.</li>
+      </ol>
+      <h3>2주차 통합 점검기</h3>
+      <p class="small muted">전사 규칙은 3강과 같습니다. 필러는 쉼표로 띄어 적고, 3초 이상 침묵은 (...)로 표시합니다. 답변 시간은 초 단위로 입력하세요. 연습용이므로 3강 기준선에는 영향을 주지 않습니다.</p>
+      <div class="integ">
+        <div class="ctrl" style="margin-bottom:8px"><label for="iDur" class="small">답변 시간(초)</label><input type="number" id="iDur" value="90" min="10" max="300" style="width:90px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit"></div>
+        <textarea id="iText" placeholder="받아 적은 답변을 붙여 넣으세요."></textarea>
+        <div class="ctrl" style="margin-top:10px"><button type="button" class="btn primary" id="iRun">점검</button></div>
+        <div id="iOut" style="margin-top:12px"></div>
+      </div>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>7강. 장소·사물 묘사: 공간 순서와 감각 표현으로 1분 이상 채우기</h4></div>
+      <span class="pill">3주차 시작</span>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">13</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 나온 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: 필러, 돌려 말하기, 되받기">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 6강. 예문과 훈련 문항은 학습용으로 새로 작성했습니다. 표지어의 적정 사용량은 이 과정의 권장 기준이며, 점검기는 단어 패턴 기반 추정치입니다. 입력한 내용은 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  /* theme */
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+  /* progress */
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  /* tooltips */
+  const pop=$('tipPop');
+  function showTip(el){pop.textContent=el.dataset.tip;pop.classList.add('on');const r=el.getBoundingClientRect();const w=Math.min(300,window.innerWidth-24);pop.style.maxWidth=w+'px';let left=r.left+window.scrollX;left=Math.min(left,window.scrollX+window.innerWidth-w-12);pop.style.left=Math.max(12,left)+'px';pop.style.top=(r.bottom+window.scrollY+8)+'px'}
+  function hideTip(){pop.classList.remove('on')}
+  document.querySelectorAll('.term').forEach(el=>{el.tabIndex=0;el.addEventListener('mouseenter',()=>showTip(el));el.addEventListener('mouseleave',hideTip);el.addEventListener('focus',()=>showTip(el));el.addEventListener('blur',hideTip);el.addEventListener('click',e=>{e.stopPropagation();pop.classList.contains('on')?hideTip():showTip(el)})});
+  document.addEventListener('click',hideTip);
+
+  /* ---------- hero strip ---------- */
+  // tokens: [text,type] type w=word f=filler z=silence m=marker
+  const HS={
+    f:{t:[['Um,','f'],['so,','w'],['uh,','f'],['the park near my house is,','w'],['um…','f'],['(3초)','z'],['it’s,','w'],['uh,','f'],['very big and,','w'],['um,','f'],['there is a,','w'],['uh,','f'],['river.','w'],['(4초)','z'],['Um,','f'],['I go there,','w'],['uh,','f'],['every weekend.','w'],['um','f']],cap:'생각할 시간이 필러 9번과 긴 침묵 두 번으로 드러납니다. the와 river 사이처럼 구의 한가운데서 끊긴 곳도 있습니다.'},
+    m:{t:[['Well,','m'],['the first place that comes to mind is the park near my house.','w'],['Honestly,','m'],['it’s huge, and','w'],['what I like most','m'],['is the river that runs right through it.','w'],['Let me think…','m'],['I’d say I go there pretty much every weekend.','w']],cap:'생각할 시간의 양은 비슷합니다. 다만 그 시간이 Well, Honestly, Let me think 같은 표현과 분열문으로 채워져 유창한 담화로 들립니다.'}
+  };
+  function hero(v){const h=HS[v];$('strip').innerHTML=h.t.map(([x,t])=>`<span class="${t}">${esc(x)}</span>`).join('');const f=h.t.filter(x=>x[1]==='f').length,z=h.t.filter(x=>x[1]==='z').length,m=h.t.filter(x=>x[1]==='m').length;const w=h.t.filter(x=>x[1]==='w').map(x=>x[0]).join(' ').split(/\s+/).filter(x=>/[a-z]/i.test(x)).length;$('hF').textContent=f;$('hZ').textContent=z;$('hM').textContent=m;$('hW').textContent=w;$('hCap').textContent=h.cap;document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}
+  document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.addEventListener('click',()=>hero(b.dataset.v)));hero('f');
+
+  /* ---------- compare ---------- */
+  const CMP=[
+    {k:'필러형 (3강 예시)',c:'var(--rose)',html:'<span class="f">Um</span>, okay, I want to talk about, <span class="f">uh</span>, the park near my house. So last summer I went there with my friend. <span class="z">(...)</span> We usually go there on weekends because, <span class="f">um</span>, it’s really close. That day we rode bikes along the river and, <span class="f">uh</span>, it was so nice. But suddenly it started raining a lot, so we went to the convenience store and, <span class="f">um</span>, waited there. <span class="z">(...)</span> Actually it was fun because we talked a lot. <span class="f">Um</span>, after the rain stopped we went back home. Anyway, it was a really memorable day, I think.',m:[['필러','6','var(--rose)'],['긴 침묵','2','var(--rose)'],['표지어','2','var(--amber)']],note:'시제는 5강 기준으로 고쳐 둔 상태입니다. 그런데도 필러와 침묵 때문에 이야기가 자주 끊깁니다. Actually는 대비할 내용이 없는 자리에 쓰였습니다.'},
+    {k:'표지어형 (6강 버전)',c:'var(--teal)',html:'<span class="m">Oh, there’s one day I’ll never forget.</span> Last summer I went to the park near my house with a friend. <span class="m">To be honest,</span> we go there pretty much every weekend because it’s so close, <span class="m">but</span> that day was different. We were riding bikes along the river when it suddenly started pouring, so we rushed into a convenience store and waited there. <span class="m">Funny thing is,</span> it turned out to be the best part of the day, <span class="m">because</span> we just stood there talking for an hour. <span class="m">I mean,</span> we hadn’t really talked like that in a long time. <span class="m">So yeah,</span> it wasn’t what we planned, <span class="m">but</span> it’s still one of my favorite memories.',m:[['필러','0','var(--teal)'],['긴 침묵','0','var(--teal)'],['표지어','6','var(--teal)']],note:'첫 문장이 시간을 벌면서 경험 서사의 시작을 알립니다. To be honest, Funny thing is, I mean, So yeah가 각각 태도, 반전, 바꿔 말하기, 마무리의 신호를 줍니다. 필러가 사라졌는데 말이 빨라진 것이 아니라 틈이 의미로 채워졌습니다.'}
+  ];
+  const ct=$('cmpTabs'),cb=$('cmpBox');
+  CMP.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.style.setProperty('--tc',c.c);b.textContent=c.k;b.addEventListener('click',()=>cmp(i));ct.appendChild(b)});
+  function cmp(i){const c=CMP[i];ct.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',j===i));cb.innerHTML=`<div class="mrow">${c.m.map(m=>`<div style="--lc:${m[2]}"><small>${m[0]}</small><b>${m[1]}</b></div>`).join('')}</div><p class="txt">${c.html}</p><p class="small muted" style="margin:10px 0 0">${c.note}</p>`}
+  cmp(0);
+
+  /* ---------- function map ---------- */
+  const FN=[
+    {k:'시간 벌기',s:'Well, Let me think',c:'var(--violet)',d:'떠올리는 중이라는 것을 말로 보여 줍니다. 침묵과 um의 직접적인 대체재입니다.',m:[['Well,','Well, I’d say it depends on the season.','질문 직후, 답을 고르는 순간'],['Let me think…','Let me think… Okay, I’ve got one.','경험 문항에서 이야기를 고를 때'],['Let’s see,','Let’s see, the first thing I usually do is…','루틴을 순서대로 떠올릴 때'],['That’s a good question.','That’s a good question. I’ve never really thought about it.','고난도 의견 문항']]},
+    {k:'시작·방향',s:'I’d have to say…',c:'var(--sky)',d:'답변의 방향을 먼저 제시합니다. 평가자에게 조직된 답변이 시작된다는 신호를 줍니다.',m:[['I’d have to say…','I’d have to say my favorite is the café near my office.','선호·최고를 묻는 질문'],['The first thing that comes to mind is…','The first thing that comes to mind is my trip to Busan.','고를 것이 많을 때'],['Off the top of my head,','Off the top of my head, I can think of two reasons.','즉흥으로 떠올린다는 뉘앙스'],['Oh, there’s one time I’ll never forget.','Oh, there’s one time I’ll never forget.','경험 문항의 시작']]},
+    {k:'태도·솔직함',s:'Honestly, Actually',c:'var(--amber)',d:'말하는 사람의 태도를 드러냅니다. 감정과 평가가 실리면 답변이 살아납니다.',m:[['Honestly, / To be honest,','To be honest, I wasn’t expecting much.','솔직한 평가'],['Actually,','I thought it’d be crowded, but actually it was pretty quiet.','예상과 반대되는 사실'],['Personally,','Personally, I prefer smaller venues.','개인 의견을 구분할 때'],['Believe it or not,','Believe it or not, it was my first time on a plane.','놀라운 사실']]},
+    {k:'바꿔 말하기',s:'I mean, What I mean is',c:'var(--rose)',d:'방금 한 말을 고치거나 더 분명하게 다시 말합니다. 3강의 자기 수정을 자연스러운 담화로 바꿔 줍니다.',m:[['I mean,','It was cheap. I mean, not super cheap, but reasonable.','정정·보충'],['What I mean is,','What I mean is, it’s not the place itself, it’s the people.','핵심을 다시 정리'],['Let me put it this way.','Let me put it this way: I’ve been there fifty times.','설명 방식을 바꿀 때'],['Or rather,','It was fun, or rather, it was unforgettable.','더 정확한 단어로 교체']]},
+    {k:'전환·복귀',s:'Anyway, Speaking of…',c:'var(--teal)',d:'곁가지에서 본론으로 돌아오거나 다음 이야기로 넘어갑니다.',m:[['Anyway,','Anyway, back to the trip.','곁가지 후 본론 복귀'],['Speaking of which,','Speaking of which, that reminds me of another time…','연상되는 이야기로 이동'],['Going back to …,','Going back to your question, I’d say yes.','질문으로 복귀'],['So,','So, after that, we headed to the beach.','다음 단계로 진행']]},
+    {k:'예시·구체화',s:'For example, Let’s say',c:'var(--lime)',d:'추상적인 말을 구체적인 예로 내려 줍니다. 15번 의견 문항에서 특히 중요합니다.',m:[['For example, / For instance,','For example, my parents still pay for everything in cash.','근거 제시'],['Let’s say …','Let’s say you want to book a table on a Friday night.','가정 상황으로 설명'],['things like …','I do things like hiking and camping.','범주를 예로 채우기'],['Take … for example.','Take my neighborhood, for example.','특정 사례 제시']]},
+    {k:'마무리',s:'So yeah, All in all',c:'var(--orchid)',d:'답변을 스스로 정리하며 닫습니다. That’s all 대신 쓰는 표현들입니다.',m:[['So yeah,','So yeah, that’s pretty much how it went.','구어적 마무리'],['All in all,','All in all, it was totally worth it.','전체 평가'],['Overall,','Overall, I think the change has been positive.','의견 문항 정리'],['That’s why …','That’s why it’s still my favorite place.','이유로 닫기']]},
+    {k:'청자 끌어들이기',s:'You know, Guess what',c:'var(--sky)',d:'듣는 사람을 이야기 속으로 끌어들입니다. 적게 쓸수록 효과가 큽니다.',m:[['You know …','You know that feeling when you finally get home?','공감할 만한 장면'],['Guess what?','And guess what? The show got canceled.','반전 직전'],['Can you imagine?','We waited three hours. Can you imagine?','감정 강조'],['The funny thing is,','The funny thing is, I didn’t even like concerts back then.','반전·아이러니']]}
+  ];
+  const fg=$('fGrid'),fd=$('fDetail');
+  FN.forEach((f,i)=>{const b=document.createElement('button');b.type='button';b.style.setProperty('--cc',f.c);b.innerHTML=`<b>${f.k}</b><span>${esc(f.s)}</span>`;b.addEventListener('click',()=>fn(i));fg.appendChild(b)});
+  function fn(i){const f=FN[i];fg.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',j===i));fd.innerHTML=`<h4 style="color:${f.c}">${f.k}</h4><p style="margin:0">${f.d}</p><div class="mk">${f.m.map(m=>`<div><b>${esc(m[0])}</b><p>${esc(m[1])}</p><small>${m[2]}</small></div>`).join('')}</div>`}
+  fn(0);
+
+  /* ---------- pause drill ---------- */
+  const PSD=[
+    {w:['Well,','to','be','honest,','I','didn’t','expect','much,','but','the','place','turned','out','to','be','amazing,','especially','the','view','from','the','rooftop.'],good:[0,3,7,15],ok:[8,16]},
+    {w:['So','the','first','thing','I','usually','do','is','grab','a','coffee,','and','then','I','just','walk','around','the','lake','for','about','an','hour.'],good:[7,10,12],ok:[0,11,18]},
+    {w:['Honestly,','I','think','the','biggest','problem','is','that','people','don’t','really','trust','what','they','read','online','anymore.'],good:[0,2,6],ok:[7,15]}
+  ];
+  let pd={i:0,sel:{}};
+  function pdRender(check){const s=PSD[pd.i];const sel=pd.sel[pd.i]||[];$('pdNo').textContent=`문장 ${pd.i+1} / ${PSD.length}`;let h='';s.w.forEach((w,j)=>{h+=`<span>${esc(w)}</span>`;if(j<s.w.length-1){let cls='gap';const on=sel.includes(j);if(check){if(on&&(s.good.includes(j)||s.ok.includes(j)))cls+=' good';else if(on)cls+=' bad';else if(s.good.includes(j))cls+=' miss'}h+=`<button type="button" class="${cls}" data-j="${j}" aria-pressed="${on}" aria-label="${esc(w)} 뒤 쉼"></button>`}});$('ps').innerHTML=h;
+    $('ps').querySelectorAll('.gap').forEach(b=>b.addEventListener('click',()=>{const j=+b.dataset.j;const a=pd.sel[pd.i]||[];const k=a.indexOf(j);k>=0?a.splice(k,1):a.push(j);pd.sel[pd.i]=a;pdRender(false);$('pfb').textContent=''}))}
+  $('pdCheck').addEventListener('click',()=>{const s=PSD[pd.i];const sel=pd.sel[pd.i]||[];const good=sel.filter(j=>s.good.includes(j)||s.ok.includes(j)).length,bad=sel.filter(j=>!s.good.includes(j)&&!s.ok.includes(j)).length,miss=s.good.filter(j=>!sel.includes(j)).length;pdRender(true);$('pfb').innerHTML=`자연스러운 쉼 <b style="color:var(--teal)">${good}</b>, 구 한가운데의 쉼 <b style="color:var(--rose)">${bad}</b>, 놓친 핵심 경계(점선 원) <b>${miss}</b>. 쉼표 자리와 표지어 뒤가 핵심 경계입니다. 관사(the, a)와 명사 사이, to와 be 사이처럼 한 덩어리 안에서 쉬면 단어를 찾는 막힘으로 들립니다.`});
+  $('pdNext').addEventListener('click',()=>{pd.i=(pd.i+1)%PSD.length;pdRender(false);$('pfb').textContent=''});
+  $('pdReset').addEventListener('click',()=>{pd.sel[pd.i]=[];pdRender(false);$('pfb').textContent=''});
+  pdRender(false);
+
+  /* ---------- circumlocution ---------- */
+  const CIR=[
+    ['영수증','계산하고 받는 것','It’s the little piece of paper you get after you pay for something, you know, the one that shows what you bought and how much it was.','receipt'],
+    ['분리수거함','아파트 단지의 그것','They’re those big bins where you separate your trash, like one for plastic, one for paper, and one for cans.','recycling bins'],
+    ['소화기','불 났을 때','It’s the red thing you spray when there’s a small fire. Most buildings have one in the hallway.','fire extinguisher'],
+    ['환승','버스에서 지하철로','It’s when you get off one bus or subway and switch to another one without paying again.','transfer'],
+    ['대기 번호표','은행이나 관공서에서','It’s the little ticket with a number on it that you take when you have to wait your turn, like at the bank.','queue ticket / number ticket'],
+    ['깜빡이','차가 방향을 바꿀 때','It’s the light on a car that blinks when you’re about to turn or change lanes.','turn signal / blinker'],
+    ['콘센트','휴대폰 충전할 때','It’s the thing on the wall that you plug your charger into.','outlet / socket'],
+    ['우산꽂이','건물 입구에서','It’s kind of a stand by the entrance where you put your wet umbrella so you don’t drip water everywhere.','umbrella stand'],
+    ['과태료 고지서','주차 위반하면','It’s like a letter you get when you break a small rule, like parking in the wrong spot, and it tells you how much you have to pay.','fine notice / ticket'],
+    ['반찬','한식 상차림','They’re the small side dishes that come with a Korean meal, things like kimchi and seasoned vegetables, and you can usually get refills for free.','side dishes (banchan)']
+  ];
+  let ci=LS.get('opic-l6-circ',0)%CIR.length;
+  function circ(){const c=CIR[ci];$('ccard').innerHTML=`<div class="small muted">카드 ${ci+1} / ${CIR.length} · 이 단어를 모른다고 가정하고 설명하세요</div><div class="ko">${c[0]}</div><div class="hint">힌트: ${c[1]}</div><textarea id="cT" placeholder="먼저 소리 내어 20초 동안 설명한 뒤 입력하세요."></textarea><div class="ctrl"><button type="button" class="btn" id="cR">모범 설명 보기</button><button type="button" class="btn primary" id="cN">다음 카드</button></div><div class="reveal" id="cRev"><p>${esc(c[2])}</p><div class="small muted">실제 단어: <span class="en">${esc(c[3])}</span></div></div>`;$('cR').addEventListener('click',()=>$('cRev').classList.toggle('on'));$('cN').addEventListener('click',()=>{ci=(ci+1)%CIR.length;LS.set('opic-l6-circ',ci);circ()})}
+  circ();
+
+  /* ---------- replace drill ---------- */
+  const RD=[
+    {t:['{0} I’d say my favorite place is the little café near my office. {1} it’s not fancy at all. {2} it’s actually kind of old and run-down. But {3} I end up going there almost every day. {4} it’s the owner. She remembers everyone’s order. {5} that’s why it feels like home.'],s:[
+      {o:['Well,','Anyway,','For example,'],a:0,e:'답변 첫머리에서 시간을 벌며 방향을 제시합니다. Anyway는 본론 복귀용, For example은 예시용이라 첫 문장에 맞지 않습니다.'},
+      {o:['To be honest,','Speaking of which,','All in all,'],a:0,e:'솔직한 평가를 꺼내는 태도 표지어. All in all은 마무리용입니다.'},
+      {o:['I mean,','Guess what?','Overall,'],a:0,e:'앞 문장(not fancy)을 더 구체적으로 다시 말하는 보충입니다.'},
+      {o:['for some reason,','for instance,','let me think,'],a:0,e:'오래되고 낡았는데도 계속 가게 된다는 의외성. 문장 한가운데 let me think는 어색합니다.'},
+      {o:['The thing is,','In the end,','By the way,'],a:0,e:'진짜 이유를 꺼내는 신호. By the way는 관련 없는 화제로 넘어갈 때 씁니다.'},
+      {o:['So yeah,','For example,','Let me think,'],a:0,e:'답변을 정리하며 닫는 마무리 표지어입니다.'}]},
+    {t:['{0} Last year I was supposed to fly to Jeju on a Friday night. {1} the flight got canceled because of a storm. {2} I was really annoyed, but {3} it turned out to be a good thing. I took the first flight the next morning, and {4} the weather was perfect. {5} sometimes plans falling apart isn’t the worst thing.'],s:[
+      {o:['Oh, there’s one time I’ll never forget.','So yeah,','Personally,'],a:0,e:'경험 문항의 시작 신호입니다. 이야기를 고를 시간도 벌어 줍니다.'},
+      {o:['But guess what?','For example,','To be honest,'],a:0,e:'반전 직전에 청자를 끌어들이는 표현. 예정(was supposed to)이 틀어지는 복잡한 상황을 엽니다.'},
+      {o:['Honestly,','Anyway,','Let’s say'],a:0,e:'감정을 드러내는 태도 표지어. Let’s say는 가정 상황용입니다.'},
+      {o:['the funny thing is,','for instance,','what I mean is,'],a:0,e:'아이러니한 반전을 알립니다.'},
+      {o:['believe it or not,','let me think,','anyway,'],a:0,e:'놀라운 사실을 강조합니다. 이야기 한가운데 anyway는 곁가지 복귀용이라 맞지 않습니다.'},
+      {o:['So I guess','First of all,','For example,'],a:0,e:'이야기에서 얻은 교훈으로 마무리합니다. 5강의 ‘말하는 지금’으로 나오는 문장이기도 합니다.'}]}
+  ];
+  let rdi=0;
+  function rdRender(){const r=RD[rdi];let h=esc(r.t[0]);r.s.forEach((s,j)=>{const order=s.o.map((_,k)=>k).sort((a,b)=>((a*5+j*2+rdi)%3)-((b*5+j*2+rdi)%3));h=h.replace('{'+j+'}',`<select data-j="${j}" aria-label="빈칸 ${j+1}"><option value="">빈칸 ${j+1}</option>${order.map(k=>`<option value="${k}">${esc(s.o[k])}</option>`).join('')}</select>`)});$('rdText').innerHTML=h;$('rdFb').innerHTML=''}
+  $('rdCheck').addEventListener('click',()=>{const r=RD[rdi];let ok=0;const fb=[];$('rdText').querySelectorAll('select').forEach(sel=>{const j=+sel.dataset.j,s=r.s[j];const v=sel.value===''?-1:+sel.value;sel.classList.remove('ok','ng');if(v===s.a){ok++;sel.classList.add('ok')}else{sel.classList.add('ng')}fb.push(`<li><b style="color:${v===s.a?'var(--teal)':'var(--rose)'}">빈칸 ${j+1}: ${esc(s.o[s.a])}</b> ${s.e}</li>`)});$('rdFb').innerHTML=`<li><b>${r.s.length}개 중 ${ok}개 정답</b></li>`+fb.join('')});
+  $('rdNext').addEventListener('click',()=>{rdi=(rdi+1)%RD.length;rdRender()});
+  rdRender();
+
+  /* ---------- bank ---------- */
+  const BANK=[
+    {k:'묘사',o:['Oh, I’d have to say …','The first place that comes to mind is …','Let me tell you about …','Well, there’s this little … near my place.'],c:['So yeah, that’s why it’s my favorite spot.','That’s pretty much what it looks like.','If you ever visit, I’d definitely recommend it.','Honestly, I can’t imagine my week without it.']},
+    {k:'루틴',o:['Well, it kind of depends on the day, but usually …','Let me walk you through a typical …','I’m pretty much a creature of habit, so …','The first thing I always do is …'],c:['So that’s my routine, more or less.','And that’s how I usually spend my weekends.','It’s nothing special, but it works for me.','So yeah, it’s pretty much the same every time.']},
+    {k:'과거 경험',o:['Oh, there’s one time I’ll never forget.','Hmm, let me think… Okay, I’ve got one.','This might sound a little strange, but …','I remember this one time back in …'],c:['Looking back, it’s still one of my favorite memories.','So it wasn’t what we planned, but it worked out in the end.','Since then, I’ve always … , just in case.','So yeah, that’s pretty much how it went.']},
+    {k:'비교·변화',o:['Wow, things have changed a lot.','That’s an interesting question, because …','If I think back to when I was a kid, …','There’s a huge difference, actually.'],c:['So yeah, I guess that’s the biggest difference.','Overall, I think the change has been mostly positive.','All in all, it’s easier now, but I do miss the old days.','That’s how I see it, anyway.']},
+    {k:'의견·이슈',o:['That’s a tough one.','Honestly, I have mixed feelings about that.','I’d say it depends, but overall …','I’ve actually thought about this a lot.'],c:['So that’s why I think …','All in all, it’s not a simple issue, but …','At the end of the day, I think it comes down to …','That’s just my opinion, but I think it makes sense.']},
+    {k:'롤플레이',o:['Hi, I’m calling because …','Hello, I was wondering if you could help me with something.','Hi, I’m sorry to bother you, but …','Hey, it’s me. I’ve got a bit of a problem.'],c:['Thanks so much for your help. I really appreciate it.','Okay, let me know what works best for you.','Sorry again for the trouble. Talk to you soon.','Great, I’ll see you then. Bye!']}
+  ];
+  const bl=$('bankList'),bbd=$('bankBody');let bk=0,bshift=0;
+  BANK.forEach((b,i)=>{const li=document.createElement('li');const x=document.createElement('button');x.type='button';x.setAttribute('role','tab');x.textContent=b.k;x.addEventListener('click',()=>{bk=i;bshift=0;bank()});li.appendChild(x);bl.appendChild(li)});
+  function bank(){const b=BANK[bk];bl.querySelectorAll('button').forEach((x,j)=>x.setAttribute('aria-selected',j===bk));const o=b.o[bshift%b.o.length],c=b.c[(bshift+1)%b.c.length];bbd.innerHTML=`<h4 style="margin:0 0 6px">${b.k} 문항</h4><div class="pair"><div><small>시작</small><p>${esc(o)}</p></div><div><small>마무리</small><p>${esc(c)}</p></div></div><div class="ctrl" style="margin-bottom:12px"><button type="button" class="btn" id="bShuf">섞기</button></div><div class="all"><b>시작 표현 전체</b><br>${b.o.map(x=>`<span>${esc(x)}</span>`).join(' · ')}</div><div class="all" style="margin-top:8px"><b>마무리 표현 전체</b><br>${b.c.map(x=>`<span>${esc(x)}</span>`).join(' · ')}</div>`;$('bShuf').addEventListener('click',()=>{bshift++;bank()})}
+  bank();
+
+  /* ---------- tally ---------- */
+  const TOP=['Describe a place in your neighborhood that you like.','Tell me about the last time you went shopping.','What do you usually do on a rainy day?','Talk about a movie you saw recently.','Describe your favorite room in your home.','Tell me about a time you got lost.','How do you usually spend your summer?','Talk about a restaurant you often go to.','Describe a typical morning on a workday.','Tell me about a gift you remember receiving.'];
+  let tp=LS.get('opic-l6-topic',0)%TOP.length;
+  const CNT=[['f','um / uh','var(--violet)'],['z','3초 이상 침묵','var(--rose)'],['l','like / you know 과용','var(--amber)'],['m','담화 표지어 사용','var(--teal)']];
+  let cnt=LS.get('opic-l6-cnt',{f:0,z:0,l:0,m:0});
+  function tPrompt(){$('tPrompt').textContent=TOP[tp]}
+  $('tShuffle').addEventListener('click',()=>{tp=(tp+1)%TOP.length;LS.set('opic-l6-topic',tp);tPrompt()});tPrompt();
+  function cRender(){$('counters').innerHTML=CNT.map(c=>`<button type="button" data-k="${c[0]}" style="--cc:${c[2]}"><b>${cnt[c[0]]}</b><span>${c[1]}</span></button>`).join('');$('counters').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{cnt[b.dataset.k]++;LS.set('opic-l6-cnt',cnt);cRender()}))}
+  cRender();
+  $('tClear').addEventListener('click',()=>{cnt={f:0,z:0,l:0,m:0};LS.set('opic-l6-cnt',cnt);cRender()});
+  let hist=LS.get('opic-l6-hist',[]);
+  function hRender(){const h=hist.slice(-12);const max=Math.max(8,...h.map(x=>x.r));$('hist').innerHTML=h.map(x=>`<div class="${x.r<4&&x.z===0?'good':''}" style="height:${Math.max(3,x.r/max*100)}%"><span>${x.r}</span></div>`).join('')||'<span class="small muted">아직 기록이 없습니다.</span>';$('histX').innerHTML=h.map((_,i)=>`<span>${hist.length-h.length+i+1}</span>`).join('')}
+  $('tSave').addEventListener('click',()=>{const r=+((cnt.f+cnt.z)).toFixed(1);hist.push({r,z:cnt.z,m:cnt.m,l:cnt.l,d:Date.now()});LS.set('opic-l6-hist',hist);cnt={f:0,z:0,l:0,m:0};LS.set('opic-l6-cnt',cnt);cRender();hRender()});
+  $('tHistClear').addEventListener('click',()=>{if(confirm('필러 기록을 모두 지울까요?')){hist=[];LS.set('opic-l6-hist',hist);hRender()}});
+  hRender();
+  let tl=60,tid=null;const TH={60:'질문 되받기나 시간 버는 표현으로 시작.',45:'경계에서 쉬고, 쉴 때는 표지어로.',25:'막히면 돌려 말하기: It’s kind of a…',10:'So yeah, … 로 마무리 준비.'};
+  $('tStart').addEventListener('click',()=>{if(tid){clearInterval(tid);tid=null;$('tStart').textContent='계속';return}if(tl<=0)tl=60;$('tStart').textContent='일시정지';$('tHint').textContent=TH[60];tid=setInterval(()=>{tl--;$('tClock').textContent=Math.floor(tl/60)+':'+String(tl%60).padStart(2,'0');if(TH[tl])$('tHint').textContent=TH[tl];if(tl<=0){clearInterval(tid);tid=null;$('tStart').textContent='다시';$('tHint').textContent='끝. 녹음을 들으며 오른쪽 카운터를 누르세요.'}},1000)});
+  $('tStop').addEventListener('click',()=>{clearInterval(tid);tid=null;tl=60;$('tClock').textContent='1:00';$('tStart').textContent='60초 시작';$('tHint').textContent='시작 전에 녹음을 켜세요. 처음 3초 안에 질문 되받기나 시간 버는 표현으로 시작합니다.'});
+
+  /* ---------- integration checker ---------- */
+  const SUBS=['because','when','while','which','who','where','although','though','since','after','before','until','unless','if','whenever','whereas','once'];
+  const PRES='go goes come comes eat eats is are am see sees get gets take takes make makes say says tell tells give gives buy buys find finds start starts stop stops decide decides try tries look looks walk walks watch watches play plays visit visits stay stays ride rides talk talks wait waits drive drives arrive arrives call calls ask asks turn turns happen happens realize realizes forget forgets spend spends bring brings'.split(' ');
+  const BLOCK=new Set(['to','can','could','will','would','should','must','might','may','did','didn\'t','does','do','don\'t','doesn\'t','usually','always','often','sometimes','still','every','now','thing','pretty']);
+  const MARK=['well','actually','honestly','to be honest','i mean','what i mean is','the thing is','anyway','so yeah','let me think','let\'s see','personally','for example','for instance','all in all','overall','looking back','believe it or not','guess what','the funny thing is','funny thing is','i\'d have to say','off the top of my head','speaking of which','that\'s why','you know'];
+  const FILL=['um','umm','uh','uhh','er','erm','ah','hmm'];
+  $('iText').value=LS.get('opic-l6-integ','');$('iText').addEventListener('input',()=>LS.set('opic-l6-integ',$('iText').value));
+  $('iRun').addEventListener('click',()=>{const raw=$('iText').value.trim();const dur=+$('iDur').value||90;if(!raw){$('iOut').innerHTML='<p class="small" style="color:var(--rose)">먼저 붙여 넣으세요.</p>';return}
+    const pauses=(raw.match(/\(\s*\.\.\.\s*\)/g)||[]).length;const t=raw.replace(/\(\s*\.\.\.\s*\)/g,' ').replace(/\s\/\s/g,' ');const low=' '+t.toLowerCase().replace(/’/g,"'")+' ';
+    const sents=t.split(/[.!?]+/).map(s=>s.trim()).filter(s=>/[a-z]/i.test(s));let words=0,fill=0,sub=0;sents.forEach(s=>{const tk=s.toLowerCase().replace(/’/g,"'").match(/[a-z']+/g)||[];let h=false;tk.forEach(w=>{if(FILL.includes(w)){fill++;return}words++;if(SUBS.includes(w))h=true});if(h)sub++});
+    const tok=low.match(/[a-z']+/g)||[];let flag=0;tok.forEach((w,i)=>{if(PRES.includes(w)&&!BLOCK.has(tok[i-1]||'')&&!((tok[i-1]==='i')&&['want','think','mean','guess','remember'].includes(w)))flag++});
+    let marks=0;const used=new Set();MARK.forEach(m=>{const re=new RegExp('(^|[^a-z])'+m.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![a-z])','g');const n=(low.match(re)||[]).length;if(n){marks+=n;used.add(m)}});
+    const min=dur/60;const msl=sents.length?words/sents.length:0;const subr=sents.length?sub/sents.length*100:0;const fpm=fill/min;
+    const rows=[['4강 평균 문장 길이',msl.toFixed(1)+' 단어','12~22',msl>=12&&msl<=25],['4강 복문 비율',Math.round(subr)+'%','40% 이상',subr>=40],['5강 현재형 확인 필요',flag+'개','1개 이하 (의도된 현재형 제외)',flag<=1],['6강 필러 빈도',fpm.toFixed(1)+'회/분','4 미만',fpm<4],['6강 긴 침묵',pauses+'회','0',pauses===0],['6강 담화 표지어',marks+'회 ('+used.size+'종류)','3종류 이상',used.size>=3]];
+    const passed=rows.filter(r=>r[3]).length;
+    $('iOut').innerHTML=`<div class="tbl-wrap"><table class="cmp" style="background:var(--surface);border-radius:12px"><tr><th style="width:auto">항목</th><th style="width:auto">결과</th><th style="width:auto">목표</th><th style="width:40px"></th></tr>${rows.map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]}</b></td><td class="muted">${r[2]}</td><td style="color:${r[3]?'var(--teal)':'var(--rose)'}">${r[3]?'✓':'✗'}</td></tr>`).join('')}</table></div><p style="margin:12px 0 0"><b>${passed} / 6 달성.</b> ${passed>=5?'2주차 목표를 거의 달성했습니다. 3주차 유형별 훈련으로 넘어갈 준비가 됐습니다.':passed>=3?'절반 이상 달성했습니다. ✗ 항목의 강의를 한 번 더 복습하고 3주차를 병행하세요.':'아직 2주차 도구가 몸에 붙지 않았습니다. 3주차로 넘어가되, 매일 10분은 4~6강 훈련기를 계속 돌리세요.'}</p><p class="small muted" style="margin:6px 0 0">사용한 표지어: ${[...used].join(', ')||'없음'} · 단어 패턴 기반 추정치입니다.</p>`});
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'이 강의가 말하는 필러 대책의 핵심은?',o:['말을 빨리 해서 생각할 시간을 없앤다','생각할 시간은 두고, 그 시간을 의미 있는 표현으로 채운다','필러를 참고 침묵한다','짧은 문장만 말한다'],a:1,e:'생각할 시간은 누구에게나 필요합니다. 그 시간을 담화 표지어로 덮어 필러와 침묵의 숫자만 줄입니다.'},
+    {q:'필러와 담화 표지어의 가장 큰 차이는?',o:['길이','표지어는 의미(구조·태도·전환)를 전달한다','표지어는 문법적으로 더 어렵다','차이가 없다'],a:1,e:'Well, Actually, I mean은 각각 생각 중, 예상과 반대, 바꿔 말하기라는 신호를 줍니다.'},
+    {q:'가장 자연스럽지 않은 쉼의 위치는?',o:['Well, 뒤','쉼표가 오는 절의 경계','the와 park 사이','I mean, 뒤'],a:2,e:'관사와 명사 사이는 한 덩어리의 한가운데라 단어를 찾는 막힘으로 들립니다.'},
+    {q:'Actually를 가장 정확하게 쓴 문장은?',o:['Actually, I like parks.','I thought it’d be crowded, but actually it was quiet.','Actually, my name is Kim.','Actually, actually, I go there.'],a:1,e:'actually는 예상이나 앞 내용과 반대되는 사실을 말할 때 씁니다.'},
+    {q:'“콘센트”라는 단어가 떠오르지 않을 때 가장 좋은 대응은?',o:['침묵하며 단어를 떠올린다','한국어로 말한다','It’s the thing on the wall you plug your charger into.','그 문장을 통째로 건너뛴다'],a:2,e:'돌려 말하기는 ACTFL이 AL 화자의 특징으로 직접 언급하는 기술입니다.'},
+    {q:'질문을 듣고 첫 문장이 떠오르지 않을 때의 세 겹 기술 순서로 알맞은 것은?',o:['구조 예고 → 질문 되받기 → 시간 버는 표현','질문 되받기 → 시간 버는 표현 → 구조 예고','침묵 → um → 답변','That’s all → 다시 시작'],a:1,e:'My favorite park? Hmm… Let me think… There are a couple of reasons…처럼 이어 쓰면 자연스럽게 시간을 벌 수 있습니다.'},
+    {q:'피해야 할 마무리 문장은?',o:['So yeah, that’s pretty much how it went.','Looking back, it’s still my favorite memory.','That’s all.','All in all, it was worth it.'],a:2,e:'That’s all, Thank you, The end는 담화를 스스로 끊는 신호로 들립니다.'},
+    {q:'롤플레이 11번을 시작하기에 가장 자연스러운 문장은?',o:['Actually, I have a question.','Hi, I’m calling because I’d like to ask about your yoga classes.','That’s a tough one.','Anyway, let me ask.'],a:1,e:'전화 롤플레이는 인사와 용건 제시로 시작합니다. 9절 문장 은행의 롤플레이 탭을 참고하세요.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${esc(item.q)}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'6강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['필러','filler','um, uh처럼 의미 없이 생각할 시간을 메우는 소리.'],['담화 표지어','discourse marker','Well, Actually, I mean처럼 말의 구조, 태도, 전환을 알려 주는 표현. 생각할 시간도 벌어 준다.'],['비유창성','disfluency','필러, 반복, 침묵, 자기 수정 등 말의 흐름이 끊기는 현상의 총칭.'],['긴 침묵','long pause','3초 이상 소리가 없는 구간. 필러보다 큰 단절 신호.'],['경계 쉼','boundary pause','절이나 의미 단위의 경계에서 쉬는 것. 자연스러운 호흡으로 들린다.'],['구 안의 쉼','mid-phrase pause','관사와 명사 사이처럼 한 덩어리 안에서 쉬는 것. 막힘으로 들린다.'],['시간 벌기 표현','stalling expression','Let me think, That’s a good question처럼 생각 중임을 말로 보여 주는 표현.'],['질문 되받기','echoing','질문의 핵심 단어를 되뇌며 반응하는 것. My favorite park? Hmm…'],['구조 예고','signposting','앞으로 말할 구조를 미리 알리는 것. There are two reasons…'],['돌려 말하기','circumlocution','정확한 단어 대신 설명으로 의미를 전달하는 기술. AL 화자의 특징.'],['바꿔 말하기','reformulation','I mean, What I mean is로 방금 한 말을 더 분명하게 다시 말하는 것.'],['자기 수정','self-repair','말하다가 스스로 고치는 것. 표지어와 함께하면 자연스럽게 들린다.'],['과용','overuse','표지어가 의미 없이 반복되어 필러처럼 들리게 되는 것.'],['말 생산 3단계','speech production','내용 구상, 언어화, 발화. 외국어에서는 언어화가 느려 틈이 생긴다.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 21강 · 추상 → 구체 전환</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.L1{--r:var(--violet)}.L2{--r:var(--sky)}.L3{--r:var(--teal)}.L4{--r:var(--amber)}.L5{--r:var(--rose)}
+.r1,.r2,.r3,.r4,.r5{border-radius:3px}
+.r1{background:var(--violet-soft);box-shadow:inset 0 -2px 0 var(--violet)}.r2{background:var(--sky-soft);box-shadow:inset 0 -2px 0 var(--sky)}.r3{background:var(--teal-soft);box-shadow:inset 0 -2px 0 var(--teal)}.r4{background:var(--amber-soft);box-shadow:inset 0 -2px 0 var(--amber)}.r5{background:var(--rose-soft);box-shadow:inset 0 -2px 0 var(--rose)}
+.lp{background:color-mix(in srgb,var(--lime) 22%,transparent);box-shadow:inset 0 -2px 0 var(--lime);border-radius:3px}
+
+/* hero ladder */
+#ladder{width:100%;height:auto;display:block;background:var(--surface2);border-radius:12px;cursor:pointer}
+.hsay{font-family:var(--serif);font-size:15px;line-height:1.65;margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--surface2);min-height:4.6em}
+.hsay small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-bottom:2px}
+.hcap{font-size:13.5px;color:var(--muted);margin:6px 0 0;min-height:2.6em}
+
+/* rungs */
+.rungs{display:grid;gap:6px;margin:18px 0}
+.rungs div{display:grid;grid-template-columns:44px 140px 1fr;gap:12px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--r)}
+@media (max-width:640px){.rungs div{grid-template-columns:36px 1fr}.rungs div p{grid-column:1/-1}}
+.rungs .n{font-family:var(--serif);font-size:22px;color:var(--r);text-align:center}
+.rungs b{font-size:15px}
+.rungs b small{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.rungs p{margin:0;font-family:var(--serif);font-size:15px}
+
+/* path types */
+.paths{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+@media (max-width:760px){.paths{grid-template-columns:1fr}}
+.paths div{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--surface);border-top:4px solid var(--cc)}
+.paths h4{margin:0 0 4px;font-size:16.5px}
+.paths svg{width:100%;height:70px;display:block;margin:6px 0}
+.paths p{font-size:14px;margin:0;color:var(--muted)}
+
+/* phrases */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px;margin:12px 0}
+.pgrid div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:var(--serif);font-size:15.5px;border-left:4px solid var(--cc)}
+.pgrid small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+.routes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+@media (max-width:760px){.routes{grid-template-columns:1fr 1fr}}
+.routes div{border-radius:12px;padding:12px;background:var(--surface);border:1px solid var(--line)}
+.routes b{display:block;font-size:14.5px;margin-bottom:4px}
+.routes span{font-family:var(--serif);font-size:14.5px;color:var(--muted)}
+
+/* rewrite demo */
+.rw{background:var(--surface2);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px}
+.rw .txt{font-family:var(--serif);font-size:18px;line-height:1.9;margin:0}
+.rw .ins{display:none}
+.rw.on .ins{display:inline}
+.rw.on .del{display:none}
+
+/* drills */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:18px 0}
+.drill-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dq{font-family:var(--serif);font-size:18.5px;line-height:1.55;margin:4px 0 14px}
+.dq small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted);margin-bottom:4px}
+.dopts{display:flex;flex-wrap:wrap;gap:8px}
+.dopts.col{display:grid}
+.dopts button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:9px 16px;cursor:pointer;font-size:15.5px;text-align:left;border-left:4px solid var(--r,var(--line))}
+.dopts.col button{font-family:var(--serif);font-size:16.5px}
+.dopts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.dopts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.dopts button:disabled{cursor:default}
+.dfb{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15.5px;display:none}
+.dfb.on{display:block}
+.pips{display:flex;gap:4px;flex-wrap:wrap}
+.pips i{width:10px;height:10px;border-radius:3px;background:var(--line)}
+.pips i.ok{background:var(--teal)}.pips i.ng{background:var(--rose)}.pips i.cur{outline:2px solid var(--amber);outline-offset:1px}
+
+/* mini story */
+.ms{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.ms select,.ms input,.ms textarea{width:100%;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:15.5px/1.55 var(--serif);padding:8px 10px}
+.ms textarea{min-height:58px;resize:vertical}
+.ms label{display:block;font-size:13.5px;font-weight:600;margin:10px 0 4px}
+.ms label small{font-weight:400;color:var(--muted);font-size:12.5px;margin-left:6px}
+.ms-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:700px){.ms-grid{grid-template-columns:1fr}}
+.ms-out{margin-top:14px;font-family:var(--serif);font-size:17px;line-height:1.85;background:var(--amber-soft);border-radius:12px;padding:14px 16px}
+.ms-chk{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ms-chk span{font-size:12.5px;border-radius:999px;padding:3px 10px;background:var(--surface2);border:1px solid var(--line)}
+.ms-chk span.ok{background:var(--teal-soft);border-color:var(--teal)}
+.ms-chk span.ng{background:var(--rose-soft);border-color:var(--rose)}
+.ms-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.ms-tabs button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:6px 12px;cursor:pointer;font-size:13.5px}
+.ms-tabs button[aria-selected="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+
+/* elevator recorder */
+.elev{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:860px){.elev{grid-template-columns:1fr}}
+.el-card{background:linear-gradient(135deg,var(--violet-soft),var(--rose-soft));border:1px solid var(--line);border-radius:22px;padding:22px 24px}
+.el-card .q{font-family:var(--serif);font-size:19px;line-height:1.5;margin:6px 0 12px}
+#elPath{width:100%;height:auto;display:block;background:var(--surface);border-radius:12px;margin-top:10px}
+.el-side{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.el-side .clock{font-family:var(--serif);font-size:44px;font-variant-numeric:tabular-nums;line-height:1}
+.el-btns{display:grid;gap:5px}
+.el-btns button{border:1px solid var(--line);border-left:5px solid var(--r);background:var(--surface2);border-radius:10px;padding:8px 12px;cursor:pointer;text-align:left;font-size:14px}
+.el-btns button.cur{background:color-mix(in srgb,var(--r) 22%,var(--surface2));font-weight:700}
+.el-btns button:disabled{opacity:.4;cursor:not-allowed}
+.el-res{font-size:14px;margin-top:6px}
+
+/* checker */
+.chk{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.chk textarea{width:100%;min-height:140px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:16.5px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin:14px 0}
+.metrics div{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:3px solid var(--lc,var(--line))}
+.metrics small{display:block;font-size:12.5px;color:var(--muted)}
+.metrics b{display:block;font-family:var(--serif);font-size:21px;line-height:1.2;font-weight:600}
+.metrics span{font-size:12px;color:var(--faint)}
+#kPath{width:100%;height:auto;display:block;background:var(--surface2);border-radius:12px;margin:8px 0}
+.hlv{font-family:var(--serif);font-size:17px;line-height:1.9;background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:10px}
+.leg{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);margin:8px 0}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;background:var(--r)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;7주차 21강&nbsp;&nbsp;추상 → 구체 전환</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">왜 끌어내려야 하는가</a></li>
+      <li><a href="#ladder">추상의 사다리 다섯 칸</a></li>
+      <li><a href="#paths">세 가지 경로</a></li>
+      <li><a href="#tools">착륙과 이륙 표현</a></li>
+      <li><a href="#rewrite">끌어내리기 전과 후</a></li>
+      <li><a href="#drills">훈련: 칸 판별과 착륙 고르기</a></li>
+      <li><a href="#mini">3문장 미니 서사 만들기</a></li>
+      <li><a href="#elevator">엘리베이터 기록기</a></li>
+      <li><a href="#checker">경로 점검기</a></li>
+      <li><a href="#myths">끌어내리기의 함정</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">7주차 정리와 과제</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">7주차 사회·추상 주제 의견 전개 · 21강</p>
+      <h1>큰 질문에는 작은 장면으로 답하고, 다시 큰 그림으로 올라오기</h1>
+      <p class="lede">“사람들이 너무 바쁘다고 생각하나요?” 이런 질문에 IH 답변은 사회 차원에서 맴돌다 끝납니다. People work a lot. It is a problem for society. 반대로 개인 이야기로만 빠지면 질문에 답하지 않은 답변이 됩니다. AL 답변은 엘리베이터처럼 움직입니다. 위에서 출발해 나의 한 장면까지 내려갔다가, 다시 사회로 올라옵니다. 오른쪽 사다리에서 세 경로를 비교해 보세요.</p>
+      <div class="meta-row"><span>학습 시간 약 100분</span><span>대상 문항: 14~15번</span><span>7주차 마지막</span></div>
+    </div>
+    <div class="wave-card" aria-label="추상의 사다리 경로">
+      <div class="wave-switch" role="group" aria-label="경로 선택">
+        <button type="button" data-v="0" aria-pressed="false">위에서 맴돌기</button>
+        <button type="button" data-v="1" aria-pressed="false">아래로 빠지기</button>
+        <button type="button" data-v="2" aria-pressed="true">엘리베이터</button>
+      </div>
+      <svg id="heroLadder" viewBox="0 0 420 190" role="img" aria-label="추상의 사다리"></svg>
+      <div class="hsay" id="hsay"></div>
+      <p class="hcap" id="hcap"></p>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>19강은 의견의 뼈대를, 20강은 영역별 내용을 다뤘습니다. 21강은 그 둘을 살아 있는 답변으로 만드는 기술, 즉 추상과 구체 사이를 오가는 법을 다룹니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>문장이 사다리의 어느 칸(사회, 집단, 주변, 나, 한 장면)에 있는지 알아볼 수 있다.</li>
+      <li>사회 질문에서 나의 한 장면까지 착륙했다가 다시 사회로 이륙하는 경로로 말할 수 있다.</li>
+      <li>추상적인 주장을 3문장 미니 서사(언제 → 무슨 일 → 무엇을 보여 주나)로 뒷받침할 수 있다.</li>
+      <li>착륙과 이륙 표현으로 칸 사이를 자연스럽게 이동할 수 있다.</li>
+      <li>구체 장면이 너무 길어져 질문에서 벗어나지 않도록 비율을 조절할 수 있다.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>왜 끌어내려야 하는가</h2>
+    <p>15번 질문은 추상적입니다. 그런데 추상적인 질문에 추상적인 말로만 답하면 문장이 짧고 일반적이 됩니다. People are busy. Society is competitive. 이런 문장은 어떤 수험자든 말할 수 있어서 언어 능력을 보여 줄 여지가 적습니다. 반대로 나의 한 장면으로 내려가는 순간, 4주차에 익힌 과거 서사, 11강의 디테일, 5강의 시제 전환이 모두 다시 살아납니다.</p>
+    <p>1강에서 AL은 ‘Advanced 수행을 유지하면서 Superior 쪽 과제를 시도하는’ 수준이라고 했습니다. 추상적 주제(Superior 쪽)를 구체적 서사(Advanced의 강점)로 받쳐 주는 것이 바로 이 수준의 전형적인 전략입니다. 낯선 높이에서도 내가 가장 잘하는 땅에 발을 디딜 수 있게 해 줍니다.</p>
+    <div class="callout">
+      <strong>내려갔으면 반드시 올라오세요</strong>
+      <p>개인 이야기로 내려가기만 하고 다시 올라오지 않으면, 평가자는 “질문은 사회에 대한 것이었는데 개인 경험만 말했다”고 들을 수 있습니다. 장면 뒤에는 반드시 <span class="en">And I don’t think I’m unusual. / That’s just one example, but…</span>처럼 다시 일반으로 이륙하는 문장이 와야 합니다.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="ladder">
+    <p class="sec-no">2</p>
+    <h2>추상의 사다리 다섯 칸</h2>
+    <p>같은 주제(바쁜 삶)를 다섯 높이에서 말한 예입니다. 위로 갈수록 넓고 일반적이며, 아래로 갈수록 좁고 생생합니다.</p>
+    <div class="rungs">
+      <div class="L1"><span class="n">1</span><b>사회<small>society · country</small></b><p>Korean society has become extremely fast-paced.</p></div>
+      <div class="L2"><span class="n">2</span><b>집단<small>groups of people</small></b><p>Office workers and high school students tend to have the busiest schedules.</p></div>
+      <div class="L3"><span class="n">3</span><b>주변<small>people I know</small></b><p>Most of my friends say they’re exhausted by Wednesday.</p></div>
+      <div class="L4"><span class="n">4</span><b>나<small>me, in general</small></b><p>I usually don’t leave the office until eight.</p></div>
+      <div class="L5"><span class="n">5</span><b>한 장면<small>one specific moment</small></b><p>Last Thursday, I fell asleep on the subway and missed my stop by four stations.</p></div>
+    </div>
+    <p>4칸(나, 일반)과 5칸(한 장면)의 차이가 중요합니다. 4칸은 현재형 습관이고, 5칸은 과거형의 특정한 순간입니다. 진짜 설득력은 5칸에서 나옵니다. I usually work late보다 Last Thursday, I fell asleep on the subway가 훨씬 강합니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="paths">
+    <p class="sec-no">3</p>
+    <h2>세 가지 경로</h2>
+    <div class="paths" id="pathCards"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="tools">
+    <p class="sec-no">4</p>
+    <h2>착륙과 이륙 표현</h2>
+    <p>칸 사이를 이동할 때는 신호를 주세요. 갑자기 개인 이야기로 넘어가면 듣는 사람이 왜 그 이야기를 하는지 놓칩니다.</p>
+    <h3>착륙: 일반 → 나의 장면</h3>
+    <div class="pgrid">
+      <div style="--cc:var(--rose)">Take my own case, for example.<small>내 경우를 예로</small></div>
+      <div style="--cc:var(--rose)">I actually saw this firsthand when …<small>직접 겪었다</small></div>
+      <div style="--cc:var(--rose)">Let me give you an example from my own life.<small>예 들기 예고</small></div>
+      <div style="--cc:var(--rose)">My family is a good example of this.<small>가족을 예로</small></div>
+      <div style="--cc:var(--rose)">I remember one time when …<small>장면 진입</small></div>
+    </div>
+    <h3>이륙: 나의 장면 → 다시 일반</h3>
+    <div class="pgrid">
+      <div style="--cc:var(--violet)">And I don’t think I’m unusual at all.<small>나만 그런 게 아니다</small></div>
+      <div style="--cc:var(--violet)">That’s just one example, but it shows …<small>예 → 의미</small></div>
+      <div style="--cc:var(--violet)">Multiply that by millions of people, and …<small>규모 확장</small></div>
+      <div style="--cc:var(--violet)">On a bigger scale, …<small>사회 차원으로</small></div>
+      <div style="--cc:var(--violet)">That’s when I realized how common this is.<small>깨달음 → 일반화</small></div>
+    </div>
+    <h3>끌어내리기의 네 경로</h3>
+    <div class="routes">
+      <div><b>나</b><span>내 하루, 내 실수, 내 습관이 바뀐 순간</span></div>
+      <div><b>가족</b><span>부모님, 형제, 조카의 한 장면</span></div>
+      <div><b>일터·학교</b><span>동료, 회의, 시험 기간의 한 장면</span></div>
+      <div><b>동네·도시</b><span>단골 가게, 지하철, 공원에서 본 장면</span></div>
+    </div>
+    <p class="small muted">20강 예시 은행에 적은 예들이 바로 이 경로의 재료입니다. 한 영역에 두 경로(예: 나 + 동네)를 준비해 두면 어떤 질문에도 착륙할 곳이 있습니다.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="rewrite">
+    <p class="sec-no">5</p>
+    <h2>끌어내리기 전과 후</h2>
+    <p>위에서 맴도는 IH 답변에 착륙, 장면, 이륙 문장을 넣으면 어떻게 바뀌는지 보세요. 버튼으로 전후를 바꿀 수 있습니다. 색은 사다리 칸, 연두색은 착륙·이륙 표현입니다.</p>
+    <div class="ctrl" style="margin-bottom:10px"><button type="button" class="btn primary" id="rwBtn">끌어내리기 적용</button><span class="small muted" id="rwMeta"></span></div>
+    <div class="rw" id="rw"><p class="txt" id="rwTxt"></p></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="drills">
+    <p class="sec-no">6</p>
+    <h2>훈련: 칸 판별과 착륙 고르기</h2>
+    <div class="drill">
+      <div class="drill-head"><strong>이 문장은 사다리의 몇 번째 칸?</strong><div class="pips" id="lPips"></div></div>
+      <div class="dq" id="lQ"></div><div class="dopts" id="lO"></div><div class="dfb" id="lFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="lNext">다음 문제</button><button type="button" class="reset" id="lReset">처음부터</button></div>
+    </div>
+    <div class="drill">
+      <div class="drill-head"><strong>이 주장을 받쳐 줄 가장 좋은 착륙은?</strong><div class="pips" id="dPips"></div></div>
+      <div class="dq" id="dQ"></div><div class="dopts col" id="dO"></div><div class="dfb" id="dFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="dNext">다음 문제</button><button type="button" class="reset" id="dReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="mini">
+    <p class="sec-no">7</p>
+    <h2>3문장 미니 서사 만들기</h2>
+    <p>의견 답변 속의 구체 장면은 10강의 90초 서사가 아니라 15~25초짜리 미니 서사입니다. 세 문장이면 충분합니다. <strong>언제</strong>(시점), <strong>무슨 일</strong>(한 순간, 디테일 하나), <strong>무엇을 보여 주나</strong>(주장과의 연결). 주장을 고르고 칸을 채우면 착륙과 이륙 표현이 붙은 문단이 만들어집니다. 다섯 개를 저장할 수 있습니다.</p>
+    <div class="ms">
+      <div class="ms-tabs" id="msTabs" role="tablist"></div>
+      <label for="msClaim">받쳐 줄 주장</label>
+      <select id="msClaim"></select>
+      <div class="ms-grid">
+        <div><label for="msLand">착륙 표현</label><select id="msLand"></select></div>
+        <div><label for="msLift">이륙 표현</label><select id="msLift"></select></div>
+      </div>
+      <label for="msWhen">1. 언제 <small>Last month, / A couple of years ago, / When I was in high school,</small></label>
+      <input id="msWhen" placeholder="Last Thursday,">
+      <label for="msWhat">2. 무슨 일 <small>한 순간 + 디테일 하나, 과거형</small></label>
+      <textarea id="msWhat" placeholder="I fell asleep on the subway after a fourteen-hour day and missed my stop by four stations."></textarea>
+      <label for="msShow">3. 무엇을 보여 주나 <small>That’s when I realized … / It made me think …</small></label>
+      <textarea id="msShow" placeholder="That’s when I realized how normal it had become for me to be completely exhausted."></textarea>
+      <div class="ms-out" id="msOut"></div>
+      <div class="ms-chk" id="msChk"></div>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn" id="msEx">예시 채우기</button><button type="button" class="reset" id="msClr">이 칸 지우기</button></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="elevator">
+    <p class="sec-no">8</p>
+    <h2>엘리베이터 기록기</h2>
+    <p>말하면서 지금 사다리의 어느 칸에 있는지 오른쪽 버튼을 누르세요. 처음엔 어색하지만, 이 연습을 몇 번 하면 내가 어디서 맴돌고 어디서 빠지는지 몸으로 알게 됩니다. 시간이 끝나거나 ‘기록 끝’을 누르면 경로가 그려지고 평가가 나옵니다. 좋은 경로는 위에서 시작해, 4~5칸까지 내려갔다가, 위에서 끝납니다.</p>
+    <div class="elev">
+      <div class="el-card">
+        <div class="small muted" id="elNo"></div>
+        <div class="q" id="elQ"></div>
+        <div class="ctrl"><button type="button" class="btn" id="elPrevQ">이전 질문</button><button type="button" class="btn" id="elNextQ">다음 질문</button></div>
+        <svg id="elPath" viewBox="0 0 420 160" aria-label="말한 경로"></svg>
+        <div class="el-res" id="elRes"></div>
+      </div>
+      <div class="el-side">
+        <div class="clock" id="elClock">1:50</div>
+        <div class="el-btns" id="elBtns"></div>
+        <div class="ctrl"><button type="button" class="btn primary" id="elStart">시작</button><button type="button" class="btn" id="elStop">기록 끝</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="checker">
+    <p class="sec-no">9</p>
+    <h2>경로 점검기</h2>
+    <p>받아 적은 의견 답변을 넣으면 문장마다 사다리 칸을 추정해 경로를 그리고, 위에서 시작했는지, 장면까지 내려갔는지, 다시 올라왔는지, 구체 부분의 비율이 적당한지 점검합니다.</p>
+    <div class="chk">
+      <div class="ctrl" style="margin-bottom:8px"><button type="button" class="btn" id="kAL">엘리베이터 답변</button><button type="button" class="btn" id="kTop">위에서 맴돌기</button><button type="button" class="btn" id="kBot">아래로 빠지기</button></div>
+      <textarea id="kText" placeholder="받아 적은 의견 답변을 붙여 넣으세요."></textarea>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn primary" id="kRun">점검</button></div>
+      <div id="kOut"></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="myths">
+    <p class="sec-no">10</p>
+    <h2>끌어내리기의 함정</h2>
+    <p>카드를 눌러 뒤집어 보세요.</p>
+    <div class="myths" id="mythGrid"></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">11</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">12</p>
+    <h2>7주차 정리와 과제</h2>
+    <p>7주차에 15번을 세 겹으로 준비했습니다. 19강은 뼈대(입장 → 근거 2개 → 반론 인정 → 재강조), 20강은 내용(다섯 긴장축, 영역별 어휘와 예), 21강은 움직임(추상과 구체 사이의 엘리베이터)입니다. 이제 8주차에는 1~21강의 모든 것을 실전 모의고사에서 한 번에 시험합니다.</p>
+    <div class="assign">
+      <h3 style="margin-top:0">21강 과제와 7주차 통합 점검</h3>
+      <ol>
+        <li>6절 두 훈련을 모두 맞힐 때까지 반복합니다.</li>
+        <li>7절 미니 서사를 다섯 칸 모두 채웁니다. 20강 다섯 영역에서 하나씩 고르면 좋습니다.</li>
+        <li>8절 엘리베이터 기록기로 질문 세 개를 말합니다. ‘좋은 경로’ 평가가 나올 때까지 반복합니다.</li>
+        <li><strong>7주차 통합 녹음</strong>: 20강 시뮬레이터에서 질문 하나를 뽑아 2분으로 말하고 녹음합니다. 받아 적어 19강 점검기, 20강 점검기, 21강 경로 점검기에 모두 넣어 봅니다.</li>
+        <li>3강 기준선의 14~15번을 다시 듣고, 지금의 녹음과 비교해 무엇이 가장 크게 달라졌는지 적어 둡니다.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>22강. 실전 모의고사 1: 풀 세트 녹음과 정밀 피드백</h4></div>
+      <span class="pill">8주차 시작</span>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">13</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 나온 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: 사다리, 착륙, 미니 서사">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 21강. 추상의 사다리는 이 과정의 학습용 모델입니다. 모범 답안과 예문 속 경험은 예시 화자의 것이며 학습용으로 새로 작성했습니다. 점검기는 단어 패턴 기반 추정이고, 입력한 내용은 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const cssv=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>{setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');hero();pathCards();elDraw()});
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  const wc=t=>(String(t).match(/[A-Za-z’']+/g)||[]).length;
+  const RN=['사회','집단','주변','나','한 장면'];const RC=['violet','sky','teal','amber','rose'];
+
+  /* ---------- versions ---------- */
+  const V=[
+    {k:'위에서 맴돌기',c:'var(--amber)',s:[[1,'I think people in Korea are very busy.'],[2,'They work a lot. Students study a lot.'],[1,'People don’t have free time.'],[1,'It is a problem for society.'],[1,'People should rest more.'],[1,'So I think people are too busy.']],cap:'모든 문장이 1~2칸에 머뭅니다. 누구나 할 수 있는 말이라 짧고, 시제나 서사를 보여 줄 기회가 없습니다. IH의 전형적인 15번.'},
+    {k:'아래로 빠지기',c:'var(--rose)',s:[[5,'Last Tuesday, I worked until eleven.'],[5,'Then I took a taxi home, and I was so tired.'],[5,'I ate some ramen and went straight to bed.'],[5,'The next day, I woke up at six, and my boss called me at seven.'],[5,'Then I had three meetings in a row.'],[5,'It was a really long week.']],cap:'장면은 생생하지만 끝까지 5칸에 머물러 질문(사람들이 너무 바쁜가)에 답하지 않습니다. 사회 질문을 개인 일기로 바꿔 버린 경로.'},
+    {k:'엘리베이터',c:'var(--teal)',s:[[1,'Honestly, yes, I think a lot of people here are way too busy, and it’s become so normal that we don’t even notice it anymore.'],[4,'Take my own case, for example.'],[5,'Last month, I had a big project at work, and for about three weeks, I left the office after ten almost every night.'],[5,'One evening, my mom called to ask if I’d eaten, and I realized I’d forgotten both lunch and dinner.'],[3,'And I don’t think I’m unusual at all. Most of my friends have similar stories, and my cousin, who’s in high school, goes from school to an academy and doesn’t get home until midnight.'],[2,'Office workers and students are probably the busiest groups.'],[1,'Multiply that by millions of people, and you get a whole society that’s tired all the time.'],[1,'Of course, some people would say that this hard work is why Korea developed so fast, and that’s true. But I think we’re paying for it now, with stress and burnout.'],[1,'So overall, I’d say yes, people are too busy, and I hope we can find a better balance, both as individuals and as a society.']],cap:'1칸에서 시작해 4~5칸의 한 장면까지 착륙하고, 주변(3) → 집단(2) → 사회(1)로 차례로 이륙합니다. 장면이 근거가 되고, 마지막은 다시 사회 차원의 결론.'}
+  ];
+
+  /* ---------- hero ladder ---------- */
+  let hv=2,hs=-1;
+  function lad(svg,seq,col,active,W,H,labels){const y=l=>16+(l-1)*((H-32)/4);const x0=labels?72:20,x1=W-16;let h='';for(let l=1;l<=5;l++){h+=`<line x1="${x0-6}" y1="${y(l)}" x2="${x1}" y2="${y(l)}" stroke="${cssv('--line')}" stroke-dasharray="3 4"/>`;if(labels)h+=`<text x="6" y="${y(l)+4}" font-size="11" fill="${cssv('--'+RC[l-1])}" font-weight="600">${l} ${RN[l-1]}</text>`}const n=seq.length;const xs=seq.map((_,i)=>n===1?(x0+x1)/2:x0+i*(x1-x0)/(n-1));if(n>1)h+=`<polyline points="${seq.map((l,i)=>xs[i]+','+y(l)).join(' ')}" fill="none" stroke="${col}" stroke-width="3" stroke-linejoin="round"/>`;seq.forEach((l,i)=>{h+=`<circle cx="${xs[i]}" cy="${y(l)}" r="${i===active?9:6}" fill="${cssv('--'+RC[l-1])}" stroke="${cssv('--bg')}" stroke-width="1.5" data-i="${i}"/>`});svg.innerHTML=h;return xs}
+  function hero(){const v=V[hv];const seq=v.s.map(x=>x[0]);const xs=lad($('heroLadder'),seq,v.c,hs,420,190,true);
+    $('heroLadder').onclick=e=>{const r=$('heroLadder').getBoundingClientRect();const px=(e.clientX-r.left)/r.width*420;let best=0;xs.forEach((x,i)=>{if(Math.abs(x-px)<Math.abs(xs[best]-px))best=i});hs=best;hero()};
+    $('hsay').innerHTML=hs<0?'<small>점을 눌러 문장을 보세요.</small>'+v.s.map(x=>`<span class="r${x[0]}">${esc(x[1])}</span>`).join(' '):`<small>${hs+1}번째 문장 · ${seq[hs]}칸 ${RN[seq[hs]-1]}</small>${esc(v.s[hs][1])}`;const p=v.s.map(x=>x[1]).join(' ');$('hcap').innerHTML=`<b>${v.k}</b> · ${wc(p)}단어 · ${v.cap}`;document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.v===hv))}
+  document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.addEventListener('click',()=>{hv=+b.dataset.v;hs=-1;hero()}));hero();
+
+  /* ---------- path cards ---------- */
+  function pathCards(){const P=[[V[0],'위에서 맴돌기','var(--amber)','추상어만 반복합니다. 짧고 일반적이며, 어떤 수험자의 답과도 구별되지 않습니다.'],[V[1],'아래로 빠지기','var(--rose)','장면은 생생하지만 질문에서 벗어납니다. 사회 질문에 개인 일기로 답한 셈.'],[V[2],'엘리베이터','var(--teal)','위 → 아래 → 위. 장면이 근거가 되고 결론은 다시 사회 차원으로.']];$('pathCards').innerHTML=P.map((p,i)=>`<div style="--cc:${p[2]}"><h4>${p[1]}</h4><svg id="pc${i}" viewBox="0 0 260 70"></svg><p>${p[3]}</p></div>`).join('');P.forEach((p,i)=>lad($('pc'+i),p[0].s.map(x=>x[0]),p[2],-1,260,70,false))}
+  pathCards();
+
+  /* ---------- rewrite ---------- */
+  const RW=[['<span class="r1">I think people in Korea are very busy.</span> ','<span class="r1">Honestly, yes, I think a lot of people here are way too busy.</span> '],['<span class="r2">They work a lot. Students study a lot.</span> ','<span class="lp">Take my own case, for example.</span> <span class="r5">Last month, I had a big project, and for three weeks, I left the office after ten almost every night. One evening, my mom called to ask if I’d eaten, and I realized I’d forgotten both lunch and dinner.</span> <span class="lp">And I don’t think I’m unusual at all.</span> <span class="r3">My cousin, who’s in high school, doesn’t get home from his academy until midnight.</span> '],['<span class="r1">People don’t have free time. It is a problem for society.</span> ','<span class="lp">Multiply that by millions of people,</span> <span class="r1">and you get a whole society that’s tired all the time.</span> '],['<span class="r1">People should rest more. So I think people are too busy.</span>','<span class="r1">So overall, I’d say yes, people are too busy, and I hope we can find a better balance.</span>']];
+  let rwOn=false;
+  function rw(){$('rwTxt').innerHTML=RW.map(r=>`<span class="del">${r[0]}</span><span class="ins">${r[1]}</span>`).join('');$('rw').classList.toggle('on',rwOn);$('rwBtn').textContent=rwOn?'원래대로':'끌어내리기 적용';const t=RW.map(r=>rwOn?r[1]:r[0]).join(' ').replace(/<[^>]+>/g,'');$('rwMeta').textContent=`${wc(t)}단어 · 약 ${Math.round(wc(t)/130*60)}초`}
+  $('rwBtn').addEventListener('click',()=>{rwOn=!rwOn;rw()});rw();
+
+  /* ---------- drills ---------- */
+  function drill(key,data,qE,oE,fE,pE,nE,rE,opts){let st=LS.get(key,{i:0,res:[]});
+    function r(){const it=data[st.i];$(pE).innerHTML=data.map((_,j)=>`<i class="${st.res[j]===true?'ok':st.res[j]===false?'ng':''} ${j===st.i?'cur':''}"></i>`).join('');$(qE).innerHTML=it.q;const o=opts||it.o;const ord=o.map((_,k)=>k);if(!opts)ord.sort((a,b)=>((a*3+st.i)%o.length)-((b*3+st.i)%o.length));$(oE).innerHTML=ord.map(k=>`<button type="button" class="${opts?'L'+(k+1):''}" data-k="${k}">${esc(o[k])}</button>`).join('');$(fE).classList.remove('on');
+      $(oE).querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const k=+b.dataset.k;$(oE).querySelectorAll('button').forEach(x=>{x.disabled=true;if(+x.dataset.k===it.a)x.classList.add('right')});if(k!==it.a)b.classList.add('wrong');st.res[st.i]=k===it.a;LS.set(key,st);$(pE).children[st.i].className=(k===it.a?'ok':'ng')+' cur';$(fE).innerHTML=`<b style="color:${k===it.a?'var(--teal)':'var(--rose)'}">${k===it.a?'정확합니다.':'다시 보세요.'}</b> ${it.e}`;$(fE).classList.add('on')}))}
+    $(nE).addEventListener('click',()=>{st.i=(st.i+1)%data.length;LS.set(key,st);r()});$(rE).addEventListener('click',()=>{st={i:0,res:[]};LS.set(key,st);r()});r()}
+  drill('opic-l21-rung',[
+    ['Korean society has become extremely competitive.',0,'나라 전체에 대한 말: 사회.'],['Office workers in their thirties tend to work the longest hours.',1,'특정 집단에 대한 일반화.'],['Most of my friends say they’re exhausted by Wednesday.',2,'내가 아는 사람들: 주변.'],['I usually work until eight or nine.',3,'나의 일반적인 습관(현재형): 나.'],['Last Thursday, I fell asleep on the subway and missed my stop by four stations.',4,'특정 시점 + 과거형 + 디테일: 한 장면.'],['A lot of high school students sleep less than six hours a night.',1,'집단(고등학생)에 대한 말.'],['My sister checks her work email even on vacation.',2,'가족 한 명의 습관: 주변.'],['Technology has changed the way our whole country communicates.',0,'나라 전체: 사회.'],['When I opened the fridge that night, all I had was a single egg.',4,'그날 밤의 한 순간: 한 장면.'],['I’ve never been good at saying no to extra work.',3,'나에 대한 일반적인 말.']
+  ].map(x=>({q:esc(x[0]),a:x[1],e:x[2]})),'lQ','lO','lFb','lPips','lNext','lReset',RN.map((r,i)=>(i+1)+' '+r));
+  drill('opic-l21-land',[
+    {q:'<small>주장</small>Smartphones are making people less social.',o:['Last weekend at a family dinner, four of us were sitting around the table, and every single person, including me, was scrolling on their phone.','For example, people use their phones a lot these days, and they don’t talk much.','My phone is a Galaxy. I bought it two years ago, and the camera is really good.'],a:0,e:'시점 + 한 장면 + 주장과 직결되는 디테일(모두 폰을 봄). 두 번째는 여전히 1칸, 세 번째는 주장과 무관한 디테일입니다.'},
+    {q:'<small>주장</small>The education system puts too much pressure on kids.',o:['My cousin is ten, and last week she cried because she couldn’t finish her academy homework before eleven at night.','Students are very busy and stressed.','My cousin likes drawing and her favorite color is purple.'],a:0,e:'구체적인 나이, 시점, 장면(밤 11시의 울음)이 압박을 증명합니다.'},
+    {q:'<small>주장</small>People care more about their health these days.',o:['My dad, who used to laugh at people jogging, signed up for a half marathon this spring.','Health is important for everyone.','I went to the hospital once. It was big and clean.'],a:0,e:'예전과 지금의 대비가 담긴 가족의 장면.'},
+    {q:'<small>주장</small>Climate change feels much more real now.',o:['This summer, our AC broke during a heat wave, and it was still thirty degrees inside my apartment at midnight.','The weather is changing a lot.','I like summer because I can go to the beach.'],a:0,e:'숫자(30도, 자정)가 있는 한 장면.'},
+    {q:'<small>주장</small>Different generations see work very differently.',o:['When I told my dad I was quitting my job after two years, the first thing he asked was, “What did they do wrong?”','Old and young people think differently.','My dad works at a company. He likes golf.'],a:0,e:'짧은 직접 인용(11강)이 세대의 관점 차이를 한 줄로 보여 줍니다.'},
+    {q:'<small>주장</small>Online shopping has hurt small local businesses.',o:['The little stationery shop near my old school, which had been there for twenty years, finally closed last year.','Many shops are closing these days.','I bought a pen online last week. It was blue.'],a:0,e:'동네 경로의 장면. 20년이라는 디테일과 과거완료(had been)가 무게를 줍니다.'}
+  ],'dQ','dO','dFb','dPips','dNext','dReset',null);
+
+  /* ---------- mini story ---------- */
+  const CLAIMS=['People in Korea are too busy these days.','Smartphones are making people less social.','The education system puts too much pressure on kids.','Climate change feels much more real than before.','Different generations see work very differently.','People care more about their health these days.','Online shopping has changed our neighborhoods.','직접 입력'];
+  const LAND=['Take my own case, for example.','I actually saw this firsthand.','Let me give you an example from my own life.','My family is a good example of this.','I remember one time that really shows this.'];
+  const LIFT=['And I don’t think I’m unusual at all.','That’s just one example, but it shows how common this is.','Multiply that by millions of people, and you can see the bigger picture.','On a bigger scale, I think the same thing is happening everywhere.','That’s when I realized this isn’t just my problem.'];
+  let ms=LS.get('opic-l21-mini',{cur:0,s:[{},{},{},{},{}]});
+  $('msClaim').innerHTML=CLAIMS.map((c,i)=>`<option value="${i}">${esc(c)}</option>`).join('');$('msLand').innerHTML=LAND.map((c,i)=>`<option value="${i}">${esc(c)}</option>`).join('');$('msLift').innerHTML=LIFT.map((c,i)=>`<option value="${i}">${esc(c)}</option>`).join('');
+  function msTabs(){$('msTabs').innerHTML=[1,2,3,4,5].map((n,i)=>`<button type="button" role="tab" data-i="${i}" aria-selected="${i===ms.cur}">미니 서사 ${n}</button>`).join('');$('msTabs').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ms.cur=+b.dataset.i;LS.set('opic-l21-mini',ms);msTabs();msLoad()}))}
+  function msLoad(){const s=ms.s[ms.cur];$('msClaim').value=s.claim||0;$('msLand').value=s.land||0;$('msLift').value=s.lift||0;$('msWhen').value=s.when||'';$('msWhat').value=s.what||'';$('msShow').value=s.show||'';msOut()}
+  ['msClaim','msLand','msLift','msWhen','msWhat','msShow'].forEach(id=>$(id).addEventListener(id.startsWith('msC')||id.startsWith('msL')?'change':'input',()=>{const s=ms.s[ms.cur];s.claim=+$('msClaim').value;s.land=+$('msLand').value;s.lift=+$('msLift').value;s.when=$('msWhen').value;s.what=$('msWhat').value;s.show=$('msShow').value;LS.set('opic-l21-mini',ms);msOut()}));
+  function msOut(){const s=ms.s[ms.cur];const ci=+(s.claim||0);const claim=ci===7?'[주장을 직접 말하세요]':CLAIMS[ci];const w=(s.when||'').trim(),a=(s.what||'').trim(),sh=(s.show||'').trim();const g=(x,l,c)=>x?`<span class="${c}">${esc(x)}</span>`:`<span class="muted">[${l}]</span>`;
+    $('msOut').innerHTML=`<span class="r1">${esc(claim)}</span> <span class="lp">${esc(LAND[s.land||0])}</span> ${g(w,'언제','r5')} ${g(a,'무슨 일','r5')} ${g(sh,'무엇을 보여 주나','r4')} <span class="lp">${esc(LIFT[s.lift||0])}</span>`;
+    const all=(w+' '+a+' '+sh);const words=wc(all);const anchor=/\b(ago|last|when i was|one (day|evening|night|morning)|that (day|night)|this (summer|spring|winter|fall|year)|yesterday)\b/i.test(w+' '+a);const past=/\b(\w+ed|was|were|had|went|got|told|said|took|came|saw|found|left|felt|realized|fell|cried|asked|called)\b/i.test(a);const link=/\b(that's when|it made me|it showed|which shows|i realized|that's why|it reminded me)\b/i.test(sh.replace(/’/g,"'"));const size=words>=20&&words<=70;
+    $('msChk').innerHTML=[['시점',anchor],['과거형 장면',past],['주장과의 연결',link],['길이 20~70단어 ('+words+')',size]].map(c=>`<span class="${c[1]?'ok':'ng'}">${c[1]?'✓':'✗'} ${c[0]}</span>`).join('')}
+  $('msEx').addEventListener('click',()=>{ms.s[ms.cur]={claim:0,land:0,lift:0,when:'Last Thursday,',what:'I fell asleep on the subway after a fourteen-hour day and missed my stop by four stations. I had to take a taxi back, and it was already past midnight.',show:'That’s when I realized how normal it had become for me to be completely exhausted.'};LS.set('opic-l21-mini',ms);msLoad()});
+  $('msClr').addEventListener('click',()=>{ms.s[ms.cur]={};LS.set('opic-l21-mini',ms);msLoad()});
+  msTabs();msLoad();
+
+  /* ---------- elevator recorder ---------- */
+  const EQ=['Do you think people in your country are too busy these days?','Do you think technology has made people lonelier?','Is the education system in your country too competitive?','Do you think people today are healthier than in the past?','Do you think the generation gap is getting bigger?','Who should be more responsible for protecting the environment?'];
+  let ei=0,et=0,eid=null,elog=[],ecur=0;const ET=110;
+  function elQ(){$('elNo').textContent=`질문 ${ei+1} / ${EQ.length}`;$('elQ').textContent=EQ[ei]}
+  function elBtns(){$('elBtns').innerHTML=RN.map((r,i)=>`<button type="button" class="L${i+1} ${ecur===i+1?'cur':''}" data-l="${i+1}" ${eid?'':'disabled'}>${i+1} ${r}</button>`).join('');$('elBtns').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const l=+b.dataset.l;if(l!==ecur){elog.push([et,l]);ecur=l;elBtns();elDraw()}}))}
+  function elDraw(){const s=$('elPath');const y=l=>14+(l-1)*33;let h='';for(let l=1;l<=5;l++)h+=`<line x1="40" y1="${y(l)}" x2="412" y2="${y(l)}" stroke="${cssv('--line')}" stroke-dasharray="3 4"/><text x="4" y="${y(l)+4}" font-size="10.5" fill="${cssv('--'+RC[l-1])}">${l} ${RN[l-1]}</text>`;if(elog.length){const x=t=>40+t/ET*372;let pts='';elog.forEach((e,i)=>{const nx=i<elog.length-1?elog[i+1][0]:Math.min(et,ET);pts+=`${x(e[0])},${y(e[1])} ${x(nx)},${y(e[1])} `});h+=`<polyline points="${pts}" fill="none" stroke="${cssv('--text')}" stroke-width="3" opacity=".75"/>`;elog.forEach(e=>{h+=`<circle cx="${x(e[0])}" cy="${y(e[1])}" r="4.5" fill="${cssv('--'+RC[e[1]-1])}"/>`})}s.innerHTML=h}
+  function elEval(){if(!elog.length){$('elRes').textContent='기록이 없습니다.';return}const end=Math.max(et,1);const startTop=elog[0][1]<=2;const minL=Math.max(...elog.map(e=>e[1]));const endTop=elog[elog.length-1][1]<=2;let low=0;elog.forEach((e,i)=>{const nx=i<elog.length-1?elog[i+1][0]:end;if(e[1]>=4)low+=nx-e[0]});const pct=Math.round(low/end*100);const ok=startTop&&minL>=4&&endTop&&pct>=20&&pct<=65;
+    $('elRes').innerHTML=`${startTop?'✓':'✗'} 위(1~2칸)에서 시작 · ${minL>=4?'✓':'✗'} 4~5칸까지 착륙 · ${endTop?'✓':'✗'} 위로 이륙해서 끝 · ${pct>=20&&pct<=65?'✓':'✗'} 아래(4~5칸) 시간 ${pct}% (권장 20~65%)<br><b style="color:${ok?'var(--teal)':'var(--amber)'}">${ok?'좋은 경로입니다. 엘리베이터가 제대로 움직였습니다.':!startTop?'질문에 대한 입장(1칸)으로 시작해 보세요.':minL<4?'나의 한 장면까지 내려가 보세요. Take my own case, for example.':!endTop?'장면 뒤에 다시 올라오세요. And I don’t think I’m unusual at all.':pct>65?'장면이 너무 깁니다. 미니 서사는 세 문장이면 충분합니다.':'장면이 너무 짧습니다. 시점과 디테일 하나를 더하세요.'}</b>`}
+  function elStop(){if(eid){clearInterval(eid);eid=null}$('elStart').textContent='다시 시작';elBtns();elDraw();elEval()}
+  $('elStart').addEventListener('click',()=>{et=0;elog=[[0,1]];ecur=1;$('elRes').textContent='';$('elStart').textContent='기록 중';eid=setInterval(()=>{et++;const l=ET-et;$('elClock').textContent=Math.floor(l/60)+':'+String(l%60).padStart(2,'0');elDraw();if(et>=ET)elStop()},1000);elBtns();elDraw()});
+  $('elStop').addEventListener('click',elStop);
+  $('elNextQ').addEventListener('click',()=>{ei=(ei+1)%EQ.length;elQ()});$('elPrevQ').addEventListener('click',()=>{ei=(ei+EQ.length-1)%EQ.length;elQ()});
+  elQ();elBtns();elDraw();
+
+  /* ---------- checker ---------- */
+  function level(s){const x=s.toLowerCase().replace(/’/g,"'");
+    const anchor=/\b(last (week|month|year|summer|winter|spring|fall|thursday|monday|tuesday|wednesday|friday|saturday|sunday|night|weekend)|ago|one (day|evening|night|morning|time)|that (day|night|evening)|yesterday|this (summer|spring|winter|fall))\b/.test(x);const past=/\b(i|we|my \w+|he|she|they)\b[^.]*\b(\w+ed|was|were|had|went|got|told|said|took|came|saw|found|left|felt|realized|fell|cried|asked|called|forgot|ate)\b/.test(x);
+    if(anchor&&past)return 5;if(/\b(and i realized|i realized i'd|one evening|that night)\b/.test(x))return 5;
+    if(/\b(my (friend|friends|family|mom|dad|mother|father|sister|brother|cousin|coworker|coworkers|parents|grandmother|grandparents|neighbor)|most of my|people i know|my cousin)\b/.test(x)&&!/\b(society|country)\b/.test(x))return 3;
+    if(/^(take my own case|let me give you an example|in my case)/.test(x)||/\bi (usually|always|often|never|tend to|work|leave|get|go)\b/.test(x)&&!/\b(people|society|country)\b/.test(x))return 4;
+    if(/\b(students|office workers|young people|younger people|older people|older generation|my generation|people my age|parents|kids|children|workers|teenagers|people in their)\b/.test(x)&&!/\b(society|country|whole)\b/.test(x))return 2;
+    return 1}
+  const LANDRE=/\b(take my own case|for example|let me give you an example|i actually saw this|i remember one time|my family is a good example|in my case)\b/i;const LIFTRE=/\b(i don't think i'm unusual|that's just one example|multiply that|on a bigger scale|this isn't just my|i think that's true for a lot of)\b/i;
+  const kt=$('kText');kt.value=LS.get('opic-l21-check','');kt.addEventListener('input',()=>LS.set('opic-l21-check',kt.value));
+  const P=v=>v.s.map(x=>x[1]).join(' ');
+  $('kAL').addEventListener('click',()=>{kt.value=P(V[2]);kRun()});$('kTop').addEventListener('click',()=>{kt.value=P(V[0]);kRun()});$('kBot').addEventListener('click',()=>{kt.value=P(V[1]);kRun()});$('kRun').addEventListener('click',kRun);
+  function kRun(){const t=kt.value.trim();const o=$('kOut');if(!t){o.innerHTML='<p class="small" style="color:var(--rose)">먼저 붙여 넣으세요.</p>';return}const sents=(t.match(/[^.?!]+[.?!]?/g)||[]).map(s=>s.trim()).filter(s=>/[a-z]/i.test(s));const lv=sents.map(level);const pastP=x=>{const y=x.toLowerCase().replace(/’/g,"'");return /\b(i|we|my|it|he|she|they|then)\b[^.]*\b(\w+ed|was|were|had|went|got|took|ate|woke|called|told|said|came|left)\b/.test(y)&&!/\b(society|country|people|most|millions)\b/.test(y)};for(let i=1;i<lv.length;i++){if(lv[i-1]===5&&(lv[i]===1||lv[i]===4)&&pastP(sents[i]))lv[i]=5}
+    const tt=t.replace(/’/g,"'");const land=LANDRE.test(tt),lift=LIFTRE.test(tt);const startTop=lv.slice(0,2).some(l=>l<=2);const deep=Math.max(...lv);const endTop=lv[lv.length-1]<=2;const wTot=wc(t)||1;let wLow=0;sents.forEach((s,i)=>{if(lv[i]>=4)wLow+=wc(s)});const pct=Math.round(wLow/wTot*100);
+    const LC={g:'var(--teal)',a:'var(--amber)',r:'var(--rose)'};
+    const rows=[['문장 수',sents.length+'개','6개 이상',sents.length>=6?'g':sents.length>=4?'a':'r'],['위에서 시작',startTop?'예':'아니오','첫 두 문장 1~2칸',startTop?'g':'r'],['가장 깊은 칸',deep+'칸','4~5칸',deep>=4?'g':deep===3?'a':'r'],['위에서 끝',endTop?'예':'아니오','마지막 1~2칸',endTop?'g':'r'],['구체 비중',pct+'%','25~60%',pct>=25&&pct<=60?'g':pct>=10&&pct<=75?'a':'r'],['착륙 표현',land?'있음':'없음','있음',land?'g':'a'],['이륙 표현',lift?'있음':'없음','있음',lift?'g':'a']];
+    o.innerHTML=`<div class="metrics">${rows.map(r=>`<div style="--lc:${LC[r[3]]}"><small>${r[0]}</small><b>${r[1]}</b><span>목표 ${r[2]}</span></div>`).join('')}</div><svg id="kPath" viewBox="0 0 420 150" aria-label="문장별 경로"></svg><div class="leg">${RN.map((r,i)=>`<span class="L${i+1}"><i></i>${i+1} ${r}</span>`).join('')}</div><div class="hlv">${sents.map((s,i)=>`<span class="r${lv[i]}">${esc(s)}</span>`).join(' ')}</div><p class="small muted" style="margin:8px 0 0">문장마다 시점·과거형·인물·집단 단어로 칸을 추정합니다. 추정이 어긋날 수 있으니 경로의 전체 모양을 보세요.</p>`;
+    lad($('kPath'),lv,cssv('--text'),-1,420,150,true)}
+
+  /* ---------- myths ---------- */
+  const myths=[['사회 질문엔 사회 이야기만 해야 한다','추상어로만 답하면 짧고 일반적이 됩니다. 나의 한 장면으로 내려가야 4주차의 서사 능력이 다시 살아납니다. 단, 반드시 다시 올라오세요.'],['개인 경험을 길게 말할수록 좋다','90초 서사를 하면 질문에서 벗어납니다. 의견 답변 속의 장면은 세 문장, 15~25초짜리 미니 서사면 충분합니다.'],['예는 “for example, people…”이면 된다','for example 뒤에 다시 people이 오면 여전히 1~2칸입니다. 예는 시점과 인물, 디테일이 있는 4~5칸이어야 근거가 됩니다.'],['내 이야기가 사회를 대표하지 않으니 쓰면 안 된다','그래서 이륙 문장이 필요합니다. And I don’t think I’m unusual at all. 한 줄이 나의 장면을 사회 현상의 예로 바꿔 줍니다.'],['장면은 극적이어야 한다','지하철에서 졸다 정거장을 지나친 일, 냉장고에 달걀 하나뿐이던 밤. 평범한 장면일수록 많은 사람의 현실을 대표해서 오히려 설득력이 큽니다.'],['착륙·이륙 표현은 꾸밈이다','이동 신호가 없으면 듣는 사람은 왜 갑자기 개인 이야기를 하는지 놓칩니다. Take my own case, for example. 한 줄이 장면을 근거로 만들어 줍니다.']];
+  const my=$('mythGrid');myths.forEach(m=>{const b=document.createElement('button');b.type='button';b.className='myth';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="inner"><div class="face front"><div class="tag">함정</div><p>${m[0]}</p><div class="hint">눌러서 이유 보기</div></div><div class="face back"><div class="tag">이렇게 하세요</div><p>${m[1]}</p></div></div>`;b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));my.appendChild(b)});
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'추상의 사다리 다섯 칸의 순서(위 → 아래)는?',o:['나 → 주변 → 집단 → 사회 → 장면','사회 → 집단 → 주변 → 나 → 한 장면','장면 → 나 → 사회 → 집단 → 주변','집단 → 사회 → 나 → 장면 → 주변'],a:1,e:'넓고 일반적인 것에서 좁고 생생한 것으로.'},
+    {q:'“I usually work until eight.”와 “Last Thursday, I fell asleep on the subway.”의 차이는?',o:['차이 없다','앞은 나(일반 습관, 현재형), 뒤는 한 장면(특정 시점, 과거형)','앞이 더 구체적이다','뒤는 사회 칸이다'],a:1,e:'설득력은 5칸, 특정한 한 순간에서 나옵니다.'},
+    {q:'가장 좋은 경로는?',o:['계속 1칸','계속 5칸','1칸에서 시작 → 4~5칸 착륙 → 다시 1~2칸으로 이륙','5칸에서 시작해 5칸에서 끝'],a:2,e:'엘리베이터 경로.'},
+    {q:'“아래로 빠지기” 경로의 문제는?',o:['너무 짧다','질문(사회)에 답하지 않고 개인 일기가 된다','시제가 없다','어휘가 어렵다'],a:1,e:'내려갔으면 반드시 이륙 문장으로 올라와야 합니다.'},
+    {q:'이륙 표현은?',o:['Take my own case, for example.','I remember one time when…','And I don’t think I’m unusual at all.','Let me give you an example.'],a:2,e:'나의 장면을 사회 현상의 예로 바꾸는 문장. 나머지는 착륙 표현입니다.'},
+    {q:'의견 답변 속 미니 서사의 적절한 길이는?',o:['한 단어','세 문장, 15~25초','90초','2분'],a:1,e:'언제 → 무슨 일 → 무엇을 보여 주나.'},
+    {q:'“For example, people use their phones a lot.”가 약한 이유는?',o:['for example이 틀려서','예라고 했지만 여전히 1~2칸(사람들 일반)이라서','너무 길어서','과거형이 아니라서만'],a:1,e:'예는 시점, 인물, 디테일이 있는 4~5칸이어야 합니다.'},
+    {q:'이 강의의 전략이 AL 수준과 맞는 이유는?',o:['어려운 단어를 써서','Superior 쪽 추상 과제를 Advanced의 강점인 구체 서사로 받쳐서','답변을 짧게 해서','개인 경험을 피해서'],a:1,e:'낯선 높이에서도 내가 가장 잘하는 땅에 발을 디디는 전략입니다.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${esc(item.q)}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'21강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['추상의 사다리','ladder of abstraction','사회 → 집단 → 주변 → 나 → 한 장면으로 이어지는 일반성의 다섯 칸.'],['엘리베이터 경로','elevator path','위(사회)에서 시작해 한 장면까지 내려갔다가 다시 위로 올라오는 답변 흐름.'],['착륙','landing','일반에서 나의 장면으로 내려가는 것. Take my own case, for example.'],['이륙','lift-off','나의 장면에서 다시 일반으로 올라오는 것. And I don’t think I’m unusual at all.'],['미니 서사','mini story','의견 답변 속 세 문장짜리 장면. 언제 → 무슨 일 → 무엇을 보여 주나.'],['구체 비중','concrete share','답변 중 4~5칸 문장의 비율. 25~60%가 적당.'],['위에서 맴돌기','stuck at the top','추상어만 반복하는 경로. IH의 전형.'],['아래로 빠지기','stuck at the bottom','개인 이야기에 머물러 질문에서 벗어나는 경로.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>

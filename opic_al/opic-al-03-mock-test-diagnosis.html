@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 3강 · 1차 모의고사 녹음과 자가 진단</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+.seg button{font-size:14px}
+/* hero gap */
+.gap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.gap-grid div{background:var(--surface2);border-radius:14px;padding:14px 16px}
+.gap-grid small{display:block;font-size:13px;color:var(--muted)}
+.gap-grid b{display:block;font-family:var(--serif);font-size:30px;line-height:1.15;font-weight:600;transition:color .3s}
+.gap-grid span{font-size:12.5px;color:var(--faint)}
+.gap-grid b.bad{color:var(--rose)}
+.gap-grid b.mid{color:var(--amber)}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:20px 0}
+.rules div{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--surface)}
+.rules b{display:block;font-size:16.5px;margin-bottom:4px}
+.rules p{font-size:15px;margin:0;color:var(--muted)}
+
+/* mock test */
+.mock{border:1px solid var(--line);border-radius:22px;background:var(--surface);overflow:hidden;margin:22px 0}
+.mock-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 18px;background:var(--surface2);border-bottom:1px solid var(--line);font-size:14px}
+.mock-bar .clock{font-family:var(--serif);font-size:24px;font-variant-numeric:tabular-nums}
+.mock-bar .grow{flex:1}
+.qdots{display:flex;gap:4px;flex-wrap:wrap}
+.qdots i{width:14px;height:14px;border-radius:4px;background:var(--line);display:inline-block}
+.qdots i.done{background:var(--teal)}
+.qdots i.cur{background:var(--amber)}
+.mock-body{padding:26px 28px;min-height:360px}
+.mock-body h4{font-size:22px;margin:0 0 8px}
+.ava{display:flex;gap:18px;align-items:center;margin-bottom:18px}
+.ava-face{width:76px;height:76px;border-radius:50%;flex:none;background:radial-gradient(circle at 50% 38%,var(--violet) 0 26%,transparent 27%),radial-gradient(circle at 50% 100%,var(--violet) 0 46%,transparent 47%),var(--surface2);border:2px solid var(--line);position:relative}
+.ava-face.talk{border-color:var(--amber);box-shadow:0 0 0 6px var(--amber-soft)}
+.ava-status{font-size:15px;color:var(--muted)}
+.ava-status b{color:var(--text)}
+.qtext{font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.7;background:var(--surface2);border-radius:12px;padding:14px 18px;margin:0 0 16px}
+.qhidden{font-size:14.5px;color:var(--faint);border:1px dashed var(--line);border-radius:12px;padding:14px 18px;margin:0 0 16px}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:10px 18px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.rec{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;color:var(--muted)}
+.rec i{width:12px;height:12px;border-radius:50%;background:var(--faint);display:inline-block}
+.rec.on i{background:var(--rose);animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.level{height:10px;border-radius:5px;background:var(--line);overflow:hidden;max-width:360px;margin:8px 0 4px}
+.level i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--amber),var(--rose))}
+.opts-col{display:grid;gap:8px;max-width:520px;margin:14px 0}
+.opts-col button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:12px 16px;cursor:pointer;font-size:15.5px}
+.opts-col button:hover{border-color:var(--amber)}
+.setting{display:flex;align-items:center;gap:10px;font-size:15px;margin:6px 0}
+.setting input{width:18px;height:18px;accent-color:var(--amber)}
+.results{width:100%;border-collapse:collapse;font-size:14.5px;min-width:560px}
+.results th,.results td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:middle}
+.results th{color:var(--muted);font-weight:500}
+.results audio{height:32px;max-width:220px}
+
+/* transcription example */
+.tx{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+@media (max-width:760px){.tx{grid-template-columns:1fr}}
+.tx div{border-radius:14px;padding:16px 18px;border:1px solid var(--line);background:var(--surface)}
+.tx .lbl{font-size:13px;font-weight:600;margin-bottom:6px}
+.tx .bad .lbl{color:var(--rose)}
+.tx .good .lbl{color:var(--teal)}
+.tx p{font-family:var(--serif);font-size:16.5px;margin:0}
+.mk{font-family:var(--sans);font-size:13px;background:var(--amber-soft);color:var(--amber);border-radius:4px;padding:0 4px}
+
+/* analyzer */
+.ana{border:1px solid var(--line);border-radius:22px;background:var(--surface);padding:22px 24px;margin:22px 0}
+.ana-top{display:grid;grid-template-columns:minmax(0,1fr) 150px 170px;gap:12px;align-items:end}
+@media (max-width:720px){.ana-top{grid-template-columns:1fr 1fr}}
+.ana label{display:block;font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.ana select,.ana input[type=number]{width:100%;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:inherit;font-size:15px}
+.ana textarea{width:100%;min-height:150px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:16px/1.65 var(--serif);resize:vertical;margin-top:12px}
+.ana .qshow{font-family:var(--serif);font-style:italic;font-size:15.5px;color:var(--muted);margin:12px 0 0}
+.tagpill{display:inline-block;font-size:12.5px;border-radius:999px;padding:2px 10px;margin-left:6px;font-style:normal;font-family:var(--sans)}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:16px 0}
+.metrics div{background:var(--surface2);border-radius:12px;padding:12px 14px;border-top:3px solid var(--lc,var(--line))}
+.metrics small{display:block;font-size:12.5px;color:var(--muted)}
+.metrics b{display:block;font-family:var(--serif);font-size:26px;line-height:1.2;font-weight:600}
+.metrics span{font-size:12px;color:var(--faint)}
+.hlview{font-family:var(--serif);font-size:17px;line-height:1.9;background:var(--surface2);border-radius:12px;padding:14px 18px}
+.hlview .f{background:var(--violet-soft);box-shadow:inset 0 -2px 0 var(--violet);border-radius:3px}
+.hlview .p{background:var(--teal-soft);box-shadow:inset 0 -2px 0 var(--teal);border-radius:3px}
+.hlview .v{background:var(--amber-soft);box-shadow:inset 0 -2px 0 var(--amber);border-radius:3px}
+.hlview .s{color:var(--sky);font-weight:600}
+.hlview .z{background:var(--rose-soft);color:var(--rose);border-radius:3px;font-family:var(--sans);font-size:13px;padding:0 3px}
+.hl-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);margin:8px 0 14px}
+.hl-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.rate{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.rate span{font-size:14px;color:var(--muted);margin-right:4px}
+.rate button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:14px}
+.rate button[aria-pressed="true"]{border-color:var(--rc);background:color-mix(in srgb,var(--rc) 18%,var(--surface2));font-weight:600}
+.saved-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.saved-list button{border:1px solid var(--line);background:transparent;border-radius:8px;padding:3px 10px;font-size:13px;cursor:pointer;color:var(--muted)}
+.saved-list button.has{border-color:var(--teal);color:var(--text)}
+
+/* error log */
+.errlog{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin:18px 0}
+.errlog div{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.errlog .nm{flex:1;font-size:14.5px;line-height:1.4}
+.errlog .nm small{display:block;color:var(--faint);font-size:12.5px;font-family:var(--serif);font-style:italic}
+.errlog button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);cursor:pointer;font-size:16px;line-height:1}
+.errlog b{font-family:var(--serif);font-size:22px;min-width:2ch;text-align:center}
+.errlog div.hot{border-color:var(--rose);background:var(--rose-soft)}
+
+/* rx */
+.rx{border:1px solid var(--line);border-radius:22px;padding:22px 26px;background:linear-gradient(135deg,var(--teal-soft),var(--violet-soft))}
+.rx ol{padding-left:22px;margin:8px 0 0}
+.rx li{margin-bottom:10px}
+.rx li b{color:var(--amber)}
+.rx .none{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;1주차 3강&nbsp;&nbsp;1차 모의고사와 자가 진단</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">왜 녹음해야 하는가</a></li>
+      <li><a href="#rules">모의고사 규칙</a></li>
+      <li><a href="#mock">1차 모의고사 실행</a></li>
+      <li><a href="#transcribe">받아 적기 규칙</a></li>
+      <li><a href="#metrics">6가지 측정 지표</a></li>
+      <li><a href="#analyzer">진단 분석기</a></li>
+      <li><a href="#manual">도구가 못 보는 것</a></li>
+      <li><a href="#errors">오류 패턴 로그</a></li>
+      <li><a href="#map">나의 유지력 지도</a></li>
+      <li><a href="#rx">나의 처방전</a></li>
+      <li><a href="#myths">자가 진단의 함정</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">과제와 다음 강</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">1주차 진단과 전략 수립 · 3강</p>
+      <h1>첫 녹음은 점수가 아니라 지도입니다</h1>
+      <p class="lede">오늘은 실제 시험과 같은 조건으로 15문항을 끝까지 녹음하고, 그 녹음을 숫자로 바꿉니다. 시제가 어디서 무너지는지, 문장이 얼마나 길게 이어지는지, 필러가 얼마나 자주 끼어드는지. 이 숫자가 남은 7주 동안 무엇을 먼저 고칠지 알려 줍니다.</p>
+      <div class="meta-row"><span>학습 시간 약 2시간 30분</span><span>모의고사 40분 포함</span><span>준비물: 이어폰 마이크</span></div>
+    </div>
+    <div class="wave-card">
+      <div class="wave-switch" role="group" aria-label="비교 선택">
+        <button type="button" data-g="mem" aria-pressed="true">내가 기억하는 내 답변</button>
+        <button type="button" data-g="rec" aria-pressed="false">녹음된 내 답변</button>
+      </div>
+      <div class="gap-grid">
+        <div><small>답변 길이</small><b id="g1">2분쯤</b><span id="g1s">“꽤 길게 말했다”</span></div>
+        <div><small>필러(um, uh)</small><b id="g2">거의 없음</b><span id="g2s">“가끔 한두 번”</span></div>
+        <div><small>과거 시제</small><b id="g3">잘 지킴</b><span id="g3s">“과거형으로 말했다”</span></div>
+        <div><small>말하기 속도</small><b id="g4">보통</b><span id="g4s">“막힘없이 말했다”</span></div>
+      </div>
+      <p class="wave-cap" id="gcap" style="min-height:2.6em"></p>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>1강에서 AL의 기준을, 2강에서 서베이 설계를 정했습니다. 이제 그 기준에 내 실제 말하기를 대어 볼 차례입니다. 이번 강의의 결과물은 하나, <strong>1주차 기준선(baseline)</strong>입니다. 8주차 23강에서 같은 방식으로 다시 측정해 이 숫자와 비교하게 됩니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>실제 시험과 같은 조건으로 15문항 모의고사를 끝까지 녹음할 수 있다.</li>
+      <li>녹음을 정해진 규칙에 따라 받아 적을 수 있다.</li>
+      <li>발화 속도, 문장 길이, 복문 비율, 필러 빈도, 긴 침묵, 시제 일관성의 6가지 지표를 측정하고 해석할 수 있다.</li>
+      <li>15문항에 걸친 나의 유지력 지도를 그리고, 1강의 IM2·IH·AL 프로필 중 어디에 가까운지 판단할 수 있다.</li>
+      <li>진단 결과를 바탕으로 남은 강의 중 무엇에 집중할지 우선순위를 정할 수 있다.</li>
+    </ul>
+    <div class="callout violet">
+      <strong>시간 계획</strong>
+      <p>모의고사 40분, 받아 적기 60~80분(15문항 전체가 부담스러우면 아래 ‘우선 분석 6문항’부터), 분석과 처방 20분 정도가 걸립니다. 한 번에 다 하지 않아도 됩니다. 모의고사는 오늘, 받아 적기와 분석은 내일로 나눠도 좋습니다. 단, 녹음은 반드시 쉬지 않고 한 번에 끝까지 하세요. 유지력은 이어서 말할 때만 측정됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>왜 녹음해야 하는가</h2>
+    <p>말하는 동안 우리의 주의는 ‘다음에 무슨 말을 할까’에 쏠려 있어서, 방금 한 말을 제대로 듣지 못합니다. 그래서 말하기에 대한 자기 평가는 실제보다 후해지는 경향이 있습니다. 위의 비교 카드처럼 “2분쯤 말했다”는 답변이 녹음으로는 1분 10초이고, “필러는 거의 없었다”는 답변에 um이 분당 9번 들어 있는 일은 아주 흔합니다. 녹음은 이 <span class="term" data-tip="자신이 생각하는 수행과 실제 수행 사이의 차이. 말하기에서는 길이, 필러, 시제에서 특히 크게 나타난다.">인식 격차</span>를 없애는 유일한 방법입니다.</p>
+    <h3>1강 과제와 무엇이 다른가</h3>
+    <p>1강 과제는 질문 하나에 대한 2분 녹음이었습니다. 그것으로는 한 답변의 품질은 볼 수 있지만, 1강에서 말한 AL의 핵심인 <em>유지력</em>은 볼 수 없습니다. 유지력은 15문항, 40분이라는 길이 속에서만 드러납니다. 4번에서는 문단을 만들던 사람이 10번에서는 목록을 말하고, 12번에서는 사과만 반복하는 장면은 풀 세트를 해 봐야 보입니다.</p>
+    <div class="callout">
+      <strong>기준선은 못 나와야 정상입니다</strong>
+      <p>오늘의 녹음이 마음에 들지 않아도 다시 녹음하지 마세요. 기준선의 가치는 ‘지금의 나’를 정확히 기록하는 데 있습니다. 다시 찍은 녹음은 준비된 나이지 시험장의 나가 아닙니다. 8주 뒤에 이 녹음을 다시 들으면, 오늘 부족했던 만큼 성장이 선명하게 보일 것입니다.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="rules">
+    <p class="sec-no">2</p>
+    <h2>모의고사 규칙</h2>
+    <p>진단이 의미 있으려면 조건이 실제 시험과 같아야 합니다. 아래 여섯 가지만은 꼭 지키세요.</p>
+    <div class="rules">
+      <div><b>한 번에 끝까지</b><p>15문항을 중간에 멈추지 않고 이어서 합니다. 실제 시험에는 일시정지가 없습니다.</p></div>
+      <div><b>질문은 두 번까지</b><p>질문을 들은 직후 짧은 시간 안에만 한 번 더 들을 수 있습니다. 아래 모의고사도 5초 안에만 다시 듣기가 열립니다.</p></div>
+      <div><b>글자는 보지 않기</b><p>실제 시험은 질문을 글로 보여 주지 않습니다. ‘질문 글 보기’는 꺼 둔 채로 진행하세요.</p></div>
+      <div><b>준비 없이</b><p>스크립트나 메모를 보지 않습니다. 2강의 코어 스토리는 머릿속에서만 꺼내 씁니다.</p></div>
+      <div><b>40분 안에</b><p>전체 시간은 40분입니다. 시간 배분도 진단 대상이므로 시계를 보면서 조절하세요.</p></div>
+      <div><b>다시 찍지 않기</b><p>마음에 들지 않는 답변이 있어도 그대로 둡니다. 기준선은 첫 녹음입니다.</p></div>
+    </div>
+    <p class="muted small">아래 모의고사는 이 강의를 위해 새로 만든 문항으로, 2강 시뮬레이터에서 고른 서베이가 이 브라우저에 저장되어 있으면 그 주제로 2~7번을 구성합니다. 질문은 브라우저의 음성 합성으로 읽어 주며, 음성이 지원되지 않으면 자동으로 글로 표시됩니다. 녹음은 이 브라우저 안에서만 처리되고 어디에도 전송되지 않습니다.</p>
+  </section>
+
+  <!-- 3 MOCK -->
+  <section class="lesson" id="mock">
+    <p class="sec-no">3</p>
+    <h2>1차 모의고사 실행</h2>
+    <p>마이크 점검부터 시작하세요. 브라우저가 마이크 권한을 물으면 허용합니다. 권한을 줄 수 없는 환경이면 ‘외부 녹음기 사용’을 켜고 휴대폰 녹음 앱을 함께 켠 채 진행하면 됩니다. 이 경우 문항별 시간만 이 화면에 기록됩니다.</p>
+
+    <div class="mock" id="mockBox">
+      <div class="mock-bar">
+        <span>남은 시간</span><span class="clock" id="mClock">40:00</span>
+        <span class="grow"></span>
+        <div class="qdots" id="mDots" aria-hidden="true"></div>
+      </div>
+      <div class="mock-body" id="mBody" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="transcribe">
+    <p class="sec-no">4</p>
+    <h2>받아 적기 규칙</h2>
+    <p>받아 적기(전사)는 지루하지만 진단의 정확도를 결정합니다. 핵심 원칙은 <strong>들린 그대로, 고치지 않고</strong>입니다. 받아 적으면서 문법을 무의식적으로 고치는 순간, 진단은 내가 아니라 ‘고친 나’를 측정하게 됩니다. 분석기가 아래 표기법을 인식하므로 그대로 따라 주세요.</p>
+    <div class="tbl-wrap">
+    <table class="cmp">
+      <tr><th>필러</th><td>um, uh, er, hmm 등을 들리는 대로 모두 적습니다. 쉼표로 띄어 적으면 분석기가 셉니다. <span class="en">So, um, I went there</span></td></tr>
+      <tr><th>긴 침묵</th><td>3초 이상 아무 소리도 없으면 <span class="mk">(...)</span>로 적습니다. 1~2초의 자연스러운 쉼은 적지 않습니다.</td></tr>
+      <tr><th>자기 수정</th><td>말하다가 고쳐 말한 곳은 <span class="mk">/</span>로 표시합니다. <span class="en">we go / we went there</span></td></tr>
+      <tr><th>문장 끝</th><td>목소리가 내려가며 생각이 끝나는 곳에 마침표를 찍습니다. and로 계속 이어지면 마침표를 찍지 않습니다. 이것이 문장 길이 측정의 기준이 됩니다.</td></tr>
+      <tr><th>잘 안 들림</th><td>알아들을 수 없는 부분은 <span class="mk">[?]</span>로 적습니다. 많이 나온다면 발음이나 녹음 환경도 점검 대상입니다.</td></tr>
+      <tr><th>고치지 않기</th><td>틀린 문법, 어색한 단어, 중복된 말을 그대로 둡니다. <span class="en">my legs are hurt</span>를 hurt로 고쳐 적지 않습니다.</td></tr>
+    </table>
+    </div>
+    <div class="tx">
+      <div class="bad"><div class="lbl">고쳐 적은 전사 (진단 불가)</div><p>I went to the park with my friend last summer. We rode bikes along the river, and it was great. Suddenly it started raining, so we went to a convenience store.</p></div>
+      <div class="good"><div class="lbl">들린 그대로 적은 전사 (진단 가능)</div><p>Um, so last summer I went there with my friend. <span class="mk">(...)</span> That day we ride bicycles along the river and, uh, it was so nice. But suddenly it start raining a lot, so we <span class="mk">/</span> we go to the convenience store.</p></div>
+    </div>
+    <div class="callout teal">
+      <strong>15문항이 부담스럽다면: 우선 분석 6문항</strong>
+      <p>시간이 부족하면 4번, 7번(경험), 10번(후반 경험), 11번, 12번(롤플레이), 15번(고난도)부터 받아 적으세요. 이 여섯 문항이 1강에서 본 probe 위치이고, 붕괴 지점을 가장 많이 보여 줍니다. 나머지는 듣기만 하고 유지력 지도의 자기 평가만 해도 됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="metrics">
+    <p class="sec-no">5</p>
+    <h2>6가지 측정 지표</h2>
+    <p>1강의 ACTFL 4대 기준은 평가자의 판단 기준이라 직접 숫자로 재기 어렵습니다. 그래서 이 과정에서는 그 기준과 강하게 연결되는 여섯 가지 관찰 가능한 지표를 씁니다. 목표 범위는 ACTFL이 정한 수치가 아니라 이 과정의 경험적 기준입니다. 숫자 하나로 등급이 정해지지 않으며, 지표들은 ‘어디를 고쳐야 하는가’를 찾는 도구일 뿐입니다. 탭을 넘겨 각 지표를 확인하세요.</p>
+    <div class="tabs" role="tablist" id="mTabs"></div>
+    <div class="tabpanel" id="mPanel" role="tabpanel"></div>
+  </section>
+
+  <!-- 6 ANALYZER -->
+  <section class="lesson" id="analyzer">
+    <p class="sec-no">6</p>
+    <h2>진단 분석기</h2>
+    <p>문항을 고르고 받아 적은 내용을 붙여 넣은 뒤 ‘분석’을 누르세요. 이 화면에서 모의고사를 했다면 답변 시간이 자동으로 채워집니다. 결과는 문항별로 이 브라우저에 저장되어 9절의 유지력 지도와 10절의 처방전으로 이어집니다. 처음이라면 ‘예시 불러오기’로 작동 방식을 먼저 확인하세요.</p>
+    <div class="callout rose">
+      <strong>분석기는 판정이 아니라 표시를 합니다</strong>
+      <p>시제 분석은 단어 목록 기반의 단순한 방식이라, 과거 경험 문항에서 현재형으로 보이는 동사를 ‘확인 필요’로 표시할 뿐입니다. <span class="en">We usually go there on weekends</span>처럼 습관을 말하는 현재형은 올바른 표현인데도 표시됩니다. 표시된 동사를 하나씩 보며 진짜 오류인지 판단하는 것은 여러분의 몫이고, 그 과정 자체가 시제 감각을 키우는 훈련입니다.</p>
+    </div>
+    <div class="ana" id="ana">
+      <div class="ana-top">
+        <div><label for="aQ">문항</label><select id="aQ"></select></div>
+        <div><label for="aDur">답변 시간(초)</label><input type="number" id="aDur" min="5" max="600" value="90"></div>
+        <div><label>&nbsp;</label><button type="button" class="btn" id="aSample" style="width:100%">예시 불러오기</button></div>
+      </div>
+      <p class="qshow" id="aQText"></p>
+      <label for="aText" style="margin-top:6px">받아 적은 답변</label>
+      <textarea id="aText" placeholder="들린 그대로 붙여 넣으세요. 필러는 쉼표로, 3초 이상 침묵은 (...), 자기 수정은 / 로 표시합니다."></textarea>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn primary" id="aRun">분석</button><button type="button" class="btn" id="aClear">이 문항 지우기</button><span class="small muted" id="aMsg"></span></div>
+      <div id="aOut"></div>
+      <div class="saved-list" id="aSaved" aria-label="저장된 문항"></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="manual">
+    <p class="sec-no">7</p>
+    <h2>도구가 못 보는 것</h2>
+    <p>숫자는 문장의 표면을 잽니다. 하지만 1강에서 본 AL의 핵심, 즉 <em>기능</em>을 수행했는지는 사람이 들어야 압니다. 녹음 전체를 한 번 더 들으며 아래 항목을 체크하세요. 체크하지 못한 항목은 지표가 좋아도 등급을 끌어내리는 요인입니다.</p>
+    <div class="check" id="manualBox">
+      <div id="manualItems"></div>
+      <div class="check-result"><strong id="manualCount">0 / 10</strong><div class="check-bar"><i id="manualFill"></i></div><div class="small" id="manualMsg"></div></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="errors">
+    <p class="sec-no">8</p>
+    <h2>오류 패턴 로그</h2>
+    <p>받아 적은 전사를 읽으며 오류를 발견할 때마다 해당 칸의 +를 누르세요. 1강에서 말했듯 AL에서도 오류는 허용되지만, <strong>같은 종류의 오류가 반복되는 패턴</strong>은 문제가 됩니다. 15문항을 다 세고 나면 숫자가 큰 두세 칸이 나의 ‘패턴 오류’입니다. 5개 이상이면 칸이 빨갛게 표시됩니다.</p>
+    <div class="errlog" id="errlog"></div>
+    <div class="ctrl"><button type="button" class="reset" id="errReset">로그 초기화</button></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="map">
+    <p class="sec-no">9</p>
+    <h2>나의 유지력 지도</h2>
+    <p>분석기에서 문항마다 고른 자기 평가(문단 유지, 간신히 유지, 붕괴)가 1강의 15문항 그래프와 같은 모양으로 그려집니다. 막대를 누르면 그 문항의 지표 요약이 나옵니다. 아직 평가하지 않은 문항은 회색으로 남습니다.</p>
+    <div class="sim">
+      <div class="sim-head"><strong>1차 모의고사 유지력 지도</strong><span class="small muted" id="mapCount"></span></div>
+      <div class="bars" id="myBars"><div class="ref" id="myRef"><span>Advanced 유지선</span></div></div>
+      <div class="bars-x" id="myBarsX"></div>
+      <div class="sim-note" id="myNote" aria-live="polite">막대를 눌러 문항별 요약을 확인하세요.</div>
+      <p class="sim-verdict" id="myVerdict"></p>
+      <div class="wave-legend"><span><i style="background:var(--teal)"></i>문단 유지</span><span><i style="background:var(--amber)"></i>간신히 유지</span><span><i style="background:var(--rose)"></i>붕괴</span><span><i style="background:var(--line)"></i>미평가</span></div>
+    </div>
+    <h3>지도를 읽는 법</h3>
+    <p>1강의 세 프로필을 떠올리세요. 붕괴가 경험 문항(4, 7, 10번)과 후반부에 고르게 퍼져 있다면 IM2형, Advanced 유지가 여러 번 있지만 probe 위치(7, 10, 12, 15번)에서 반복해서 무너진다면 IH형, 노란 막대가 있어도 빨간 막대가 거의 없다면 AL형입니다. 대부분의 수험자는 오늘 IH형 지도를 얻습니다. 그리고 IH형 지도는 고칠 곳이 가장 분명한 지도이기도 합니다. 빨간 막대가 서 있는 위치가 곧 남은 7주의 훈련 목록입니다.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="rx">
+    <p class="sec-no">10</p>
+    <h2>나의 처방전</h2>
+    <p>분석기 결과, 체크리스트, 오류 로그, 유지력 지도를 합쳐 우선순위를 만듭니다. 위쪽일수록 먼저 손대야 할 항목이며, 각 항목 옆에 그 문제를 다루는 강의 번호가 붙습니다. 데이터를 더 입력할수록 처방이 정확해집니다.</p>
+    <div class="rx" id="rxBox"></div>
+    <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="rxExport">기준선 기록 텍스트로 꺼내기</button><span class="small muted" id="rxMsg"></span></div>
+    <textarea id="rxText" readonly style="display:none;width:100%;min-height:200px;margin-top:10px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:13.5px/1.6 var(--sans);padding:12px" aria-label="기준선 기록"></textarea>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="myths">
+    <p class="sec-no">11</p>
+    <h2>자가 진단의 함정</h2>
+    <p>자가 진단을 처음 하는 사람들이 자주 빠지는 함정입니다. 카드를 눌러 뒤집어 보세요.</p>
+    <div class="myths" id="mythGrid"></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">12</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">13</p>
+    <h2>과제와 다음 강</h2>
+    <div class="assign">
+      <h3 style="margin-top:0">3강 과제: 1주차 기준선 확정</h3>
+      <ol>
+        <li>3절 모의고사를 한 번에 끝까지 녹음하고, 녹음 파일을 모두 내려받아 ‘1주차 기준선’ 폴더에 보관합니다.</li>
+        <li>최소한 우선 분석 6문항(4, 7, 10, 11, 12, 15번)을 받아 적고 6절 분석기에 넣습니다. 여유가 있으면 15문항 전부를 합니다.</li>
+        <li>분석기의 ‘확인 필요’ 동사를 하나씩 보며 진짜 시제 오류를 8절 로그에 기록합니다.</li>
+        <li>7절 체크리스트와 9절 자기 평가를 마칩니다.</li>
+        <li>10절 처방전을 텍스트로 꺼내 기준선 폴더에 함께 저장합니다. 23강에서 이 파일과 비교합니다.</li>
+        <li>처방전 1순위 항목 하나를 골라, 그 문항을 다시 녹음하지 말고 <em>왜</em> 무너졌는지 한 줄로 적어 둡니다. 원인 추측이 다음 주 연습의 출발점입니다.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>4강. 복문 구조 훈련: 관계절, 분사구문, 접속부사로 문장 연결하기</h4></div>
+      <span class="pill">2주차 시작</span>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">14</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 새로 나온 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: WPM, 필러, 기준선">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 3강. 모의고사 문항은 학습용으로 새로 작성했으며 실제 시험 문항이 아닙니다. 지표의 목표 범위는 이 과정의 경험적 기준이며 ACTFL이나 주관사가 정한 수치가 아닙니다. 녹음과 입력 내용은 이 브라우저에만 저장되며 외부로 전송되지 않습니다. 녹음 파일 자체는 페이지를 닫으면 사라지므로 반드시 내려받아 두세요.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  /* theme */
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+  /* progress + toc */
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* tooltips */
+  const pop=$('tipPop');
+  function showTip(el){pop.textContent=el.dataset.tip;pop.classList.add('on');const r=el.getBoundingClientRect();const w=Math.min(300,window.innerWidth-24);pop.style.maxWidth=w+'px';let left=r.left+window.scrollX;left=Math.min(left,window.scrollX+window.innerWidth-w-12);pop.style.left=Math.max(12,left)+'px';pop.style.top=(r.bottom+window.scrollY+8)+'px'}
+  function hideTip(){pop.classList.remove('on')}
+  document.querySelectorAll('.term').forEach(el=>{el.tabIndex=0;el.addEventListener('mouseenter',()=>showTip(el));el.addEventListener('mouseleave',hideTip);el.addEventListener('focus',()=>showTip(el));el.addEventListener('blur',hideTip);el.addEventListener('click',e=>{e.stopPropagation();pop.classList.contains('on')?hideTip():showTip(el)})});
+  document.addEventListener('click',hideTip);
+
+  /* hero gap */
+  const GAP={mem:[['2분쯤','“꽤 길게 말했다”',''],['거의 없음','“가끔 한두 번”',''],['잘 지킴','“과거형으로 말했다”',''],['보통','“막힘없이 말했다”','']],
+             rec:[['1분 12초','예상보다 40% 짧음','mid'],['분당 9회','um 7번, uh 4번','bad'],['5곳 붕괴','문제가 생긴 대목에 집중','bad'],['분당 84단어','긴 침묵 3번 포함','mid']]};
+  function gap(m){GAP[m].forEach((g,i)=>{const b=$('g'+(i+1));b.textContent=g[0];b.className=g[2];$('g'+(i+1)+'s').textContent=g[1]});$('gcap').textContent=m==='mem'?'답변 직후 수험자가 스스로 떠올린 자기 평가입니다.':'같은 답변을 녹음해 받아 적고 측정한 결과입니다. (이해를 돕기 위한 예시)';document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===m))}
+  document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.addEventListener('click',()=>gap(b.dataset.g)));gap('mem');
+
+  /* ---------- question bank ---------- */
+  const T={exp:'past',desc:'desc',rout:'rout',rp1:'rp',rp2:'rp',adv:'adv',intro:'intro'};
+  const CLQ={
+    outdoor:['You indicated in the survey that you go to parks. Describe the park you go to most often. Where is it, and what does it look like?','What do you usually do when you go to the park? Tell me about your routine, from the moment you arrive until you leave.','Tell me about a memorable experience you had at a park. When was it, who were you with, and what happened that made it so memorable?'],
+    watch:['You indicated that you like going to the movies. Describe the movie theater you usually go to. What does it look like, and what is it like inside?','What do you usually do before and after you watch a movie? Tell me about it step by step.','Tell me about a movie-going experience you will never forget. What happened, and why was it so memorable?'],
+    travel:['You indicated that you enjoy traveling in your country. Describe a place in your country that you like to visit. What is it like there?','How do you usually prepare for a trip? Tell me about everything you do, from planning to packing.','Tell me about a trip that did not go as planned. What happened, and how did you deal with it?'],
+    home:['Tell me about your home. What does it look like, and which room do you like the most? Why?','What do you usually do when you spend a vacation at home? Describe a typical day.','Tell me about a memorable vacation you spent at home. What did you do, and what made it special?'],
+    city:['You indicated that you go to cafés. Describe a café you often go to. Where is it, and what does it look like?','What do you usually do when you go to the café? Tell me about a typical visit.','Tell me about something unexpected that happened at a café. What happened, and how did it turn out?']
+  };
+  const LATE={
+    same:['I would like to know about recycling in your country. What kinds of things do people recycle, and how do they do it?','Tell me about how you recycle at home. What steps do you take?','Tell me about a time when you had a problem with recycling or throwing something away. What happened?',
+      'I would like to give you a situation and ask you to act it out. You want to buy tickets for a concert. Call the ticket office and ask three or four questions to get information about the concert.',
+      'I am sorry, but there is a problem I need you to resolve. When you arrive at the concert hall, you find out that your tickets are for the wrong date. Call your friend, explain the situation, and give two or three alternatives.',
+      'That is the end of the situation. Have you ever had a problem with tickets or a reservation? Tell me what happened and how you dealt with it.',
+      'Compare the concerts or performances people went to when you were younger with the ones people go to today. What has changed?',
+      'Some people say it has become too expensive to go to concerts these days. What do you think about that, and why do you think prices have gone up?'],
+    hard:['Let us talk about recycling. Describe the recycling system where you live. What items are separated, where do people take them, and how often are they collected? Please give me as many details as you can.','How has the way people in your country recycle changed over the years? What do you think caused those changes?','Tell me about a specific time when you made a mistake with recycling or had trouble getting rid of something. Explain what happened, how you handled it, and what you learned from it.',
+      'I would like to give you a situation and ask you to act it out. You want to buy tickets for a concert. Call the ticket office and ask three or four questions about the date, the seats, the price, and how to pick up the tickets.',
+      'I am sorry, but there is a problem I need you to resolve. When you arrive at the concert hall, you find out that your tickets are for the wrong date, and all the other dates are sold out. Call your friend, explain the situation, and offer two or three alternatives so that you can still have a good evening together.',
+      'That is the end of the situation. Have you ever had to change your plans because of a problem with a reservation? Describe the situation in detail, what you did to fix it, and how things turned out in the end.',
+      'Think about how people enjoyed music ten years ago and how they enjoy it now. What are the biggest differences, and how have these changes affected the music industry?',
+      'Many people are worried about ticket scalping, where people buy tickets in large amounts and resell them at much higher prices. What concerns do people have about this, and what do you think should be done about it?']
+  };
+  const TYPES=['intro','desc','rout','exp','desc','rout','exp','desc','rout','exp','rp1','rp2','exp','adv','adv'];
+  const TNAME={intro:['자기소개','var(--faint)'],desc:['묘사','var(--sky)'],rout:['습관·변화','var(--violet)'],exp:['과거 경험','var(--teal)'],rp1:['롤플레이 질문','var(--amber)'],rp2:['롤플레이 해결','var(--amber)'],adv:['고난도','var(--rose)']};
+  function pickClusters(){const s=LS.get('opic-l2-survey',null);const order=['outdoor','watch','travel','home','city'];const map={'공원 가기':'outdoor','해변 가기':'outdoor','캠핑하기':'outdoor','걷기':'outdoor','조깅':'outdoor','하이킹·트레킹':'outdoor','영화 보기':'watch','공연 보기':'watch','콘서트 보기':'watch','음악 감상하기':'watch','국내 여행':'travel','해외 여행':'travel','차로 드라이브하기':'travel','집에서 보내는 휴가':'home','TV 시청하기':'home','요리하기':'home','카페·커피전문점 가기':'city','쇼핑하기':'city'};
+    let got=[];if(s&&Array.isArray(s.i)){s.i.forEach(n=>{const c=map[n];if(c&&!got.includes(c))got.push(c)})}
+    order.forEach(c=>{if(got.length<2&&!got.includes(c))got.push(c)});return {cl:got.slice(0,2),fromSurvey:!!(s&&s.i&&s.i.length)}}
+  function buildSet(mode){const {cl}=pickClusters();const L=LATE[mode==='hard'?'hard':'same'];
+    return ['Let us start the interview now. Tell me a little bit about yourself.',...CLQ[cl[0]],...CLQ[cl[1]],...L]}
+
+  /* ---------- mock test ---------- */
+  const mb=$('mBody'),mDots=$('mDots'),mClock=$('mClock');
+  for(let i=0;i<15;i++){const d=document.createElement('i');mDots.appendChild(d)}
+  let M={stream:null,ac:null,an:null,raf:null,mime:'',rec:null,chunks:[],blobs:Array(15).fill(null),durs:Array(15).fill(0),qi:0,set:null,mode:'same',showText:false,external:false,left:2400,tick:null,qStart:0,replayUsed:false,replayTimer:null,tts:('speechSynthesis' in window)};
+  function dots(){[...mDots.children].forEach((d,i)=>{d.className=i<M.qi?'done':i===M.qi&&M.set?'cur':''})}
+  function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+  function startScreen(){
+    const pc=pickClusters();
+    mb.innerHTML=`<h4>시작 전 점검</h4>
+    <p class="muted">${pc.fromSurvey?'2강에서 저장한 서베이를 바탕으로 2~7번 주제를 정했습니다.':'2강 서베이 기록이 없어 기본 주제(공원, 영화)로 구성합니다.'} 8~10번은 돌발 주제, 11~13번은 롤플레이, 14~15번은 고난도 문항입니다.</p>
+    <div class="setting"><input type="checkbox" id="optExt"><label for="optExt">외부 녹음기 사용 (이 화면에서는 녹음하지 않고 시간만 기록)</label></div>
+    <div class="setting"><input type="checkbox" id="optText"><label for="optText">질문 글 보기 (진단 목적이라면 꺼 두세요)</label></div>
+    <div id="micArea" style="margin:14px 0">
+      <button type="button" class="btn" id="micBtn">마이크 점검</button>
+      <div class="level"><i id="lvl"></i></div>
+      <div class="small muted" id="micMsg">버튼을 누르고 아무 문장이나 말해 보세요. 막대가 움직이면 정상입니다.</div>
+    </div>
+    ${M.tts?'<button type="button" class="btn" id="ttsTest">질문 음성 들어 보기</button>':'<p class="small" style="color:var(--amber)">이 브라우저는 음성 합성을 지원하지 않아 질문이 글로 표시됩니다.</p>'}
+    <div class="ctrl" style="margin-top:18px"><button type="button" class="btn primary" id="startBtn">모의고사 시작 (40분)</button></div>`;
+    $('optExt').addEventListener('change',e=>{M.external=e.target.checked;$('micArea').style.display=M.external?'none':''});
+    $('optText').addEventListener('change',e=>M.showText=e.target.checked);
+    $('micBtn').addEventListener('click',initMic);
+    if(M.tts)$('ttsTest').addEventListener('click',()=>speak('Hello. This is a sample question. I will read each question like this.'));
+    $('startBtn').addEventListener('click',startTest);
+  }
+  async function initMic(){
+    if(M.stream)return true;
+    try{
+      M.stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      const AC=window.AudioContext||window.webkitAudioContext;M.ac=new AC();const src=M.ac.createMediaStreamSource(M.stream);M.an=M.ac.createAnalyser();M.an.fftSize=512;src.connect(M.an);
+      const buf=new Uint8Array(M.an.fftSize);const loop=()=>{M.an.getByteTimeDomainData(buf);let m=0;for(const v of buf)m=Math.max(m,Math.abs(v-128));const l=$('lvl');if(l)l.style.width=Math.min(100,m/90*100)+'%';M.raf=requestAnimationFrame(loop)};loop();
+      for(const t of ['audio/webm;codecs=opus','audio/webm','audio/ogg','audio/mp4']){if(window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t)){M.mime=t;break}}
+      if($('micMsg'))$('micMsg').textContent='마이크가 연결되었습니다. 막대가 말소리에 반응하는지 확인하세요.';
+      return true;
+    }catch(e){if($('micMsg'))$('micMsg').innerHTML='<span style="color:var(--rose)">마이크를 사용할 수 없습니다.</span> 브라우저 권한을 확인하거나, ‘외부 녹음기 사용’을 켜고 휴대폰 녹음 앱으로 진행하세요.';return false}
+  }
+  function speak(text,onend){
+    if(!M.tts){onend&&onend();return}
+    speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.95;
+    const vs=speechSynthesis.getVoices().filter(v=>/en[-_]US/i.test(v.lang));if(vs.length)u.voice=vs.find(v=>/female|samantha|jenny|aria|google us/i.test(v.name))||vs[0];
+    let done=false;const fin=()=>{if(done)return;done=true;onend&&onend()};u.onend=fin;u.onerror=fin;
+    speechSynthesis.speak(u);
+    setTimeout(()=>{if(!speechSynthesis.speaking)fin()},Math.max(4000,text.split(' ').length*520));
+  }
+  async function startTest(){
+    if(!M.external){const ok=await initMic();if(!ok){return}}
+    if(!M.tts)M.showText=true;
+    M.set=buildSet('same');M.mode='same';M.qi=0;M.left=2400;LS.set('opic-l3-qs',{set:M.set,mode:'same'});
+    M.tick=setInterval(()=>{M.left--;mClock.textContent=fmt(M.left);if(M.left<=0){clearInterval(M.tick);finishQ(true)}},1000);
+    showQ();
+  }
+  function showQ(){
+    dots();const i=M.qi,q=M.set[i],ty=TYPES[i];M.replayUsed=false;
+    mb.innerHTML=`<div class="ava"><div class="ava-face" id="avaF"></div><div class="ava-status"><b>${i+1}번 / 15</b> <span class="tagpill" style="border:1px solid ${TNAME[ty][1]};color:${TNAME[ty][1]}">${TNAME[ty][0]}</span><br><span id="avaS">질문을 읽는 중입니다…</span></div></div>
+    ${M.showText?`<div class="qtext">${esc(q)}</div>`:'<div class="qhidden">질문 글은 숨겨져 있습니다. 실제 시험처럼 귀로만 들으세요.</div>'}
+    <div class="ctrl"><button type="button" class="btn" id="replay" disabled>다시 듣기</button><span class="rec" id="recI"><i></i><span id="recT">대기</span></span><span class="grow" style="flex:1"></span><button type="button" class="btn primary" id="nextBtn" disabled>${i===14?'시험 마치기':'다음 문항'}</button><button type="button" class="btn" id="stopAll">중단</button></div>`;
+    $('nextBtn').addEventListener('click',()=>finishQ(false));
+    $('stopAll').addEventListener('click',()=>{if(confirm('모의고사를 중단할까요? 지금까지의 녹음은 결과 화면에 남습니다.')){finishQ(true)}});
+    $('replay').addEventListener('click',()=>{if(M.replayUsed)return;M.replayUsed=true;$('replay').disabled=true;clearTimeout(M.replayTimer);$('avaF').classList.add('talk');speak(q,()=>{const f=$('avaF');if(f)f.classList.remove('talk')})});
+    $('avaF').classList.add('talk');
+    speak(q,()=>{const f=$('avaF');if(!f)return;f.classList.remove('talk');$('avaS').textContent='답변하세요. 5초 동안 다시 듣기를 쓸 수 있습니다.';const rb=$('replay');rb.disabled=false;M.replayTimer=setTimeout(()=>{if(rb)rb.disabled=true},5000);$('nextBtn').disabled=false;beginRec()});
+  }
+  function beginRec(){
+    M.qStart=performance.now();
+    const ri=$('recI');ri.classList.add('on');
+    if(!M.external&&M.stream&&window.MediaRecorder){M.chunks=[];try{M.rec=new MediaRecorder(M.stream,M.mime?{mimeType:M.mime}:undefined)}catch(e){M.rec=new MediaRecorder(M.stream)}M.rec.ondataavailable=e=>{if(e.data&&e.data.size)M.chunks.push(e.data)};M.rec.start()}
+    const upd=()=>{const t=$('recT');if(!t||!ri.classList.contains('on'))return;t.textContent=(M.external?'시간 기록 ':'녹음 중 ')+fmt((performance.now()-M.qStart)/1000);setTimeout(upd,500)};upd();
+  }
+  function finishQ(endAll){
+    if(M.tts)speechSynthesis.cancel();clearTimeout(M.replayTimer);
+    const i=M.qi;const dur=M.qStart?(performance.now()-M.qStart)/1000:0;M.durs[i]=Math.round(dur);M.qStart=0;
+    const after=()=>{const durs=LS.get('opic-l3-dur',Array(15).fill(0));durs[i]=M.durs[i];LS.set('opic-l3-dur',durs);
+      if(endAll||i===14||M.left<=0){M.qi=i+1;endTest();return}
+      M.qi=i+1;if(M.qi===7){readjust()}else showQ()};
+    if(M.rec&&M.rec.state==='recording'){const r=M.rec;r.onstop=()=>{M.blobs[i]=new Blob(M.chunks,{type:r.mimeType||'audio/webm'});M.rec=null;after()};r.stop()}else after();
+  }
+  function readjust(){
+    dots();
+    mb.innerHTML=`<h4>난이도 재조정</h4><p class="muted">1~7번을 마쳤습니다. 2강에서 정한 나의 재조정 규칙을 떠올리고 선택하세요. 남은 시간 동안 시계는 계속 갑니다.</p>
+    <div class="opts-col"><button type="button" data-m="easy">쉬운 질문</button><button type="button" data-m="same">비슷한 질문</button><button type="button" data-m="hard">어려운 질문</button></div>
+    <p class="small muted">이 모의고사에서 ‘쉬운 질문’은 ‘비슷한 질문’과 같은 문항으로 진행되며, 선택 기록만 남습니다.</p>`;
+    mb.querySelectorAll('[data-m]').forEach(b=>b.addEventListener('click',()=>{M.mode=b.dataset.m;const late=LATE[M.mode==='hard'?'hard':'same'];M.set=M.set.slice(0,7).concat(late);LS.set('opic-l3-qs',{set:M.set,mode:M.mode});showQ()}));
+  }
+  function endTest(){
+    clearInterval(M.tick);if(M.tts)speechSynthesis.cancel();M.qi=15;dots();[...mDots.children].forEach((d,j)=>d.className=M.durs[j]?'done':'');
+    const used=2400-M.left;const ext=M.external||!M.blobs.some(Boolean);
+    let rows='';for(let i=0;i<15;i++){if(!M.durs[i]&&!M.blobs[i])continue;const b=M.blobs[i];let url='';if(b){url=URL.createObjectURL(b)}const ext2=(b&&b.type.includes('mp4'))?'m4a':(b&&b.type.includes('ogg'))?'ogg':'webm';
+      rows+=`<tr><td>${i+1}번</td><td>${TNAME[TYPES[i]][0]}</td><td>${fmt(M.durs[i])}</td><td>${b?`<audio controls src="${url}"></audio>`:'<span class="muted">외부 녹음</span>'}</td><td>${b?`<a href="${url}" download="opic-1st-q${String(i+1).padStart(2,'0')}.${ext2}">내려받기</a>`:''}</td></tr>`}
+    mb.innerHTML=`<h4>모의고사가 끝났습니다</h4><p>사용 시간 <b>${fmt(used)}</b> / 40:00, 재조정 선택 <b>${({easy:'쉬운 질문',same:'비슷한 질문',hard:'어려운 질문'})[M.mode]}</b>. 문항별 답변 시간은 분석기에 자동으로 채워집니다.</p>
+    ${ext?'<p class="muted">외부 녹음기로 진행했다면 녹음 파일을 문항 번호에 맞게 나눠 두세요.</p>':'<p style="color:var(--amber)">녹음 파일은 페이지를 닫으면 사라집니다. 지금 모두 내려받으세요.</p>'}
+    <div class="tbl-wrap"><table class="results"><tr><th>문항</th><th>유형</th><th>시간</th><th>듣기</th><th></th></tr>${rows||'<tr><td colspan="5" class="muted">기록된 문항이 없습니다.</td></tr>'}</table></div>
+    <div class="ctrl" style="margin-top:14px">${ext?'':'<button type="button" class="btn" id="dlAll">전체 내려받기</button>'}<a class="btn" href="#transcribe" style="text-decoration:none;color:inherit">받아 적기 규칙으로</a><button type="button" class="btn" id="again">처음 화면으로</button></div>`;
+    if($('dlAll'))$('dlAll').addEventListener('click',()=>{mb.querySelectorAll('a[download]').forEach((a,k)=>setTimeout(()=>a.click(),k*400))});
+    $('again').addEventListener('click',()=>{if(confirm('처음 화면으로 돌아갈까요? 내려받지 않은 녹음은 사라집니다.')){M.set=null;M.qi=0;M.blobs=Array(15).fill(null);M.durs=Array(15).fill(0);M.left=2400;mClock.textContent='40:00';dots();startScreen()}});
+    fillQSelect();loadQ();
+  }
+  startScreen();
+
+  /* ---------- metric tabs ---------- */
+  const MT=[
+    {k:'발화 속도',en:'Words per minute (WPM)',c:'var(--teal)',d:'1분에 말한 단어 수입니다. 필러와 표기 기호는 빼고 셉니다. 속도 자체가 목표는 아니지만, 너무 느리다는 것은 문장을 머릿속에서 조립하는 데 시간이 걸린다는 신호이고, 이는 1강의 정확성 기준 중 유창성과 연결됩니다.',how:'단어 수 ÷ (답변 시간 ÷ 60)',t:[['붉은 신호','80 미만','문장 조립이 말하기 속도를 따라가지 못함'],['노란 신호','80~110','이해에는 문제없지만 흐름이 자주 끊김'],['목표','110 이상','자연스러운 대화 속도. 너무 빨라서 시제가 무너진다면 오히려 늦추기']],fix:'9강 공통 답변 틀로 조립 시간을 줄이고, 매일 짧은 섀도잉을 병행합니다.'},
+    {k:'문장 길이',en:'Mean length of sentence',c:'var(--sky)',d:'마침표 사이의 평균 단어 수입니다. 짧은 문장의 나열은 1강의 텍스트 유형에서 ‘개별 문장’ 단계에 머문다는 신호입니다. 반대로 지나치게 길면 and로만 이어 붙인 문장일 가능성이 있으니 복문 비율과 함께 봐야 합니다.',how:'전체 단어 수 ÷ 문장 수',t:[['붉은 신호','8 미만','IM형 짧은 문장 나열'],['노란 신호','8~12','연결은 되지만 단조로움'],['목표','12~22','복문이 섞인 Advanced형 문장'],['주의','25 초과','and, so로 끝없이 잇는 런온 문장 의심']],fix:'4강 복문 구조 훈련에서 관계절과 분사구문으로 문장 연결 방식을 늘립니다.'},
+    {k:'복문 비율',en:'Subordination ratio',c:'var(--violet)',d:'because, when, which, although 같은 종속 연결어가 들어간 문장의 비율입니다. and, but, so는 문장을 ‘나란히’ 놓을 뿐이지만, 종속 연결어는 원인, 시간, 조건, 양보 같은 논리 관계를 만듭니다. 문단 길이 담화의 뼈대가 바로 이 관계입니다.',how:'종속 연결어가 있는 문장 수 ÷ 전체 문장 수',t:[['붉은 신호','20% 미만','관계없는 문장의 나열'],['노란 신호','20~40%','부분적으로 논리 연결'],['목표','40% 이상','원인과 시간 관계로 엮인 문단']],fix:'4강에서 종속절, 5강에서 시간 접속사(when, while, by the time)를 집중 훈련합니다.'},
+    {k:'필러 빈도',en:'Fillers per minute',c:'var(--amber)',d:'um, uh, er 같은 소리가 1분에 몇 번 나오는지입니다. AL에서도 망설임은 허용되지만, 필러가 많으면 담화가 끊긴 것처럼 들립니다. 필러를 없애는 것보다 Well, Actually, Let me think 같은 담화 표지어로 바꾸는 것이 목표입니다.',how:'필러 수 ÷ (답변 시간 ÷ 60)',t:[['붉은 신호','분당 8회 초과','문장마다 필러가 끼어듦'],['노란 신호','분당 4~8회','생각할 때마다 필러'],['목표','분당 4회 미만','필러 대신 담화 표지어로 시간을 범']],fix:'6강 필러와 담화 표지어에서 대체 표현 세트를 만듭니다.'},
+    {k:'긴 침묵',en:'Long pauses (3s+)',c:'var(--rose)',d:'3초 이상 아무 소리도 없는 구간입니다. 필러보다 더 큰 단절 신호이며, 주로 할 말이 바닥났거나 단어를 찾지 못할 때 나옵니다. 침묵이 어디서 나오는지가 중요합니다. 문제가 생긴 대목에서 반복된다면 1강에서 본 붕괴의 전조입니다.',how:'(...) 표기 수',t:[['붉은 신호','3회 이상','답변 흐름이 여러 번 끊김'],['노란 신호','1~2회','특정 지점에서 막힘'],['목표','0회','막혀도 돌려 말하기와 표지어로 이어 감']],fix:'6강 담화 표지어, 15강 돌발 대응, 21강 추상 질문 구체화로 ‘할 말이 바닥나는’ 상황을 줄입니다.'},
+    {k:'시제 일관성',en:'Tense consistency (past questions)',c:'var(--teal)',d:'과거 경험 문항에서 현재형으로 보이는 동사가 얼마나 섞였는지입니다. 1강에서 IH와 AL을 가른 가장 큰 차이였습니다. 분석기는 ‘확인 필요’ 동사를 표시할 뿐이니, 직접 보고 진짜 오류만 8절 로그에 적으세요.',how:'확인 필요 동사 수 ÷ (과거형 + 확인 필요 동사 수)',t:[['붉은 신호','20% 초과','과거 서사가 성립하지 않음'],['노란 신호','5~20%','특정 대목(문제 상황)에서 무너짐'],['목표','5% 미만','습관 현재형 같은 의도된 현재형만 남음']],fix:'5강 시제 일관성, 10~12강 스토리텔링 구조에서 문제 상황 서술을 집중 훈련합니다.'}
+  ];
+  const mt=$('mTabs'),mp=$('mPanel');
+  MT.forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.style.setProperty('--tc',m.c);b.textContent=m.k;b.addEventListener('click',()=>showM(i));mt.appendChild(b)});
+  function showM(i){const m=MT[i];mt.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',j===i));mp.innerHTML=`<h4 style="color:${m.c}">${m.k}</h4><div class="en-name">${m.en}</div><p>${m.d}</p><p><strong>계산</strong> ${m.how}</p><div class="tbl-wrap"><table class="cmp">${m.t.map(r=>`<tr${r[0]==='목표'?' class="al"':''}><th>${r[0]}</th><td><b>${r[1]}</b> ${r[2]}</td></tr>`).join('')}</table></div><p style="margin:14px 0 0"><strong>신호가 나쁠 때</strong> ${m.fix}</p>`}
+  showM(0);
+
+  /* ---------- analyzer ---------- */
+  const FILLERS=['um','umm','uhm','uh','uhh','er','erm','ah','hmm','mm'];
+  const SUBS=['because','when','while','which','who','whose','where','although','though','since','after','before','until','unless','if','whenever','whereas','once'];
+  const MARKERS=['actually','anyway','honestly','basically','eventually','so','well','then','also','however','plus','finally','first','luckily','unfortunately'];
+  const IRR='was were had did went came saw got took made said thought felt knew bought found told gave became began left met ran sat stood brought caught taught sent spent built lost won wore woke wrote rode drove ate drank slept kept paid heard held put read let set cut hit hurt chose spoke broke forgot fell flew grew threw drew sang swam understood forgave hid shook led lent lay meant sold shot shut stole stuck swept tore'.split(' ');
+  const PRES='go goes come comes eat eats is are am have has do does see sees get gets take takes make makes say says think thinks feel feels know knows buy buys find finds tell tells give gives become becomes begin begins leave leaves meet meets run runs sit sits stand stands start starts stop stops decide decides try tries look looks walk walks watch watches play plays visit visits stay stays enjoy enjoys want wants need needs ride rides talk talks wait waits drive drives arrive arrives call calls ask asks turn turns happen happens realize realizes forget forgets lose loses win wins sleep sleeps drink drinks spend spends bring brings catch catches it\'s that\'s there\'s'.split(' ');
+  const BLOCK=new Set(['to','can','could','will','would','should','must','might','may','did','didn\'t','didnt','does','do','don\'t','doesn\'t','let\'s','gonna','wanna','i\'ll','we\'ll','you','couldn\'t','wouldn\'t','won\'t','cannot','can\'t','always','usually','often','sometimes','normally','generally','every']);
+  const STANCE=new Set(['want','think','guess','mean','remember','believe','know','hope','feel','wanna']);
+  const NOT_ED=new Set(['need','bed','red','speed','feed','seed','shed','hundred','indeed','proceed','succeed','exceed','embed','ted','fred','wed']);
+  function analyze(text,dur,past){
+    const raw=text.replace(/\r/g,'');
+    const pauses=(raw.match(/\(\s*\.\.\.\s*\)/g)||[]).length;
+    const repairs=(raw.match(/\s\/\s/g)||[]).length;
+    const unclear=(raw.match(/\[\?\]/g)||[]).length;
+    const clean=raw.replace(/\(\s*\.\.\.\s*\)/g,' ').replace(/\[\?\]/g,' ').replace(/\s\/\s/g,' ');
+    const sentences=clean.split(/[.!?]+/).map(s=>s.trim()).filter(s=>/[a-zA-Z]/.test(s));
+    let words=0,fill=0,subS=0,mark=0,pastN=0,flag=0;
+    const lower=clean.toLowerCase();
+    fill+=(lower.match(/\byou know\b/g)||[]).length+(lower.match(/\bi mean\b/g)||[]).length+(lower.match(/,\s*like\s*,/g)||[]).length;
+    sentences.forEach(s=>{const toks=s.toLowerCase().match(/[a-z’']+/g)||[];let hasSub=false;toks.forEach((t,k)=>{t=t.replace(/’/g,"'");if(FILLERS.includes(t)){fill++;return}words++;if(SUBS.includes(t))hasSub=true;if(MARKERS.includes(t))mark++});if(hasSub)subS++});
+    // tense
+    const tokens=lower.replace(/’/g,"'").match(/[a-z']+/g)||[];
+    tokens.forEach((t,k)=>{const prev=tokens[k-1]||'';if(IRR.includes(t)||(t.length>3&&t.endsWith('ed')&&!NOT_ED.has(t))){pastN++;return}if(past&&PRES.includes(t)&&!BLOCK.has(prev)&&!(prev==='i'&&STANCE.has(t)))flag++});
+    const min=Math.max(dur,1)/60;
+    return {words,sent:sentences.length,wpm:Math.round(words/min),msl:sentences.length?+(words/sentences.length).toFixed(1):0,sub:sentences.length?Math.round(subS/sentences.length*100):0,fpm:+(fill/min).toFixed(1),fill,pauses,repairs,unclear,mark,pastN,flag,tense:past&&(pastN+flag)?Math.round(flag/(pastN+flag)*100):null,dur};
+  }
+  function light(k,v){const L={wpm:v<80?'r':v<110?'a':'g',msl:v<8?'r':v<12?'a':v>25?'a':'g',sub:v<20?'r':v<40?'a':'g',fpm:v>8?'r':v>=4?'a':'g',pauses:v>=3?'r':v>=1?'a':'g',tense:v===null?'n':v>20?'r':v>=5?'a':'g',dur:v<60?'r':v<90?'a':v>180?'a':'g'};return L[k]}
+  const LC={r:'var(--rose)',a:'var(--amber)',g:'var(--teal)',n:'var(--line)'};
+  function highlight(text,past){
+    let h=esc(text);
+    h=h.replace(/\(\s*\.\.\.\s*\)/g,'<span class="z">(...)</span>').replace(/\s\/\s/g,' <span class="z">/</span> ').replace(/\[\?\]/g,'<span class="z">[?]</span>');
+    return h.replace(/(<[^>]+>)|([A-Za-z’']+)/g,(m,tag,w,off,str)=>{if(tag)return tag;const t=w.toLowerCase().replace(/’/g,"'");
+      if(FILLERS.includes(t))return `<span class="f">${w}</span>`;
+      if(IRR.includes(t)||(t.length>3&&t.endsWith('ed')&&!NOT_ED.has(t)))return `<span class="p">${w}</span>`;
+      if(past&&PRES.includes(t)){const before=str.slice(0,off).replace(/<[^>]+>/g,'').toLowerCase().replace(/’/g,"'").match(/[a-z']+/g)||[];const prev=before[before.length-1]||'';if(!BLOCK.has(prev)&&!(prev==='i'&&STANCE.has(t)))return `<span class="v">${w}</span>`}
+      if(SUBS.includes(t))return `<span class="s">${w}</span>`;
+      return w})}
+  let ANA=LS.get('opic-l3-ana',{});let RATE=LS.get('opic-l3-rate',Array(15).fill(null));
+  const aQ=$('aQ'),aDur=$('aDur'),aText=$('aText'),aOut=$('aOut');
+  function curSet(){const s=LS.get('opic-l3-qs',null);return s&&s.set?s.set:buildSet('same')}
+  function fillQSelect(){const set=curSet();const v=aQ.value;aQ.innerHTML=set.map((q,i)=>`<option value="${i}">${i+1}번 ${TNAME[TYPES[i]][0]}${[3,6,9,10,11,14].includes(i)?' (우선)':''}</option>`).join('');aQ.value=v||'3'}
+  function isPast(i){return TYPES[i]==='exp'}
+  function loadQ(){const i=+aQ.value;const set=curSet();$('aQText').innerHTML=esc(set[i])+(isPast(i)?'<span class="tagpill" style="border:1px solid var(--teal);color:var(--teal)">과거 경험: 시제 분석</span>':'');const d=ANA[i];const durs=LS.get('opic-l3-dur',Array(15).fill(0));aText.value=d?d.text:'';aDur.value=d?d.dur:(durs[i]||90);aMsg('');if(d)render(i,d.text,d.dur);else aOut.innerHTML='';renderSaved()}
+  function aMsg(t){$('aMsg').textContent=t}
+  function render(i,text,dur){const r=analyze(text,dur,isPast(i));const card=(k,label,val,unit,lk)=>`<div style="--lc:${LC[light(lk||k,lk==='tense'&&val==='-'?null:typeof val==='number'?val:null)]}"><small>${label}</small><b>${val}</b><span>${unit}</span></div>`;
+    aOut.innerHTML=`<div class="metrics">${card('wpm','발화 속도',r.wpm,'단어/분')}${card('msl','평균 문장 길이',r.msl,'단어/문장')}${card('sub','복문 비율',r.sub,'%')}${card('fpm','필러 빈도',r.fpm,'회/분 ('+r.fill+'회)')}${card('pauses','긴 침묵',r.pauses,'회')}${r.tense===null?`<div style="--lc:var(--line)"><small>시제 확인 필요</small><b>-</b><span>과거 경험 문항만</span></div>`:card('tense','시제 확인 필요',r.tense,'% ('+r.flag+'개 표시)')}${card('dur','답변 시간',r.dur,'초','dur')}</div>
+    <div class="hl-legend"><span><i style="background:var(--teal)"></i>과거형</span><span><i style="background:var(--amber)"></i>시제 확인 필요</span><span><i style="background:var(--violet)"></i>필러</span><span><i style="background:var(--sky)"></i>종속 연결어</span><span><i style="background:var(--rose)"></i>침묵·수정·불명확</span></div>
+    <div class="hlview">${highlight(text,isPast(i))}</div>
+    <p class="small muted" style="margin:10px 0 0">문장 ${r.sent}개, 단어 ${r.words}개, 담화 표지어 ${r.mark}회, 자기 수정 ${r.repairs}회${r.unclear?', 불명확 '+r.unclear+'곳':''}</p>
+    <div class="rate"><span>이 답변의 자기 평가</span>${[['keep','문단 유지','var(--teal)'],['edge','간신히 유지','var(--amber)'],['down','붕괴','var(--rose)']].map(x=>`<button type="button" data-r="${x[0]}" style="--rc:${x[2]}" aria-pressed="${RATE[i]===x[0]}">${x[1]}</button>`).join('')}</div>`;
+    aOut.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{RATE[i]=b.dataset.r;LS.set('opic-l3-rate',RATE);aOut.querySelectorAll('[data-r]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawMap();renderRx()}));
+    return r}
+  $('aRun').addEventListener('click',()=>{const i=+aQ.value,t=aText.value.trim(),d=+aDur.value||90;if(!t){aMsg('받아 적은 답변을 붙여 넣으세요.');return}const r=render(i,t,d);ANA[i]={text:t,dur:d,r};LS.set('opic-l3-ana',ANA);aMsg('저장했습니다.');renderSaved();drawMap();renderRx()});
+  $('aClear').addEventListener('click',()=>{const i=+aQ.value;delete ANA[i];RATE[i]=null;LS.set('opic-l3-ana',ANA);LS.set('opic-l3-rate',RATE);aText.value='';aOut.innerHTML='';aMsg('지웠습니다.');renderSaved();drawMap();renderRx()});
+  $('aSample').addEventListener('click',()=>{aQ.value='3';const set=curSet();$('aQText').innerHTML=esc(set[3])+'<span class="tagpill" style="border:1px solid var(--teal);color:var(--teal)">과거 경험: 시제 분석</span>';aText.value='Um, okay, I want to talk about, uh, the park near my house. So last summer I went there with my friend. (...) We usually go there on weekends because, um, it\'s really close. That day we ride bicycles along the river and, uh, it was so nice. But suddenly it start raining a lot, so we / we go to the convenience store and, um, wait there. (...) Actually it was fun because we talk a lot. Um, after the rain stop we went back home. Anyway, it was a really memorable day, I think.';aDur.value=68;render(3,aText.value,68);aMsg('예시입니다. 저장하려면 ‘분석’을 누르세요. “We usually go there”는 습관 현재형이라 오류가 아닙니다.')});
+  aQ.addEventListener('change',loadQ);
+  function renderSaved(){const s=$('aSaved');s.innerHTML='<span class="small muted" style="align-self:center;margin-right:4px">저장된 문항</span>'+Array.from({length:15},(_,i)=>`<button type="button" data-q="${i}" class="${ANA[i]?'has':''}">${i+1}</button>`).join('');s.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>{aQ.value=b.dataset.q;loadQ()}))}
+  fillQSelect();loadQ();
+
+  /* ---------- manual checklist ---------- */
+  const MAN=[['경험 문항(4, 7, 10번) 중 두 개 이상에 ‘문제가 생긴 순간’이 들어 있다','1강의 복잡한 상황 처리'],['경험 문항에서 이야기의 결과와 지금의 소감까지 말했다','배경 → 사건 → 전환 → 결과 → 소감'],['대부분의 답변을 질문에 대한 한 문장 요약으로 시작했다','“I’d have to say…”처럼 방향을 먼저 제시'],['대부분의 답변을 마무리 문장으로 닫았다','“That’s all.” 대신 정리 문장'],['질문이 요구한 조건(누구와, 언제, 왜 등)을 빠뜨리지 않았다','특히 재조정 후 8~15번'],['11번에서 질문을 3개 이상, 어순 오류 없이 했다','Do you…, Is there…, How much…'],['12번에서 대안을 2개 이상 제시하고 상대 의견을 물었다','사과로만 채우지 않기'],['14번에서 변화의 원인이나 영향을 말했다','과거·현재 나열에서 끝내지 않기'],['15번에서 입장과 근거를 1분 이상 이어 갔다','구체적인 사례로 끌어내리기'],['40분 안에 15번까지 여유 있게 마쳤다','14~15번에 2분 이상 확보']];
+  let man=LS.get('opic-l3-man',[]);const mi=$('manualItems');
+  MAN.forEach((m,i)=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" ${man[i]?'checked':''}><span>${m[0]}<small>${m[1]}</small></span>`;l.querySelector('input').addEventListener('change',e=>{man[i]=e.target.checked;LS.set('opic-l3-man',man);renderMan();renderRx()});mi.appendChild(l)});
+  function renderMan(){const n=man.filter(Boolean).length;$('manualCount').textContent=n+' / 10';$('manualFill').style.width=n*10+'%';$('manualMsg').textContent=n<=4?'기능 수행이 지표보다 큰 문제입니다. 문단 구조와 롤플레이 형식부터 잡아야 합니다.':n<=7?'형식은 대체로 갖췄습니다. 체크하지 못한 항목이 처방전 상위에 올라갑니다.':'기능 면에서는 AL의 형식을 갖추고 있습니다. 이제 지표(시제, 연결)의 품질을 끌어올릴 차례입니다.'}
+  renderMan();
+
+  /* ---------- error log ---------- */
+  const ERR=[['시제','tense: go → went'],['주어·동사 일치','agreement: he go → he goes'],['의문문 어순','question order: where you are'],['관사','articles: a / the 누락·오용'],['전치사','prepositions: in / on / at'],['단수·복수','plurals: many friend'],['어휘 선택','word choice: 어색한 단어'],['문장 미완성','fragments: 끝맺지 못한 문장']];
+  let err=LS.get('opic-l3-err',Array(ERR.length).fill(0));const el=$('errlog');
+  function renderErr(){el.innerHTML='';ERR.forEach((e,i)=>{const d=document.createElement('div');if(err[i]>=5)d.className='hot';d.innerHTML=`<div class="nm">${e[0]}<small>${e[1]}</small></div><button type="button" aria-label="${e[0]} 하나 빼기">−</button><b>${err[i]}</b><button type="button" aria-label="${e[0]} 하나 더하기">+</button>`;const [m,p]=d.querySelectorAll('button');m.addEventListener('click',()=>{err[i]=Math.max(0,err[i]-1);save()});p.addEventListener('click',()=>{err[i]++;save()});el.appendChild(d)});}
+  function save(){LS.set('opic-l3-err',err);renderErr();renderRx()}
+  $('errReset').addEventListener('click',()=>{if(confirm('오류 로그를 초기화할까요?')){err=Array(ERR.length).fill(0);save()}});
+  renderErr();
+
+  /* ---------- map ---------- */
+  const mbars=$('myBars'),mx=$('myBarsX');$('myRef').style.bottom='62%';
+  for(let i=0;i<15;i++){const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',(i+1)+'번');b.addEventListener('click',()=>pickMap(i));mbars.appendChild(b);const s=document.createElement('span');s.textContent=i+1;mx.appendChild(s)}
+  const HV={keep:78,edge:64,down:40};
+  function drawMap(){const bs=[...mbars.querySelectorAll('button')];let n=0,dn=0,ed=0,kp=0;const downs=[];bs.forEach((b,i)=>{const r=RATE[i];b.style.height=(r?HV[r]:12)+'%';b.className=r==='down'?'down':r==='edge'?'edge':'';b.style.background=r?'':'var(--line)';if(r){n++;if(r==='down'){dn++;downs.push(i+1)}if(r==='edge')ed++;if(r==='keep')kp++}});
+    $('mapCount').textContent=`평가 ${n} / 15`;
+    let v='';if(n<6)v='아직 평가한 문항이 적습니다. 최소 우선 분석 6문항을 평가하면 판정이 나옵니다.';
+    else if(dn===0&&ed<=3)v=`<strong>AL형 지도</strong> 붕괴 없이 유지되고 있습니다. 8주 동안 이 상태를 실전 조건에서 재현하는 것이 목표입니다.`;
+    else if(dn<=1)v=`<strong>AL 문턱</strong> 붕괴는 ${downs.join(', ')}번 한 곳입니다. 그 문항 유형이 곧 1순위 훈련 대상입니다.`;
+    else if(dn<=4)v=`<strong>IH형 지도</strong> ${downs.join(', ')}번에서 무너졌습니다. ${downs.some(x=>[4,7,10,12,15].includes(x))?'probe 위치에서 반복되는 붕괴로, 1강의 IH 프로필과 같은 모양입니다.':''} 붕괴 위치의 공통점을 찾는 것이 다음 단계입니다.`;
+    else v=`<strong>IM형 지도</strong> 붕괴가 ${dn}곳으로 넓게 퍼져 있습니다. 개별 문항보다 2주차의 문장 뼈대(4~6강)를 먼저 단단히 하는 것이 효율적입니다.`;
+    $('myVerdict').innerHTML=v}
+  function pickMap(i){const d=ANA[i];const set=curSet();$('myNote').innerHTML=`<strong>${i+1}번 ${TNAME[TYPES[i]][0]}</strong> `+(d?`속도 ${d.r.wpm}단어/분, 문장 길이 ${d.r.msl}, 복문 ${d.r.sub}%, 필러 분당 ${d.r.fpm}회, 침묵 ${d.r.pauses}회${d.r.tense!==null?', 시제 확인 필요 '+d.r.tense+'%':''}, ${d.r.dur}초`:'아직 분석하지 않았습니다.')+(RATE[i]?'':' 자기 평가 없음.')}
+  drawMap();
+
+  /* ---------- prescription ---------- */
+  function avg(k){const v=Object.values(ANA).map(a=>a.r&&a.r[k]).filter(x=>typeof x==='number');return v.length?v.reduce((a,b)=>a+b,0)/v.length:null}
+  function renderRx(){
+    const items=[];const n=Object.keys(ANA).length;
+    const tense=avg('tense'),msl=avg('msl'),sub=avg('sub'),fpm=avg('fpm'),wpm=avg('wpm');
+    const pausesT=Object.values(ANA).reduce((a,b)=>a+(b.r?b.r.pauses:0),0);
+    const D=i=>RATE[i]==='down';const ME=man.some(Boolean);const U=i=>ME&&!man[i];
+    if((tense!==null&&tense>10)||err[0]>=5)items.push([9,'과거 서사의 시제 붕괴',`과거 경험 문항의 시제 확인 필요 비율 평균 ${tense!==null?Math.round(tense)+'%':'-'}, 시제 오류 기록 ${err[0]}회.`,'5강 시제 일관성 → 10~12강 스토리텔링']);
+    if((msl!==null&&msl<10)||(sub!==null&&sub<30))items.push([8,'짧은 문장 나열',`평균 문장 길이 ${msl!==null?msl.toFixed(1):'-'}단어, 복문 비율 ${sub!==null?Math.round(sub)+'%':'-'}.`,'4강 복문 구조']);
+    if(D(11)||U(6))items.push([8,'12번 문제 해결 롤플레이','복잡한 상황 처리는 AL 판별의 핵심 probe입니다.','17강 문제 해결 롤플레이']);
+    if(D(13)||D(14)||U(7)||U(8))items.push([7,'14~15번 고난도 문항','천장 확인 문항에서 구조를 잃었습니다.','13~14강 비교와 변화 → 19~21강 의견 전개']);
+    if((fpm!==null&&fpm>5)||pausesT>=5)items.push([6,'필러와 침묵',`필러 평균 분당 ${fpm!==null?fpm.toFixed(1):'-'}회, 긴 침묵 합계 ${pausesT}회.`,'6강 필러와 담화 표지어']);
+    if(D(10)||U(5)||err[2]>=2)items.push([6,'11번 질문 만들기',`의문문 어순 오류 ${err[2]}회.`,'16강 정보 요청 질문']);
+    if(D(7)||D(8)||D(9))items.push([5,'돌발 주제 대응','8~10번 돌발 콤보에서 무너졌습니다.','9강 공통 답변 틀 → 15강 돌발 대응']);
+    if(U(0)||U(1))items.push([7,'경험 문항의 구조','문제 상황이나 결과·소감이 빠진 경험 답변이 있습니다.','10~12강 스토리텔링 구조']);
+    if(U(2)||U(3))items.push([4,'답변의 시작과 마무리','방향을 먼저 제시하고 정리 문장으로 닫는 습관이 필요합니다.','9강 공통 답변 틀']);
+    if(wpm!==null&&wpm<100)items.push([4,'느린 발화 속도',`평균 분당 ${Math.round(wpm)}단어.`,'9강 공통 답변 틀 + 매일 섀도잉 10분']);
+    if(U(9))items.push([3,'시간 배분','15번까지 여유 있게 마치지 못했습니다.','24강 시험 당일 루틴(시간 배분)']);
+    const top=ERR.map((e,i)=>[e[0],err[i]]).filter(x=>x[1]>=5&&x[0]!=='시제'&&x[0]!=='의문문 어순');
+    top.forEach(t=>items.push([5,`패턴 오류: ${t[0]}`,`${t[1]}회 반복.`,'매주 녹음 과제의 교정 단계에서 집중 점검']));
+    items.sort((a,b)=>b[0]-a[0]);
+    const box=$('rxBox');
+    if(!n&&!RATE.some(Boolean)&&!man.some(Boolean)&&!err.some(x=>x))box.innerHTML='<p class="none" style="margin:0">아직 데이터가 없습니다. 모의고사 후 6~9절을 채우면 처방전이 만들어집니다.</p>';
+    else if(!items.length)box.innerHTML='<p style="margin:0"><strong>뚜렷한 약점이 보이지 않습니다.</strong> 입력한 데이터가 적다면 우선 분석 6문항을 모두 채워 보세요. 데이터가 충분한데도 이 결과라면, 6-6 경로로 실전 모의고사 비중을 늘리는 것을 고려하세요.</p>';
+    else box.innerHTML=`<strong>우선순위 (분석 ${n}문항 기준)</strong><ol>${items.slice(0,6).map(x=>`<li><strong>${x[1]}</strong> ${x[2]} <br><b>처방</b> ${x[3]}</li>`).join('')}</ol>`;
+    box._items=items;
+  }
+  renderRx();
+  $('rxExport').addEventListener('click',()=>{const ta=$('rxText');const set=curSet();const qs=LS.get('opic-l3-qs',{});let t='[OPIc AL 1주차 기준선 기록]\n재조정 선택: '+({easy:'쉬운',same:'비슷한',hard:'어려운'}[qs.mode]||'기록 없음')+'\n\n문항별 지표\n';
+    for(let i=0;i<15;i++){const d=ANA[i];t+=`${i+1}번 ${TNAME[TYPES[i]][0]}: `+(d?`${d.r.dur}초, ${d.r.wpm}wpm, 문장 ${d.r.msl}, 복문 ${d.r.sub}%, 필러 ${d.r.fpm}/분, 침묵 ${d.r.pauses}${d.r.tense!==null?', 시제 확인 '+d.r.tense+'%':''}`:'미분석')+(RATE[i]?` [${({keep:'유지',edge:'간신히',down:'붕괴'})[RATE[i]]}]`:'')+'\n'}
+    t+='\n체크리스트 '+man.filter(Boolean).length+'/10\n오류 로그: '+ERR.map((e,i)=>e[0]+' '+err[i]).join(', ')+'\n\n처방 우선순위\n'+(($('rxBox')._items||[]).slice(0,6).map((x,i)=>`${i+1}. ${x[1]} → ${x[3]}`).join('\n')||'없음');
+    ta.style.display='block';ta.value=t;ta.select();$('rxMsg').textContent='상자의 내용을 복사해 기준선 폴더에 저장하세요.'});
+
+  /* ---------- myths ---------- */
+  const myths=[['잘된 답변부터 다시 듣는다','기분은 좋아지지만 진단에는 도움이 안 됩니다. 가장 듣기 싫은 답변, 특히 probe 위치(7, 10, 12, 15번)부터 들으세요. 처방전은 무너진 곳에서 나옵니다.'],['문법 오류만 찾으면 된다','1강에서 보았듯 AL을 가르는 것은 기능과 텍스트 유형입니다. 문법이 완벽해도 문제 상황을 피해 가고 짧은 문장만 나열했다면 IH 이하입니다. 7절 체크리스트가 오류 로그보다 먼저입니다.'],['녹음이 부끄러워서 다시 찍는다','다시 찍은 녹음은 기준선이 아닙니다. 첫 녹음의 어색함이 8주 뒤 비교의 가치를 만듭니다.'],['길이만 늘리면 된다','길이는 결과입니다. 문장 길이와 복문 비율이 낮은 채로 시간만 늘리면 같은 문장을 반복하거나 나열이 길어질 뿐입니다.'],['대충 받아 적어도 된다','고쳐 적은 전사는 내가 아니라 ‘고친 나’를 측정합니다. 특히 시제를 무의식적으로 고치면 가장 중요한 지표가 사라집니다.'],['숫자가 나쁘면 AL은 불가능하다','지표는 등급이 아니라 수리 목록입니다. 오늘 붉은 신호가 많다는 것은 고칠 곳이 분명하다는 뜻이고, 대부분의 지표는 몇 주 단위 훈련으로 눈에 띄게 움직입니다.']];
+  const my=$('mythGrid');myths.forEach(m=>{const b=document.createElement('button');b.type='button';b.className='myth';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="inner"><div class="face front"><div class="tag">함정</div><p>${m[0]}</p><div class="hint">눌러서 이유 보기</div></div><div class="face back"><div class="tag">이렇게 하세요</div><p>${m[1]}</p></div></div>`;b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));my.appendChild(b)});
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'1강 과제(문항 1개)가 아니라 15문항 풀 세트로 진단해야 하는 가장 큰 이유는?',o:['문항이 많을수록 평균 점수가 정확해서','AL의 핵심인 유지력은 긴 시간과 여러 유형에 걸쳐서만 드러나서','시험 시간에 익숙해지기 위해서','녹음 파일을 많이 모으기 위해서'],a:1,e:'4번에서는 문단을 만들던 사람이 10번이나 12번에서 무너지는 모습은 풀 세트에서만 보입니다.'},
+    {q:'받아 적을 때 “my legs are hurt”라고 들렸다면?',o:['my legs hurt로 고쳐 적는다','들린 그대로 적는다','문장을 지운다','[?]로 적는다'],a:1,e:'고쳐 적으면 진단 대상이 사라집니다. 오류는 그대로 적고, 오류 로그에 따로 기록합니다.'},
+    {q:'3초 이상의 침묵을 적는 표기는?',o:['/','[?]','(...)','—'],a:2,e:'/ 는 자기 수정, [?]는 알아들을 수 없는 부분입니다.'},
+    {q:'평균 문장 길이가 28단어로 나왔고 복문 비율이 15%라면 가장 가능성 높은 해석은?',o:['AL 수준의 복잡한 문장','and, so로 끝없이 이어 붙인 런온 문장','필러가 너무 많음','속도가 너무 빠름'],a:1,e:'문장은 긴데 종속 연결어가 적다면, 논리 관계 없이 등위 접속사로만 이어 붙였을 가능성이 큽니다.'},
+    {q:'분석기가 과거 경험 문항에서 “We usually go there on weekends”의 go를 표시했다. 올바른 판단은?',o:['시제 오류이므로 로그에 기록한다','습관을 말하는 현재형이므로 오류가 아니다','분석기 오류이므로 무시하고 지표를 믿는다','문장을 지운다'],a:1,e:'분석기는 ‘확인 필요’를 표시할 뿐입니다. 진짜 오류인지 판단하는 것이 훈련의 일부입니다.'},
+    {q:'필러 빈도를 줄이는 이 과정의 기본 방향은?',o:['필러를 참고 침묵한다','말 속도를 크게 늦춘다','Well, Actually 같은 담화 표지어로 바꾼다','짧은 문장만 말한다'],a:2,e:'침묵은 필러보다 더 큰 단절 신호입니다. 생각할 시간을 담화 표지어로 버는 것이 목표입니다.'},
+    {q:'유지력 지도에서 4, 5, 13번은 유지, 7, 10, 12, 15번은 붕괴로 나왔다. 가장 가까운 프로필은?',o:['IM2형','IH형','AL형','판단 불가'],a:1,e:'Advanced 과제를 여러 번 해내지만 probe 위치에서 반복해서 무너지는 모양은 1강의 IH 프로필 그대로입니다.'},
+    {q:'숫자 지표가 모두 목표 범위인데 체크리스트에서 ‘12번 대안 2개 이상’을 체크하지 못했다면?',o:['문제없다, 지표가 좋으니까','기능 수행 실패이므로 처방 상위에 둔다','오류 로그에 기록한다','다시 녹음한다'],a:1,e:'지표는 문장의 표면을 재고, 체크리스트는 기능을 봅니다. 복잡한 상황 처리 실패는 지표가 좋아도 등급을 끌어내립니다.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${item.q}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${o}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'3강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['기준선','baseline','훈련 전의 수행을 같은 조건으로 기록한 측정값. 8주차 23강에서 비교 대상이 됩니다.'],['인식 격차','perception gap','스스로 생각하는 수행과 실제 수행의 차이. 녹음으로만 확인할 수 있습니다.'],['전사','transcription','녹음을 들린 그대로 글로 옮기는 일. 고쳐 적지 않는 것이 원칙입니다.'],['WPM','words per minute','1분당 말한 단어 수. 필러와 표기 기호는 제외합니다.'],['평균 문장 길이','mean length of sentence','마침표 사이의 평균 단어 수. 텍스트 유형의 대리 지표입니다.'],['복문 비율','subordination ratio','종속 연결어(because, when, which 등)가 들어간 문장의 비율.'],['종속 연결어','subordinator','원인, 시간, 조건, 양보 같은 논리 관계로 절을 묶는 말.'],['등위 접속사','coordinator','and, but, so처럼 대등한 절을 나란히 잇는 말.'],['런온 문장','run-on sentence','and, so 등으로 끝없이 이어 붙여 구조가 흐려진 문장.'],['필러','filler','um, uh처럼 생각할 시간을 버는 소리.'],['담화 표지어','discourse marker','Well, Actually, Looking back처럼 말의 흐름을 안내하는 표현.'],['긴 침묵','long pause','3초 이상 아무 소리도 없는 구간. 전사에서 (...)로 표시합니다.'],['자기 수정','self-repair','말하다가 스스로 고쳐 말하는 것. 전사에서 / 로 표시합니다. 적당한 자기 수정은 오히려 모니터링 능력의 증거입니다.'],['패턴 오류','systematic error','같은 종류로 반복되는 오류. 우연한 실수와 달리 평가에 영향을 줍니다.'],['우선 분석 문항','priority items','4, 7, 10, 11, 12, 15번. 붕괴가 가장 잘 드러나는 probe 위치.'],['섀도잉','shadowing','원어민 음성을 들으며 바로 뒤따라 말하는 훈련. 발화 속도와 리듬 개선에 쓰입니다.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>

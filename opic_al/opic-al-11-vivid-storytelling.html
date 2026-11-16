@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 11강 · 생생함 더하기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lq{--l:var(--sky)}.le{--l:var(--rose)}.ld{--l:var(--amber)}
+.hq{background:var(--sky-soft);box-shadow:inset 0 -2px 0 var(--sky);border-radius:3px}
+.he{background:var(--rose-soft);box-shadow:inset 0 -2px 0 var(--rose);border-radius:3px}
+.hd{background:var(--amber-soft);box-shadow:inset 0 -2px 0 var(--amber);border-radius:3px}
+
+/* hero */
+.layers{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.layers button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.layers button i{width:10px;height:10px;border-radius:50%;background:var(--l);display:inline-block}
+.layers button[aria-pressed="true"]{border-color:var(--l);background:color-mix(in srgb,var(--l) 18%,var(--surface2));font-weight:600}
+.htxt{font-family:var(--serif);font-size:16px;line-height:1.75;padding:12px 14px;background:var(--surface2);border-radius:12px;min-height:11em;max-height:280px;overflow:auto}
+.vmeter{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:var(--muted)}
+.vmeter .bar{flex:1;height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.vmeter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sky),var(--rose),var(--amber));transition:width .4s}
+.hstat{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}
+.hstat div{font-size:12.5px;color:var(--muted)}
+.hstat b{display:block;font-family:var(--serif);font-size:22px;line-height:1.1;color:var(--text);font-weight:600}
+
+/* tools */
+.tools3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+@media (max-width:760px){.tools3{grid-template-columns:1fr}}
+.tools3 div{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--surface);border-top:4px solid var(--l)}
+.tools3 h4{margin:0 0 4px;font-size:17px}
+.tools3 p{font-size:14.5px;margin:0 0 8px;color:var(--muted)}
+.tools3 .ex{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:8px 12px;color:var(--text)}
+.qtab{width:100%;border-collapse:collapse;font-size:15px;min-width:620px}
+.qtab th,.qtab td{border-top:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.qtab th{color:var(--muted);font-weight:500;font-size:13.5px}
+.qtab td:first-child{font-weight:600;white-space:nowrap}
+
+/* emotions */
+.epal{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.epal span{font-family:var(--serif);font-size:16px;padding:4px 12px;border-radius:999px;border:1px solid var(--ec);background:color-mix(in srgb,var(--ec) 14%,transparent)}
+.intens{display:flex;gap:0;margin:14px 0;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.intens div{flex:1;padding:10px 8px;text-align:center;font-family:var(--serif);font-size:15.5px;background:color-mix(in srgb,var(--rose) var(--p),var(--surface))}
+.intens small{display:block;font-family:var(--sans);font-size:11.5px;color:var(--muted)}
+.body{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin:12px 0}
+.body div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:var(--serif);font-size:16px}
+.body small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+.arcb{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin:20px 0}
+.arcb-sel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media (max-width:700px){.arcb-sel{grid-template-columns:1fr 1fr}}
+.arcb-sel label{font-size:13px;font-weight:600;display:block;margin-bottom:3px}
+.arcb-sel select{width:100%;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font-size:14px}
+#emoArc{width:100%;height:auto;display:block;margin:14px 0 6px;background:var(--surface2);border-radius:12px}
+.arcb-ph{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.arcb-ph div{background:var(--surface2);border-radius:10px;padding:8px 12px;font-family:var(--serif);font-size:15px;border-left:4px solid var(--ec)}
+.arcb-ph small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted)}
+
+/* zoom */
+.zoom{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin:18px 0}
+.zoom input[type=range]{width:100%;accent-color:var(--amber)}
+.zoom .zt{font-family:var(--serif);font-size:18px;line-height:1.8;background:var(--surface2);border-radius:12px;padding:14px 16px;margin-top:10px;min-height:5em}
+.zoom .zm{font-size:13px;color:var(--muted);margin-top:6px}
+.dtypes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:14px 0}
+.dtypes div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface)}
+.dtypes b{display:block;font-size:15px;margin-bottom:4px}
+.dtypes span{font-family:var(--serif);font-size:15px;color:var(--muted)}
+
+/* compare */
+.cmpbox{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:20px 24px}
+.cmpbox .txt{font-family:var(--serif);font-size:18px;line-height:1.9;margin:0}
+.cmpbox.off-q .hq,.cmpbox.off-e .he,.cmpbox.off-d .hd{background:none;box-shadow:none}
+.hk{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.hk button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.hk button i{width:10px;height:10px;border-radius:50%;background:var(--l);display:inline-block}
+.hk button[aria-pressed="false"]{opacity:.45}
+
+/* drills */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:18px 0}
+.drill-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dq{font-family:var(--serif);font-size:19px;line-height:1.55;margin:4px 0 14px}
+.dq small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted);margin-bottom:4px}
+.dopts{display:grid;gap:8px}
+.dopts.row{display:flex;flex-wrap:wrap}
+.dopts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:9px 16px;cursor:pointer;font-family:var(--serif);font-size:16.5px}
+.dopts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.dopts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.dopts button:disabled{cursor:default}
+.dfb{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15.5px;display:none}
+.dfb.on{display:block}
+.pips{display:flex;gap:4px}
+.pips i{width:10px;height:10px;border-radius:3px;background:var(--line)}
+.pips i.ok{background:var(--teal)}.pips i.ng{background:var(--rose)}.pips i.cur{outline:2px solid var(--amber);outline-offset:1px}
+
+/* machine */
+.cm{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.cm-nav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.cm-nav button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);cursor:pointer;font-size:13px}
+.cm-nav button.done{border-color:var(--teal);background:var(--teal-soft)}
+.cm-nav button[aria-current="true"]{outline:2px solid var(--amber);outline-offset:1px}
+.cm .src{font-family:var(--serif);font-size:19px;background:var(--surface2);border-radius:10px;padding:10px 14px;margin:8px 0}
+.cm .tgt{font-size:14px;margin-bottom:8px}.cm .tgt b{color:var(--amber)}
+.cm textarea{width:100%;min-height:80px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:17px/1.6 var(--serif);padding:10px 12px;resize:vertical}
+.cm-r{margin-top:10px;font-size:15px}
+.cm-m{display:none;margin-top:10px;border-radius:12px;padding:12px 14px;background:var(--teal-soft);border-left:3px solid var(--teal);font-family:var(--serif);font-size:17px}
+.cm-m.on{display:block}
+
+/* checker & worksheet */
+.chk,.ws{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.chk textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:16.5px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:14px 0}
+.metrics div{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:3px solid var(--lc,var(--line))}
+.metrics small{display:block;font-size:12.5px;color:var(--muted)}
+.metrics b{display:block;font-family:var(--serif);font-size:22px;line-height:1.2;font-weight:600}
+.metrics span{font-size:12px;color:var(--faint)}
+.hlv{font-family:var(--serif);font-size:17px;line-height:1.9;background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:10px}
+.hlv .v{background:var(--violet-soft);outline:1px dashed var(--violet);border-radius:3px}
+.dens{display:flex;height:30px;border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:6px 0 2px}
+.dens div{flex:1;display:flex;align-items:flex-end;justify-content:center;background:var(--surface2);position:relative}
+.dens div i{display:block;width:100%;background:var(--amber);opacity:.8}
+.dens-x{display:flex;font-size:11.5px;color:var(--faint)}
+.dens-x span{flex:1;text-align:center}
+.ws-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:12px}
+.ws-grid label{display:block;font-size:13.5px;font-weight:600;margin-bottom:4px}
+.ws-grid label small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.ws-grid textarea,.ws-grid input{width:100%;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:15.5px/1.55 var(--serif);padding:8px 10px}
+.ws-grid textarea{min-height:58px;resize:vertical}
+.ws-src{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14.5px;margin-top:10px}
+.ws-src b{color:var(--muted);font-weight:600}
+.ws-out{margin-top:14px;font-family:var(--serif);font-size:17px;line-height:1.85;background:var(--amber-soft);border-radius:12px;padding:14px 16px}
+.ws-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.ws-tabs button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:7px 14px;cursor:pointer;font-size:14px}
+.ws-tabs button[aria-selected="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;4주차 11강&nbsp;&nbsp;생생함 더하기</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">생생함은 어디에 쓰는가</a></li>
+      <li><a href="#quote">도구 1: 직접 인용</a></li>
+      <li><a href="#emotion">도구 2: 감정 변화</a></li>
+      <li><a href="#arcbuilder">감정 곡선 그리기</a></li>
+      <li><a href="#detail">도구 3: 디테일과 슬로모션</a></li>
+      <li><a href="#compare">같은 이야기, 두 가지 해상도</a></li>
+      <li><a href="#drills">훈련: 인용과 감정 어휘</a></li>
+      <li><a href="#machine">훈련: 디테일 채우기</a></li>
+      <li><a href="#budget">생생함 예산</a></li>
+      <li><a href="#checker">생생함 점검기</a></li>
+      <li><a href="#worksheet">내 이야기 업그레이드</a></li>
+      <li><a href="#myths">생생함의 함정</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">과제와 다음 강</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">4주차 과거 경험 서사 · 11강</p>
+      <h1>“I lost my wallet.” 한 문장을 30초짜리 장면으로 바꾸는 법</h1>
+      <p class="lede">10강에서 이야기의 뼈대를 세웠다면, 11강은 그 뼈대에 피와 살을 붙입니다. 누군가 한 말을 그대로 옮기고, 감정이 어떻게 바뀌었는지 보여 주고, 가장 긴장된 순간을 슬로모션으로 늘리는 것. 세 가지 도구 모두 4~6강의 문장 기술을 실제 이야기 속에서 쓰게 만듭니다.</p>
+      <div class="meta-row"><span>학습 시간 약 90분</span><span>선수 강의: 10강</span><span>핵심 자리: 전환과 결과</span></div>
+    </div>
+    <div class="wave-card" aria-label="생생함 층 쌓기">
+      <div class="layers" id="hLayers" role="group" aria-label="층 선택">
+        <button type="button" class="lq" data-l="q" aria-pressed="false"><i></i>직접 인용</button>
+        <button type="button" class="le" data-l="e" aria-pressed="false"><i></i>감정 변화</button>
+        <button type="button" class="ld" data-l="d" aria-pressed="false"><i></i>디테일</button>
+      </div>
+      <div class="htxt" id="hTxt"></div>
+      <div class="vmeter"><span>생생함</span><div class="bar"><i id="hBar"></i></div></div>
+      <div class="hstat"><div><b id="hW">0</b>단어</div><div><b id="hS">0초</b>예상 길이</div><div><b id="hL">0 / 3</b>켜진 도구</div></div>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>10강의 5단 구조로 이야기는 순서를 갖게 되었습니다. 하지만 구조만 있는 이야기는 보고서처럼 들립니다. 11강은 그 이야기를 듣는 사람이 장면을 떠올릴 수 있게 만드는 강의입니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>누군가 한 말이나 속으로 한 생각을 직접 인용으로 옮길 수 있고, 간접 화법과의 시제 차이를 안다.</li>
+      <li>happy, sad를 넘어서는 감정 어휘와 신체 반응 표현으로 감정의 변화를 보여 줄 수 있다.</li>
+      <li>숫자, 이름, 감각, 작은 행동, 대비의 다섯 가지 디테일을 이야기에 넣을 수 있다.</li>
+      <li>전환의 순간을 슬로모션처럼 늘려 말할 수 있다.</li>
+      <li>생생함을 배경이 아니라 전환과 결과에 집중시키는 ‘예산’ 감각을 갖는다.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>생생함은 어디에 쓰는가</h2>
+    <p>1강의 AL 정의에서 서술과 묘사는 따로가 아니었습니다. Advanced 화자는 과거 이야기를 하면서 그 장면을 <em>묘사</em>합니다. 사건만 나열하면 서술은 있어도 묘사가 없고, 그러면 문장은 짧아지고 연결은 단순해집니다. 생생함을 더하는 세 가지 도구는 그래서 꾸밈이 아니라, 서술 안에 묘사를 끼워 넣는 Advanced 기술입니다.</p>
+    <div class="tools3">
+      <div class="lq"><h4>직접 인용</h4><p>그 순간 누가 무슨 말을 했는지 그대로. 장면에 목소리를 줍니다.</p><div class="ex">He just smiled and said, “Don’t worry. This is Japan.”</div></div>
+      <div class="le"><h4>감정 변화</h4><p>감정의 이름과 몸의 반응, 그리고 그것이 어떻게 바뀌었는지.</p><div class="ex">I went from excited to completely panicked in about two seconds.</div></div>
+      <div class="ld"><h4>디테일</h4><p>숫자, 이름, 감각, 작은 행동, 대비. 장면에 해상도를 줍니다.</p><div class="ex">I checked every pocket at least three times.</div></div>
+    </div>
+    <div class="callout">
+      <strong>생생함은 전환과 결과에</strong>
+      <p>10강에서 AL형 답변은 전환과 결과에 시간의 절반을 쓴다고 했습니다. 그 시간을 채우는 것이 바로 이 세 도구입니다. 배경에 디테일을 쏟으면 10강의 함정(배경만 긴 이야기)으로 돌아갑니다. 생생함은 이야기가 가장 긴장된 곳에 씁니다.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="quote">
+    <p class="sec-no">2</p>
+    <h2>도구 1: 직접 인용</h2>
+    <p>“직원이 걱정하지 말라고 했다”보다 “직원이 웃으면서 ‘걱정 마세요, 여기 일본이에요’라고 했다”가 훨씬 생생합니다. 직접 인용은 이야기에 다른 사람의 목소리를 넣어 장면을 만듭니다. 말할 때는 인용 부분에서 목소리 톤을 살짝 바꾸면 듣는 사람이 인용임을 바로 압니다.</p>
+    <div class="tbl-wrap">
+    <table class="qtab">
+      <tr><th>형태</th><th>예시</th><th>쓰임</th></tr>
+      <tr><td>said / asked / told me</td><td class="en">She asked, “Are you okay?”</td><td>기본. 가장 안전합니다.</td></tr>
+      <tr><td>생각 인용</td><td class="en">I remember thinking, “This is it. I’m done.”</td><td>속마음. 전환 장면에 특히 효과적입니다.</td></tr>
+      <tr><td>속으로 말하기</td><td class="en">I said to myself, “Just breathe.”</td><td>스스로를 다독이는 장면.</td></tr>
+      <tr><td>구어 인용 (was like)</td><td class="en">And I was like, “No way!”</td><td>원어민 구어에서 매우 흔합니다. 한 이야기에 한 번 정도.</td></tr>
+      <tr><td>동작 + 인용</td><td class="en">He just shrugged and said, “Follow me.”</td><td>말과 행동을 함께 그려 장면을 만듭니다.</td></tr>
+    </table>
+    </div>
+    <div class="callout violet">
+      <strong>인용 안은 그 사람의 ‘지금’입니다</strong>
+      <p>5강에서 과거 이야기에서는 현재형을 피하라고 했습니다. 하지만 직접 인용 안은 예외입니다. 그 사람이 그 순간 실제로 한 말이므로 <span class="en">He said, “Don’t worry, this is Japan.”</span>처럼 현재형이 맞습니다. 반대로 간접 화법으로 바꾸면 시제가 한 칸 뒤로 물러납니다. <span class="en">He told me not to worry because it was Japan.</span> 인용 안의 현재형을 오류로 착각하지 않도록, 이 강의의 점검기는 따옴표 안의 동사를 시제 점검에서 제외합니다.</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="emotion">
+    <p class="sec-no">3</p>
+    <h2>도구 2: 감정 변화</h2>
+    <p>IM 답변의 감정은 대개 세 단어입니다. happy, sad, fun. AL 답변은 감정에 정확한 이름을 붙이고, 몸의 반응으로 보여 주고, 무엇보다 <strong>감정이 바뀌는 순간</strong>을 말합니다. 감정의 변화는 10강의 전환과 정확히 겹칩니다. 전환이란 결국 감정이 뒤집히는 순간이기 때문입니다.</p>
+    <h3>감정 어휘 팔레트</h3>
+    <div class="epal" id="epal"></div>
+    <h3>강도 조절</h3>
+    <div class="intens">
+      <div style="--p:6%">a little nervous<small>약간</small></div>
+      <div style="--p:14%">kind of nervous<small>좀</small></div>
+      <div style="--p:24%">really nervous<small>꽤</small></div>
+      <div style="--p:36%">so nervous that…<small>너무 ~해서</small></div>
+      <div style="--p:50%">absolutely terrified<small>극단 (강한 단어 + absolutely)</small></div>
+    </div>
+    <p class="small muted">very를 반복하는 대신 강도에 맞는 표현을 고르세요. 특히 so … that … 구조는 감정과 그 결과를 한 문장에 담아 4강의 복문도 함께 만들어 줍니다: <span class="en">I was so nervous that my hands were shaking.</span></p>
+    <h3>감정을 몸으로 보여 주기</h3>
+    <div class="body">
+      <div>My stomach just dropped.<small>철렁함, 불길한 예감</small></div>
+      <div>My heart was pounding.<small>긴장, 두려움</small></div>
+      <div>I just froze.<small>얼어붙음</small></div>
+      <div>My hands were shaking.<small>긴장, 떨림</small></div>
+      <div>I couldn’t stop laughing.<small>웃음</small></div>
+      <div>I let out a huge sigh of relief.<small>안도</small></div>
+      <div>I almost cried.<small>벅참, 안도</small></div>
+      <div>My face turned bright red.<small>창피함</small></div>
+    </div>
+    <h3>감정의 변화를 한 문장에</h3>
+    <ul class="prose">
+      <li><span class="en">I went from excited to completely panicked in about two seconds.</span></li>
+      <li><span class="en">At first, I was really annoyed, but then I started to see the funny side.</span></li>
+      <li><span class="en">What started as a disaster turned into the best part of the trip.</span></li>
+    </ul>
+    <div class="callout rose">
+      <strong>-ed와 -ing 형용사</strong>
+      <p>한국어 화자의 단골 오류입니다. 감정을 <em>느끼는 사람</em>은 -ed(<span class="en">I was bored / excited / embarrassed</span>), 감정을 <em>일으키는 대상</em>은 -ing(<span class="en">The movie was boring / exciting / embarrassing</span>). “I was very boring”은 “나는 매우 지루한 사람이었다”라는 뜻이 됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="arcbuilder">
+    <p class="sec-no">4</p>
+    <h2>감정 곡선 그리기</h2>
+    <p>10강의 5단 구조마다 감정을 하나씩 정하면 이야기의 감정 곡선이 그려집니다. 좋은 이야기는 전환에서 감정이 크게 떨어지거나 튀어 오르고, 결과와 느낀 점에서 다시 올라옵니다. 내 이야기의 감정을 골라 보세요. 아래에 각 감정에 어울리는 표현이 나옵니다.</p>
+    <div class="arcb">
+      <div class="arcb-sel" id="arcSel"></div>
+      <svg id="emoArc" viewBox="0 0 520 200" role="img" aria-label="감정 곡선"></svg>
+      <div class="arcb-ph" id="arcPh"></div>
+      <p class="small muted" id="arcMsg" style="margin:10px 0 0"></p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="detail">
+    <p class="sec-no">5</p>
+    <h2>도구 3: 디테일과 슬로모션</h2>
+    <p>디테일은 장면의 해상도입니다. 7강에서 장소 묘사에 쓴 감각 표현이 경험 이야기에서는 다섯 가지로 확장됩니다.</p>
+    <div class="dtypes">
+      <div><b>숫자·시간</b><span>about thirty thousand yen, almost an hour later, the last two seats</span></div>
+      <div><b>이름·고유명사</b><span>a tiny ramen place called Ichiran, my friend Minji, Line 2</span></div>
+      <div><b>감각</b><span>it was freezing, the smell of burnt toast, the whole room went silent</span></div>
+      <div><b>작은 행동</b><span>I checked my pockets three times, she grabbed my arm</span></div>
+      <div><b>대비</b><span>I was the only one not wearing a costume, everyone else was dry</span></div>
+    </div>
+    <h3>슬로모션 기법</h3>
+    <p>영화가 결정적인 순간을 느리게 보여 주듯, 이야기도 전환의 몇 초를 늘려 말하면 긴장이 생깁니다. 아래 막대를 움직여 같은 순간이 얼마나 길어질 수 있는지 보세요. 실제 시간은 2초인데 말하는 시간은 25초가 됩니다.</p>
+    <div class="zoom">
+      <label for="zr" class="small muted">확대 단계</label>
+      <input type="range" id="zr" min="1" max="4" step="1" value="1">
+      <div class="zt" id="zt"></div>
+      <div class="zm" id="zm"></div>
+    </div>
+    <div class="callout teal">
+      <strong>슬로모션은 한 이야기에 한 번</strong>
+      <p>모든 장면을 늘리면 이야기 전체가 늘어져 90초를 넘깁니다. 슬로모션은 전환의 한 장면에만 쓰고, 나머지는 10강의 시간 배분대로 빠르게 지나가세요. 늘린 장면과 빠른 장면의 대비 자체가 리듬을 만듭니다.</p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="compare">
+    <p class="sec-no">6</p>
+    <h2>같은 이야기, 두 가지 해상도</h2>
+    <p>10강의 오사카 이야기 중 전환과 결과 부분을 두 가지 해상도로 비교합니다. 구조는 같고, 생생함의 세 도구만 다릅니다. 아래 버튼으로 도구별 표시를 켜고 끌 수 있습니다.</p>
+    <div class="tabs" role="tablist" id="cTabs"></div>
+    <div class="cmpbox" id="cBox" role="tabpanel"></div>
+    <div class="hk" id="cKey">
+      <button type="button" class="lq" data-k="q" aria-pressed="true"><i></i>직접 인용</button>
+      <button type="button" class="le" data-k="e" aria-pressed="true"><i></i>감정</button>
+      <button type="button" class="ld" data-k="d" aria-pressed="true"><i></i>디테일</button>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="drills">
+    <p class="sec-no">7</p>
+    <h2>훈련: 인용과 감정 어휘</h2>
+    <div class="drill">
+      <div class="drill-head"><strong>가장 자연스러운 인용은?</strong><div class="pips" id="qPips"></div></div>
+      <div class="dq" id="qQ"></div><div class="dopts" id="qO"></div><div class="dfb" id="qFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="qNext">다음 문제</button><button type="button" class="reset" id="qReset">처음부터</button></div>
+    </div>
+    <div class="drill">
+      <div class="drill-head"><strong>빈칸에 가장 정확한 감정 어휘는?</strong><div class="pips" id="ePips"></div></div>
+      <div class="dq" id="eQ"></div><div class="dopts row" id="eO"></div><div class="dfb" id="eFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="eNext">다음 문제</button><button type="button" class="reset" id="eReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="machine">
+    <p class="sec-no">8</p>
+    <h2>훈련: 디테일 채우기</h2>
+    <p>밋밋한 문장을 지정된 디테일 유형으로 바꿔 보세요. 먼저 소리 내어 말한 뒤 입력합니다. 점검 결과는 목표 유형이 들어갔는지를 단어 패턴으로 추정한 것입니다.</p>
+    <div class="cm"><div class="cm-nav" id="mNav"></div><div id="mBody"></div></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="budget">
+    <p class="sec-no">9</p>
+    <h2>생생함 예산</h2>
+    <p>생생함은 많을수록 좋은 것이 아니라 <strong>어디에 쓰느냐</strong>가 중요합니다. 90초 이야기 하나에 이 정도의 예산을 권합니다.</p>
+    <div class="tbl-wrap">
+    <table class="qtab">
+      <tr><th>도구</th><th>양</th><th>위치</th></tr>
+      <tr><td>직접 인용</td><td>1~2개</td><td>전환 직후(속마음) 또는 결과(누군가의 한마디)</td></tr>
+      <tr><td>감정 어휘</td><td>3~4개, 서로 다른 단어</td><td>배경(기대) 1개, 전환(당황) 1~2개, 결과(안도) 1개</td></tr>
+      <tr><td>신체 반응</td><td>1개</td><td>전환의 가장 긴장된 순간</td></tr>
+      <tr><td>디테일</td><td>3~5개</td><td>대부분 전환과 결과에. 배경에는 숫자나 이름 하나 정도</td></tr>
+      <tr><td>슬로모션</td><td>1회</td><td>전환 한 장면</td></tr>
+    </table>
+    </div>
+    <p>이 예산을 넘기면 이야기가 늘어지고, 무엇보다 연기처럼 들리기 시작합니다. 평가자는 연기력이 아니라 언어 능력을 듣습니다. 생생함의 목적은 서술 안에 묘사를 넣어 문단을 두텁게 만드는 것이지, 극적인 효과 자체가 아닙니다.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="checker">
+    <p class="sec-no">10</p>
+    <h2>생생함 점검기</h2>
+    <p>받아 적은 경험 답변을 넣으면 생생함의 세 도구가 얼마나 들어갔는지, 디테일이 이야기의 어느 부분에 몰려 있는지, 따옴표 밖에서 현재형으로 미끄러진 동사가 있는지 점검합니다. 직접 인용은 따옴표로 표시해 받아 적으세요.</p>
+    <div class="chk">
+      <div class="ctrl" style="margin-bottom:8px"><button type="button" class="btn" id="kVivid">생생한 버전 넣기</button><button type="button" class="btn" id="kPlain">밋밋한 버전 넣기</button></div>
+      <textarea id="kText" placeholder="받아 적은 답변을 붙여 넣으세요. 직접 인용은 “ ”나 &quot; &quot;로 감싸 주세요."></textarea>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn primary" id="kRun">점검</button></div>
+      <div id="kOut"></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="worksheet">
+    <p class="sec-no">11</p>
+    <h2>내 이야기 업그레이드</h2>
+    <p>10강 스토리 설계 카드를 이 브라우저에서 만들었다면, 그 이야기의 전환과 결과가 아래에 불러와집니다. 각 이야기에 인용 하나, 감정 둘(전환 전·후), 신체 반응 하나, 디테일 둘을 더해 생생한 버전을 만드세요.</p>
+    <div class="ws">
+      <div class="ws-tabs" id="wsTabs" role="tablist"></div>
+      <div id="wsBody"></div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="myths">
+    <p class="sec-no">12</p>
+    <h2>생생함의 함정</h2>
+    <p>카드를 눌러 뒤집어 보세요.</p>
+    <div class="myths" id="mythGrid"></div>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">13</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 14 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">14</p>
+    <h2>과제와 다음 강</h2>
+    <div class="assign">
+      <h3 style="margin-top:0">11강 과제: 네 이야기에 색 입히기</h3>
+      <ol>
+        <li>7절 두 훈련과 8절 디테일 채우기 여섯 문항을 모두 마칩니다.</li>
+        <li>4절에서 10강 스토리 A~D 각각의 감정 곡선을 정해 봅니다. 전환에서 감정이 크게 움직이는지 확인하세요.</li>
+        <li>11절 업그레이드 시트로 네 이야기 모두에 인용, 감정, 디테일을 더합니다.</li>
+        <li>업그레이드한 이야기 두 개를 10강 타이머로 90초 안에 말하고 녹음합니다. 생생함을 더해도 90초를 크게 넘지 않는지 확인하세요.</li>
+        <li>녹음 하나를 받아 적어(인용은 따옴표로) 10절 점검기에 넣습니다. 디테일이 앞 25%에 몰려 있지 않은지 봅니다.</li>
+        <li>-ed / -ing 감정 형용사 다섯 쌍(bored/boring 등)으로 내 경험 문장을 하나씩 만들어 봅니다.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>12강. 기억에 남는 경험 유형별 템플릿: 여행, 공연, 문제 상황</h4></div>
+      <span class="pill">4주차 마지막</span>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">15</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 나온 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: 직접 인용, 슬로모션, -ed">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 11강. 예문과 훈련 문항은 학습용으로 새로 작성했습니다. 생생함 예산은 이 과정의 권장 기준이며, 점검기는 단어 목록 기반 추정치입니다. 입력한 내용은 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const cssv=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>{setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');arcDraw()});
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  const wc=t=>(String(t).match(/[A-Za-z’']+/g)||[]).length;
+
+  /* ---------- hero ---------- */
+  const HS=[['b','As soon as we got off the train, I reached into my bag, and my wallet was gone.'],['e',' My stomach just dropped.'],['d',' I checked every pocket at least three times, but nothing.'],['q',' I kept saying to my sister, “It’s gone. It’s actually gone.”'],['d',' Everything was in it: my cards, about thirty thousand yen, even my hotel key.'],['e',' I went from excited to completely panicked in about two seconds.'],['b',' We went to the station office'],['d',', where an older man in a navy uniform was sitting behind the counter'],['b','.'],['q',' He listened to my terrible mix of English and gestures, then just smiled and said, “Don’t worry. This is Japan.”'],['b',' About an hour later, they called. Someone had found it'],['d',' at the last stop, with every single yen still inside'],['b','.'],['e',' I honestly almost cried, I was so relieved.']];
+  let hon=new Set();
+  function hero(){$('hTxt').innerHTML=HS.filter(s=>s[0]==='b'||hon.has(s[0])).map(s=>s[0]==='b'?esc(s[1]):`<span class="h${s[0]}">${esc(s[1])}</span>`).join('');const w=wc($('hTxt').textContent);$('hW').textContent=w;$('hS').textContent=Math.round(w/130*60)+'초';$('hL').textContent=hon.size+' / 3';$('hBar').style.width=(15+hon.size*28)+'%';document.querySelectorAll('#hLayers button').forEach(b=>b.setAttribute('aria-pressed',hon.has(b.dataset.l)))}
+  document.querySelectorAll('#hLayers button').forEach(b=>b.addEventListener('click',()=>{const l=b.dataset.l;hon.has(l)?hon.delete(l):hon.add(l);hero()}));hero();
+
+  /* ---------- emotion palette & arc ---------- */
+  const EMO={excited:[2,'var(--amber)','I couldn’t wait.','I’d been counting down the days.'],curious:[1,'var(--sky)','I had no idea what to expect.','I was dying to find out.'],relaxed:[1,'var(--teal)','Everything felt so easy.','I was finally starting to relax.'],nervous:[-1,'var(--violet)','My hands were shaking.','I was so nervous that I couldn’t eat.'],confused:[-1,'var(--violet)','I had no idea what was going on.','I just stood there, totally lost.'],frustrated:[-2,'var(--rose)','I was about to lose it.','I couldn’t believe how long it was taking.'],embarrassed:[-2,'var(--rose)','My face turned bright red.','I wanted to disappear.'],disappointed:[-2,'var(--rose)','My heart just sank.','All that planning, for nothing.'],panicked:[-3,'var(--rose)','My stomach just dropped.','My heart was pounding.'],exhausted:[-1,'var(--violet)','I could barely keep my eyes open.','I was completely wiped out.'],relieved:[2,'var(--teal)','I let out a huge sigh of relief.','I almost cried, I was so relieved.'],thrilled:[3,'var(--amber)','I was over the moon.','I couldn’t stop smiling.'],grateful:[2,'var(--teal)','I’ll never forget how kind they were.','I’m still so grateful to him.'],amused:[2,'var(--amber)','I couldn’t stop laughing.','Now it just makes me laugh.'],proud:[2,'var(--amber)','I felt like I’d actually done something.','I was really proud of myself.'],nostalgic:[1,'var(--sky)','It takes me right back.','I still think about it all the time.']};
+  $('epal').innerHTML=Object.entries(EMO).map(([k,v])=>`<span style="--ec:${v[1]}">${k}</span>`).join('');
+  const BEATS=['배경','전개','전환','결과','느낀 점'];
+  let arc=LS.get('opic-l11-arc',['excited','relaxed','panicked','relieved','grateful']);
+  $('arcSel').innerHTML=BEATS.map((b,i)=>`<div><label for="as${i}">${i+1}. ${b}</label><select id="as${i}" data-i="${i}">${Object.keys(EMO).map(k=>`<option value="${k}" ${arc[i]===k?'selected':''}>${k}</option>`).join('')}</select></div>`).join('');
+  $('arcSel').querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>{arc[+s.dataset.i]=s.value;LS.set('opic-l11-arc',arc);arcDraw()}));
+  function arcDraw(){const s=$('emoArc');const faint=cssv('--faint'),muted=cssv('--muted'),txt=cssv('--text');const xs=[60,165,270,375,470];const y=v=>100-v*26;let h=`<line x1="30" y1="100" x2="500" y2="100" stroke="${faint}" stroke-dasharray="4 4"/><text x="34" y="20" font-size="11" fill="${muted}">긍정</text><text x="34" y="190" font-size="11" fill="${muted}">부정</text>`;const pts=arc.map((e,i)=>[xs[i],y(EMO[e][0])]);h+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${txt}" stroke-width="2.5" opacity=".6"/>`;pts.forEach((p,i)=>{const c=cssv(EMO[arc[i]][1].slice(4,-1));h+=`<circle cx="${p[0]}" cy="${p[1]}" r="9" fill="${c}"/><text x="${p[0]}" y="${p[1]+(EMO[arc[i]][0]>=0?-14:24)}" text-anchor="middle" font-size="12" font-weight="600" fill="${txt}">${arc[i]}</text><text x="${p[0]}" y="196" text-anchor="middle" font-size="11" fill="${muted}">${BEATS[i]}</text>`});s.innerHTML=h;
+    $('arcPh').innerHTML=arc.map((e,i)=>`<div style="--ec:${EMO[e][1]}"><small>${BEATS[i]} · ${e}</small>${esc(EMO[e][2])}<br>${esc(EMO[e][3])}</div>`).join('');
+    const vals=arc.map(e=>EMO[e][0]);const swing=Math.abs(vals[2]-vals[1]);const recover=vals[3]>vals[2];const uniq=new Set(arc).size;
+    $('arcMsg').innerHTML=`전환에서의 감정 변화 폭 <b>${swing}</b>${swing>=3?' (충분히 극적입니다)':swing>=1?' (조금 더 크게 움직여도 좋습니다)':' (전환에서 감정이 바뀌지 않습니다. 이야기에 굴곡이 있는지 확인하세요)'} · 결과에서 회복 ${recover?'<b style="color:var(--teal)">있음</b>':'<b style="color:var(--amber)">없음 (긍정적 반전 이야기라면 괜찮습니다)</b>'} · 서로 다른 감정 ${uniq}개`}
+  arcDraw();
+
+  /* ---------- zoom ---------- */
+  const ZM=[['I lost my wallet.','실제 시간 2초, 말하는 시간 2초. IM형.'],['When I got off the train, I realized my wallet was gone.','시간과 깨달음이 들어갔습니다. IH형.'],['As soon as I got off the train, I reached into my bag, and my wallet wasn’t there. I checked my pockets, then my bag again. My stomach just dropped.','작은 행동과 신체 반응이 들어가 장면이 생겼습니다.'],['As soon as I stepped off the train, I reached into my bag for my wallet, and my fingers touched… nothing. I checked my jacket, my jeans, the bag again, three, four times. My sister was staring at me, and I remember thinking, “Okay, don’t panic.” But I was already panicking. In about two seconds, the whole trip went from perfect to a total disaster.','실제 시간 2초, 말하는 시간 약 25초. 작은 행동, 숫자, 생각 인용, 감정 변화가 모두 들어간 슬로모션입니다.']];
+  function zoom(){const v=+$('zr').value;const z=ZM[v-1];$('zt').textContent=z[0];$('zm').textContent=`${v}단계 · ${wc(z[0])}단어 · ${z[1]}`}
+  $('zr').addEventListener('input',zoom);zoom();
+
+  /* ---------- compare ---------- */
+  const PLAIN='But when we got off the train, I lost my wallet. I was very surprised. We went to the station office and talked to the staff. They called other stations. Later, someone found it. I was very happy. We went back to get it.';
+  const VIVID='But as soon as we got off the train, I reached into my bag, and my wallet was gone. <span class="he">My stomach just dropped.</span> <span class="hd">I checked every pocket at least three times</span>, and <span class="hq">I kept saying to my sister, “It’s gone. It’s actually gone.”</span> <span class="hd">Everything was in it: my cards, about thirty thousand yen, even my hotel key.</span> <span class="he">I went from excited to completely panicked in about two seconds.</span> So we went straight to the station office, <span class="hd">where an older man in a navy uniform</span> listened to my terrible mix of English and gestures. <span class="hq">He just smiled and said, “Don’t worry. This is Japan.”</span> <span class="hd">About an hour later</span>, it turned out someone had handed it in at the last stop, <span class="hd">with every single yen still inside</span>. <span class="he">I honestly almost cried, I was so relieved.</span>';
+  const ct=$('cTabs'),cb=$('cBox');
+  [['밋밋한 버전','var(--rose)'],['생생한 버전','var(--teal)']].forEach((t,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.style.setProperty('--tc',t[1]);b.textContent=t[0];b.addEventListener('click',()=>cmp(i));ct.appendChild(b)});
+  function cmp(i){ct.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',j===i));const t=i?VIVID:esc(PLAIN);const plain=t.replace(/<[^>]+>/g,'');cb.innerHTML=`<p class="txt">${t}</p><p class="small muted" style="margin:10px 0 0">${wc(plain)}단어 · 약 ${Math.round(wc(plain)/130*60)}초 · ${i?'인용 2, 감정 3(서로 다른 단어 + 신체 반응), 디테일 6. 구조는 밋밋한 버전과 같습니다.':'very surprised, very happy 같은 막연한 감정과 사건 나열. 시제는 맞지만 장면이 없습니다.'}</p>`}
+  cmp(1);
+  document.querySelectorAll('#cKey button').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);cb.classList.toggle('off-'+b.dataset.k,!on)}));
+
+  /* ---------- drills ---------- */
+  function drill(key,data,qE,oE,fE,pE,nE,rE){let st=LS.get(key,{i:0,res:[]});
+    function r(){const it=data[st.i];$(pE).innerHTML=data.map((_,j)=>`<i class="${st.res[j]===true?'ok':st.res[j]===false?'ng':''} ${j===st.i?'cur':''}"></i>`).join('');$(qE).innerHTML=it.q;const ord=it.o.map((_,k)=>k).sort((a,b)=>((a*3+st.i)%it.o.length)-((b*3+st.i)%it.o.length));$(oE).innerHTML=ord.map(k=>`<button type="button" data-k="${k}">${esc(it.o[k])}</button>`).join('');$(fE).classList.remove('on');
+      $(oE).querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const k=+b.dataset.k;$(oE).querySelectorAll('button').forEach(x=>{x.disabled=true;if(+x.dataset.k===it.a)x.classList.add('right')});if(k!==it.a)b.classList.add('wrong');st.res[st.i]=k===it.a;LS.set(key,st);$(pE).children[st.i].className=(k===it.a?'ok':'ng')+' cur';$(fE).innerHTML=`<b style="color:${k===it.a?'var(--teal)':'var(--rose)'}">${k===it.a?'정확합니다.':'다시 보세요.'}</b> ${it.e}`;$(fE).classList.add('on')}))}
+    $(nE).addEventListener('click',()=>{st.i=(st.i+1)%data.length;LS.set(key,st);r()});$(rE).addEventListener('click',()=>{st={i:0,res:[]};LS.set(key,st);r()});r()}
+  drill('opic-l11-q',[
+    {q:'<small>간접 화법을 직접 인용으로</small>She told me that she had lost her ticket.',o:['She said, “I lost my ticket!”','She said, “She had lost her ticket.”','She said, “I had lost my ticket.”'],a:0,e:'직접 인용은 그 사람이 그 순간 실제로 한 말입니다. 대명사는 I, 시제는 그 사람의 ‘지금’ 기준이라 과거완료가 아니라 과거형입니다.'},
+    {q:'<small>속마음을 생생하게</small>I thought that I was going to be late.',o:['I remember thinking, “I’m going to be so late.”','I remember thinking, “I was going to be so late.”','I thought, that I am late.'],a:0,e:'생각 인용도 그 순간의 현재 시점입니다. I remember thinking, “…”은 전환 장면에서 특히 효과적인 틀입니다.'},
+    {q:'<small>구어 인용으로 가장 자연스러운 것</small>나는 “말도 안 돼!”라는 반응이었다.',o:['And I was like, “No way!”','And I was like that no way.','And I like said no way.'],a:0,e:'was like + 직접 인용은 원어민 구어에서 매우 흔합니다. 다만 한 이야기에 한 번 정도가 적당합니다.'},
+    {q:'<small>간접 질문을 직접 인용으로</small>He asked if we had a reservation.',o:['He asked, “Do you have a reservation?”','He asked, “If we had a reservation?”','He asked, “Did we have a reservation?”'],a:0,e:'직접 인용 안은 그 사람이 실제로 한 질문 그대로. 상대에게 묻는 말이니 you, 현재형 의문문입니다.'},
+    {q:'<small>직접 인용을 간접 화법으로</small>“I can’t find my phone,” she said.',o:['She said she couldn’t find her phone.','She said she can’t find my phone.','She said I couldn’t find her phone.'],a:0,e:'간접 화법은 시제가 한 칸 뒤로(can’t → couldn’t), 대명사는 말하는 나의 관점(I → she, my → her)으로 바뀝니다. 5강의 이야기 속 지금 감각과 같습니다.'}
+  ],'qQ','qO','qFb','qPips','qNext','qReset');
+  drill('opic-l11-e',[
+    {q:'When the staff handed back my wallet, I felt so ___.',o:['relieved','embarrassed','nervous','bored'],a:0,e:'걱정이 풀린 안도감은 relieved입니다. 결과 단계의 대표 감정입니다.'},
+    {q:'I tripped on the stairs in front of the whole class. I was so ___.',o:['embarrassed','relieved','nostalgic','curious'],a:0,e:'남들 앞에서 창피한 감정은 embarrassed. 신체 반응으로는 My face turned bright red.'},
+    {q:'We’d waited two hours, and then they canceled the show. I was really ___.',o:['frustrated','thrilled','relaxed','grateful'],a:0,e:'기다림이 헛수고가 된 짜증은 frustrated입니다. 기대가 무너진 쪽을 강조하면 disappointed도 가능합니다.'},
+    {q:'The night before my first solo trip, I couldn’t sleep. I was ___ and nervous at the same time.',o:['excited','bored','relieved','ashamed'],a:0,e:'기대와 긴장이 섞인 감정. 배경 단계에서 좋은 감정입니다.'},
+    {q:'Looking at those old photos now, I feel kind of ___.',o:['nostalgic','furious','panicked','confused'],a:0,e:'지난 시절을 그리워하는 감정. 느낀 점 단계에 잘 어울립니다.'},
+    {q:'A total stranger drove us to the hospital. I’m still so ___ to him.',o:['grateful','jealous','annoyed','relieved'],a:0,e:'grateful to + 사람. 느낀 점 단계의 대표 감정입니다.'},
+    {q:'We finally reached the top after five hours. I was exhausted, but so ___.',o:['proud','ashamed','bored','scared'],a:0,e:'힘들었지만 해낸 뿌듯함. 대비(exhausted but proud)가 감정을 입체적으로 만듭니다.'},
+    {q:'The movie was so long that I got really ___.',o:['bored','boring'],a:0,e:'감정을 느끼는 사람은 -ed(bored), 감정을 일으키는 대상은 -ing(The movie was boring).'}
+  ],'eQ','eO','eFb','ePips','eNext','eReset');
+
+  /* ---------- detail machine ---------- */
+  const NUMRE=/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten|twenty|thirty|forty|fifty|hundred|thousand|half|dozen)\b/i;
+  const BODYRE=/\b(heart|hands?|stomach|face|froze|freeze|shaking|pounding|sweat|cried|cry|laugh|sigh|knees|breath)\b/i;
+  const SENSE=/\b(smell|smelled|smelling|sound|heard|hear|loud|quiet|silent|hot|cold|freezing|warm|steaming|bright|dark|taste|tasted|spicy|sweet|salty|soft|rough|wet|soaked)\b/i;
+  const QUOTE=/[“"][^”"]{2,}[”"]/;
+  const DM=[
+    {s:'It was crowded.',t:'숫자',re:NUMRE,m:'There must have been about five hundred people packed into a room built for maybe two hundred.'},
+    {s:'I was nervous.',t:'신체 반응',re:BODYRE,m:'My hands were shaking so much that I could barely hold the microphone.'},
+    {s:'The food was good.',t:'감각',re:SENSE,m:'The noodles were still steaming when they came out, and the broth had this smoky, spicy kick to it.'},
+    {s:'We waited a long time.',t:'숫자 + 작은 행동',re:NUMRE,m:'We waited almost two hours, and I must have checked my phone a hundred times.'},
+    {s:'The hotel room was bad.',t:'대비',re:/\b(but|while|whereas|instead|only|everyone else|unlike)\b/i,m:'The pictures online showed a sea view, but our window faced a brick wall about a meter away.'},
+    {s:'He helped us.',t:'직접 인용',re:QUOTE,m:'He just grabbed one of our bags and said, “Follow me. I know a shortcut.”'}
+  ];
+  let dm=LS.get('opic-l11-dm',{i:0,a:{}});
+  function dmR(){$('mNav').innerHTML=DM.map((_,j)=>`<button type="button" data-j="${j}" class="${dm.a[j]&&dm.a[j].ok?'done':''}" aria-current="${j===dm.i}">${j+1}</button>`).join('');$('mNav').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{dm.i=+b.dataset.j;LS.set('opic-l11-dm',dm);dmR()}));
+    const it=DM[dm.i];const sv=(dm.a[dm.i]||{}).t||'';$('mBody').innerHTML=`<div class="small muted">${dm.i+1} / ${DM.length} · 이 문장을 장면으로 바꾸세요</div><div class="src">${esc(it.s)}</div><div class="tgt">목표 디테일 <b>${esc(it.t)}</b></div><textarea id="mT" placeholder="먼저 소리 내어 말한 뒤 입력하세요.">${esc(sv)}</textarea><div class="ctrl" style="margin-top:8px"><button type="button" class="btn primary" id="mC">점검</button><button type="button" class="btn" id="mM">예시 보기</button><button type="button" class="btn" id="mN">다음</button></div><div class="cm-r" id="mR"></div><div class="cm-m" id="mMod">${esc(it.m)}</div>`;
+    $('mT').addEventListener('input',e=>{dm.a[dm.i]=Object.assign(dm.a[dm.i]||{},{t:e.target.value});LS.set('opic-l11-dm',dm)});
+    $('mC').addEventListener('click',()=>{const t=$('mT').value.trim();if(!t){$('mR').textContent='먼저 입력하세요.';return}const ok=it.re.test(t);const w=wc(t);$('mR').innerHTML=`<span style="color:${ok?'var(--teal)':'var(--rose)'}">${ok?'✓ 목표 디테일이 보입니다.':'✗ 목표 디테일이 보이지 않습니다.'}</span> <span class="muted">${w}단어${w<10?' · 조금 더 늘려 장면을 만들어 보세요.':''}${/\bvery\b/i.test(t)?' · very 대신 구체적인 표현을 써 보세요.':''}</span>`;dm.a[dm.i]={t,ok};LS.set('opic-l11-dm',dm);$('mNav').children[dm.i].className=ok?'done':''});
+    $('mM').addEventListener('click',()=>$('mMod').classList.toggle('on'));$('mN').addEventListener('click',()=>{dm.i=(dm.i+1)%DM.length;LS.set('opic-l11-dm',dm);dmR()})}
+  dmR();
+
+  /* ---------- checker ---------- */
+  const EMOW=Object.keys(EMO).concat(['scared','terrified','shocked','surprised','annoyed','upset','happy','sad','angry','worried','anxious','stressed','glad','amazed','touched','guilty','ashamed','furious','jealous','lonely']);
+  const VAGUE=['happy','sad','angry','very','fun','good'];
+  const SENSEW=['smell','smelled','sound','heard','loud','quiet','silent','freezing','warm','steaming','bright','dark','tasted','spicy','sweet','salty','soft','soaked','wet','cold','hot'];
+  const BODYW=['stomach','heart was','hands were','froze','shaking','pounding','almost cried','couldn\'t stop laughing','sigh','face turned','tears'];
+  const PRES='go goes come comes eat eats is are am get gets take takes make makes say says tell tells give gives buy buys find finds start starts stop stops try tries look looks walk walks play plays visit visits stay stays ride rides talk talks wait waits arrive arrives call calls ask asks happen happens lose loses'.split(' ');
+  const BLK=new Set(['to','can','could','will','would','should','must','might','may','did','didn\'t','does','do','don\'t','doesn\'t','usually','always','often','still','every','now','i\'ll','we\'ll','that\'s','it\'s']);
+  const kt=$('kText');kt.value=LS.get('opic-l11-check','');kt.addEventListener('input',()=>LS.set('opic-l11-check',kt.value));
+  $('kVivid').addEventListener('click',()=>{kt.value='Oh, there’s one trip I’ll never forget. It was back in 2023, and my sister and I had booked a last-minute trip to Osaka. On the third day, we were taking the train to Kyoto, just chatting about lunch. '+VIVID.replace(/<[^>]+>/g,'')+' Looking back, it’s the part of the trip I remember most, and ever since then, I’ve kept my cards in two different places.';kRun()});
+  $('kPlain').addEventListener('click',()=>{kt.value='Last year I went to Osaka with my sister. It was very fun. We took the train to Kyoto. '+PLAIN+' It was a good trip.';kRun()});
+  $('kRun').addEventListener('click',kRun);
+  function kRun(){const t=kt.value.trim();const o=$('kOut');if(!t){o.innerHTML='<p class="small" style="color:var(--rose)">먼저 붙여 넣으세요.</p>';return}
+    const qs=[];const qre=/[“"][^”"]{2,}[”"]/g;let m;while((m=qre.exec(t)))qs.push([m.index,m.index+m[0].length]);const wasLike=(t.match(/\b(was|were) like,?\s*[“"]/gi)||[]).length;
+    const inQ=p=>qs.some(q=>p>=q[0]&&p<q[1]);
+    const low=t.toLowerCase().replace(/’/g,"'");const L=low.length;
+    const find=(list)=>{const out=[];list.forEach(w=>{const re=new RegExp('(^|[^a-z])'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![a-z])','g');let x;while((x=re.exec(low))){const p=x.index+x[1].length;if(!inQ(p))out.push([p,w.length,w])}});return out};
+    const emo=find(EMOW),vag=find(VAGUE),sen=find(SENSEW),bod=find(BODYW);const nums=[];const nre=/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten|twenty|thirty|fifty|hundred|thousand|half)\b/g;let n;while((n=nre.exec(low))){if(!inQ(n.index))nums.push([n.index,n[0].length])}
+    const details=[...sen,...bod,...nums];const first25=details.filter(d=>d[0]<L*.25).length;const pct=details.length?Math.round(first25/details.length*100):0;
+    const tok=[];const tre=/[a-z']+/g;while((m=tre.exec(low)))tok.push([m[0],m.index]);const refIdx=(()=>{const r=low.search(/looking back|ever since|since then|i learned/);return r<0?L:r})();
+    const flags=[];tok.forEach((x,i)=>{const prev=i?tok[i-1][0]:'';if(x[1]<refIdx&&!inQ(x[1])&&PRES.includes(x[0])&&!BLK.has(prev)&&!(prev==='i'&&['want','think','mean','guess'].includes(x[0])))flags.push([x[1],x[0].length])});
+    const uniqEmo=new Set(emo.map(e=>e[2]).filter(e=>!VAGUE.includes(e)));
+    const LC={g:'var(--teal)',a:'var(--amber)',r:'var(--rose)'};
+    const rows=[['직접 인용',qs.length+'개'+(wasLike?' (was like '+wasLike+')':''),'1~2개',qs.length>=1&&qs.length<=3?'g':qs.length>3?'a':'r'],['감정 어휘(구체)',uniqEmo.size+'종류','3종류 이상',uniqEmo.size>=3?'g':uniqEmo.size>=1?'a':'r'],['막연한 감정·very',vag.length+'회','2회 이하',vag.length<=2?'g':vag.length<=4?'a':'r'],['신체 반응',bod.length+'개','1개 이상',bod.length>=1?'g':'a'],['숫자·시간',nums.length+'개','2개 이상',nums.length>=2?'g':nums.length>=1?'a':'r'],['감각',sen.length+'개','1개 이상',sen.length>=1?'g':'a'],['앞 25%의 디테일 비중',pct+'%','30% 이하',pct<=30?'g':pct<=50?'a':'r'],['인용 밖 현재형',flags.length+'개','1개 이하',flags.length<=1?'g':flags.length<=3?'a':'r']];
+    const bins=[0,0,0,0,0,0,0,0,0,0];details.forEach(d=>{bins[Math.min(9,Math.floor(d[0]/L*10))]++});const mx=Math.max(1,...bins);
+    const marks=[...qs.map(q=>[q[0],q[1]-q[0],'hq']),...emo.filter(e=>!VAGUE.includes(e[2])).map(e=>[e[0],e[1],'he']),...bod.map(e=>[e[0],e[1],'he']),...nums.map(e=>[e[0],e[1],'hd']),...sen.map(e=>[e[0],e[1],'hd']),...flags.map(f=>[f[0],f[1],'v'])].sort((a,b)=>b[0]-a[0]);
+    const used=[];let cursor=t.length;const pieces=[];marks.forEach(([s,len,c])=>{if(used.some(u=>s<u[1]&&s+len>u[0]))return;used.push([s,s+len]);pieces.unshift(esc(t.slice(s+len,cursor)));pieces.unshift(`<span class="${c}">${esc(t.slice(s,s+len))}</span>`);cursor=s});pieces.unshift(esc(t.slice(0,cursor)));
+    o.innerHTML=`<div class="metrics">${rows.map(r=>`<div style="--lc:${LC[r[3]]}"><small>${r[0]}</small><b>${r[1]}</b><span>목표 ${r[2]}</span></div>`).join('')}</div><div class="small muted">디테일 분포 (답변 처음 → 끝)</div><div class="dens">${bins.map(b=>`<div><i style="height:${b/mx*100}%"></i></div>`).join('')}</div><div class="dens-x"><span>배경</span><span></span><span></span><span>전환</span><span></span><span></span><span>결과</span><span></span><span></span><span>끝</span></div><div class="hlv">${pieces.join('')}</div><p class="small muted" style="margin:8px 0 0">파랑은 인용, 빨강은 감정·신체 반응, 주황은 숫자·감각, 보라 점선은 인용 밖 현재형(확인 필요)입니다. 단어 목록 기반 추정입니다.</p>`}
+
+  /* ---------- worksheet ---------- */
+  const st10=LS.get('opic-l10-stories',null);
+  let ws=LS.get('opic-l11-ws',{cur:0,s:[{},{},{},{}]});
+  const F=[['quote','직접 인용 (생각 또는 누군가의 말)','I remember thinking, “…” / He said, “…”'],['emoBefore','전환 직후의 감정','panicked, frustrated, embarrassed …'],['body','신체 반응','My stomach just dropped.'],['d1','디테일 1 (전환 장면)','숫자, 작은 행동, 대비'],['d2','디테일 2 (결과 장면)','숫자, 이름, 감각'],['emoAfter','결과의 감정','relieved, grateful, amused …']];
+  function wsTabs(){$('wsTabs').innerHTML=['A','B','C','D'].map((n,i)=>{const t=st10&&st10.s&&st10.s[i]&&st10.s[i].title;return `<button type="button" role="tab" data-i="${i}" aria-selected="${i===ws.cur}">스토리 ${n}${t?' · '+esc(t).slice(0,14):''}</button>`}).join('');$('wsTabs').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ws.cur=+b.dataset.i;LS.set('opic-l11-ws',ws);wsTabs();wsBody()}))}
+  function wsBody(){const i=ws.cur,s=ws.s[i];const src=st10&&st10.s&&st10.s[i]?st10.s[i]:{};
+    $('wsBody').innerHTML=`<div class="ws-src">${src.turn||src.res?`<b>10강 전환</b> ${esc(src.turn||'(비어 있음)')}<br><b>10강 결과</b> ${esc(src.res||'(비어 있음)')}`:'10강 스토리 카드 기록이 없습니다. 아래 두 칸에 전환과 결과를 직접 적으세요.'}</div>
+    <div class="ws-grid">${!(src.turn||src.res)?`<div><label for="w_turn">전환</label><textarea id="w_turn" data-k="turn">${esc(s.turn||'')}</textarea></div><div><label for="w_res">결과</label><textarea id="w_res" data-k="res">${esc(s.res||'')}</textarea></div>`:''}${F.map(f=>`<div><label for="w_${f[0]}">${f[1]}<small>${esc(f[2])}</small></label><textarea id="w_${f[0]}" data-k="${f[0]}">${esc(s[f[0]]||'')}</textarea></div>`).join('')}</div>
+    <div class="ws-out" id="wsOut"></div><div class="ctrl" style="margin-top:10px"><button type="button" class="btn" id="wsEx">예시 채우기</button><button type="button" class="reset" id="wsClr">이 카드 지우기</button></div>`;
+    $('wsBody').querySelectorAll('textarea').forEach(t=>t.addEventListener('input',()=>{s[t.dataset.k]=t.value;LS.set('opic-l11-ws',ws);wsOut()}));
+    $('wsEx').addEventListener('click',()=>{Object.assign(s,{turn:s.turn||'as soon as we got off the train, I realized my wallet was gone',res:s.res||'we went to the station office, and it turned out someone had handed it in at the last stop',quote:'I remember thinking, “Okay, don’t panic.” But I was already panicking.',emoBefore:'I went from excited to completely panicked in about two seconds.',body:'My stomach just dropped.',d1:'I checked every pocket at least three times.',d2:'It came back with every single yen still inside.',emoAfter:'I honestly almost cried, I was so relieved.'});LS.set('opic-l11-ws',ws);wsBody()});
+    $('wsClr').addEventListener('click',()=>{ws.s[i]={};LS.set('opic-l11-ws',ws);wsBody()});wsOut()}
+  function wsOut(){const i=ws.cur,s=ws.s[i];const src=st10&&st10.s&&st10.s[i]?st10.s[i]:{};const turn=(src.turn||s.turn||'').trim(),res=(src.res||s.res||'').trim();const v=k=>(s[k]||'').trim();const sl=(x,lab,cls)=>x?(cls?`<span class="${cls}">${esc(x)}</span>`:esc(x)):`<span class="muted">[${lab}]</span>`;const cap=x=>x?x.charAt(0).toUpperCase()+x.slice(1):x;
+    $('wsOut').innerHTML=`${sl(cap(turn),'전환')}. ${sl(v('body'),'신체 반응','he')} ${sl(v('d1'),'디테일 1','hd')} ${sl(v('quote'),'인용','hq')} ${sl(v('emoBefore'),'전환의 감정','he')} ${sl(cap(res),'결과')}. ${sl(v('d2'),'디테일 2','hd')} ${sl(v('emoAfter'),'결과의 감정','he')}`;const w=wc($('wsOut').textContent.replace(/\[[^\]]+\]/g,''));$('wsOut').insertAdjacentHTML('beforeend',`<div class="small muted" style="font-family:var(--sans);margin-top:8px">전환+결과 약 ${w}단어 · 약 ${Math.round(w/130*60)}초. 10강 기준으로 전환과 결과에 40~45초 정도가 적당합니다.</div>`)}
+  wsTabs();wsBody();
+
+  /* ---------- myths ---------- */
+  const myths=[['감정 표현은 많을수록 좋다','감정 단어를 문장마다 넣으면 과장된 연기처럼 들립니다. 서로 다른 감정 3~4개를 이야기의 곡선에 맞춰 배치하는 것이 핵심입니다.'],['인용은 정확한 원문이어야 한다','몇 년 전 누군가의 말을 정확히 기억하는 사람은 없습니다. 원어민도 그 순간의 핵심을 재구성해 인용합니다. 중요한 것은 장면이 살아나는 것입니다.'],['인용 안의 현재형도 시제 오류다','직접 인용은 그 사람의 ‘그 순간’이라 현재형이 맞습니다. 인용 밖에서 현재형으로 미끄러지는 것만 조심하세요.'],['배경부터 디테일을 쌓아야 몰입된다','배경의 디테일은 전환에 도착하는 시간만 늦춥니다. 배경에는 숫자나 이름 하나, 나머지 디테일은 전환과 결과에 씁니다.'],['very를 붙이면 감정이 강해진다','very happy, very surprised는 막연한 감정을 더 막연하게 강조할 뿐입니다. thrilled, shocked처럼 강한 단어로 바꾸거나, 몸의 반응으로 보여 주세요.'],['생생하게 하려면 문장이 길어야 한다','슬로모션도 짧은 문장의 연속으로 만들 수 있습니다. I checked my jacket. My jeans. The bag again. 짧은 문장의 리듬이 긴장을 만들기도 합니다.']];
+  const my=$('mythGrid');myths.forEach(m=>{const b=document.createElement('button');b.type='button';b.className='myth';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="inner"><div class="face front"><div class="tag">함정</div><p>${m[0]}</p><div class="hint">눌러서 이유 보기</div></div><div class="face back"><div class="tag">이렇게 하세요</div><p>${m[1]}</p></div></div>`;b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));my.appendChild(b)});
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'생생함의 세 도구가 AL과 연결되는 이유는?',o:['어려운 단어를 쓰게 해서','서술 안에 묘사를 끼워 넣어 문단을 두텁게 만들어서','답변을 짧게 만들어서','시제를 단순하게 만들어서'],a:1,e:'Advanced 화자는 과거를 서술하면서 장면을 묘사합니다. 세 도구는 그 기술입니다.'},
+    {q:'생생함을 가장 많이 써야 하는 단계는?',o:['배경','전개','전환과 결과','느낀 점'],a:2,e:'10강에서 시간의 절반을 쓰는 곳이 전환과 결과입니다. 그 시간을 채우는 것이 생생함의 도구입니다.'},
+    {q:'“He said, ‘Don’t worry, this is Japan.’”의 현재형은?',o:['시제 오류','직접 인용 안이라 맞다','과거완료로 바꿔야 한다','미래형으로 바꿔야 한다'],a:1,e:'인용 안은 그 사람의 그 순간입니다. 간접 화법으로 바꾸면 He told me not to worry because it was Japan.'},
+    {q:'“나는 지루했다”를 바르게 옮긴 것은?',o:['I was very boring.','I was bored.','I was boredom.','I bored.'],a:1,e:'감정을 느끼는 사람은 -ed. I was boring은 내가 지루한 사람이었다는 뜻입니다.'},
+    {q:'슬로모션 기법을 쓰기에 가장 알맞은 곳과 횟수는?',o:['배경, 여러 번','전환의 한 장면, 한 번','느낀 점, 두 번','모든 장면'],a:1,e:'한 장면만 늘려야 대비가 생기고 90초 안에 끝납니다.'},
+    {q:'다음 중 ‘몸으로 보여 주는’ 감정 표현은?',o:['I was very surprised.','My stomach just dropped.','It was a surprise.','I had a feeling.'],a:1,e:'신체 반응은 감정의 이름을 말하지 않고도 장면을 보여 줍니다.'},
+    {q:'90초 이야기에 권장되는 직접 인용 수는?',o:['0개','1~2개','5개 이상','문장마다'],a:1,e:'한두 개면 장면에 목소리가 생깁니다. 많아지면 연기처럼 들립니다.'},
+    {q:'“There must have been about five hundred people…”이 더한 디테일의 종류는?',o:['감각','숫자','인용','대비'],a:1,e:'crowded라는 막연한 형용사를 숫자로 보여 주었습니다. 7강의 ‘보여 주기’와 같은 원리입니다.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${esc(item.q)}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'11강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['직접 인용','direct speech','누군가 한 말이나 생각을 따옴표 안에 그대로 옮기는 것. 인용 안은 그 순간의 시제.'],['간접 화법','reported speech','남의 말을 내 문장으로 옮기는 것. 시제가 한 칸 뒤로, 대명사는 내 관점으로.'],['인용 동사','quotative','said, asked, told me, thought, was like처럼 인용을 이끄는 표현.'],['생각 인용','inner monologue','I remember thinking, “…”처럼 속마음을 인용하는 것.'],['감정 곡선','emotional arc','이야기의 단계마다 감정이 오르내리는 모양. 전환에서 크게 움직인다.'],['신체 반응','physical reaction','My heart was pounding처럼 감정을 몸의 반응으로 보여 주는 표현.'],['-ed / -ing 형용사','participial adjectives','느끼는 사람은 -ed(bored), 일으키는 대상은 -ing(boring).'],['디테일 5종','five detail types','숫자·시간, 이름·고유명사, 감각, 작은 행동, 대비.'],['슬로모션 기법','slow-motion technique','전환의 짧은 순간을 늘려 긴장을 만드는 서술 기법.'],['생생함 예산','vividness budget','한 이야기에 쓰는 인용, 감정, 디테일의 권장량과 위치.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>

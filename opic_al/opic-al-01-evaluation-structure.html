@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 과정 1강 — 평가 구조와 AL 채점 기준</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, :root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#1B1A2C; --bg-2:#222138; --surface:#2A2843; --surface-2:#33304F; --line:#3E3B5E;
+  --text:#ECE9F6; --muted:#ABA6C6; --faint:#7E7A9C;
+  --teal:#4FD1C5; --sky:#6CB8FF; --violet:#A99BFF; --amber:#F6C453; --coral:#FF7A90; --mint:#7EE0A1;
+  --lv1:#5C5A7A; --lv2:#6B6890; --lv3:#7C78A6; --lv4:#3FA7B5; --lv5:#4FC2C4; --lv6:#5FB8F0; --lv7:#8FA2FF; --lv8:#F6C453; --lv9:#FF7A90;
+  --hl-time:rgba(108,184,255,.22); --hl-tense:rgba(169,155,255,.25); --hl-link:rgba(79,209,197,.22);
+  --hl-comp:rgba(246,196,83,.25); --hl-break:rgba(255,122,144,.28); --hl-wrap:rgba(126,224,161,.22);
+  --shadow:0 18px 40px -24px rgba(0,0,0,.7);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#F6F5FB; --bg-2:#EDEBF6; --surface:#FFFFFF; --surface-2:#F1EFF9; --line:#D8D4EA;
+  --text:#1E1C2E; --muted:#56526F; --faint:#8A86A3;
+  --teal:#0E857B; --sky:#1F6FC0; --violet:#5B48D6; --amber:#A26F00; --coral:#C9334F; --mint:#1F8A4C;
+  --lv1:#B9B6CF; --lv2:#A6A2C2; --lv3:#928DB6; --lv4:#2E95A3; --lv5:#22A3A5; --lv6:#2D86D0; --lv7:#5B6BE0; --lv8:#D69A00; --lv9:#D93C5A;
+  --hl-time:rgba(31,111,192,.14); --hl-tense:rgba(91,72,214,.14); --hl-link:rgba(14,133,123,.14);
+  --hl-comp:rgba(214,154,0,.18); --hl-break:rgba(201,51,79,.15); --hl-wrap:rgba(31,138,76,.14);
+  --shadow:0 18px 40px -26px rgba(40,30,90,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:17px;line-height:1.78;word-break:keep-all;overflow-wrap:break-word;padding-bottom:env(safe-area-inset-bottom,0px)}
+.display,h1,h2{font-family:"Black Han Sans","IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;font-weight:400;letter-spacing:.005em}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.prose{max-width:740px}
+p{margin:0 0 1em}
+strong{font-weight:600}
+em.en,.en{font-style:normal}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topbar .wrap{display:flex;align-items:center;gap:12px;height:58px}
+.brand{font-weight:600;font-size:15px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand b{color:var(--text);font-weight:700}
+.tbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.tbtn:hover{border-color:var(--violet)}
+.progress{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:linear-gradient(90deg,var(--teal),var(--sky),var(--violet),var(--amber),var(--coral))}
+.toc-panel{position:fixed;top:64px;right:16px;z-index:50;width:min(360px,calc(100vw - 32px));max-height:calc(100vh - 90px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px;display:none}
+.toc-panel.open{display:block}
+.toc-panel a{display:flex;gap:10px;padding:8px 10px;border-radius:8px;color:var(--text);text-decoration:none;font-size:15px;line-height:1.4}
+.toc-panel a:hover{background:var(--surface-2)}
+.toc-panel a span{color:var(--faint);min-width:22px;font-variant-numeric:tabular-nums}
+
+/* hero */
+.hero{padding:64px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:end}
+.kicker{color:var(--muted);font-size:15px;margin-bottom:14px}
+.hero h1{font-size:clamp(38px,5.6vw,64px);line-height:1.12;margin:0 0 22px}
+.hero .lede{font-size:19px;color:var(--muted);max-width:34em}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;color:var(--muted);background:var(--bg-2)}
+.meter-card{background:var(--bg-2);border:1px solid var(--line);border-radius:22px;padding:22px 20px 18px}
+.meter-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:14px;color:var(--muted)}
+.meter{position:relative;display:flex;align-items:flex-end;gap:7px;height:280px;padding-top:26px}
+.bar{flex:1;position:relative;height:100%;display:flex;align-items:flex-end;border:0;background:none;padding:0;cursor:pointer}
+.bar i{display:block;width:100%;height:var(--h);background:var(--c);border-radius:7px 7px 3px 3px;opacity:.42;transform-origin:bottom;transition:opacity .2s,transform .2s}
+.bar:hover i{opacity:.7}
+.bar[aria-pressed="true"] i{opacity:1;box-shadow:0 0 0 2px var(--bg-2),0 0 0 4px var(--c)}
+.meter.boot .bar i{animation:rise .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--k) * 60ms)}
+@keyframes rise{from{transform:scaleY(.04)}to{transform:scaleY(1)}}
+.bar-labels{display:flex;gap:7px;margin-top:8px}
+.bar-labels span{flex:1;text-align:center;font-size:12.5px;font-weight:600;color:var(--muted)}
+.divider{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--faint);pointer-events:none}
+.divider.left b{left:auto;right:6px}
+.divider b{position:absolute;top:4px;left:6px;font-size:11.5px;font-weight:600;color:var(--faint);white-space:nowrap}
+.groups{display:flex;gap:7px;margin-top:6px;font-size:12px;color:var(--faint)}
+.groups div{border-top:2px solid var(--line);padding-top:4px;text-align:center}
+.level-panel{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-height:132px}
+.level-panel h3{margin:0 0 4px;font-size:18px;display:flex;gap:10px;align-items:baseline}
+.level-panel h3 small{font-size:13px;color:var(--muted);font-weight:500}
+.level-panel p{margin:0 0 6px;font-size:15.5px;line-height:1.65}
+.level-panel .next{color:var(--muted);font-size:14.5px}
+
+/* sections */
+section.sec{padding:76px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:18px;align-items:flex-start;margin-bottom:26px}
+.sec-no{font-family:"Black Han Sans",sans-serif;font-size:52px;line-height:.9;color:var(--accent,var(--violet));min-width:62px}
+.sec-head h2{font-size:clamp(28px,3.6vw,40px);line-height:1.2;margin:0}
+.sec-head p{margin:8px 0 0;color:var(--muted);font-size:16.5px}
+h3{font-size:21px;line-height:1.4;margin:34px 0 12px;font-weight:700}
+h4{font-size:17px;margin:20px 0 8px;font-weight:700}
+ul.clean{padding-left:1.2em;margin:0 0 1em}
+ul.clean li{margin:.35em 0}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+/* callouts */
+.call{border-left:4px solid var(--c,var(--violet));background:var(--bg-2);border-radius:0 12px 12px 0;padding:14px 18px;margin:20px 0}
+.call .t{font-weight:700;margin-bottom:4px;color:var(--c,var(--violet))}
+.call p:last-child{margin-bottom:0}
+.call.key{--c:var(--amber)} .call.tip{--c:var(--teal)} .call.warn{--c:var(--coral)} .call.info{--c:var(--sky)}
+.pull{font-family:"Black Han Sans",sans-serif;font-size:clamp(24px,3.2vw,34px);line-height:1.35;margin:30px 0;padding:24px 0;border-top:2px solid var(--amber);border-bottom:2px solid var(--amber);max-width:22em}
+
+/* fact grid */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.fact .k{font-size:14px;color:var(--muted)}
+.fact .v{font-size:24px;font-weight:700;margin:2px 0}
+.fact .s{font-size:13.5px;color:var(--faint);line-height:1.5}
+
+/* timeline */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 0}
+.step{flex:1 1 120px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;cursor:pointer;text-align:left;position:relative}
+.step .n{font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.step .l{font-size:15px;font-weight:600;line-height:1.35}
+.step[aria-selected="true"]{border-color:var(--teal);background:color-mix(in srgb,var(--teal) 12%,var(--surface))}
+.step-detail{margin-top:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.step-detail h4{margin-top:0}
+
+/* question map */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface);gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;border-radius:999px;padding:6px 14px;cursor:pointer;font-size:14.5px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--violet);color:var(--bg);font-weight:600}
+:root[data-theme="light"] .seg button[aria-pressed="true"]{color:#fff}
+.qmap{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;margin:18px 0 6px}
+.qtile{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px 2px 8px;text-align:center;cursor:pointer;position:relative}
+.qtile .q{font-weight:700;font-size:17px}
+.qtile .c{display:block;height:5px;border-radius:3px;margin:6px 8px 0;background:var(--qc)}
+.qtile[aria-pressed="true"]{border-color:var(--qc);box-shadow:inset 0 0 0 1px var(--qc)}
+.qtile.off{opacity:.25;cursor:not-allowed}
+.qtile .star{position:absolute;top:3px;right:5px;font-size:11px;color:var(--amber)}
+.qsets{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint)}
+.qsets div{border-top:2px solid var(--line);padding-top:3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qdetail{margin-top:14px;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.qdetail h4{margin:0 0 6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{display:inline-block;font-size:12.5px;font-weight:600;border-radius:999px;padding:2px 10px;background:color-mix(in srgb,var(--tc,var(--violet)) 18%,transparent);color:var(--tc,var(--violet))}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--qc)}
+
+/* table */
+.table-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15.5px;line-height:1.6}
+th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+thead th{background:var(--surface-2);font-weight:700;font-size:14.5px}
+tbody th{font-weight:600;color:var(--muted);width:130px;background:var(--bg-2)}
+tr:last-child td,tr:last-child th{border-bottom:0}
+td.ih{border-left:3px solid var(--lv8)} td.al{border-left:3px solid var(--lv9)}
+
+/* lenses */
+.lenses{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}
+.lens{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--lc);border-radius:12px;padding:16px 18px}
+.lens h4{margin:0 0 6px;color:var(--lc)}
+.lens p{font-size:15.5px;margin:0 0 8px}
+.lens .al{font-size:14.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+
+/* text type slider */
+.tt{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:20px;margin:22px 0}
+.tt-scale{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:12px 0 4px;font-size:13px;color:var(--muted);text-align:center}
+.tt-scale span.on{color:var(--text);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--violet)}
+.tt-out{margin-top:14px;background:var(--surface);border-radius:12px;padding:16px;border:1px solid var(--line)}
+.tt-out .lvl{font-size:13.5px;color:var(--muted);margin-bottom:6px}
+.tt-out .eng{font-size:16.5px;line-height:1.7}
+.tt-out .why{font-size:14.5px;color:var(--muted);margin-top:8px}
+
+/* chart */
+.chart-card{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:18px;margin:20px 0}
+.chart-card svg{width:100%;height:auto;display:block}
+.chart-cap{font-size:14.5px;color:var(--muted);margin-top:10px;min-height:3.2em}
+
+/* samples */
+.sample-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.sample{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;border-top:5px solid var(--sc)}
+.sample h4{margin:0 0 4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sample .script{font-size:16px;line-height:1.85;margin:10px 0}
+.speak{border:1px solid var(--line);background:var(--bg-2);border-radius:999px;padding:4px 12px;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.speak:hover{border-color:var(--sc)}
+.prompt-box{background:var(--bg-2);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:16px}
+.prompt-box .muted{font-size:14px}
+.ann{border-radius:4px;padding:1px 2px;cursor:pointer;transition:background .15s}
+.samples.show-time .a-time{background:var(--hl-time);box-shadow:inset 0 -2px 0 var(--sky)}
+.samples.show-tense .a-tense{background:var(--hl-tense);box-shadow:inset 0 -2px 0 var(--violet)}
+.samples.show-link .a-link{background:var(--hl-link);box-shadow:inset 0 -2px 0 var(--teal)}
+.samples.show-comp .a-comp{background:var(--hl-comp);box-shadow:inset 0 -2px 0 var(--amber)}
+.samples.show-break .a-break{background:var(--hl-break);box-shadow:inset 0 -2px 0 var(--coral)}
+.samples.show-wrap .a-wrap{background:var(--hl-wrap);box-shadow:inset 0 -2px 0 var(--mint)}
+.ann-toggles{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.ann-toggles button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.ann-toggles button i{width:10px;height:10px;border-radius:50%;background:var(--bc);display:inline-block}
+.ann-toggles button[aria-pressed="false"]{opacity:.45}
+.ann-note{font-size:14.5px;background:var(--bg-2);border-radius:10px;padding:10px 12px;color:var(--muted);min-height:3em;margin-top:6px}
+.ann-note b{color:var(--text)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin:18px 0}
+.myth{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:16px 18px;text-align:left;cursor:pointer;min-height:150px;display:flex;flex-direction:column;gap:8px}
+.myth .m{font-weight:700;font-size:17px;line-height:1.45}
+.myth .lab{font-size:13px;color:var(--coral);font-weight:600}
+.myth .a{display:none;font-size:15px;line-height:1.65;color:var(--text)}
+.myth .hint{font-size:13px;color:var(--faint);margin-top:auto}
+.myth[aria-expanded="true"]{background:var(--bg-2);border-color:var(--teal)}
+.myth[aria-expanded="true"] .lab{color:var(--teal)}
+.myth[aria-expanded="true"] .a{display:block}
+.myth[aria-expanded="true"] .hint{display:none}
+
+/* quiz */
+.quiz-item{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:14px 0}
+.quiz-item .qn{font-size:13.5px;color:var(--faint)}
+.quiz-item .ask{font-weight:600;margin:4px 0 10px}
+.quiz-item blockquote{margin:0 0 12px;padding:12px 16px;background:var(--bg-2);border-radius:10px;font-size:15.5px;line-height:1.75;border-left:3px solid var(--faint)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);background:var(--bg-2);border-radius:10px;padding:8px 14px;cursor:pointer;font-size:15px;text-align:left}
+.opt:hover{border-color:var(--violet)}
+.opt.right{border-color:var(--mint);background:color-mix(in srgb,var(--mint) 16%,var(--bg-2))}
+.opt.wrong{border-color:var(--coral);background:color-mix(in srgb,var(--coral) 14%,var(--bg-2))}
+.fb{display:none;margin-top:12px;font-size:15px;line-height:1.7;padding:12px 14px;border-radius:10px;background:var(--bg-2)}
+.fb.show{display:block}
+.score-line{font-weight:600;margin-top:10px}
+
+/* booth */
+.booth{display:grid;grid-template-columns:220px 1fr;gap:24px;background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:22px;margin:20px 0;align-items:center}
+.ring{position:relative;width:200px;height:200px;margin:0 auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .time{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.ring .time small{font-size:13px;color:var(--muted);font-weight:500}
+.booth .prompt-en{font-size:17px;line-height:1.7;background:var(--surface);border-radius:12px;padding:14px 16px;border:1px solid var(--line);margin:10px 0}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:15px}
+.btn.primary{background:var(--coral);border-color:var(--coral);color:#1B1A2C}
+:root[data-theme="light"] .btn.primary{color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.status{font-size:14.5px;color:var(--muted);margin-top:10px;min-height:1.6em}
+audio{width:100%;margin-top:10px}
+.rec-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--coral);margin-right:6px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+
+/* checklist */
+.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}
+.check-group{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.check-group h4{margin:0 0 6px;color:var(--gc)}
+.check-group label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:15.5px;line-height:1.55;cursor:pointer;border-top:1px dashed var(--line)}
+.check-group label:first-of-type{border-top:0}
+.check-group input{margin-top:5px;width:18px;height:18px;accent-color:var(--gc);flex:none}
+.ready{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.ready-bar{height:12px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin:8px 0}
+.ready-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--lv5),var(--lv7),var(--lv8),var(--lv9));transition:width .35s}
+
+/* curriculum strip */
+.strip{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:16px 0}
+.wk{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 8px 10px;font-size:12.5px;line-height:1.4;color:var(--muted)}
+.wk b{display:block;color:var(--text);font-size:13px;margin-bottom:4px}
+.wk.now{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,var(--surface))}
+.wk .dots{display:flex;gap:3px;margin-top:6px}
+.wk .dots i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.wk .dots i.on{background:var(--amber)}
+
+/* glossary */
+.term{border:0;background:none;padding:0;font:inherit;color:inherit;border-bottom:1.5px dashed var(--violet);cursor:help;line-height:inherit}
+.term:hover{color:var(--violet)}
+#pop{position:fixed;z-index:60;max-width:340px;background:var(--surface);border:1px solid var(--violet);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);font-size:14.5px;line-height:1.6;display:none}
+#pop b{display:block;color:var(--violet);margin-bottom:4px;font-size:15px}
+.gloss-search{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px}
+.gloss{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+.gl{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.gl b{display:block;margin-bottom:2px}
+.gl span{font-size:14.5px;color:var(--muted);line-height:1.6;display:block}
+
+/* summary */
+.sum-list{counter-reset:s;list-style:none;padding:0;margin:16px 0}
+.sum-list li{counter-increment:s;position:relative;padding:12px 0 12px 46px;border-top:1px solid var(--line)}
+.sum-list li::before{content:counter(s);position:absolute;left:0;top:10px;width:32px;height:32px;border-radius:50%;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--amber)}
+.hw{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+.hw ol{margin:0;padding-left:1.3em}
+.hw li{margin:.5em 0}
+.next-card{display:flex;gap:18px;align-items:center;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:20px}
+.next-card .n{font-family:"Black Han Sans",sans-serif;font-size:42px;color:var(--teal);line-height:1}
+
+footer{border-top:1px solid var(--line);padding:36px 0 60px;color:var(--faint);font-size:14px}
+footer li{margin:.3em 0}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .facts{grid-template-columns:repeat(2,1fr)}
+  .sample-grid,.lenses,.check-grid,.gloss{grid-template-columns:1fr}
+  .booth{grid-template-columns:1fr}
+  .strip{grid-template-columns:repeat(4,1fr)}
+  .qmap,.qsets{grid-template-columns:repeat(8,1fr)}
+  .qsets{display:none}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .facts{grid-template-columns:1fr}
+  .qmap{grid-template-columns:repeat(5,1fr)}
+  .sec-head{flex-direction:column;gap:6px}
+  .meter{height:230px;gap:4px}
+  .bar-labels{gap:4px}
+  .bar-labels span{font-size:10.5px}
+  .divider b{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><b>OPIc AL 과정</b> 1주차 1강</div>
+    <button class="tbtn" id="tocBtn" aria-expanded="false" aria-controls="tocPanel">목차</button>
+    <button class="tbtn" id="themeBtn" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+<nav class="toc-panel" id="tocPanel" aria-label="강의 목차"></nav>
+<div id="pop" role="tooltip"></div>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">OPIc AL 목표 8주 과정, 1강 (전체 24강)</div>
+      <h1>IH와 AL 사이, 정확히 무엇이 다른가</h1>
+      <p class="lede">OPIc이 무엇을 재는 시험인지, 한 판이 어떻게 흘러가는지, 그리고 평가자가 IH와 AL을 가르는 기준이 무엇인지 해부합니다. 이 강의를 마치면 앞으로 7주 동안 왜 그 순서로 훈련하는지가 보입니다.</p>
+      <div class="hero-meta">
+        <span class="chip">예상 학습 시간 90분</span>
+        <span class="chip">대상: IM2~IH, 난이도 5~6 목표</span>
+        <span class="chip">기준: ACTFL 2024 가이드라인</span>
+      </div>
+    </div>
+    <div class="meter-card" aria-label="OPIc 9개 등급 미터">
+      <div class="meter-head"><span>OPIc 9개 등급 — 막대를 눌러 보세요</span><span>목표: AL</span></div>
+      <div class="meter boot" id="meter"></div>
+      <div class="bar-labels" id="barLabels"></div>
+      <div class="groups" id="groups"></div>
+      <div class="level-panel" id="levelPanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 1 -->
+<section class="sec" id="s1" data-toc="이 강의에서 할 일" style="--accent:var(--amber)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">01</div><div><h2>이 강의에서 할 일</h2><p>전체 과정 중 지금 위치와, 1강이 끝났을 때 할 수 있어야 하는 것</p></div></div>
+    <div class="prose">
+      <p>OPIc 준비를 "주제별 스크립트 외우기"로 시작하면 IH까지는 비교적 빨리 갑니다. 그런데 AL에서 막히는 사람이 많습니다. 이유는 단순합니다. <strong>IH와 AL은 같은 사다리의 한 칸 차이가 아니라, 평가 체계상 서로 다른 '주 레벨'에 속하기 때문입니다.</strong> IH는 Intermediate 레벨의 꼭대기이고, AL은 Advanced 레벨의 바닥입니다. 그 사이에는 평가 기준 자체가 바뀌는 경계선이 있습니다.</p>
+      <p>그래서 1강은 문장 연습이 아니라 <strong>채점 기준을 해부하는 시간</strong>입니다. 기준을 알면 2강부터의 훈련이 "많이 말하기"가 아니라 "평가자가 찾는 증거를 남기기"로 바뀝니다.</p>
+    </div>
+    <h3>전체 8주 과정에서 1강의 위치</h3>
+    <div class="strip" id="strip"></div>
+    <h3>학습 목표</h3>
+    <ul class="clean prose">
+      <li>OPIc의 시험 진행 순서(오리엔테이션 → 서베이 → 자기평가 → 본시험 → 난이도 재조정)와 각 단계의 의미를 설명할 수 있다.</li>
+      <li>15개 문항이 어떤 세트로 묶여 있고, 각 문항이 어떤 능력을 측정하는지 말할 수 있다.</li>
+      <li>평가자가 쓰는 네 가지 렌즈(기능, 맥락, 정확성, 텍스트 유형)와 '바닥·천장' 판정 원리를 이해한다.</li>
+      <li>같은 질문에 대한 IH형 답변과 AL형 답변을 듣고, 어디서 등급이 갈리는지 짚어낼 수 있다.</li>
+      <li>자신의 현재 위치를 진단하고, 앞으로 집중할 약점을 하나 고를 수 있다.</li>
+    </ul>
+    <div class="call tip"><div class="t">이 강의 사용법</div><p>점선 밑줄이 있는 단어는 눌러서 뜻을 볼 수 있습니다(예: <button class="term" data-term="ACTFL">ACTFL</button>). 영어 예시 답변 옆의 "영어로 들어보기" 버튼은 브라우저 음성으로 읽어 줍니다. 체크리스트 상태와 테마 선택은 이 브라우저에 저장됩니다.</p></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="sec" id="s2" data-toc="OPIc은 무엇을 재는가" style="--accent:var(--sky)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">02</div><div><h2>OPIc은 무엇을 재는가</h2><p>"얼마나 아는가"가 아니라 "준비 안 된 상황에서 무엇을 해낼 수 있는가"</p></div></div>
+    <div class="prose">
+      <p>OPIc은 <button class="term" data-term="OPI">OPI</button>(사람 면접관과 1:1로 진행하는 말하기 인터뷰)를 컴퓨터로 옮긴 시험입니다. 미국 외국어교육협회 <button class="term" data-term="ACTFL">ACTFL</button>이 개발했고, 화면 속 가상 면접관이 질문하면 수험자가 답을 녹음합니다. 국내에서는 컴퓨터 기반 <button class="term" data-term="iBT">iBT</button> 방식으로 거의 매일 시행됩니다.</p>
+      <p>ACTFL이 밝히는 OPIc의 목적은 <strong>리허설하지 않은 상황에서 언어를 얼마나 효과적이고 적절하게 쓰는지</strong>를 보여주는 말하기 샘플을 얻는 것입니다. 이 샘플을 평가자가 <button class="term" data-term="ACTFL 가이드라인">ACTFL 말하기 가이드라인</button>에 비춰 판정합니다. 현재 기준은 2024년 4월에 나온 4판으로, 2012년 이후 처음 개정된 판입니다.</p>
+    </div>
+    <h3>이 정의에서 바로 나오는 세 가지 결론</h3>
+    <div class="lenses">
+      <div class="lens" style="--lc:var(--sky)"><h4>1. 절대평가다</h4><p>다른 응시자와 비교하지 않습니다. 같은 날 잘하는 사람이 많아도 내 등급은 내려가지 않습니다. 기준표에 내 샘플이 어디 맞는지만 봅니다.</p><div class="al">AL 시사점: "남보다 잘하기"가 아니라 "AL 기준이 요구하는 증거를 빠짐없이 남기기"가 목표입니다.</div></div>
+      <div class="lens" style="--lc:var(--teal)"><h4>2. 문항별 점수가 없다</h4><p>15개 답변을 하나의 말하기 샘플로 묶어 <button class="term" data-term="총체적 채점">총체적으로</button> 판정합니다. 3번 문항 몇 점, 7번 문항 몇 점 같은 합산 방식이 아닙니다.</p><div class="al">AL 시사점: 한 문항을 망쳐도 끝이 아닙니다. 대신 같은 유형에서 반복해서 무너지면, 그 유형이 내 등급의 '천장'이 됩니다.</div></div>
+      <div class="lens" style="--lc:var(--violet)"><h4>3. 즉석 생성 능력을 본다</h4><p>외운 문장을 얼마나 많이 갖고 있는지가 아니라, 처음 듣는 질문에 맞춰 문장을 만들어 내는 능력을 봅니다. 질문과 어긋난 암기 답변은 이 능력의 증거가 되지 못합니다.</p><div class="al">AL 시사점: 스크립트가 아니라 "어떤 주제든 채울 수 있는 답변의 틀"을 훈련해야 합니다(2주차부터).</div></div>
+      <div class="lens" style="--lc:var(--amber)"><h4>4. 할 수 있는 일(기능)이 핵심이다</h4><p>문법 지식이나 어휘량이 아니라 묘사하기, 과거 이야기하기, 비교하기, 문제 해결하기 같은 '언어로 하는 일'을 해내는지가 등급을 정합니다.</p><div class="al">AL 시사점: AL을 가르는 기능은 정해져 있습니다. 다음 섹션들에서 그 목록을 구체적으로 봅니다.</div></div>
+    </div>
+    <div class="call key"><div class="t">기억할 문장</div><p>OPIc은 "영어를 얼마나 아는가"의 시험이 아니라 "영어로 무엇을 해낼 수 있는가"의 시험이다. 평가자는 답변 15개를 듣고, 내가 <strong>일관되게</strong> 해낼 수 있는 일의 수준을 찾는다.</p></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="sec" id="s3" data-toc="시험 한 판의 흐름" style="--accent:var(--teal)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">03</div><div><h2>시험 한 판의 흐름</h2><p>시험장에 앉아서 나올 때까지 무슨 일이 일어나는가</p></div></div>
+    <h3>기본 정보 (2026년 하반기 기준)</h3>
+    <div class="facts">
+      <div class="fact"><div class="k">응시료</div><div class="v">84,000원</div><div class="s">제휴 대학 정기평가 등 할인 제도가 따로 있음</div></div>
+      <div class="fact"><div class="k">총 소요 시간</div><div class="v">약 60분</div><div class="s">오리엔테이션 20분 + 본시험 40분</div></div>
+      <div class="fact"><div class="k">문항 수</div><div class="v">12~15문항</div><div class="s">선택한 난이도에 따라 달라짐</div></div>
+      <div class="fact"><div class="k">등급</div><div class="v">9개 등급</div><div class="s">NL부터 AL까지, 영어 최고 등급은 AL</div></div>
+      <div class="fact"><div class="k">결과 발표</div><div class="v">10일째 오후 1시</div><div class="s">시험일 기준</div></div>
+      <div class="fact"><div class="k">성적 유효기간</div><div class="v">2년</div><div class="s">발표일이 아니라 응시일 기준</div></div>
+    </div>
+    <p class="small muted">응시료·일정·발표 규칙은 바뀔 수 있으니 접수 전에 공식 홈페이지(opic.or.kr)에서 다시 확인하세요.</p>
+
+    <h3>진행 순서 — 단계를 눌러 보세요</h3>
+    <div class="steps" id="steps" role="tablist"></div>
+    <div class="step-detail" id="stepDetail" aria-live="polite"></div>
+
+    <div class="call warn"><div class="t">40분은 생각보다 짧다</div><p>본시험 40분 안에 문항 듣기, 다시 듣기, 답변 녹음이 모두 들어갑니다. 15문항이면 문항당 평균 2분 남짓입니다. 앞쪽 쉬운 문항에서 3분씩 말하면 뒤쪽 롤플레이와 어드밴스 문항(AL 판별 구간)에서 시간에 쫓깁니다. 시간 배분은 24강에서 따로 다룹니다.</p></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="sec" id="s4" data-toc="15문항 지도" style="--accent:var(--violet)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">04</div><div><h2>15문항 지도</h2><p>각 문항은 무엇을 측정하고, AL 판정에 얼마나 중요한가</p></div></div>
+    <div class="prose">
+      <p>OPIc 문항은 무작위로 나오지 않습니다. 같은 주제로 2~3문항이 연속으로 나오는 <button class="term" data-term="콤보 세트">콤보 세트</button>가 기본 단위이고, 세트 안의 순서도 거의 고정돼 있습니다. 아래 지도는 수험생들 사이에서 널리 확인된 출제 패턴을 정리한 것입니다. 공식 문항 구조표가 공개된 것은 아니므로, 드물게 순서가 바뀌는 경우도 있다는 점은 감안하세요.</p>
+    </div>
+    <div style="margin:18px 0 4px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <span class="small muted">선택 난이도:</span>
+      <div class="seg" id="diffSeg">
+        <button data-d="12" aria-pressed="false">1~2</button>
+        <button data-d="34" aria-pressed="false">3~4</button>
+        <button data-d="56" aria-pressed="true">5~6 (AL 목표)</button>
+      </div>
+    </div>
+    <div class="qmap" id="qmap"></div>
+    <div class="qsets" id="qsets"></div>
+    <div class="legend" id="qlegend"></div>
+    <div class="qdetail" id="qdetail" aria-live="polite"></div>
+    <div class="call info"><div class="t">별표(★) 문항이 AL 판별 구간</div><p>AL은 "과거 사건을 문단으로 서술하기", "예상 밖 상황을 말로 해결하기", "사회적 주제를 구체적으로 다루기"를 요구합니다. 이 기능을 직접 측정하는 문항이 경험 문항(4·7·10·13번), 롤플레이 문제 해결(12번), 어드밴스(14·15번)입니다. 묘사·루틴 문항은 기본기를 보여주는 자리이고, 별표 문항은 AL 증거를 남기는 자리입니다.</p></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="sec" id="s5" data-toc="9개 등급과 ACTFL 척도" style="--accent:var(--lv7)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">05</div><div><h2>9개 등급과 ACTFL 척도</h2><p>OPIc 등급표는 ACTFL 피라미드의 일부를 잘라 쓴 것</p></div></div>
+    <div class="prose">
+      <p>ACTFL 가이드라인은 말하기 능력을 다섯 개의 <button class="term" data-term="주 레벨">주 레벨</button>로 나눕니다. Novice, Intermediate, Advanced, Superior, Distinguished입니다. 앞의 세 레벨은 다시 Low, Mid, High로 쪼개집니다. ACTFL 평가는 Superior까지 판정하지만, 국내 OPIc 영어는 그중 <strong>NL부터 AL까지 9개 등급</strong>만 운영합니다.</p>
+      <p>여기서 눈여겨볼 점이 두 가지 있습니다.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ACTFL 주 레벨</th><th>ACTFL 세부 등급</th><th>OPIc 영어 등급</th><th>핵심 능력 한 줄 요약</th></tr></thead>
+        <tbody>
+          <tr><th>Superior</th><td>Superior</td><td class="muted">운영하지 않음</td><td>추상적 주제로 의견을 논증하고 가설을 세움</td></tr>
+          <tr><th rowspan="3">Advanced</th><td>Advanced High</td><td class="muted">운영하지 않음</td><td>Superior 과제를 자주 시도하지만 유지하지 못함</td></tr>
+          <tr><td>Advanced Mid</td><td class="muted">운영하지 않음</td><td>Advanced 과제를 여유 있게, 풍부하게 수행</td></tr>
+          <tr><td>Advanced Low</td><td><strong style="color:var(--lv9)">AL</strong></td><td>세 시간 프레임에서 문단 단위 서술을 최소한으로라도 유지</td></tr>
+          <tr><th rowspan="3">Intermediate</th><td>Intermediate High</td><td><strong style="color:var(--lv8)">IH</strong></td><td>Advanced 과제를 자주 시도하지만 끝까지 유지하지 못함</td></tr>
+          <tr><td>Intermediate Mid</td><td>IM1 · IM2 · IM3</td><td>친숙한 주제를 문장 단위로 만들어 말함</td></tr>
+          <tr><td>Intermediate Low</td><td>IL</td><td>짧은 문장으로 기본 정보를 주고받음</td></tr>
+          <tr><th>Novice</th><td>Low · Mid · High</td><td>NL · NM · NH</td><td>외운 단어와 표현 중심</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>첫째, IM1~IM3은 OPIc만의 세분화다</h4>
+    <p class="prose">ACTFL에는 Intermediate Mid가 하나뿐입니다. 국내 OPIc은 이 구간에 응시자가 몰리기 때문에 셋으로 나눠 변별력을 높였습니다. 그래서 IM1·IM2·IM3은 "같은 레벨 안에서 얼마나 위쪽에 있는가"의 차이이고, IM3에서 IH로 가는 것도 여전히 Intermediate 안에서의 이동입니다.</p>
+    <h4>둘째, IH에서 AL로 가는 순간 주 레벨이 바뀐다</h4>
+    <p class="prose">IM1→IM2→IM3→IH는 같은 Intermediate 안에서 "더 길게, 더 정확하게"로 올라갈 수 있습니다. 하지만 IH→AL은 다릅니다. 평가자가 확인하는 <strong>기능의 종류</strong>가 바뀝니다. Intermediate는 "문장을 만들어 일상 과제를 해결하는가"를 보고, Advanced는 "문단으로 시간 흐름을 서술하고 복잡한 상황을 해결하는가"를 봅니다.</p>
+    <div class="pull">IH는 Intermediate의 꼭대기, AL은 Advanced의 바닥이다. 그 사이에 기준이 바뀌는 선이 있다.</div>
+
+    <h3>선택 난이도는 '천장'을 정한다</h3>
+    <div class="prose">
+      <p>ACTFL의 OPIc 안내서(2024)에 따르면, 수험자가 고르는 <button class="term" data-term="자기평가">자기평가</button> 단계가 어떤 시험지(Form)를 받을지 결정합니다. 시험지마다 집중적으로 확인하는 등급 구간과, 부여할 수 있는 등급의 상한이 다릅니다.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ACTFL 시험지</th><th>집중 확인 구간</th><th>부여 가능한 등급 범위</th></tr></thead>
+        <tbody>
+          <tr><th>Form 1</th><td>NL ~ NH</td><td>NL ~ IL</td></tr>
+          <tr><th>Form 2</th><td>NH ~ IM</td><td>NL ~ IH</td></tr>
+          <tr><th>Form 3</th><td>IM ~ AL</td><td>NL ~ AL</td></tr>
+          <tr><th>Form 4</th><td>AL ~ AM</td><td>IH ~ AH</td></tr>
+          <tr><th>Form 5</th><td>AH ~ Superior</td><td>AL ~ Superior</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="call key"><div class="t">실전 결론</div><p>국내 OPIc의 6단계 난이도가 ACTFL Form과 정확히 어떻게 대응하는지는 공개돼 있지 않습니다. 다만 원리는 분명합니다. <strong>낮은 난이도를 고르면 AL 증거를 보여줄 문항 자체가 줄어든다</strong>는 것입니다. 난이도 3~4에서는 14·15번이 일반 주제로 나오고, 5~6에서는 조건이 많고 복잡한 어드밴스 문항이 나옵니다. AL이 목표라면 5~6을 고르는 이유가 여기 있습니다. 5와 6의 차이는 크지 않다는 것이 수험생들의 일반적인 경험이며, 이 선택은 2강에서 자세히 다룹니다.</p></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="sec" id="s6" data-toc="채점의 네 가지 렌즈" style="--accent:var(--teal)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">06</div><div><h2>채점의 네 가지 렌즈</h2><p>평가자는 무엇을 들으며 등급을 정하는가</p></div></div>
+    <div class="prose"><p>ACTFL 계열 말하기 평가는 전통적으로 네 가지 기준으로 샘플을 봅니다. 이 넷은 따로 점수를 매겨 더하는 항목이 아니라, 한 답변을 서로 다른 각도에서 비추는 렌즈입니다. 각 렌즈에서 AL이 요구하는 수준을 함께 정리했습니다.</p></div>
+    <div class="lenses">
+      <div class="lens" style="--lc:var(--amber)"><h4>기능과 과제</h4><p>언어로 무엇을 해내는가. 묘사, 설명, 과거 서사, 비교, 질문하기, 문제 해결, 의견 말하기 같은 '일'이 기준입니다.</p><div class="al"><b>AL 기준:</b> 과거·현재·미래의 <button class="term" data-term="시간 프레임">시간 프레임</button>에서 서사와 묘사를 해내고, 예상 밖 전개가 있는 상황을 언어로 해결한다.</div></div>
+      <div class="lens" style="--lc:var(--sky)"><h4>맥락과 내용</h4><p>어떤 상황과 주제에서 그 일을 해내는가. 나와 내 주변의 일상에서 시작해 지역사회, 사회 전체의 관심사로 넓어집니다.</p><div class="al"><b>AL 기준:</b> 개인 일상 주제는 물론, 지역사회·사회적 관심사도 구체적 사례를 들어 다룰 수 있다.</div></div>
+      <div class="lens" style="--lc:var(--coral)"><h4>정확성과 이해 가능성</h4><p>문법, 어휘, 발음, 유창성이 의미 전달을 얼마나 돕는가. 핵심 질문은 "외국인 화자에게 익숙하지 않은 사람도 알아들을 수 있는가"입니다.</p><div class="al"><b>AL 기준:</b> 오류와 머뭇거림이 있어도 메시지 전달에는 지장이 없다. 모국어를 직역한 흔적이 보일 수 있다.</div></div>
+      <div class="lens" style="--lc:var(--violet)"><h4>텍스트 유형</h4><p>말의 덩어리가 얼마나 큰가. 단어 → 구 → 문장 → 문장 꾸러미 → 문단 → 확장 담화 순으로 커집니다.</p><div class="al"><b>AL 기준:</b> <button class="term" data-term="문단 수준 담화">문단</button> 단위로 말한다. 문장들이 연결어와 흐름으로 하나의 덩어리가 된다.</div></div>
+    </div>
+
+    <h3>텍스트 유형 체험 — 슬라이더를 움직여 보세요</h3>
+    <div class="tt">
+      <div class="small muted">같은 질문 "What do you usually do on weekends?"에 대해, 말 덩어리의 크기만 바꾼 예시입니다.</div>
+      <input type="range" id="ttRange" min="0" max="5" value="4" aria-label="텍스트 유형 단계">
+      <div class="tt-scale" id="ttScale"></div>
+      <div class="tt-out" id="ttOut"></div>
+    </div>
+    <div class="call tip"><div class="t">'문단'의 진짜 뜻</div><p>문단은 "문장이 많다"가 아닙니다. 문장 다섯 개를 and, so로만 이어 붙이면 여전히 <strong>문장 꾸러미</strong>입니다. 문단이 되려면 시간 순서나 원인·결과, 대조 같은 내적 구조가 있고, 앞 문장과 뒷 문장이 서로를 받쳐야 합니다. 4강(복문 구조)과 6강(담화 표지어)이 바로 이 연결을 훈련합니다.</p></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="sec" id="s7" data-toc="바닥과 천장" style="--accent:var(--amber)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">07</div><div><h2>바닥과 천장 — 등급이 정해지는 방식</h2><p>평균이 아니라 '일관되게 유지되는 선'이 등급이다</p></div></div>
+    <div class="prose">
+      <p>평가자는 샘플 전체를 들으며 두 개의 선을 찾습니다.</p>
+      <ul class="clean">
+        <li><strong><button class="term" data-term="바닥">바닥(floor)</button></strong>: 거의 모든 과제에서 일관되게 해내는 수준. 이 선이 주 레벨을 정합니다.</li>
+        <li><strong><button class="term" data-term="천장">천장(ceiling)</button></strong>: 더 어려운 과제에서 말이 무너지는 지점. 상위 레벨을 아직 감당하지 못한다는 증거입니다.</li>
+      </ul>
+      <p>그다음 세부 등급(Low/Mid/High)은 "바닥이 그 레벨을 얼마나 여유 있게 유지하는가, 위 레벨 과제를 얼마나 자주 해내는가"로 정해집니다. High는 위 레벨 과제를 꽤 자주 해내지만 <button class="term" data-term="유지">유지</button>하지 못하는 상태이고, Low는 그 레벨을 최소한으로 유지하는 상태입니다.</p>
+    </div>
+    <div class="chart-card">
+      <div class="seg" id="profSeg" style="margin-bottom:12px">
+        <button data-p="im3" aria-pressed="false">IM3 패턴</button>
+        <button data-p="ih" aria-pressed="true">IH 패턴</button>
+        <button data-p="al" aria-pressed="false">AL 패턴</button>
+      </div>
+      <svg id="chart" viewBox="0 0 760 330" role="img" aria-label="문항별 수행 수준 그래프"></svg>
+      <div class="chart-cap" id="chartCap"></div>
+    </div>
+    <p class="small muted prose">그래프는 원리를 보여주기 위한 개념도입니다. 실제 평가자가 문항별 점수를 매기는 것은 아닙니다.</p>
+    <div class="call key"><div class="t">IH가 AL로 못 가는 가장 흔한 이유</div><p>IH 수험자의 답변 중에는 AL급 답변이 섞여 있는 경우가 많습니다. 문제는 <strong>경험 문항 하나는 잘했는데 돌발 주제 경험에서 무너지고, 롤플레이 문제 해결에서 또 무너지는</strong> 패턴입니다. 평가자 입장에서 이것은 "Advanced 과제를 할 수는 있지만 유지하지 못한다", 즉 IH의 정의 그 자체입니다. 그래서 AL 훈련의 핵심은 최고 답변을 더 좋게 만드는 것이 아니라 <strong>가장 약한 유형을 Advanced 선 위로 끌어올리는 것</strong>입니다.</p></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="sec" id="s8" data-toc="IH와 AL의 경계 해부" style="--accent:var(--coral)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">08</div><div><h2>IH와 AL의 경계 해부</h2><p>아홉 가지 차원에서 나란히 비교하기</p></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>차원</th><th>IH (Intermediate High)</th><th>AL (Advanced Low)</th></tr></thead>
+        <tbody>
+          <tr><th>한 줄 정의</th><td class="ih">Advanced 과제를 자주 <strong>시도</strong>하고 상당 부분 해내지만, 모든 과제에서 유지하지는 못한다.</td><td class="al">Advanced 과제를 대부분의 상황에서 <strong>최소한으로라도 유지</strong>한다.</td></tr>
+          <tr><th>시제·시간</th><td class="ih">과거 이야기를 시작은 과거형으로 하지만, 사건이 긴박해지는 구간에서 현재형으로 무너진다.</td><td class="al">과거·현재·미래 프레임을 안정적으로 오간다. 과거완료나 현재완료로 사건 사이의 시간 관계를 일부 표현한다.</td></tr>
+          <tr><th>말 덩어리</th><td class="ih">문장 꾸러미. 문단을 시도하지만 중간에 흐름이 끊긴다.</td><td class="al">문단. 도입, 전개, 마무리가 있고, 대개 한 답변이 한 문단 분량이다.</td></tr>
+          <tr><th>연결</th><td class="ih">and, so, but, because를 반복한다.</td><td class="al">시간·원인·대조 연결어와 관계절로 문장끼리 붙는다(by the time, which, since, while 등).</td></tr>
+          <tr><th>복잡한 상황</th><td class="ih">단순한 상황은 능숙하다. 상황이 꼬이면 말이 짧아지고 끊긴다.</td><td class="al">예상 밖 전개를 설명하고, 대안을 제시하고, 결과까지 말한다.</td></tr>
+          <tr><th>주제 범위</th><td class="ih">나와 일상 주제에서는 편하다. 사회적 주제는 짧은 의견이나 반복으로 끝난다.</td><td class="al">사회적 주제도 구체적인 사례와 변화의 원인·결과로 풀어낸다.</td></tr>
+          <tr><th>오류</th><td class="ih">어려운 과제 구간에서 오류가 몰리고, 의미 전달이 흐려진다.</td><td class="al">오류는 있지만 의미 전달을 방해하지 않는다. 모국어 직역 흔적은 있을 수 있다.</td></tr>
+          <tr><th>막혔을 때</th><td class="ih">단어를 못 찾으면 문장을 포기하거나 같은 말을 반복한다.</td><td class="al">다른 말로 풀어 설명(<button class="term" data-term="우회 표현">우회 표현</button>)하고 다시 흐름으로 돌아온다.</td></tr>
+          <tr><th>14·15번 반응</th><td class="ih">"I think it's good/bad because..." 수준의 짧은 의견, 같은 내용 반복.</td><td class="al">구체적 사례, 과거와 현재 비교, 영향과 전망까지 문단으로 말한다.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="call warn"><div class="t">AL은 '완벽한 영어'가 아니다</div><p>표의 AL 열을 보면 "최소한으로라도", "오류는 있지만", "직역 흔적이 있을 수 있다" 같은 말이 계속 나옵니다. AL은 원어민 같은 영어가 아닙니다. Advanced의 <strong>바닥</strong>입니다. 자연스러움이나 화려한 어휘보다, 시간 프레임과 문단 구조와 상황 해결을 <strong>끝까지 놓지 않는 것</strong>이 AL의 조건입니다.</p></div>
+    <div class="call info"><div class="t">반대로, AL에 필요 없는 것</div><p>추상적인 주제로 논리적 주장을 펼치고, 반론을 다루고, 가정법으로 가설을 세우는 것은 원래 <strong>Superior</strong> 레벨의 기능입니다. 14·15번 사회 이슈 문항에서 철학적 논증을 하려다 무너지는 것보다, 구체적인 사례를 문단으로 설명하는 편이 AL에 훨씬 유리합니다. 21강(추상적 질문을 구체적 사례로 끌어내리기)이 이 전략을 다룹니다.</p></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="sec" id="s9" data-toc="같은 질문, 두 개의 답변" style="--accent:var(--sky)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">09</div><div><h2>같은 질문, 두 개의 답변</h2><p>내용은 거의 같다. 등급을 가르는 것은 어디인가</p></div></div>
+    <div class="prose"><p>아래 두 답변은 같은 사람이 같은 일을 이야기한 것으로 가정하고 만든 예시입니다. 등장하는 사건(퇴근 후 한강공원, 강풍, 날아간 치킨)도 같습니다. 색깔 버튼으로 표시를 켜고 끄며 비교해 보세요. 표시된 구간을 누르면 설명이 나옵니다.</p></div>
+    <div class="prompt-box"><b>Q4 (경험 문항)</b> You indicated that you go to parks. Tell me about a memorable experience you had at a park. When was it, who were you with, and what happened that made it so memorable?<div class="muted">공원에 간다고 답하셨네요. 공원에서 있었던 기억에 남는 경험을 말해 주세요. 언제, 누구와 있었고, 무슨 일이 있어서 기억에 남았나요?</div></div>
+    <div class="ann-toggles" id="annToggles">
+      <button data-cat="time" aria-pressed="true" style="--bc:var(--sky)"><i></i>시간 표지</button>
+      <button data-cat="tense" aria-pressed="true" style="--bc:var(--violet)"><i></i>시제·상</button>
+      <button data-cat="link" aria-pressed="true" style="--bc:var(--teal)"><i></i>연결·전개</button>
+      <button data-cat="comp" aria-pressed="true" style="--bc:var(--amber)"><i></i>돌발 처리</button>
+      <button data-cat="break" aria-pressed="true" style="--bc:var(--coral)"><i></i>붕괴</button>
+      <button data-cat="wrap" aria-pressed="true" style="--bc:var(--mint)"><i></i>마무리</button>
+    </div>
+    <div class="samples sample-grid show-time show-tense show-link show-comp show-break show-wrap" id="samples">
+      <article class="sample" style="--sc:var(--lv8)">
+        <h4><span>IH형 답변</span><button class="speak" data-target="ihText">영어로 들어보기</button></h4>
+        <div class="small muted">약 55초 분량</div>
+        <div class="script" id="ihText">Oh, a memorable experience at a park… let me think. Okay, <span class="ann a-time" data-note="좋은 출발: 시간 표지로 과거 프레임을 열었습니다. IH도 출발은 잘합니다.">last spring</span>, I went to Yeouido Han River Park with two of my coworkers. We went there after work <span class="ann a-link" data-note="because로 이유를 붙였습니다. 다만 이 답변의 연결어는 대부분 because, but, so, and 수준에 머뭅니다.">because</span> the weather was really nice. We ordered fried chicken and sat on a mat near the river. It was very relaxing. <span class="ann a-link" data-note="전환 신호(But then)는 좋습니다. 문제는 바로 다음 문장부터입니다.">But then</span>, suddenly, <span class="ann a-break" data-note="붕괴 지점 1: 사건이 긴박해지는 순간 과거형이 현재형(is, flies, is falling)으로 무너집니다. 평가자가 'Advanced 과제를 유지하지 못한다'고 판단하는 전형적인 신호입니다.">the wind is very strong and… um, our mat flies away, and the chicken box is… falling down.</span> <span class="ann a-break" data-note="붕괴 지점 2: 현재진행형 나열과 '...'으로 끊긴 짧은 조각들. 무슨 일이 일어났는지는 전달되지만, 문단의 흐름이 사라졌습니다.">So we are running, catching the mat… it's very chaotic.</span> <span class="ann a-comp" data-note="돌발 상황의 해결이 '잡았다, 웃었다' 한 줄로 끝납니다. 결과(치킨은 어떻게 됐나)와 그 뒤의 대응이 없습니다.">Finally we catch it, and we laugh a lot.</span> <span class="ann a-wrap" data-note="일반적인 마무리: 'so funny', 'want to go again'은 어떤 경험에도 붙일 수 있는 말이라 이 경험만의 의미를 보여주지 못합니다.">So, yeah, it was a really memorable experience because it was so funny. I want to go there again.</span></div>
+        <div class="ann-note" id="noteIH">표시된 구간을 눌러 보세요.</div>
+      </article>
+      <article class="sample" style="--sc:var(--lv9)">
+        <h4><span>AL형 답변</span><button class="speak" data-target="alText">영어로 들어보기</button></h4>
+        <div class="small muted">약 75초 분량</div>
+        <div class="script" id="alText"><span class="ann a-link" data-note="자연스러운 진입: 질문을 되풀이하지 않고 바로 이야기로 들어갑니다. 담화 표지어로 '이제 이야기가 시작된다'는 신호를 줍니다.">Oh, that reminds me of something</span> that happened <span class="ann a-time" data-note="시간 표지로 과거 프레임을 열고, 다음 문장에서 요일과 시간대까지 좁혀 장면을 세웁니다.">last spring</span>. It was a Friday evening, and two of my coworkers and I decided to grab some fried chicken and head to Yeouido Han River Park right after work, <span class="ann a-tense" data-note="과거완료진행(we'd been stuck): 공원에 간 시점보다 '더 이전부터 계속된' 상황을 표현합니다. 시간 관계를 문법으로 보여주는 것, 이것이 AL 기준의 '상(aspect)을 일부 통제한다'의 예입니다.">since we'd been stuck in the office all week</span>. <span class="ann a-link" data-note="At first로 '처음엔 좋았다'를 깔아 두면, 뒤에 올 반전이 구조적으로 준비됩니다.">At first</span>, everything was perfect. The sun was setting over the river, and we were just chatting about our weekend plans. <span class="ann a-comp" data-note="돌발 전개 도입: 긴박한 순간에도 과거형(blew, went flying)이 유지됩니다. IH 답변이 무너진 바로 그 지점입니다.">But then, out of nowhere, a really strong gust of wind blew our picnic mat right into the air</span>, and our chicken box went flying with it. For a second, we just froze. <span class="ann a-link" data-note="Then으로 사건 순서를 이어 갑니다. 짧은 문장(we just froze)과 긴 문장을 섞어 리듬을 만듭니다.">Then</span> we all started running after it, laughing like kids. <span class="ann a-tense" data-note="By the time + 과거완료: '매트를 잡았을 무렵엔 이미 치킨 절반이 떨어져 있었다'. 두 사건의 선후를 한 문장으로 묶었습니다.">By the time we'd finally caught the mat</span>, half of the chicken had ended up on the grass, <span class="ann a-comp" data-note="돌발 상황의 결과와 대응까지 말합니다(그래서 더 시켰다). 상황 해결이 언어로 완결됩니다.">so we had to order more</span>. <span class="ann a-wrap" data-note="회고형 마무리: 과거 이야기에서 현재 시점의 생각으로 프레임을 옮깁니다(Looking back, I think).">Looking back, I think that's exactly why it's so memorable.</span> Nothing went as planned, but it was the first time I'd really laughed with those coworkers, and <span class="ann a-tense" data-note="현재완료(we've been closer ever since): 과거 사건이 현재까지 이어진 결과를 말합니다. 한 답변 안에서 과거→현재로 시간 프레임을 매끄럽게 넘겼습니다.">we've been much closer ever since</span>.</div>
+        <div class="ann-note" id="noteAL">표시된 구간을 눌러 보세요.</div>
+      </article>
+    </div>
+    <h3>차이를 한 문장씩</h3>
+    <ul class="clean prose">
+      <li><strong>단어 수준의 차이는 크지 않습니다.</strong> AL 답변에도 어려운 단어는 거의 없습니다(gust 정도). 등급을 가른 것은 어휘가 아니라 구조입니다.</li>
+      <li><strong>긴박한 구간에서의 시제가 결정적입니다.</strong> IH 답변은 바람이 부는 순간부터 현재형으로 무너졌고, AL 답변은 그 구간에서 오히려 과거완료까지 썼습니다.</li>
+      <li><strong>돌발 상황이 '해결'까지 갑니다.</strong> 무슨 일이 생겼는지에서 멈추지 않고, 그래서 어떻게 했고 결과가 어땠는지까지 말합니다.</li>
+      <li><strong>마무리가 이 경험에만 맞는 말입니다.</strong> "재밌었다"가 아니라 "그 뒤로 동료들과 가까워졌다"는 고유한 의미로 닫습니다.</li>
+      <li><strong>길이 차이는 20초 정도입니다.</strong> AL 답변이 더 긴 이유는 더 많이 말해서가 아니라, 사건 사이의 연결을 말로 채웠기 때문입니다.</li>
+    </ul>
+    <div class="call tip"><div class="t">이 예시를 쓰는 법</div><p>AL 답변을 통째로 외우지 마세요. 대신 "시간 표지로 열기 → 배경 → At first로 평온 깔기 → But then으로 반전 → 과거완료로 선후 묶기 → 결과와 대응 → Looking back으로 현재 의미" 라는 <strong>뼈대</strong>를 가져가세요. 이 뼈대는 10강(스토리텔링 구조)에서 다른 주제에 이식하는 연습을 합니다.</p></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="sec" id="s10" data-toc="AL에 대한 일곱 가지 오해" style="--accent:var(--coral)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">10</div><div><h2>AL에 대한 일곱 가지 오해</h2><p>카드를 눌러 사실을 확인하세요</p></div></div>
+    <div class="myths" id="myths"></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="sec" id="s11" data-toc="등급 판정 연습" style="--accent:var(--mint)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">11</div><div><h2>등급 판정 연습</h2><p>평가자의 귀로 들어 보기</p></div></div>
+    <div class="prose"><p>실제 등급은 답변 15개 전체로 판정합니다. 여기서는 <strong>답변 하나가 보여주는 수준</strong>만 판단하는 연습입니다. 지금까지 배운 렌즈(시간 프레임, 텍스트 유형, 돌발 처리)를 의식하며 골라 보세요.</p></div>
+    <div id="quiz"></div>
+    <div class="score-line" id="quizScore"></div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="sec" id="s12" data-toc="녹음 부스" style="--accent:var(--coral)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">12</div><div><h2>녹음 부스</h2><p>지금 내 답변은 어디쯤일까 — 3강 정식 진단 전의 맛보기</p></div></div>
+    <div class="prose"><p>문항을 하나 고르고, 10초 동안 구상한 뒤 2분 안에 답해 보세요. 녹음은 이 브라우저 안에서만 처리되며 어디에도 전송되지 않습니다. 마이크를 쓸 수 없는 환경이라면 타이머만 켜고 휴대폰 녹음 앱을 함께 쓰세요.</p></div>
+    <div class="booth">
+      <div class="ring">
+        <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" fill="none" stroke="var(--surface-2)" stroke-width="12"/><circle id="ringArc" cx="100" cy="100" r="88" fill="none" stroke="var(--coral)" stroke-width="12" stroke-linecap="round" stroke-dasharray="552.9" stroke-dashoffset="0"/></svg>
+        <div class="time"><span id="timeTxt">2:00</span><small id="phaseTxt">대기 중</small></div>
+      </div>
+      <div>
+        <div class="seg" id="promptSeg">
+          <button data-i="0" aria-pressed="true">묘사 (Q2형)</button>
+          <button data-i="1" aria-pressed="false">경험 (Q4형)</button>
+          <button data-i="2" aria-pressed="false">어드밴스 (Q15형)</button>
+        </div>
+        <div class="prompt-en" id="promptEn"></div>
+        <div class="btns">
+          <button class="btn primary" id="recBtn">녹음 시작</button>
+          <button class="btn" id="stopBtn" disabled>정지</button>
+          <button class="btn" id="timerOnlyBtn">타이머만 켜기</button>
+          <button class="btn" id="hearQ">질문 듣기</button>
+        </div>
+        <div class="status" id="recStatus" aria-live="polite"></div>
+        <audio id="playback" controls hidden></audio>
+        <div class="btns"><a class="btn" id="dlRec" hidden>녹음 파일 저장</a></div>
+      </div>
+    </div>
+    <h4>들어 보며 스스로 확인할 다섯 가지</h4>
+    <ul class="clean prose">
+      <li>첫 10초 안에 말을 시작했는가, 질문을 되풀이하며 시간을 끌었는가</li>
+      <li>(경험 문항) 사건이 긴박해지는 구간에서도 과거형이 유지됐는가</li>
+      <li>and, so, but 말고 다른 연결 방식이 몇 번 나왔는가</li>
+      <li>"끝"이 이 답변에만 맞는 말이었는가, 어디든 붙일 수 있는 말이었는가</li>
+      <li>(어드밴스 문항) 의견만 말했는가, 구체적인 사례와 변화까지 말했는가</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="sec" id="s13" data-toc="AL 준비도 자가진단" style="--accent:var(--violet)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">13</div><div><h2>AL 준비도 자가진단</h2><p>지금 확실히 할 수 있는 것만 체크하세요</p></div></div>
+    <div class="check-grid" id="checks"></div>
+    <div class="ready">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap"><b>AL 준비도</b><span id="readyNum" class="muted">0 / 12</span></div>
+      <div class="ready-bar"><i id="readyBar"></i></div>
+      <div id="readyMsg" class="small"></div>
+      <div class="btns"><button class="btn" id="resetChecks">체크 초기화</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="sec" id="s14" data-toc="정리와 과제" style="--accent:var(--amber)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">14</div><div><h2>정리와 과제</h2><p>1강에서 가져갈 다섯 문장</p></div></div>
+    <ol class="sum-list prose">
+      <li>OPIc은 준비 안 된 상황에서 영어로 <strong>무엇을 해내는가</strong>를 재는 절대평가이며, 15개 답변을 하나의 샘플로 총체적으로 판정한다.</li>
+      <li>IH는 Intermediate의 꼭대기, AL은 Advanced의 바닥이다. 둘 사이에서 평가 기준이 '문장'에서 '문단과 시간 흐름'으로 바뀐다.</li>
+      <li>등급은 평균이 아니라 <strong>일관되게 유지되는 바닥</strong>으로 정해진다. 가장 약한 유형이 내 천장이 된다.</li>
+      <li>AL의 핵심 증거는 세 가지다: 긴박한 구간에서도 유지되는 시간 프레임, 문단 단위 구조, 예상 밖 상황의 언어적 해결.</li>
+      <li>AL은 완벽한 영어가 아니다. 오류가 있어도 이 세 가지를 끝까지 놓지 않으면 된다. 난이도는 5~6을 골라 그 증거를 보여줄 기회를 확보한다.</li>
+    </ol>
+    <h3>이번 강의 과제</h3>
+    <div class="hw">
+      <ol>
+        <li><b>현재 위치 추정:</b> 맨 위 등급 미터를 보고 지금 내 위치를 하나 고르고, 그렇게 판단한 이유를 한 줄로 적으세요.</li>
+        <li><b>녹음 3개:</b> 녹음 부스의 세 문항을 모두 녹음하세요. 지금은 잘하려고 하지 말고, 평소 실력 그대로 남기는 것이 목적입니다. 3강 진단에서 이 녹음을 다시 씁니다.</li>
+        <li><b>붕괴 지점 찾기:</b> 경험 문항 녹음을 들으며 시제가 현재형으로 바뀐 곳에 표시하세요. 몇 번째 문장에서 처음 무너지는지가 내 약점의 위치입니다.</li>
+        <li><b>자가진단 기록:</b> 13번 섹션 체크리스트를 채우고, 체크하지 못한 항목 중 하나를 "8주 동안 가장 먼저 고칠 것"으로 정하세요.</li>
+      </ol>
+    </div>
+    <div class="next-card">
+      <div class="n">2강</div>
+      <div><b>Background Survey 전략</b><div class="muted small">준비할 주제 수를 줄이는 서베이 선택법, 선택 항목끼리 답변을 공유하는 묶기 전략, 난이도 5와 6 중 무엇을 고를지, 그리고 중간 난이도 재조정 화면에서의 선택까지 다룹니다.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="sec" id="s15" data-toc="용어 사전" style="--accent:var(--violet)">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-no">15</div><div><h2>용어 사전</h2><p>강의에 나온 용어를 한곳에 모았습니다</p></div></div>
+    <input class="gloss-search" id="glossSearch" type="search" placeholder="용어 검색 (예: 문단, aspect, 롤플레이)" aria-label="용어 검색">
+    <div class="gloss" id="gloss"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>참고 자료</b></p>
+    <ul class="clean">
+      <li>ACTFL Proficiency Guidelines 2024 — Speaking (4판, 2024년 4월 발행)</li>
+      <li>ACTFL OPIc Familiarization Guide (2024)</li>
+      <li>OPIc 공식 홈페이지 opic.or.kr — 응시료·일정·결과 발표 규정</li>
+      <li>문항 구성과 난이도별 출제 패턴은 공식 공개 자료가 아니라 수험생들 사이에 널리 확인된 패턴을 정리한 것입니다.</li>
+    </ul>
+    <p>OPIc AL 목표 8주 과정 1강. 2026년 10월 기준으로 작성했습니다.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- theme ---------- */
+const root=document.documentElement;
+const themeBtn=$('#themeBtn');
+const saved=store.get('opic-al-theme');
+if(saved==='light'||saved==='dark') root.dataset.theme=saved;
+function themeLabel(){themeBtn.textContent=root.dataset.theme==='light'?'다크 테마':'라이트 테마'}
+themeLabel();
+themeBtn.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='light'?'dark':'light';store.set('opic-al-theme',root.dataset.theme);themeLabel();drawChart(curProfile)});
+
+/* ---------- progress + toc ---------- */
+const prog=$('#progress');
+function onScroll(){const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%'}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+const tocPanel=$('#tocPanel'),tocBtn=$('#tocBtn');
+$$('section[data-toc]').forEach((s,i)=>{const a=document.createElement('a');a.href='#'+s.id;a.innerHTML='<span>'+String(i+1).padStart(2,'0')+'</span>'+s.dataset.toc;a.addEventListener('click',()=>{tocPanel.classList.remove('open');tocBtn.setAttribute('aria-expanded','false')});tocPanel.appendChild(a)});
+tocBtn.addEventListener('click',e=>{e.stopPropagation();const o=tocPanel.classList.toggle('open');tocBtn.setAttribute('aria-expanded',o)});
+document.addEventListener('click',e=>{if(!tocPanel.contains(e.target)&&e.target!==tocBtn){tocPanel.classList.remove('open');tocBtn.setAttribute('aria-expanded','false')}});
+
+/* ---------- glossary ---------- */
+const GLOSS={
+ 'ACTFL':'American Council on the Teaching of Foreign Languages. 미국 외국어교육협회로, OPI와 OPIc을 개발하고 말하기 능력 기준표(Proficiency Guidelines)를 만든 기관입니다.',
+ 'OPI':'Oral Proficiency Interview. 공인 면접관과 1:1로 대화하며 말하기 능력을 평가하는 ACTFL의 원조 시험입니다. OPIc은 이를 컴퓨터로 옮긴 것입니다.',
+ 'OPIc':'Oral Proficiency Interview by computer. 가상 면접관의 질문에 답을 녹음하는 컴퓨터 기반 말하기 시험. 국내 영어 시험의 최고 등급은 AL입니다.',
+ 'iBT':'Internet-Based Test. 인터넷에 연결된 컴퓨터로 응시하는 방식. 시험장에서 헤드셋을 끼고 응시합니다.',
+ 'ACTFL 가이드라인':'ACTFL Proficiency Guidelines. 말하기·쓰기·듣기·읽기 능력을 Novice부터 Distinguished까지 기술한 기준표. 현재 기준은 2024년 4월에 나온 4판입니다.',
+ '총체적 채점':'Holistic rating. 항목별 점수를 더하는 대신, 샘플 전체를 듣고 기준표의 어느 등급 기술에 가장 잘 맞는지 판단하는 방식입니다.',
+ '주 레벨':'Major level. Novice, Intermediate, Advanced, Superior, Distinguished의 다섯 단계. 각 레벨은 해낼 수 있는 기능의 종류로 구분됩니다. Low/Mid/High는 그 안의 세부 등급입니다.',
+ '자기평가':'Self Assessment. 시험 시작 전 6단계 설명 중 자신의 수준에 맞는 것을 고르는 단계. 이 선택에 따라 받을 문항 세트(난이도)가 정해집니다.',
+ '서베이':'Background Survey. 직업, 거주 형태, 여가·취미·운동·휴가 등 관심 항목을 고르는 사전 설문. 여기서 고른 주제로 콤보 문항이 출제됩니다.',
+ '난이도 재조정':'1차 본시험(약 7번까지)이 끝난 뒤 남은 문항의 난이도를 쉽게/비슷하게/어렵게 중에서 다시 고르는 단계입니다.',
+ '콤보 세트':'Combo set. 같은 주제로 2~3문항이 연달아 나오는 묶음. 보통 묘사 → 습관·루틴 → 경험(또는 비교) 순서입니다.',
+ '돌발 주제':'서베이에서 고르지 않은 주제로 나오는 문항. 날씨, 명절, 재활용, 건강, 지리, 약속 등이 자주 언급됩니다. 준비되지 않은 주제에서 실력이 유지되는지 확인하는 장치입니다.',
+ '롤플레이':'Role-play. 상황을 주고 연기하게 하는 문항(11~13번). 질문하기, 문제 상황 해결하기, 관련 경험 말하기로 이어집니다.',
+ '어드밴스 문항':'난이도 5~6에서 14·15번에 나오는 문항. 조건이 많고 질문이 길며, 비교·변화·사회적 이슈를 다룹니다. AL 판별에 중요한 구간입니다.',
+ '시간 프레임':'Time frame. 과거, 현재, 미래라는 큰 시간 틀. Advanced 레벨은 세 프레임 모두에서 서사와 묘사를 해낼 것을 요구합니다.',
+ '상':'Aspect. 사건이 끝났는지, 진행 중인지, 이전부터 계속되어 왔는지 같은 "시간의 모양"을 나타내는 문법 범주. 영어에서는 진행형과 완료형이 대표적입니다. AL 기준은 이를 "일부 통제한다"고 기술합니다.',
+ '문단 수준 담화':'Paragraph-length discourse. 문장들이 연결어와 내적 구조(시간 순서, 원인·결과, 대조)로 묶여 하나의 의미 덩어리가 된 말. Advanced 레벨의 길이 기준입니다.',
+ '텍스트 유형':'Text type. 말 덩어리의 크기와 구조. 단어 → 구 → 문장 → 문장 꾸러미 → 문단 → 확장 담화로 커집니다.',
+ '문장 꾸러미':'Strings of sentences. 문장 여러 개가 나열되어 있지만 서로 긴밀하게 연결되지 않은 상태. Intermediate 상위권의 전형적인 형태입니다.',
+ '기능':'Function. 언어로 해내는 일. 묘사, 서사, 비교, 질문, 문제 해결, 의견 제시 등. 레벨을 구분하는 가장 중요한 기준입니다.',
+ '바닥':'Floor. 샘플 전체에서 일관되게 유지되는 수행 수준. 주 레벨을 결정합니다.',
+ '천장':'Ceiling. 더 어려운 과제에서 말이 무너지는 지점. 상위 레벨을 아직 감당하지 못한다는 증거가 됩니다.',
+ '유지':'Sustain. 특정 레벨의 과제를 한두 번이 아니라 샘플 전반에서 계속 해내는 것. IH는 Advanced 과제를 시도하지만 유지하지 못하고, AL은 최소한으로라도 유지합니다.',
+ '언어적 붕괴':'Linguistic breakdown. 과제가 어려워질 때 문법·어휘·유창성이 급격히 무너지는 현상. 시제가 섞이고, 문장이 조각나고, 말이 끊깁니다. 천장을 보여주는 신호입니다.',
+ '우회 표현':'Circumlocution. 정확한 단어가 떠오르지 않을 때 다른 말로 풀어 설명하는 전략. 예: "the thing you use to open wine bottles" (corkscrew를 모를 때).',
+ '응집성':'Cohesion. 문장과 문장이 연결어, 대명사, 반복 등으로 서로 붙어 있는 정도.',
+ '담화 표지어':'Discourse marker. 말의 흐름을 안내하는 표현. Well, Actually, At first, Looking back, What I mean is 등. 6강에서 자세히 다룹니다.',
+ '필러':'Filler. um, uh, like처럼 생각할 시간을 버는 말. 적절한 필러는 자연스럽지만, 과하면 유창성을 해칩니다.',
+ 'Form':'ACTFL OPIc 시험지 유형. 자기평가 선택에 따라 Form 1~5 중 하나가 생성되며, 시험지마다 집중 확인 구간과 부여 가능 등급 범위가 다릅니다.'
+};
+const pop=$('#pop');
+function showPop(btn){const k=btn.dataset.term;const v=GLOSS[k];if(!v)return;pop.innerHTML='<b>'+k+'</b>'+v;pop.style.display='block';const r=btn.getBoundingClientRect();const pw=Math.min(340,window.innerWidth-24);pop.style.maxWidth=pw+'px';let left=Math.min(Math.max(12,r.left),window.innerWidth-pw-12);let top=r.bottom+8;pop.style.left=left+'px';pop.style.top=top+'px';const ph=pop.offsetHeight;if(top+ph>window.innerHeight-10){pop.style.top=Math.max(10,r.top-ph-8)+'px'}}
+document.addEventListener('click',e=>{const t=e.target.closest('.term');if(t){e.stopPropagation();if(pop.style.display==='block'&&pop.dataset.k===t.dataset.term){pop.style.display='none';pop.dataset.k='';return}pop.dataset.k=t.dataset.term;showPop(t)}else if(!pop.contains(e.target)){pop.style.display='none';pop.dataset.k=''}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){pop.style.display='none';tocPanel.classList.remove('open')}});
+window.addEventListener('scroll',()=>{pop.style.display='none'},{passive:true});
+// glossary list
+const glossEl=$('#gloss');
+function renderGloss(q){glossEl.innerHTML='';const qq=(q||'').trim().toLowerCase();Object.entries(GLOSS).forEach(([k,v])=>{if(qq&&!(k.toLowerCase().includes(qq)||v.toLowerCase().includes(qq)))return;const d=document.createElement('div');d.className='gl';d.innerHTML='<b>'+k+'</b><span>'+v+'</span>';glossEl.appendChild(d)});if(!glossEl.children.length){glossEl.innerHTML='<div class="gl"><span>일치하는 용어가 없습니다. 다른 단어로 검색해 보세요.</span></div>'}}
+renderGloss('');$('#glossSearch').addEventListener('input',e=>renderGloss(e.target.value));
+
+/* ---------- level meter ---------- */
+const LEVELS=[
+ {id:'NL',full:'Novice Low',h:10,c:'--lv1',g:'N',d:'개별 단어 몇 개를 말하는 수준. 사실상 의사소통 기능이 없습니다.',n:'다음 단계로: 자주 쓰는 단어와 인사말을 외워 말할 수 있으면 NM입니다.'},
+ {id:'NM',full:'Novice Mid',h:16,c:'--lv2',g:'N',d:'외운 단어와 짧은 표현으로 아주 제한된 내용을 전달합니다.',n:'다음 단계로: 외운 표현을 조합해 짧은 문장을 시도하면 NH에 가깝습니다.'},
+ {id:'NH',full:'Novice High',h:24,c:'--lv3',g:'N',d:'외운 표현을 조합해 친숙한 주제에서 간단한 문장을 시도합니다. 자주 막힙니다.',n:'다음 단계로: 외운 것이 아니라 스스로 문장을 만들기 시작하면 Intermediate로 넘어갑니다. 여기가 첫 번째 주 레벨 경계입니다.'},
+ {id:'IL',full:'Intermediate Low',h:33,c:'--lv4',g:'I',d:'짧은 문장을 스스로 만들어 기본 정보를 주고받습니다. 현재 시제 중심이고 자주 멈춥니다.',n:'다음 단계로: 친숙한 주제에서 문장을 더 길고 안정적으로 이어 가면 IM입니다.'},
+ {id:'IM1',full:'Intermediate Mid 1',h:42,c:'--lv5',g:'I',d:'친숙한 주제를 문장 단위로 말합니다. 문장 수가 적고 표현이 단조롭습니다. IM1~3은 ACTFL의 Intermediate Mid를 OPIc이 셋으로 나눈 것입니다.',n:'다음 단계로: 문장 수를 늘리고 이유·예시를 붙이면 IM2로 올라갑니다.'},
+ {id:'IM2',full:'Intermediate Mid 2',h:51,c:'--lv5',g:'I',d:'여러 문장을 이어 말하지만 연결이 단순합니다. 국내 채용·승진 요건에서 자주 보이는 구간입니다.',n:'다음 단계로: 정확도를 높이고, 과거 경험을 문장 꾸러미로 말할 수 있으면 IM3입니다.'},
+ {id:'IM3',full:'Intermediate Mid 3',h:61,c:'--lv6',g:'I',d:'문장 꾸러미가 안정적이고, 과거 이야기도 시도합니다. 묘사와 루틴은 편하게 해냅니다.',n:'다음 단계로: 문단을 시도하고 Advanced 과제(서사, 비교, 문제 해결)를 자주 해내면 IH입니다.'},
+ {id:'IH',full:'Intermediate High',h:74,c:'--lv8',g:'I',d:'Advanced 과제를 자주 시도하고 상당 부분 해냅니다. 그러나 모든 과제에서 유지하지는 못하고, 어려운 구간에서 무너집니다. Intermediate의 꼭대기입니다.',n:'다음 단계로: 바로 오른쪽 점선이 주 레벨 경계입니다. 가장 약한 유형까지 Advanced 기능을 유지해야 AL로 넘어갑니다.'},
+ {id:'AL',full:'Advanced Low',h:100,c:'--lv9',g:'A',d:'과거·현재·미래 시간 프레임에서 문단 단위 서술을 최소한으로라도 유지합니다. 예상 밖 상황을 말로 해결하고, 사회적 주제도 구체적으로 다룹니다. OPIc 영어의 최고 등급이자 Advanced의 바닥입니다.',n:'이 과정의 목표입니다. AL은 완벽한 영어가 아니라 Advanced 기능을 끝까지 놓지 않는 영어입니다.'}
+];
+const meter=$('#meter'),labels=$('#barLabels'),panel=$('#levelPanel'),groups=$('#groups');
+LEVELS.forEach((L,i)=>{const b=document.createElement('button');b.className='bar';b.style.setProperty('--h',L.h+'%');b.style.setProperty('--c','var('+L.c+')');b.style.setProperty('--k',i);b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',L.full);b.innerHTML='<i></i>';b.addEventListener('click',()=>selectLevel(i));meter.appendChild(b);const s=document.createElement('span');s.textContent=L.id;labels.appendChild(s)});
+function addDivider(afterIdx,label){const d=document.createElement('div');d.className='divider';d.innerHTML='<b>'+label+'</b>';meter.appendChild(d);requestAnimationFrame(()=>{const bars=$$('.bar',meter);const a=bars[afterIdx],b=bars[afterIdx+1];const mr=meter.getBoundingClientRect();const x=(a.getBoundingClientRect().right+b.getBoundingClientRect().left)/2-mr.left;d.style.left=x+'px'});return d}
+const div1=addDivider(2,'Novice | Intermediate');const div2=addDivider(7,'주 레벨 경계');div2.classList.add('left');
+function placeDividers(){[[div1,2],[div2,7]].forEach(([d,i])=>{const bars=$$('.bar',meter);const mr=meter.getBoundingClientRect();const x=(bars[i].getBoundingClientRect().right+bars[i+1].getBoundingClientRect().left)/2-mr.left;d.style.left=x+'px'})}
+window.addEventListener('resize',placeDividers);
+[['Novice',3],['Intermediate',5],['Adv.',1]].forEach(([n,f])=>{const d=document.createElement('div');d.style.flex=f;d.textContent=n;groups.appendChild(d)});
+function selectLevel(i){$$('.bar',meter).forEach((b,j)=>b.setAttribute('aria-pressed',j===i));const L=LEVELS[i];panel.innerHTML='<h3><span style="color:var('+L.c+')">'+L.id+'</span><small>'+L.full+'</small></h3><p>'+L.d+'</p><p class="next">'+L.n+'</p>'}
+selectLevel(8);
+if(reduced) meter.classList.remove('boot');
+setTimeout(()=>{meter.classList.remove('boot');placeDividers()},1500);
+
+/* ---------- curriculum strip ---------- */
+const WEEKS=[['1주차','진단과 전략'],['2주차','문장 뼈대'],['3주차','묘사·설명'],['4주차','과거 서사'],['5주차','비교와 변화'],['6주차','롤플레이'],['7주차','사회·추상 주제'],['8주차','실전 모의고사']];
+const strip=$('#strip');WEEKS.forEach((w,i)=>{const d=document.createElement('div');d.className='wk'+(i===0?' now':'');d.innerHTML='<b>'+w[0]+'</b>'+w[1]+'<div class="dots">'+[0,1,2].map(k=>'<i class="'+(i===0&&k===0?'on':'')+'"></i>').join('')+'</div>';strip.appendChild(d)});
+
+/* ---------- timeline ---------- */
+const STEPS=[
+ {l:'오리엔테이션',t:'입실과 오리엔테이션',d:'<p>본인 확인 후 헤드셋을 끼고 장비를 점검합니다. 오리엔테이션은 서베이, 자기평가, 화면 사용법 안내, 샘플 문항 체험까지 포함해 약 20분입니다. 이 20분은 본시험 40분과 별개입니다.</p><p class="muted small">팁: 마이크 테스트에서 실제 답변할 때의 목소리 크기로 말하세요. 작게 테스트하고 본시험에서 크게 말하면 소리가 깨질 수 있습니다.</p>'},
+ {l:'Background Survey',t:'서베이: 출제 주제를 내가 고른다',d:'<p>직업과 학생 여부, 거주 형태, 그리고 여가·취미·운동·휴가 항목을 고릅니다. 여가 영역은 일반적으로 정해진 개수 이상(보통 12개 이상)을 골라야 합니다. 여기서 고른 주제가 2~7번 콤보 세트의 재료가 됩니다.</p><p><b>AL 관점:</b> 서베이는 시험 범위를 내가 설계하는 유일한 단계입니다. 서로 답변을 공유할 수 있는 주제를 묶어 고르면, 준비량은 줄이고 답변의 깊이는 늘릴 수 있습니다. 2강의 주제입니다.</p>'},
+ {l:'Self Assessment',t:'자기평가: 난이도 선택',d:'<p>6단계의 수준 설명 중 하나를 고릅니다. 이 선택이 문항 세트의 난이도를 결정합니다. 1~2단계는 12문항, 3~6단계는 15문항이 나오는 것으로 알려져 있습니다.</p><p><b>AL 관점:</b> 5~6단계를 골라야 14·15번에서 어드밴스 문항이 나옵니다. AL 증거를 보여줄 기회를 스스로 확보하는 선택입니다.</p>'},
+ {l:'샘플 문항',t:'사전 체험',d:'<p>화면 조작과 녹음 방식을 익히기 위한 연습 문항입니다. 채점되지 않습니다.</p><p class="muted small">팁: 여기서 질문 다시 듣기 버튼의 위치와 타이밍을 확인해 두세요. 본시험에서 당황하지 않습니다.</p>'},
+ {l:'1차 본시험',t:'1차 본시험 (1번~7번 전후)',d:'<p>1번 자기소개로 시작해 서베이 주제 콤보 세트가 이어집니다. 각 질문은 한 번 더 들을 수 있지만, 재생이 끝난 직후 짧은 시간 안에 눌러야 합니다. 다시 듣기 자체는 감점 요인이 아니라는 것이 일반적인 안내입니다.</p><p><b>AL 관점:</b> 1번 자기소개는 채점에서 제외되는 것으로 널리 알려져 있습니다. 30~40초로 짧게 끝내고 긴장을 푸는 용도로 쓰세요.</p>'},
+ {l:'난이도 재조정',t:'중간 난이도 재조정',d:'<p>남은 문항의 난이도를 "쉬운 질문 / 비슷한 질문 / 어려운 질문" 중에서 다시 고릅니다.</p><p><b>AL 관점:</b> 이미 처음 선택한 난이도로 문항 세트의 큰 틀이 정해져 있어 재조정의 영향은 크지 않다는 것이 수험생들의 일반적인 경험입니다. 컨디션이 무너지지 않았다면 "비슷한 질문"이 무난한 선택으로 많이 권해집니다.</p>'},
+ {l:'2차 본시험',t:'2차 본시험 (8번~15번)',d:'<p>돌발 주제 세트, 롤플레이 세트(11~13번), 어드밴스 세트(14~15번)가 이어집니다. AL 판별에 중요한 문항이 이 구간에 몰려 있는데, 시험 후반이라 체력과 시간이 가장 부족한 때이기도 합니다.</p><p><b>AL 관점:</b> 롤플레이는 건너뛰지 마세요. 롤플레이를 비우면 등급이 크게 떨어진다는 것이 공통된 경험입니다. 14·15번까지 에너지를 남겨 두는 시간 배분이 필요합니다.</p>'},
+ {l:'결과 발표',t:'결과 발표',d:'<p>시험일 기준 10일째 되는 날 오후 1시에 발표됩니다. 성적 유효기간은 응시일로부터 2년입니다.</p><p class="muted small">결과에는 등급만 나옵니다. 어떤 문항에서 무엇이 부족했는지는 기본 결과에 나오지 않기 때문에, 이 과정에서는 녹음 자가 분석으로 그 정보를 직접 만듭니다(3강, 23강).</p>'}
+];
+const stepsEl=$('#steps'),stepDetail=$('#stepDetail');
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='step';b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.innerHTML='<div class="n">단계 '+(i+1)+'</div><div class="l">'+s.l+'</div>';b.addEventListener('click',()=>selStep(i));stepsEl.appendChild(b)});
+function selStep(i){$$('.step',stepsEl).forEach((b,j)=>b.setAttribute('aria-selected',j===i));stepDetail.innerHTML='<h4>'+STEPS[i].t+'</h4>'+STEPS[i].d}
+selStep(1);
+
+/* ---------- question map ---------- */
+const CAT={intro:{n:'자기소개',c:'var(--faint)'},desc:{n:'묘사',c:'var(--sky)'},hab:{n:'습관·루틴',c:'var(--teal)'},exp:{n:'경험·비교',c:'var(--violet)'},rp:{n:'롤플레이',c:'var(--amber)'},adv:{n:'어드밴스',c:'var(--coral)'},gen:{n:'일반 주제',c:'var(--lv6)'}};
+const Q56=[
+ {c:'intro',set:'시작',t:'자기소개',m:'채점에서 제외되는 것으로 널리 알려진 워밍업 문항입니다.',al:'30~40초로 짧게. 목소리를 풀고 페이스를 잡는 데만 씁니다. 여기서 시간을 쓰면 뒤가 부족해집니다.'},
+ {c:'desc',set:'세트1',t:'서베이 주제 묘사',m:'좋아하는 장소·사물·활동을 현재 시제로 묘사합니다. 공간, 특징, 느낌.',al:'묘사도 문단으로 하세요. 전체 인상 → 세부(공간 순서) → 내가 좋아하는 이유의 구조. 7강에서 다룹니다.'},
+ {c:'hab',set:'세트1',t:'습관·루틴',m:'보통 언제, 누구와, 어떤 순서로 하는지. 빈도 표현과 순서 표현.',al:'"보통은 이렇지만 가끔은 이렇다"처럼 대조를 넣으면 문장 꾸러미가 문단이 됩니다.'},
+ {c:'exp',set:'세트1',t:'과거 경험',m:'기억에 남는 일, 처음 했던 일, 문제가 있었던 일 등을 과거 시제로 서술합니다.',al:'AL 판별 핵심. 긴박한 구간에서도 과거형 유지, 사건의 선후 관계, 고유한 마무리.',star:1},
+ {c:'desc',set:'세트2',t:'서베이 또는 돌발 묘사',m:'두 번째 주제. 서베이 주제일 수도, 돌발 주제일 수도 있습니다.',al:'세트1과 같은 틀을 다른 주제에 이식하는 능력을 보여주는 자리입니다.'},
+ {c:'hab',set:'세트2',t:'습관·루틴',m:'두 번째 주제의 루틴.',al:'세트1과 똑같은 문장 패턴을 반복하면 암기 인상을 줍니다. 연결 방식을 바꿔 보세요.'},
+ {c:'exp',set:'세트2',t:'경험 또는 과거·현재 비교',m:'과거 경험 또는 "예전과 지금은 어떻게 다른가".',al:'비교가 나오면 변화의 원인과 영향까지. 과거와 현재 프레임을 한 답변에서 오가는 것이 AL 증거입니다.',star:1},
+ {c:'desc',set:'세트3',t:'돌발 주제 묘사',m:'난이도 재조정 이후. 서베이에 없는 주제가 나오는 구간입니다.',al:'준비 안 된 주제에서도 10초 안에 말을 시작하는지가 관건. 15강에서 빈출 돌발 주제를 다룹니다.'},
+ {c:'hab',set:'세트3',t:'돌발 주제 습관',m:'돌발 주제의 루틴이나 일반적인 방식.',al:'모르는 주제라도 "내 주변 사람의 경우"로 끌어오면 구체성을 잃지 않습니다.'},
+ {c:'exp',set:'세트3',t:'돌발 주제 경험·비교',m:'돌발 주제에서의 과거 경험이나 변화.',al:'준비 안 된 주제에서 서사가 유지되는가. IH와 AL이 가장 많이 갈리는 문항 중 하나입니다.',star:1},
+ {c:'rp',set:'세트4',t:'롤플레이: 정보 요청',m:'상황을 주고 상대에게 질문 3~4개를 하게 합니다.',al:'의문문의 정확성과 다양성(간접 의문문 포함). 16강에서 다룹니다. 절대 건너뛰지 마세요.'},
+ {c:'rp',set:'세트4',t:'롤플레이: 문제 해결',m:'문제가 생긴 상황을 설명하고 대안을 제시합니다.',al:'Advanced의 "예상 밖 전개가 있는 상황 처리"를 직접 측정합니다. 상황 설명 + 대안 2개 + 마무리. 17강.',star:1},
+ {c:'rp',set:'세트4',t:'롤플레이 관련 경험',m:'비슷한 문제를 겪었던 실제 경험을 말합니다.',al:'롤플레이 상황을 과거 서사로 전환. 경험 문항과 같은 뼈대를 씁니다. 18강.',star:1},
+ {c:'adv',set:'세트5',t:'어드밴스: 비교·변화 분석',m:'조건이 많고 긴 질문. 두 대상 비교, 과거와 현재의 변화와 원인.',al:'질문의 조건을 빠짐없이 다루세요. 구체적 사례 → 변화 → 원인 → 영향의 문단. 13~14강.',star:1},
+ {c:'adv',set:'세트5',t:'어드밴스: 사회적 이슈',m:'사회적 관심사, 뉴스, 우려되는 점 등.',al:'추상적 논증보다 구체적 사례로 끌어내리는 것이 AL에 유리합니다. 19~21강.',star:1}
+];
+function qset(d){if(d==='56')return Q56;if(d==='34')return Q56.map((q,i)=>i>=13?{c:'gen',set:'추가',t:'서베이·돌발 일반 주제',m:'난이도 3~4에서는 14·15번이 어드밴스가 아니라 서베이나 돌발 주제의 일반 문항으로 나옵니다.',al:'AL을 보여줄 고난도 과제의 기회가 줄어듭니다. AL이 목표라면 난이도 5~6을 권하는 이유입니다.'}:q);return Q56.map((q,i)=>i>=12?Object.assign({},q,{off:1}):q)}
+let curDiff='56',curQ=3;
+const qmap=$('#qmap'),qsets=$('#qsets'),qdetail=$('#qdetail');
+function renderQ(){const qs=qset(curDiff);qmap.innerHTML='';qs.forEach((q,i)=>{const b=document.createElement('button');b.className='qtile'+(q.off?' off':'');b.style.setProperty('--qc',CAT[q.c].c);b.setAttribute('aria-pressed',i===curQ);b.setAttribute('aria-label',(i+1)+'번 '+CAT[q.c].n+(q.off?' (출제 안 됨)':''));b.innerHTML=(q.star&&!q.off?'<span class="star" aria-hidden="true">★</span>':'')+'<div class="q">'+(i+1)+'</div><span class="c"></span>';if(!q.off)b.addEventListener('click',()=>{curQ=i;renderQ()});qmap.appendChild(b)});
+ qsets.innerHTML='';qs.forEach(q=>{const d=document.createElement('div');d.textContent=q.off?'':q.set;qsets.appendChild(d)});
+ if(qs[curQ].off)curQ=3;const q=qs[curQ];qdetail.innerHTML='<h4>'+(curQ+1)+'번 <span class="tag" style="--tc:'+CAT[q.c].c+'">'+CAT[q.c].n+'</span> '+q.t+(q.star?' <span class="tag" style="--tc:var(--amber)">AL 판별 구간</span>':'')+'</h4><p style="margin:6px 0">'+q.m+'</p><p class="muted" style="margin:0"><b style="color:var(--text)">AL 포인트:</b> '+q.al+'</p>'+(curDiff==='12'?'<p class="small muted" style="margin:8px 0 0">난이도 1~2는 12문항으로 끝나며, 13~15번이 출제되지 않습니다.</p>':'')}
+$$('#diffSeg button').forEach(b=>b.addEventListener('click',()=>{curDiff=b.dataset.d;$$('#diffSeg button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderQ()}));
+renderQ();
+const leg=$('#qlegend');Object.values(CAT).forEach(c=>{const s=document.createElement('span');s.style.setProperty('--qc',c.c);s.innerHTML='<i></i>'+c.n;leg.appendChild(s)});
+
+/* ---------- text type ---------- */
+const TT=[
+ {n:'단어',lv:'Novice',e:'"Weekend… park… friends."',w:'단어를 나열할 뿐 문장이 없습니다. 무엇을 하는지는 듣는 사람이 추측해야 합니다.'},
+ {n:'구',lv:'Novice',e:'"On weekend… with my friends… at the park… walking."',w:'의미 덩어리(구)는 있지만 주어와 동사를 갖춘 문장으로 완성되지 않습니다.'},
+ {n:'문장',lv:'Intermediate',e:'"I go to the park on weekends. I walk with my friends."',w:'스스로 만든 완전한 문장. Intermediate의 출발점입니다.'},
+ {n:'문장 꾸러미',lv:'Intermediate (IM3~IH)',e:'"I usually go to the park on weekends. I go with my friends. We walk and talk a lot. Sometimes we eat chicken. It is really fun, so I like weekends."',w:'문장이 여러 개지만 나열에 가깝습니다. 연결은 and, so 수준이고, 문장 순서를 바꿔도 의미가 크게 달라지지 않습니다.'},
+ {n:'문단',lv:'Advanced (AL 목표선)',e:'"Weekends are pretty much the only time I get to see my college friends, so we usually meet up at Ttukseom Park on Saturday afternoons. We start with a long walk along the river, which gives us time to catch up on everything that\'s happened during the week. Then, once it starts getting dark, we grab some food from the convenience store and just sit by the water. It\'s nothing special, really, but after a stressful week at work, it\'s exactly what I need to recharge."',w:'이유(so), 관계절(which), 시간 순서(start with → then → once), 대조(nothing special, but)가 문장을 하나의 흐름으로 묶습니다. 문장 순서를 바꾸면 의미가 깨집니다. 이것이 문단입니다.'},
+ {n:'확장 담화',lv:'Superior',e:'(여러 문단에 걸쳐) 주말 여가 문화가 세대별로 어떻게 다른지, 그 배경에 어떤 사회 변화가 있는지 논증하고, 반론을 다루고, 앞으로의 변화를 가정하는 말.',w:'추상적 논증과 가설은 Superior의 영역입니다. AL에 필요한 것은 이 바로 아래 단계인 문단까지입니다.'}
+];
+const ttScale=$('#ttScale'),ttOut=$('#ttOut'),ttRange=$('#ttRange');
+TT.forEach(t=>{const s=document.createElement('span');s.textContent=t.n;ttScale.appendChild(s)});
+function renderTT(){const i=+ttRange.value;$$('span',ttScale).forEach((s,j)=>s.classList.toggle('on',j===i));const t=TT[i];ttOut.innerHTML='<div class="lvl">'+t.n+' — 주로 <b>'+t.lv+'</b> 레벨의 특징</div><div class="eng">'+t.e+'</div><div class="why">'+t.w+'</div>'}
+ttRange.addEventListener('input',renderTT);renderTT();
+
+/* ---------- floor/ceiling chart ---------- */
+const PROF={
+ im3:{v:[2.3,2.45,2.4,2.25,2.5,2.4,2.3,2.35,2.25,2.15,2.4,2.2,2.2,2.1,2.05],col:'--lv6',cap:'<b>IM3 패턴.</b> 바닥은 Intermediate 중간에 안정적으로 있습니다. 묘사와 루틴은 편하지만, Advanced 과제(경험, 문제 해결, 어드밴스)에서 Advanced 선 근처에도 가지 못하고 오히려 내려갑니다. 위 레벨 과제를 시도하는 증거가 적어 High로 올라가지 못합니다.'},
+ ih:{v:[2.6,2.85,2.75,3.15,2.85,2.8,3.1,2.75,2.7,2.55,2.9,2.6,3.05,2.45,2.35],col:'--lv8',cap:'<b>IH 패턴.</b> 4번, 7번, 13번에서는 Advanced 선을 넘었습니다. 하지만 돌발 경험(10번), 롤플레이 문제 해결(12번), 어드밴스(14·15번)에서 선 아래로 떨어집니다. "Advanced 과제를 자주 해내지만 유지하지 못한다", 정확히 IH의 정의입니다. 가장 낮은 구간이 천장 역할을 합니다.'},
+ al:{v:[2.75,3.05,3.0,3.3,3.1,3.05,3.25,3.05,3.0,3.15,3.1,3.2,3.25,3.05,3.0],col:'--lv9',cap:'<b>AL 패턴.</b> 최고점은 IH 패턴과 크게 다르지 않습니다. 차이는 바닥입니다. 돌발 주제, 롤플레이, 어드밴스 문항까지 거의 모든 과제에서 Advanced 선 위를 최소한으로라도 지킵니다. 1번 자기소개는 채점에서 제외되므로 선 아래여도 상관없습니다.'}
+};
+let curProfile='ih';
+const svg=$('#chart');
+function cssv(n){return getComputedStyle(root).getPropertyValue(n).trim()}
+function drawChart(p){curProfile=p;const W=760,H=330,L=96,R=20,T=18,B=40;const xs=i=>L+(W-L-R)*(i/14);const ys=v=>T+(H-T-B)*(1-(v-1.5)/(3.7-1.5));
+ const line=cssv('--line'),muted=cssv('--muted'),faint=cssv('--faint'),coral=cssv('--coral');
+ let s='';
+ // bands
+ s+='<rect x="'+L+'" y="'+ys(3.7)+'" width="'+(W-L-R)+'" height="'+(ys(3)-ys(3.7))+'" fill="'+cssv('--lv9')+'" opacity=".08"/>';
+ [[1.5,'Novice'],[2,'Intermediate'],[3,'Advanced']].forEach(([v,n])=>{s+='<text x="'+(L-10)+'" y="'+(ys(v+ (v===1.5?0.25:0.5))+4)+'" text-anchor="end" font-size="13" fill="'+muted+'" font-family="IBM Plex Sans KR,sans-serif">'+n+'</text>'});
+ [2,3].forEach(v=>{s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+ys(v)+'" y2="'+ys(v)+'" stroke="'+(v===3?coral:line)+'" stroke-width="'+(v===3?2:1)+'" stroke-dasharray="'+(v===3?'6 5':'3 4')+'"/>'});
+ s+='<text x="'+(W-R)+'" y="'+(ys(3)-6)+'" text-anchor="end" font-size="12" fill="'+coral+'" font-family="IBM Plex Sans KR,sans-serif">Advanced 선</text>';
+ for(let i=0;i<15;i++){s+='<text x="'+xs(i)+'" y="'+(H-14)+'" text-anchor="middle" font-size="12" fill="'+faint+'" font-family="IBM Plex Sans KR,sans-serif">'+(i+1)+'</text>'}
+ s+='<text x="'+(L-22)+'" y="'+(H-14)+'" text-anchor="end" font-size="12" fill="'+faint+'" font-family="IBM Plex Sans KR,sans-serif">문항</text>';
+ // other profiles faint
+ Object.entries(PROF).forEach(([k,o])=>{if(k===p)return;s+='<polyline fill="none" stroke="'+cssv(o.col)+'" stroke-width="1.5" opacity=".22" points="'+o.v.map((v,i)=>xs(i)+','+ys(v)).join(' ')+'"/>'});
+ const o=PROF[p];const col=cssv(o.col);
+ s+='<polyline fill="none" stroke="'+col+'" stroke-width="3" stroke-linejoin="round" points="'+o.v.map((v,i)=>xs(i)+','+ys(v)).join(' ')+'"/>';
+ o.v.forEach((v,i)=>{const below=v<3&&i>0;s+='<circle cx="'+xs(i)+'" cy="'+ys(v)+'" r="'+(below&&p!=='im3'?6:4.5)+'" fill="'+(i===0?cssv('--bg-2'):(below&&p!=='im3'?coral:col))+'" stroke="'+col+'" stroke-width="2"/>'});
+ // floor line
+ const floor=Math.min(...o.v.slice(1));s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+ys(floor)+'" y2="'+ys(floor)+'" stroke="'+col+'" stroke-width="1" opacity=".55"/>';
+ s+='<text x="'+(L+6)+'" y="'+(ys(floor)+15)+'" font-size="12" fill="'+col+'" font-family="IBM Plex Sans KR,sans-serif">바닥 (2~15번 중 최저)</text>';
+ svg.innerHTML=s;$('#chartCap').innerHTML=o.cap}
+$$('#profSeg button').forEach(b=>b.addEventListener('click',()=>{$$('#profSeg button').forEach(x=>x.setAttribute('aria-pressed',x===b));drawChart(b.dataset.p)}));
+drawChart('ih');
+
+/* ---------- annotated samples ---------- */
+const samples=$('#samples');
+$$('#annToggles button').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);samples.classList.toggle('show-'+b.dataset.cat,on)}));
+const CATN={time:'시간 표지',tense:'시제·상',link:'연결·전개',comp:'돌발 처리',break:'붕괴',wrap:'마무리'};
+$$('.ann').forEach(sp=>{sp.setAttribute('tabindex','0');sp.setAttribute('role','button');const act=()=>{const art=sp.closest('.sample');const note=$('.ann-note',art);const cat=(sp.className.match(/a-(\w+)/)||[])[1];note.innerHTML='<b>'+(CATN[cat]||'')+'</b> — '+sp.dataset.note};sp.addEventListener('click',act);sp.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act()}})});
+
+/* ---------- speech ---------- */
+let speakingBtn=null;
+function speak(text,btn){if(!('speechSynthesis' in window)){alert('이 브라우저는 음성 읽기를 지원하지 않습니다.');return}
+ if(speakingBtn===btn&&speechSynthesis.speaking){speechSynthesis.cancel();btn.textContent=btn.dataset.orig;speakingBtn=null;return}
+ speechSynthesis.cancel();if(speakingBtn){speakingBtn.textContent=speakingBtn.dataset.orig}
+ const u=new SpeechSynthesisUtterance(text.replace(/…/g,', ').replace(/\s+/g,' '));u.lang='en-US';u.rate=.95;
+ const vs=speechSynthesis.getVoices().filter(v=>/^en(-|_)US/i.test(v.lang));if(vs.length)u.voice=vs.find(v=>/natural|samantha|google/i.test(v.name))||vs[0];
+ if(btn){btn.dataset.orig=btn.dataset.orig||btn.textContent;btn.textContent='정지';speakingBtn=btn;u.onend=u.onerror=()=>{btn.textContent=btn.dataset.orig;speakingBtn=null}}
+ speechSynthesis.speak(u)}
+$$('.speak').forEach(b=>b.addEventListener('click',()=>speak($('#'+b.dataset.target).textContent,b)));
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}
+
+/* ---------- myths ---------- */
+const MYTHS=[
+ ['길게 말하면 AL이 나온다','길이는 결과이지 원인이 아닙니다. 같은 내용을 and로 이어 3분 말해도 문장 꾸러미일 뿐입니다. AL은 길이보다 구조(문단), 기능(서사·상황 해결), 시간 프레임 유지로 판정됩니다. 오히려 쉬운 문항에서 길게 말하다 뒤쪽 AL 판별 문항의 시간을 잃는 경우가 많습니다.'],
+ ['어려운 단어와 숙어를 많이 쓰면 유리하다','9번 섹션의 AL 답변에도 어려운 단어는 거의 없습니다. 평가자는 어휘의 화려함보다 의미 전달과 문장 간 연결을 봅니다. 어색하게 끼워 넣은 숙어는 오히려 이해 가능성을 떨어뜨리고 암기 인상을 줍니다.'],
+ ['스크립트를 통째로 외우면 된다','OPIc은 준비 안 된 상황에서의 생성 능력을 봅니다. 질문의 조건과 어긋난 외운 답변은 과제 수행의 증거가 되지 못하고, 갑자기 유창해졌다가 다른 문항에서 무너지는 격차는 평가자에게 쉽게 드러납니다. 외울 것은 문장이 아니라 답변의 뼈대입니다.'],
+ ['실수를 하나라도 하면 AL은 불가능하다','ACTFL 기준의 AL 기술에도 머뭇거림, 오류, 모국어 직역 흔적이 있을 수 있다고 나옵니다. 문제는 개별 실수가 아니라, 어려운 과제마다 반복되는 패턴적 붕괴입니다. 실수했다면 고치고 흐름으로 돌아오는 것 자체가 좋은 신호입니다.'],
+ ['14·15번은 버려도 등급에 상관없다','IH가 목표라면 그럴 수 있다는 경험담이 많습니다. 하지만 AL은 거의 모든 과제에서 Advanced 기능을 유지해야 하는 등급입니다. 마지막 두 문항이 Advanced 선 아래로 떨어지면 그것이 천장이 됩니다.'],
+ ['원어민 발음이어야 AL을 받는다','기준은 원어민 같은 억양이 아니라 이해 가능성입니다. 외국인 화자에게 익숙하지 않은 사람도 알아들을 수 있는지가 핵심입니다. 억양 교정보다 명확한 발음, 끊는 위치, 적당한 속도가 훨씬 효과적입니다.'],
+ ['난이도 6이 5보다 무조건 유리하다','수험생들의 일반적인 경험으로는 5와 6의 차이가 질문에 붙는 세부 조건 정도로 크지 않습니다. 중요한 것은 5~6 구간을 골라 어드밴스 문항을 받는 것입니다. 5와 6 중 선택은 2강에서 다룹니다.']
+];
+const mythsEl=$('#myths');
+MYTHS.forEach(([m,a])=>{const b=document.createElement('button');b.className='myth';b.setAttribute('aria-expanded','false');b.innerHTML='<span class="lab">오해</span><span class="m">'+m+'</span><span class="a">'+a+'</span><span class="hint">눌러서 사실 확인</span>';b.addEventListener('click',()=>{const o=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',o);$('.lab',b).textContent=o?'사실':'오해'});mythsEl.appendChild(b)});
+
+/* ---------- quiz ---------- */
+const QUIZ=[
+ {ask:'질문: "Tell me about the park you often go to." 이 답변이 보여주는 수준에 가장 가까운 것은?',tx:'I like park. Park is very good. I go to park on weekend. I walk. I see tree and flower. It is good.',opts:['IM1','IM3','IH','AL'],a:0,ex:'짧은 단문을 현재형으로 나열합니다. 스스로 문장을 만들고는 있지만(그래서 Intermediate), 관사·복수형 같은 기본 오류가 반복되고 연결이 전혀 없습니다. 보기 중에서는 Intermediate 하위권인 IM1에 가장 가깝습니다.'},
+ {ask:'같은 질문. 이 답변이 보여주는 수준에 가장 가까운 것은?',tx:'Usually, I go to the park near my apartment on weekends. There\'s a walking trail around a small lake, so I like walking there with my dog. Sometimes I ride a bike too, because it\'s good for my health and I can relax after a busy week.',opts:['IM1','IM3','IH','AL'],a:1,ex:'정확하고 자연스러우며 이유도 붙였습니다. 하지만 이 답변은 현재 시제의 묘사와 루틴에 머물러 있어, Advanced 기능(과거 서사, 복잡한 상황)의 증거가 없습니다. 묘사 문항으로는 충분히 좋은 답이지만, 이 답변 하나만 보면 문장 꾸러미 수준의 IM3입니다. 위로 가려면 다른 문항에서 서사와 문단을 보여줘야 합니다.'},
+ {ask:'질문: "Tell me about a time you had a problem at a park." 이 답변이 보여주는 수준에 가장 가까운 것은?',tx:'Last summer, I went to a park with my family for a picnic. We brought a lot of food and found a nice spot under a tree. But then it suddenly starts raining a lot, and we don\'t have umbrella… so we are running to the… um, the place with the roof… and we wait there. It was a bad day but also fun.',opts:['IM3','IH','AL'],a:1,ex:'과거 시제로 장면을 잘 세우고 But then으로 전환도 합니다. Advanced 과제를 시도하고 있다는 뜻입니다. 그러나 비가 오는 순간부터 현재형으로 무너지고(starts, don\'t have, are running), 단어를 못 찾아 문장이 끊기며, 결말이 일반적입니다. "시도하지만 유지하지 못함", 전형적인 IH입니다.'},
+ {ask:'질문: "How has the park in your neighborhood changed compared to when you were young?" 이 답변이 보여주는 수준에 가장 가까운 것은?',tx:'When I was a kid, the park near my house was basically just a dirt field with a couple of swings. These days, though, it\'s been completely renovated. There\'s a running track, an outdoor gym, and even a tiny library. I think the main reason is that the city started focusing more on quality of life, and people simply expect more from public spaces now. The downside is that it\'s much more crowded than it used to be, so if I want some peace and quiet, I have to go really early in the morning.',opts:['IM3','IH','AL'],a:2,ex:'과거(When I was a kid) → 현재완료(it\'s been renovated) → 현재로 시간 프레임을 매끄럽게 오갑니다. 변화의 내용, 원인(the main reason is), 결과와 대응(The downside… so…)까지 하나의 문단으로 짜여 있습니다. 비교·변화 문항에서 AL이 요구하는 기능을 모두 보여줍니다.'},
+ {ask:'질문: "Tell me about a problem you had at a park." 아래 답변이 AL을 받기 어려운 가장 큰 이유는?',tx:'I\'d love to tell you about my favorite hobby, which is watching movies. Movies are a great way to relieve stress, and I usually watch them on weekends with my family. Movies give me inspiration and help me understand different cultures. That\'s why I love watching movies.',opts:['문법 오류가 많다','질문과 어긋난 암기 답변이라 과제 수행의 증거가 되지 못한다','답변이 너무 짧다','발음이 원어민 같지 않을 것이다'],a:1,ex:'문장 자체는 유창하고 정확합니다. 하지만 질문(공원에서 겪은 문제)에 전혀 답하지 않았습니다. OPIc은 주어진 과제를 해내는지를 보기 때문에, 질문과 무관한 외운 답변은 아무리 매끄러워도 해당 기능의 증거가 되지 않습니다. 오히려 다른 문항과의 수준 차이가 암기 인상을 줍니다.'}
+];
+const quizEl=$('#quiz'),qScore=$('#quizScore');let answered=0,correct=0;
+QUIZ.forEach((q,qi)=>{const d=document.createElement('div');d.className='quiz-item';d.innerHTML='<div class="qn">연습 '+(qi+1)+' / '+QUIZ.length+'</div><div class="ask">'+q.ask+'</div><blockquote lang="en">'+q.tx+'</blockquote><div class="opts"></div><div class="fb"></div>';const os=$('.opts',d),fb=$('.fb',d);let done=false;
+ q.opts.forEach((o,oi)=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.addEventListener('click',()=>{if(done)return;done=true;answered++;const ok=oi===q.a;if(ok)correct++;$$('.opt',os).forEach((x,xi)=>{if(xi===q.a)x.classList.add('right');else if(xi===oi)x.classList.add('wrong')});fb.innerHTML='<b style="color:var('+(ok?'--mint':'--coral')+')">'+(ok?'맞았습니다.':'정답은 "'+q.opts[q.a]+'"입니다.')+'</b> '+q.ex;fb.classList.add('show');qScore.textContent=answered===QUIZ.length?('결과: '+QUIZ.length+'문제 중 '+correct+'문제 정답. '+(correct>=4?'평가자의 시선이 잡혀 가고 있습니다.':'8번 섹션의 비교표를 한 번 더 보고 다시 들어 보세요.')):''});os.appendChild(b)});
+ quizEl.appendChild(d)});
+
+/* ---------- checklist ---------- */
+const CHECKS=[
+ {g:'시간 프레임',c:'var(--violet)',items:['과거 경험을 말할 때, 긴박한 구간까지 과거 시제를 유지할 수 있다','한 답변 안에서 과거, 현재, 미래를 자연스럽게 오갈 수 있다 (예전엔, 요즘은, 앞으로는)','과거완료나 현재완료로 사건 사이의 시간 관계를 표현할 수 있다']},
+ {g:'문단 구조',c:'var(--teal)',items:['한 답변을 도입, 전개, 마무리로 구성한다','1분 30초 이상 같은 주제로 끊기지 않고 말할 수 있다','and, so, but 외의 연결 방식(관계절, by the time, while 등)을 세 가지 이상 쓴다']},
+ {g:'상황 대처',c:'var(--amber)',items:['예상 못 한 주제가 나와도 10초 안에 말을 시작할 수 있다','롤플레이에서 문제 상황을 설명하고 대안을 두 가지 이상 제시할 수 있다','단어가 막히면 다른 말로 풀어 설명하고 흐름으로 돌아온다']},
+ {g:'사회적 주제',c:'var(--coral)',items:['사회적 이슈 질문에 구체적인 사례를 들어 답할 수 있다','어떤 변화의 원인과 영향을 문단으로 설명할 수 있다','내 녹음을 들었을 때 의미가 전달되지 않는 구간이 거의 없다']}
+];
+const checksEl=$('#checks');let state={};try{state=JSON.parse(store.get('opic-al-checks')||'{}')||{}}catch(e){state={}}
+CHECKS.forEach((g,gi)=>{const d=document.createElement('div');d.className='check-group';d.style.setProperty('--gc',g.c);d.innerHTML='<h4>'+g.g+'</h4>';g.items.forEach((it,ii)=>{const id='c'+gi+'_'+ii;const l=document.createElement('label');l.innerHTML='<input type="checkbox" id="'+id+'"'+(state[id]?' checked':'')+'><span>'+it+'</span>';$('input',l).addEventListener('change',e=>{state[id]=e.target.checked;store.set('opic-al-checks',JSON.stringify(state));updReady()});d.appendChild(l)});checksEl.appendChild(d)});
+function updReady(){const total=12;let n=0;const weak=[];CHECKS.forEach((g,gi)=>{let gn=0;g.items.forEach((_,ii)=>{if(state['c'+gi+'_'+ii]){n++;gn++}});if(gn<2)weak.push(g.g)});$('#readyNum').textContent=n+' / '+total;$('#readyBar').style.width=(n/total*100)+'%';let m;if(n<=4)m='지금은 Intermediate 기반을 다지는 단계입니다. 2주차 문장 뼈대 훈련에서 가장 큰 변화를 느낄 수 있습니다.';else if(n<=8)m='IH 근처로 보입니다. Advanced 과제를 시도는 하지만 유지가 흔들리는 구간이 있습니다. 약한 영역을 집중 공략하면 AL이 가까워집니다.';else if(n<=11)m='AL 문턱에 와 있습니다. 남은 항목이 바로 당신의 천장일 가능성이 큽니다. 그 유형을 모의고사에서 반복 확인하세요.';else m='모든 항목에 자신이 있다면, 이제 실전 조건(시간 압박, 돌발 주제)에서도 유지되는지 녹음으로 검증할 차례입니다.';
+ if(weak.length&&n>0)m+=' 우선 보강할 영역: '+weak.join(', ')+'.';$('#readyMsg').textContent=m}
+$('#resetChecks').addEventListener('click',()=>{state={};store.set('opic-al-checks','{}');$$('#checks input').forEach(i=>i.checked=false);updReady()});
+updReady();
+
+/* ---------- recording booth ---------- */
+const PROMPTS=[
+ 'I\'d like to know about the park you often go to. Where is it, and what does it look like? Please describe it in as much detail as possible.',
+ 'Tell me about a memorable experience you had at a park. When was it, who were you with, and what happened that made it so memorable? Please tell me the story from beginning to end.',
+ 'Some people say that green spaces in cities are disappearing because of development. What do you think about this issue? How has it affected people in your area, and what do people around you say about it?'
+];
+let pIdx=0;const promptEn=$('#promptEn');
+function setPrompt(i){pIdx=i;promptEn.textContent=PROMPTS[i];$$('#promptSeg button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.i===i))}
+$$('#promptSeg button').forEach(b=>b.addEventListener('click',()=>setPrompt(+b.dataset.i)));setPrompt(0);
+$('#hearQ').addEventListener('click',e=>speak(PROMPTS[pIdx],e.currentTarget));
+const arc=$('#ringArc'),timeTxt=$('#timeTxt'),phaseTxt=$('#phaseTxt'),recBtn=$('#recBtn'),stopBtn=$('#stopBtn'),timerOnlyBtn=$('#timerOnlyBtn'),statusEl=$('#recStatus'),audio=$('#playback'),dl=$('#dlRec');
+const CIRC=552.9,PREP=10,ANS=120;let tId=null,phase='idle',left=0,mr=null,chunks=[],stream=null;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function setRing(frac){arc.style.strokeDashoffset=String(CIRC*(1-frac))}
+function tick(){left--;if(phase==='prep'){timeTxt.textContent=fmt(left);setRing(left/PREP);if(left<=0){phase='ans';left=ANS;phaseTxt.textContent='답변 중';arc.setAttribute('stroke',cssv('--coral'));if(mr&&mr.state==='inactive'){mr.start()}statusEl.innerHTML=mr?'<span class="rec-dot"></span>녹음 중입니다. 말하기 시작하세요.':'답변을 시작하세요.';timeTxt.textContent=fmt(left);setRing(1)}}else if(phase==='ans'){timeTxt.textContent=fmt(Math.max(0,left));setRing(Math.max(0,left)/ANS);if(left===30)statusEl.innerHTML=(mr?'<span class="rec-dot"></span>':'')+'30초 남았습니다. 마무리 문장을 준비하세요.';if(left<=0)finish()}}
+function startFlow(withRec){phase='prep';left=PREP;phaseTxt.textContent='구상 시간';arc.setAttribute('stroke',cssv('--sky'));timeTxt.textContent=fmt(left);setRing(1);statusEl.textContent='10초 동안 답변의 뼈대를 떠올리세요.';recBtn.disabled=true;timerOnlyBtn.disabled=true;stopBtn.disabled=false;clearInterval(tId);tId=setInterval(tick,1000)}
+async function startRec(){audio.hidden=true;dl.hidden=true;if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||typeof MediaRecorder==='undefined'){statusEl.textContent='이 환경에서는 녹음을 쓸 수 없습니다. 타이머만 켜고 휴대폰 녹음 앱을 함께 쓰세요.';return}
+ try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){statusEl.textContent='마이크 권한을 얻지 못했습니다. 브라우저 주소창의 권한 설정을 확인하거나, 타이머만 켜고 다른 녹음 앱을 쓰세요.';return}
+ chunks=[];try{mr=new MediaRecorder(stream)}catch(e){statusEl.textContent='녹음기를 시작하지 못했습니다. 다른 브라우저(Chrome, Edge, Safari 최신판)에서 열어 보세요.';stream.getTracks().forEach(t=>t.stop());return}
+ mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+ mr.onstop=()=>{const type=mr.mimeType||'audio/webm';const blob=new Blob(chunks,{type});const url=URL.createObjectURL(blob);audio.src=url;audio.hidden=false;const ext=type.includes('mp4')?'m4a':(type.includes('ogg')?'ogg':'webm');dl.href=url;dl.download='opic-practice-'+['describe','experience','advanced'][pIdx]+'.'+ext;dl.hidden=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;mr=null};
+ startFlow(true)}
+function finish(){clearInterval(tId);tId=null;const wasAns=phase==='ans';phase='idle';phaseTxt.textContent='종료';timeTxt.textContent=fmt(0);setRing(0);recBtn.disabled=false;timerOnlyBtn.disabled=false;stopBtn.disabled=true;
+ if(mr){if(mr.state!=='inactive'){mr.stop();statusEl.textContent='녹음이 끝났습니다. 아래에서 다시 듣고, 다섯 가지 확인 항목으로 점검해 보세요.'}else{if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;mr=null;statusEl.textContent='구상 시간 중에 멈춰서 녹음된 내용이 없습니다.'}}else{statusEl.textContent=wasAns?'시간이 끝났습니다. 몇 초에 말이 끝났는지 기억해 두세요.':'멈췄습니다.'}}
+recBtn.addEventListener('click',startRec);
+timerOnlyBtn.addEventListener('click',()=>{mr=null;audio.hidden=true;dl.hidden=true;startFlow(false)});
+stopBtn.addEventListener('click',finish);
+
+})();
+</script>
+</body>
+</html>

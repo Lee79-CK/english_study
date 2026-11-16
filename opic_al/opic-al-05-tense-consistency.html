@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 5강 · 시제 일관성</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+/* tense colors */
+.tc-ps{--t:var(--teal)}.tc-pp{--t:var(--violet)}.tc-pg{--t:var(--sky)}.tc-pf{--t:var(--amber)}.tc-ph{--t:var(--lime)}.tc-prf{--t:var(--orchid)}.tc-pr{--t:var(--rose)}
+
+/* hero palette */
+.pal{display:flex;height:40px;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin:6px 0 4px}
+.pal div{transition:flex .45s;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#14112a;overflow:hidden;white-space:nowrap}
+:root[data-theme="light"] .pal div{color:#fff}
+.pal-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.pal-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;background:var(--t)}
+.pal-q{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--muted);background:var(--surface2);border-radius:10px;padding:10px 12px;margin:10px 0 0;line-height:1.6;max-height:150px;overflow:auto}
+.pal-q span{border-bottom:2px solid var(--t);font-style:normal;color:var(--text)}
+
+/* timeline */
+.tl{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin:22px 0}
+#tlsvg{width:100%;height:auto;display:block}
+.tl-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px;margin-top:14px}
+.tl-list button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 12px;cursor:pointer;font-family:var(--serif);font-size:15.5px;line-height:1.45;border-left:4px solid var(--t)}
+.tl-list button[aria-pressed="true"]{background:color-mix(in srgb,var(--t) 16%,var(--surface2));border-color:var(--t)}
+.tl-note{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15.5px;min-height:3.2em}
+.tl-note b{color:var(--t)}
+
+/* kit */
+.kitpanel .form{font-family:var(--serif);font-size:19px;margin-bottom:8px}
+.kitpanel dl{display:grid;grid-template-columns:110px 1fr;gap:8px 14px;margin:12px 0 0}
+.kitpanel dt{color:var(--muted);font-size:14.5px}
+.kitpanel dd{margin:0}
+@media (max-width:560px){.kitpanel dl{grid-template-columns:1fr}}
+
+/* drills */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:18px 0}
+.drill-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dq{font-family:var(--serif);font-size:20px;line-height:1.6;margin:6px 0 14px}
+.dq .blank{display:inline-block;min-width:90px;border-bottom:2px solid var(--amber);text-align:center;color:var(--amber);font-style:italic}
+.dopts{display:flex;flex-wrap:wrap;gap:8px}
+.dopts button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:9px 16px;cursor:pointer;font-size:16px}
+.dopts button.en{font-family:var(--serif);font-size:17px}
+.dopts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.dopts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.dopts button:disabled{cursor:default}
+.dfb{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15.5px;display:none}
+.dfb.on{display:block}
+.pips{display:flex;gap:4px}
+.pips i{width:10px;height:10px;border-radius:3px;background:var(--line)}
+.pips i.ok{background:var(--teal)}.pips i.ng{background:var(--rose)}.pips i.cur{outline:2px solid var(--amber);outline-offset:1px}
+
+/* causes */
+.causes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0}
+.causes div{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--surface);border-top:4px solid var(--rose)}
+.causes h4{margin:0 0 6px;font-size:17.5px}
+.causes p{font-size:15px;margin:0 0 8px}
+.causes .pair{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:8px 12px}
+.causes .pair s{color:var(--rose)}
+.causes .pair b{color:var(--teal);font-weight:600}
+
+/* signals */
+.sig{width:100%;border-collapse:collapse;font-size:15px;min-width:600px}
+.sig th,.sig td{border-top:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.sig th{color:var(--muted);font-weight:500;font-size:13.5px}
+.sig td:first-child{font-weight:600;white-space:nowrap}
+.tpl{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:18px 0}
+.tpl p{font-family:var(--serif);font-size:18px;line-height:1.8;margin:0}
+.tpl .s{padding:0 4px;border-radius:4px;font-family:var(--sans);font-size:13px;font-weight:600;margin-right:4px;background:color-mix(in srgb,var(--t) 20%,transparent);color:var(--t)}
+
+/* hunt */
+.hunt{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.hunt-text{font-family:var(--serif);font-size:19px;line-height:2.05}
+.hunt-text .vb{border:0;background:transparent;font:inherit;color:inherit;padding:0 3px;border-radius:5px;cursor:pointer;border-bottom:2px dotted var(--faint)}
+.hunt-text .vb[aria-pressed="true"]{background:var(--amber-soft);border-bottom:2px solid var(--amber)}
+.hunt-text .vb.tp{background:var(--teal-soft);border-bottom:2px solid var(--teal)}
+.hunt-text .vb.miss{background:var(--rose-soft);border-bottom:2px solid var(--rose)}
+.hunt-text .vb.fa{text-decoration:line-through;text-decoration-color:var(--rose)}
+.hunt-text .fx{font-family:var(--sans);font-size:13px;color:var(--teal);font-weight:600;margin-left:2px}
+.hunt-res{margin-top:14px;font-size:15.5px}
+.hunt-res li{margin-bottom:6px}
+
+/* convert */
+.conv{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.conv .src{font-family:var(--serif);font-size:17px;line-height:1.7;background:var(--surface2);border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.conv textarea,.chk-box textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:17px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+.palrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;margin:12px 0}
+.palrow div{background:var(--surface2);border-radius:10px;padding:8px 10px;border-top:3px solid var(--t)}
+.palrow small{display:block;font-size:12px;color:var(--muted)}
+.palrow b{font-family:var(--serif);font-size:24px;font-weight:600}
+.goals{list-style:none;padding:0;margin:8px 0 0;font-size:15px}
+.goals li{margin-bottom:5px}
+.goals .y{color:var(--teal)}.goals .n{color:var(--rose)}
+.model{display:none;margin-top:12px;border-radius:12px;padding:14px 16px;background:var(--teal-soft);border-left:3px solid var(--teal)}
+.model.on{display:block}
+.model p{font-family:var(--serif);font-size:17px;line-height:1.75;margin:0}
+.hlv{font-family:var(--serif);font-size:17px;line-height:1.9;background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:10px}
+.hlv mark{background:color-mix(in srgb,var(--t) 22%,transparent);color:inherit;border-bottom:2px solid var(--t);border-radius:3px;padding:0 1px}
+
+/* cards */
+.deck{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:820px){.deck{grid-template-columns:1fr}}
+.card{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:24px}
+.card .no{font-size:13px;color:var(--muted)}
+.card .prompt{font-family:var(--serif);font-size:22px;line-height:1.5;margin:8px 0 14px}
+.card .req{list-style:none;padding:0;margin:0}
+.card .req label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:15.5px;cursor:pointer}
+.card .req input{width:18px;height:18px;margin-top:4px;accent-color:var(--teal)}
+.card .req .en{font-size:16px}
+.cside{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.cside .clock{font-family:var(--serif);font-size:48px;font-variant-numeric:tabular-nums;line-height:1}
+.cside .bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.cside .bar i{display:block;height:100%;width:0;background:var(--amber);transition:width 1s linear}
+.dots{display:flex;gap:4px;flex-wrap:wrap}
+.dots i{width:12px;height:12px;border-radius:3px;background:var(--line)}
+.dots i.d{background:var(--teal)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;2주차 5강&nbsp;&nbsp;시제 일관성</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">시제가 AL의 분기점인 이유</a></li>
+      <li><a href="#timeline">두 개의 ‘지금’</a></li>
+      <li><a href="#kit">서사 시제 키트</a></li>
+      <li><a href="#perfect">현재완료와 과거</a></li>
+      <li><a href="#pastperfect">과거완료: 필요할 때와 남용</a></li>
+      <li><a href="#korean">한국어 화자가 미끄러지는 이유</a></li>
+      <li><a href="#signals">시제 전환 신호어</a></li>
+      <li><a href="#hunt">오류 찾기</a></li>
+      <li><a href="#convert">이야기 변환 훈련</a></li>
+      <li><a href="#cards">말하기 카드</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">과제와 다음 강</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">2주차 AL급 문장 뼈대 만들기 · 5강</p>
+      <h1>과거 이야기는 두 가지 색이 아니라 여섯 가지 색으로 칠합니다</h1>
+      <p class="lede">1강에서 IH 답변은 문제가 생긴 순간 현재형으로 미끄러졌고, AL 답변은 오히려 시제가 더 정교해졌습니다. 차이는 문법 지식이 아니라 ‘이야기 속 지금’을 붙잡는 감각입니다. 이번 강의에서는 그 감각을 타임라인으로 눈에 보이게 만들고, 말하면서 유지하는 훈련을 합니다.</p>
+      <div class="meta-row"><span>학습 시간 약 90분</span><span>선수 강의: 1강, 3강, 4강</span><span>목표: 시제 확인 필요 5% 미만</span></div>
+    </div>
+    <div class="wave-card" aria-label="IH와 AL의 시제 팔레트 비교">
+      <div class="wave-switch" role="group" aria-label="답변 선택">
+        <button type="button" data-p="ih" aria-pressed="true">1강 IH 답변</button>
+        <button type="button" data-p="al" aria-pressed="false">1강 AL 답변</button>
+      </div>
+      <div class="pal" id="pal"></div>
+      <div class="pal-legend" id="palLeg"></div>
+      <div class="pal-q" id="palQ"></div>
+      <p class="wave-cap" id="palCap" style="min-height:2.6em"></p>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>3강 분석기의 ‘시제 확인 필요’ 비율이 높게 나왔다면 이 강의가 1순위 처방입니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>과거 이야기에는 ‘이야기 속 지금’과 ‘말하는 지금’ 두 개의 기준점이 있다는 것을 이해하고, 각 사건을 그 기준으로 배치할 수 있다.</li>
+      <li>과거 서사에 쓰이는 일곱 가지 시제 형태(과거, 과거진행, 과거완료, 과거 습관, 과거 속 미래, 현재완료, 현재)의 역할을 구분한다.</li>
+      <li>현재완료와 단순 과거를 시간 표현에 따라 정확히 고른다.</li>
+      <li>과거완료가 꼭 필요한 자리와, 한국어 ‘~했었다’ 번역 때문에 남용하는 자리를 구분한다.</li>
+      <li>시제를 바꿀 때 신호어를 함께 써서, 의도된 전환과 실수를 구분되게 말한다.</li>
+      <li>60~90초 이야기를 시제 붕괴 없이 말할 수 있다.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>시제가 AL의 분기점인 이유</h2>
+    <p>1강에서 Advanced의 첫 번째 과제는 ‘주요 시간 프레임에서의 서술’이었습니다. 과거, 현재, 미래를 오가며 각각에 맞는 시제로 말하는 능력입니다. ACTFL 기준표는 AL 화자가 이것을 시제와 <span class="term" data-tip="같은 시간대 안에서 동작이 완료됐는지, 진행 중인지, 반복되는지를 나타내는 문법 범주. 영어에서는 진행형(-ing)과 완료형(have/had p.p.)이 대표적.">상(aspect)</span>을 어느 정도 통제하며 해낸다고 묘사합니다. 반대로 IH 화자는 같은 과제를 시도하지만 유지하지 못한다고 묘사합니다.</p>
+    <p>실전에서 그 ‘유지하지 못함’은 거의 항상 같은 장면에서 일어납니다. 이야기가 평온할 때는 과거형이 잘 나오다가, <strong>문제가 생기거나 감정이 고조되는 순간</strong> 현재형으로 돌아갑니다. 1강의 IH 예시가 정확히 그랬습니다. 날씨가 나빠지고 다리가 아픈 대목에서 <span class="en">we go, my legs are hurt, the weather is suddenly bad, we come back</span>이 연달아 나왔습니다. 그 대목은 평가자가 Advanced를 확인하려고 가장 집중해서 듣는 구간이기도 합니다.</p>
+    <div class="callout">
+      <strong>목표는 ‘과거형을 많이’가 아니라 ‘시제의 결을 구분’</strong>
+      <p>과거 이야기를 전부 단순 과거로만 말해도 틀린 것은 아닙니다. 하지만 AL 답변은 단순 과거를 뼈대로 삼고, 그 위에 ‘그 전에 이미 있었던 일’(과거완료), ‘그때 진행 중이던 일’(과거진행), ‘하려고 했던 일’(과거 속 미래), ‘지금 돌아본 평가’(현재)를 겹쳐 칠합니다. 위의 시제 팔레트에서 AL 답변이 여섯 가지 색을 쓰는 이유입니다. 이 결이 평가자에게는 ‘시간 관계를 통제하고 있다’는 신호가 됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="timeline">
+    <p class="sec-no">2</p>
+    <h2>두 개의 ‘지금’</h2>
+    <p>과거 이야기를 할 때 머릿속에는 기준점이 두 개 있어야 합니다. 하나는 지금 말하고 있는 <strong>말하는 지금</strong>, 다른 하나는 이야기가 펼쳐지는 <strong>이야기 속 지금</strong>입니다. 시제는 각 사건이 이 두 기준점에 대해 어디에 있는지를 알려 주는 좌표입니다.</p>
+    <p>아래는 1강 AL 답변을 조금 다듬어 시간 축에 펼친 것입니다. 문장 조각을 누르면 그 사건이 축 위 어디에 놓이는지, 왜 그 시제를 썼는지가 나옵니다.</p>
+    <div class="tl">
+      <svg id="tlsvg" viewBox="0 0 760 230" role="img" aria-label="시제 타임라인"></svg>
+      <div class="tl-list" id="tlList"></div>
+      <div class="tl-note" id="tlNote" aria-live="polite">문장 조각을 눌러 보세요.</div>
+    </div>
+    <div class="callout teal">
+      <strong>타임라인에서 보이는 규칙</strong>
+      <p>이야기를 앞으로 움직이는 것은 단순 과거뿐입니다(초록 점). 과거완료(보라)는 이야기 속 지금보다 <em>왼쪽</em>, 즉 더 앞선 일을 꺼내올 때만 씁니다. 과거진행(파랑 막대)은 사건이 끼어드는 배경입니다. 과거 속 미래(주황 점선)는 계획했지만 일어나지 않은 일로, 복잡한 상황을 알리는 신호입니다. 그리고 현재와 현재완료(분홍, 빨강)는 이야기 밖으로 나와 ‘말하는 지금’에 설 때만 씁니다.</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="kit">
+    <p class="sec-no">3</p>
+    <h2>서사 시제 키트</h2>
+    <p>과거 이야기에서 쓰는 일곱 가지 형태입니다. 탭마다 형태, 역할, 함께 쓰는 신호어, OPIc 예시, 한국어 화자의 함정을 정리했습니다.</p>
+    <div class="tabs" role="tablist" id="kitTabs"></div>
+    <div class="tabpanel kitpanel" id="kitPanel" role="tabpanel"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="perfect">
+    <p class="sec-no">4</p>
+    <h2>현재완료와 과거</h2>
+    <p>둘 다 우리말로는 ‘~했다’라서 가장 많이 헷갈리는 쌍입니다. 구분 기준은 하나입니다. <strong>그 일이 끝난 과거의 한 시점에 갇혀 있으면 과거, 말하는 지금까지 연결되어 있으면 현재완료</strong>입니다. 그래서 시간 표현이 결정적인 단서가 됩니다.</p>
+    <div class="tbl-wrap">
+    <table class="sig">
+      <tr><th>시제</th><th>함께 쓰는 시간 표현</th><th>예시</th></tr>
+      <tr><td>과거</td><td>yesterday, last year, in 2022, two weeks ago, when I was a student, that day</td><td class="en">I <b>went</b> to Jeju <b>last spring</b>.</td></tr>
+      <tr><td>현재완료</td><td>ever, never, since, for (지금까지), so far, already, yet, recently, three times</td><td class="en">I<b>’ve been</b> to Jeju <b>three times</b>.</td></tr>
+    </table>
+    </div>
+    <p>OPIc에서 현재완료가 빛나는 자리는 두 곳입니다. 하나는 경험 문항의 마지막, 이야기 밖으로 나오면서 <span class="en">Since then, I’ve never gone hiking without a raincoat.</span>처럼 그 경험이 지금까지 남긴 영향을 말할 때입니다. 다른 하나는 14번 비교·변화 문항에서 <span class="en">The way people listen to music has changed a lot.</span>처럼 변화를 요약할 때입니다.</p>
+    <div class="drill" id="drA">
+      <div class="drill-head"><strong>현재완료 vs 과거 고르기</strong><div class="pips" id="aPips"></div></div>
+      <div class="dq" id="aQ"></div><div class="dopts" id="aO"></div><div class="dfb" id="aFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="aNext">다음 문제</button><button type="button" class="reset" id="aReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="pastperfect">
+    <p class="sec-no">5</p>
+    <h2>과거완료: 필요할 때와 남용</h2>
+    <p>과거완료(had p.p.)는 AL 답변의 표지처럼 보여서, 배우고 나면 아무 데나 쓰고 싶어집니다. 하지만 과거완료는 ‘이야기 속 지금보다 앞선 일’을 꺼낼 때만 의미가 있습니다. 순서가 이미 분명하면 필요 없고, 이야기 속 지금 자체를 말할 때 쓰면 틀립니다.</p>
+    <h3>과거완료가 꼭 필요한 다섯 자리</h3>
+    <ul class="prose">
+      <li><strong>깨달음·발견:</strong> <span class="en">I realized I <b>had left</b> my wallet at the café.</span> 깨달은 시점보다 두고 온 일이 먼저입니다.</li>
+      <li><strong>by the time:</strong> <span class="en">By the time we got there, the show <b>had</b> already <b>started</b>.</span> 4강에서 본 짝입니다.</li>
+      <li><strong>배경 이야기:</strong> <span class="en">We<b>’d been planning</b> the trip for months.</span> 이야기가 시작되기 전부터 이어진 일입니다.</li>
+      <li><strong>그때까지의 경험:</strong> <span class="en">I <b>had never tried</b> surfing before that day.</span> 현재완료의 ‘경험’을 과거 시점으로 옮긴 것입니다.</li>
+      <li><strong>남의 말 전하기:</strong> <span class="en">She told me she <b>had</b> already <b>booked</b> the tickets.</span></li>
+    </ul>
+    <div class="callout rose">
+      <strong>가장 흔한 남용: ‘~했었다’의 직역</strong>
+      <p>한국어의 ‘~했었다’는 대개 ‘예전에 그랬는데 지금은 아니다’라는 뜻이지, 영어의 과거완료가 아닙니다. <span class="en">I had visited Jeju last year.</span>는 기준점 없이 과거완료를 쓴 오류입니다. 단순 과거 <span class="en">I visited Jeju last year.</span>나, 지금은 아니라는 뜻을 살리려면 <span class="en">I used to live in Busan.</span>을 씁니다.</p>
+    </div>
+    <div class="drill" id="drB">
+      <div class="drill-head"><strong>이 had, 괜찮을까?</strong><div class="pips" id="bPips"></div></div>
+      <div class="dq" id="bQ"></div><div class="dopts" id="bO"></div><div class="dfb" id="bFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="bNext">다음 문제</button><button type="button" class="reset" id="bReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="korean">
+    <p class="sec-no">6</p>
+    <h2>한국어 화자가 미끄러지는 이유</h2>
+    <p>시제 붕괴는 문법을 몰라서보다, 한국어의 습관이 영어로 새어 나와서 생기는 경우가 많습니다. 원인을 알면 어느 순간에 조심해야 하는지 알 수 있습니다.</p>
+    <div class="causes">
+      <div><h4>1. 관형절과 연결 어미의 현재형</h4><p>한국어는 ‘비가 <u>오는</u> 걸 봤다’, ‘도착<u>하니</u>’처럼 과거 이야기 속에서도 현재형 어미를 자연스럽게 씁니다. 이것이 영어 종속절로 그대로 옮겨집니다.</p><div class="pair"><s>When I arrive there, it is closed.</s><br><b>When I arrived there, it was closed.</b></div></div>
+      <div><h4>2. 장면이 생생해질 때의 현재형</h4><p>한국어로 이야기할 때도 긴장되는 대목에서 ‘그런데 갑자기 비가 막 쏟아지는 거야’처럼 현재형을 씁니다. 감정이 올라가는 순간이 바로 시제가 미끄러지는 순간입니다.</p><div class="pair"><s>And suddenly the rain is pouring.</s><br><b>And suddenly it started pouring.</b></div></div>
+      <div><h4>3. ‘~했었다’를 과거완료로 직역</h4><p>‘예전에 ~했었다’를 had p.p.로 옮기는 습관입니다. 5절에서 본 대로 기준점 없는 과거완료가 됩니다.</p><div class="pair"><s>When I was young, I had lived in Busan.</s><br><b>When I was young, I lived / used to live in Busan.</b></div></div>
+      <div><h4>4. 이야기 속 습관을 현재형으로</h4><p>‘그때 우리는 보통 주말마다 거기 가’처럼 과거의 습관을 말할 때 usually에 끌려 현재형이 나옵니다. 과거 습관은 used to나 would를 씁니다.</p><div class="pair"><s>Back then we usually go there on weekends.</s><br><b>Back then we’d usually go there on weekends.</b></div></div>
+    </div>
+    <div class="callout teal">
+      <strong>위험 구간을 미리 표시해 두기</strong>
+      <p>네 가지 원인 중 2번이 OPIc에서 가장 치명적입니다. 문제가 생기는 대목은 AL 판별 구간이기 때문입니다. 그래서 2강의 코어 스토리 4번(계획이 틀어진 날)을 연습할 때는 문제가 시작되는 문장(<span class="en">But then…, Suddenly…, The thing is…</span>) 직후의 동사 세 개를 특히 의식하세요. 그 세 개만 과거로 지켜도 붕괴의 대부분을 막을 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="signals">
+    <p class="sec-no">7</p>
+    <h2>시제 전환 신호어</h2>
+    <p>과거 이야기 중에도 현재형을 써야 하는 순간이 있습니다. 변하지 않는 사실(<span class="en">Jeju is a volcanic island</span>), 지금의 평가(<span class="en">Looking back, it’s one of my best memories</span>), 지금까지 이어지는 결과(<span class="en">I still go there</span>)입니다. 이런 전환은 오류가 아니지만, 평가자가 실수와 구분할 수 있어야 합니다. 그래서 <strong>시제를 바꿀 때는 신호어와 함께, 문장 단위로</strong> 바꿉니다.</p>
+    <div class="tbl-wrap">
+    <table class="sig">
+      <tr><th>전환 방향</th><th>신호어</th><th>예시</th></tr>
+      <tr><td>과거 → 현재</td><td class="en">Looking back, These days, Now, To this day, I still…</td><td class="en"><b>Looking back,</b> that rainy afternoon is what I remember most.</td></tr>
+      <tr><td>과거 → 현재완료</td><td class="en">Since then, Ever since, I’ve never… since</td><td class="en"><b>Since then,</b> I’ve been back twice.</td></tr>
+      <tr><td>현재 → 과거</td><td class="en">Back then, When I was…, At that time, I remember when…</td><td class="en"><b>Back then,</b> there was no café on that street.</td></tr>
+      <tr><td>과거 → 과거완료</td><td class="en">Before that, By then, It turned out (that)…, I realized…</td><td class="en"><b>It turned out</b> someone had already taken our seats.</td></tr>
+    </table>
+    </div>
+    <h3>14번 비교·변화 문항의 시제 틀</h3>
+    <p>14번은 여러 시간 프레임을 한 답변 안에서 오가야 하는 문항이라, 신호어가 곧 답변의 골격이 됩니다.</p>
+    <div class="tpl"><p>
+      <span class="s tc-ph">과거 습관</span><b>Back then</b>, people used to ___, and they would ___.<br>
+      <span class="s tc-pr">현재</span><b>These days</b>, most people ___ instead.<br>
+      <span class="s tc-prf">현재완료</span>So it<b>’s changed</b> a lot, mostly because ___.<br>
+      <span class="s tc-pr">현재 평가</span><b>Personally</b>, I think it’s ___, but I do miss ___.
+    </p></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="hunt">
+    <p class="sec-no">8</p>
+    <h2>오류 찾기</h2>
+    <p>아래 이야기에서 시제나 형태가 틀렸다고 생각하는 동사를 모두 누르세요. 점선 밑줄이 있는 것이 동사입니다. 맞는 동사도 섞여 있으니 신중하게 고르고 ‘채점’을 누르세요. 초록은 맞게 찾은 오류, 빨강 배경은 놓친 오류, 빨간 취소선은 맞는데 오류로 고른 동사입니다.</p>
+    <div class="hunt">
+      <div class="hunt-text" id="huntText"></div>
+      <div class="ctrl" style="margin-top:14px"><button type="button" class="btn primary" id="huntCheck">채점</button><button type="button" class="reset" id="huntReset">다시 하기</button></div>
+      <div class="hunt-res" id="huntRes"></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="convert">
+    <p class="sec-no">9</p>
+    <h2>이야기 변환 훈련</h2>
+    <p>아래는 3강에서 흔히 보이는 현재형 나열식 이야기입니다. 이 이야기를 과거 서사로 다시 말해 보세요. 먼저 소리 내어 말한 다음 입력하고 ‘점검’을 누르면 시제 팔레트와 목표 달성 여부를 보여 줍니다. 목표는 과거완료 1개 이상, 과거진행 1개 이상, 마지막 문장은 말하는 지금으로 나오기, 현재형 확인 필요 1개 이하입니다.</p>
+    <div class="conv">
+      <div class="small muted">원문 (현재형 나열)</div>
+      <div class="src">Last month I go to a concert with my sister. We buy the tickets two months before. When we arrive, there is a long line. While we wait, it starts to rain. We don’t bring umbrellas, so we get wet. But the concert is amazing. I want to go again.</div>
+      <label for="convT" class="small muted">나의 과거 서사</label>
+      <textarea id="convT" placeholder="먼저 소리 내어 말한 뒤 입력하세요."></textarea>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn primary" id="convC">점검</button><button type="button" class="btn" id="convM">모범 답안 보기</button></div>
+      <div id="convOut"></div>
+      <div class="model" id="convModel"><div class="small muted" style="margin-bottom:6px">모범 답안 (가능한 답 중 하나)</div><p>Last month I went to a concert with my sister. We’d bought the tickets two months earlier, so we’d been looking forward to it for weeks. When we got there, there was already a huge line, and while we were waiting, it started pouring. Neither of us had brought an umbrella, so we got completely soaked. But honestly, the concert was amazing, and we forgot all about the rain. Since then, I’ve been to two more of their shows, and I’m already planning the next one.</p></div>
+    </div>
+    <div class="callout violet">
+      <strong>점검기의 한계</strong>
+      <p>3강 분석기와 마찬가지로 단어 패턴 기반의 추정입니다. <span class="en">had</span> 뒤의 단어 형태, <span class="en">was/were + -ing</span> 같은 모양을 셀 뿐 의미를 이해하지는 못합니다. 표시된 결과를 출발점 삼아 직접 확인하세요. 3강 기준선을 덮어쓰지 않도록 연습 답변은 이 점검기에 넣으세요.</p>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="cards">
+    <p class="sec-no">10</p>
+    <h2>말하기 카드</h2>
+    <p>지금까지 배운 것을 말하기로 옮기는 단계입니다. 카드를 뽑고 90초 타이머를 켠 뒤 바로 말하세요. 카드마다 꼭 넣어야 할 시제 형태가 있습니다. 말하고 나서 실제로 넣은 것만 체크하세요. 녹음해서 들어 보면 더 정확합니다. 여덟 장을 모두 마치는 것이 이번 주 목표입니다.</p>
+    <div class="deck">
+      <div class="card" id="card"></div>
+      <div class="cside">
+        <div class="small muted">답변 타이머</div>
+        <div class="clock" id="cClock">1:30</div>
+        <div class="bar"><i id="cBar"></i></div>
+        <div class="small" id="cHint">시작하면 30초마다 안내가 바뀝니다.</div>
+        <div class="ctrl"><button type="button" class="btn primary" id="cStart">시작</button><button type="button" class="btn" id="cReset">초기화</button></div>
+        <div class="ctrl"><button type="button" class="btn" id="cPrev">이전 카드</button><button type="button" class="btn" id="cNext">다음 카드</button></div>
+        <div><div class="small muted" style="margin-bottom:4px">완료한 카드</div><div class="dots" id="cDots"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">11</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">12</p>
+    <h2>과제와 다음 강</h2>
+    <div class="assign">
+      <h3 style="margin-top:0">5강 과제: 이야기 속 지금을 붙잡기</h3>
+      <ol>
+        <li>4절과 5절 훈련을 모두 맞힐 때까지 반복합니다.</li>
+        <li>8절 오류 찾기에서 놓친 오류가 0개가 될 때까지 다시 합니다.</li>
+        <li>2강 코어 스토리 4번(계획이 틀어진 날)을 타임라인으로 그려 봅니다. 종이에 축을 긋고, 배경(과거완료), 진행 중이던 일(과거진행), 하려던 일(과거 속 미래), 사건(과거), 지금의 평가(현재)를 표시합니다.</li>
+        <li>그 타임라인을 보며 90초로 말하고 녹음합니다. 받아 적은 뒤 9절 점검기에 넣어 시제 팔레트를 확인합니다. 4강의 연결 도구도 함께 썼는지 보세요.</li>
+        <li>10절 말하기 카드 여덟 장을 이번 주 안에 모두 마칩니다. 하루 두 장이면 충분합니다.</li>
+        <li>3강 기준선 녹음 중 경험 문항 하나를 다시 듣고, 시제가 미끄러진 지점이 6절의 네 가지 원인 중 어디에 해당하는지 적어 둡니다.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>6강. 필러와 담화 표지어: Well, Actually, What I mean is 자연스럽게 쓰기</h4></div>
+      <span class="pill">2주차</span>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">13</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 나온 시제 관련 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: 과거완료, 상, 기준점">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 5강. 예문과 훈련 문항은 학습용으로 새로 작성했으며, 타임라인 예시는 1강 AL 예시 답변을 바탕으로 다듬었습니다. 점검기는 단어 패턴 기반 추정치입니다. 입력한 내용은 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  /* theme */
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>{setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');drawTL()});
+  /* progress */
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  /* tooltips */
+  const pop=$('tipPop');
+  function showTip(el){pop.textContent=el.dataset.tip;pop.classList.add('on');const r=el.getBoundingClientRect();const w=Math.min(300,window.innerWidth-24);pop.style.maxWidth=w+'px';let left=r.left+window.scrollX;left=Math.min(left,window.scrollX+window.innerWidth-w-12);pop.style.left=Math.max(12,left)+'px';pop.style.top=(r.bottom+window.scrollY+8)+'px'}
+  function hideTip(){pop.classList.remove('on')}
+  document.querySelectorAll('.term').forEach(el=>{el.tabIndex=0;el.addEventListener('mouseenter',()=>showTip(el));el.addEventListener('mouseleave',hideTip);el.addEventListener('focus',()=>showTip(el));el.addEventListener('blur',hideTip);el.addEventListener('click',e=>{e.stopPropagation();pop.classList.contains('on')?hideTip():showTip(el)})});
+  document.addEventListener('click',hideTip);
+
+  const TN={ps:['과거','var(--teal)'],pp:['과거완료','var(--violet)'],pg:['과거진행','var(--sky)'],pf:['과거 속 미래','var(--amber)'],ph:['과거 습관','var(--lime)'],prf:['현재완료','var(--orchid)'],pr:['현재','var(--rose)'],err:['현재(오류)','var(--rose)']};
+
+  /* ---------- hero palette ---------- */
+  const PAL={
+    ih:{c:[['ps',8],['err',6],['pr',3]],q:'… It <span class="tc-ps">was</span> last spring, and I <span class="tc-ps">went</span> there with my family … the first day we <span class="tc-ps">went</span> to the beach and we <span class="tc-ps">ate</span> black pork … the second day we <span class="tc-pr">go</span> to Hallasan … my legs <span class="tc-pr">are hurt</span> … the weather <span class="tc-pr">is</span> suddenly bad, so we <span class="tc-pr">come</span> back.',cap:'과거와 (실수로 섞인) 현재, 사실상 두 가지 색입니다. 문제가 생긴 대목에서 빨강이 몰려 있습니다.'},
+    al:{c:[['ps',13],['pp',4],['pg',1],['pf',1],['pr',2],['prf',1]],q:'We<span class="tc-pp">’d been planning</span> it for months because my parents <span class="tc-pp">hadn’t traveled</span> together … We <span class="tc-pg">were hiking</span> up Hallasan when the weather suddenly <span class="tc-ps">turned</span> … we <span class="tc-pf">were going to</span> reach the top … I <span class="tc-ps">suggested</span> we head back … Looking back, that afternoon <span class="tc-pr">is</span> what I remember most.',cap:'단순 과거를 뼈대로 여섯 가지 결을 겹쳤습니다. 빨강(현재)은 신호어 Looking back 뒤에만 나옵니다.'}
+  };
+  function pal(k){const p=PAL[k];$('pal').innerHTML=p.c.map(([t,n])=>`<div style="flex:${n};background:${TN[t][1]}">${n>2?TN[t][0]:''}</div>`).join('');$('palLeg').innerHTML=p.c.map(([t,n])=>`<span style="--t:${TN[t][1]}"><i></i>${TN[t][0]} ${n}</span>`).join('');$('palQ').innerHTML=p.q;$('palQ').querySelectorAll('span').forEach(s=>{const m=[...s.classList].find(c=>c.startsWith('tc-'));if(m)s.style.setProperty('--t',TN[m.slice(3)][1])});$('palCap').textContent=p.cap;document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===k))}
+  document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.addEventListener('click',()=>pal(b.dataset.p)));pal('ih');
+
+  /* ---------- timeline ---------- */
+  // x positions: backstory 40-230, story 270-560, now 640-720
+  const TL=[
+    {t:'pp',s:'We’d been planning it for months',x1:60,x2:250,row:0,n:'이야기가 시작되기 전부터 이어진 계획입니다. 이야기 속 지금보다 왼쪽에서 오른쪽 끝까지 이어지는 막대라서 과거완료 진행형(had been -ing)을 씁니다.'},
+    {t:'pp',s:'my parents hadn’t traveled together in years',x1:40,x2:250,row:1,n:'여행 이전 몇 년 동안의 상태입니다. 이야기 속 지금보다 앞선 기간이라 과거완료입니다.'},
+    {t:'ps',s:'The first couple of days went exactly as planned',x:300,row:2,n:'이야기를 앞으로 움직이는 첫 사건입니다. 단순 과거.'},
+    {t:'pp',s:'a place my cousin had recommended',x:150,row:3,n:'사촌이 추천한 것은 여행 전의 일입니다. 이야기 흐름 중에 과거의 과거를 잠깐 꺼내올 때 과거완료를 씁니다.'},
+    {t:'pg',s:'We were hiking up Hallasan',x1:360,x2:430,row:2,n:'사건이 끼어드는 배경입니다. 진행 중이던 동작이라 과거진행. 다음 조각의 when과 짝을 이룹니다.'},
+    {t:'ps',s:'when the weather suddenly turned',x:410,row:3,n:'진행 중이던 등산에 끼어든 사건입니다. 단순 과거. 문제가 시작되는 바로 이 지점에서 시제를 지키는 것이 AL의 핵심입니다.'},
+    {t:'pf',s:'We were going to reach the top',x:470,row:4,n:'하려고 했지만 일어나지 않은 계획입니다. 과거 시점에서 본 미래라서 was/were going to. 복잡한 상황을 알리는 신호이기도 합니다.'},
+    {t:'ps',s:'I suggested we head back',x:460,row:1,n:'문제에 대한 대응입니다. 단순 과거로 이야기를 다시 앞으로 움직입니다.'},
+    {t:'ps',s:'we ended up spending hours in a café',x:525,row:2,n:'예상 밖의 결과입니다. 4강의 end up -ing가 과거형으로 쓰였습니다.'},
+    {t:'pp',s:'which we hadn’t done in a long time',x1:200,x2:520,row:4,n:'카페에서 대화한 시점 이전까지 오랫동안 하지 않았던 일입니다. 이야기 속 지금 기준의 ‘그때까지의 경험’이라 과거완료.'},
+    {t:'pr',s:'Looking back, that afternoon is what I remember most',x:690,row:2,n:'이야기 밖으로 나와 말하는 지금 서서 평가합니다. 신호어 Looking back 뒤의 현재형은 오류가 아니라 의도된 전환입니다.'},
+    {t:'prf',s:'I’ve been back to Jeju twice since then',x1:540,x2:700,row:3,n:'그 여행 이후부터 지금까지의 경험입니다. since then과 짝을 이루는 현재완료로, 과거와 지금을 잇습니다.'}
+  ];
+  let tlSel=null;
+  function cssv(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+  function drawTL(){const s=$('tlsvg');const col=t=>cssv('--'+({ps:'teal',pp:'violet',pg:'sky',pf:'amber',ph:'lime',prf:'orchid',pr:'rose'}[t]));const line=cssv('--line'),faint=cssv('--faint'),muted=cssv('--muted'),txt=cssv('--text');
+    let h=`<rect x="20" y="30" width="250" height="160" rx="10" fill="${cssv('--violet')}" opacity=".06"/><rect x="280" y="30" width="290" height="160" rx="10" fill="${cssv('--teal')}" opacity=".07"/><rect x="620" y="30" width="120" height="160" rx="10" fill="${cssv('--rose')}" opacity=".07"/>`;
+    h+=`<text x="145" y="22" text-anchor="middle" font-size="12" fill="${muted}">이야기 이전 (과거의 과거)</text><text x="425" y="22" text-anchor="middle" font-size="12" fill="${muted}">이야기 속 지금</text><text x="680" y="22" text-anchor="middle" font-size="12" fill="${muted}">말하는 지금</text>`;
+    h+=`<line x1="20" y1="205" x2="745" y2="205" stroke="${faint}" stroke-width="1.5"/><polygon points="745,200 755,205 745,210" fill="${faint}"/><text x="20" y="224" font-size="11" fill="${faint}">더 먼 과거</text><text x="740" y="224" text-anchor="end" font-size="11" fill="${faint}">지금</text>`;
+    h+=`<line x1="595" y1="30" x2="595" y2="200" stroke="${line}" stroke-dasharray="4 5"/>`;
+    TL.forEach((e,i)=>{const y=50+e.row*32;const c=col(e.t);const on=tlSel===i;const op=tlSel===null||on?1:.25;
+      if(e.x1!==undefined){h+=`<rect x="${e.x1}" y="${y-6}" width="${e.x2-e.x1}" height="12" rx="6" fill="${c}" opacity="${op*(on?1:.75)}" ${e.t==='pf'?'stroke-dasharray="4 3"':''}/>`}
+      else if(e.t==='pf'){h+=`<circle cx="${e.x}" cy="${y}" r="8" fill="none" stroke="${c}" stroke-width="2.5" stroke-dasharray="3 3" opacity="${op}"/><line x1="${e.x-7}" y1="${y-7}" x2="${e.x+7}" y2="${y+7}" stroke="${c}" stroke-width="2" opacity="${op}"/>`}
+      else{h+=`<circle cx="${e.x}" cy="${y}" r="${on?9:7}" fill="${c}" opacity="${op}"/>`}
+      if(on){const lx=e.x!==undefined?e.x:(e.x1+e.x2)/2;h+=`<text x="${Math.min(700,Math.max(60,lx))}" y="${y-12}" text-anchor="middle" font-size="12" font-weight="600" fill="${txt}">${TN[e.t][0]}</text>`}});
+    s.innerHTML=h}
+  const tll=$('tlList');
+  TL.forEach((e,i)=>{const b=document.createElement('button');b.type='button';b.style.setProperty('--t',TN[e.t][1]);b.textContent=e.s;b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{tlSel=i;tll.querySelectorAll('button').forEach((x,j)=>x.setAttribute('aria-pressed',j===i));const n=$('tlNote');n.style.setProperty('--t',TN[e.t][1]);n.innerHTML=`<b>${TN[e.t][0]}</b> ${e.n}`;drawTL()});tll.appendChild(b)});
+  drawTL();
+
+  /* ---------- kit ---------- */
+  const KIT=[
+    {t:'ps',f:'동사 과거형 (went, turned, suggested)',r:'이야기를 앞으로 움직이는 뼈대. 사건이 일어난 순서대로 나열됩니다.',sig:'then, after that, suddenly, the next day, finally',ex:'The weather suddenly turned, so I suggested we head back.',trap:'불규칙 동사(rided → rode, buyed → bought)와 be동사의 수 일치(we was → we were). 말할 때 가장 자주 나오는 20개 불규칙 동사는 입에 붙여 두세요.'},
+    {t:'pg',f:'was / were + -ing',r:'사건이 끼어들 때 이미 진행 중이던 배경. 장면을 열 때도 씁니다.',sig:'while, when(끼어드는 사건), at that moment, all day',ex:'We were walking along the river when it started pouring.',trap:'know, like, want 같은 상태 동사에는 쓰지 않습니다(I was knowing ✗). 또 when 절과 주절의 역할을 바꾸지 마세요: 진행형은 배경, 단순 과거는 끼어드는 사건.'},
+    {t:'pp',f:'had + p.p. / had been + -ing',r:'이야기 속 지금보다 앞선 일. 깨달음, by the time, 배경 이야기, 그때까지의 경험, 남의 말 전하기.',sig:'by the time, already, before that, never … before, realized, found out, for months',ex:'By the time we got there, the tickets had already sold out.',trap:'‘~했었다’를 직역한 남용(I had visited Jeju last year ✗). 순서가 이미 분명하면(after, before) 단순 과거로 충분합니다.'},
+    {t:'ph',f:'used to + 동사 / would + 동사',r:'예전에 반복하던 습관이나 상태(지금은 아님). 14번 비교 문항과 경험 문항의 배경에 씁니다.',sig:'back then, when I was a kid, every summer, always',ex:'When I was a kid, we used to go to my grandma’s every summer, and we’d spend hours by the river.',trap:'would는 반복 동작에만 씁니다. 상태에는 used to(I would live in Busan ✗ → I used to live in Busan). used to 뒤에는 동사원형.'},
+    {t:'pf',f:'was / were going to · was supposed to · was about to',r:'과거 시점에서 계획했거나 예정됐던 일. 대부분 일어나지 않았음을 암시해 복잡한 상황을 여는 신호가 됩니다.',sig:'but, then, instead, at the last minute',ex:'We were supposed to meet at seven, but my friend got stuck in traffic.',trap:'주어 수 일치(we was going to ✗). 그리고 계획이 틀어졌다면 반드시 그다음에 무슨 일이 있었는지 말해야 합니다. 그게 Advanced 과제입니다.'},
+    {t:'prf',f:'have / has + p.p.',r:'과거와 말하는 지금을 잇는 다리. 그 경험이 지금까지 남긴 영향, 지금까지의 횟수, 변화의 요약.',sig:'since then, ever, never, so far, three times, recently',ex:'Since then, I’ve never gone hiking without checking the forecast.',trap:'끝난 과거 시간 표현과 함께 쓰지 않습니다(I have been there last year ✗). 이야기 한가운데에서는 쓰지 않고, 이야기 밖으로 나올 때만 씁니다.'},
+    {t:'pr',f:'동사 현재형',r:'말하는 지금의 평가, 변하지 않는 사실, 지금도 이어지는 습관.',sig:'Looking back, these days, now, to this day, I still',ex:'Looking back, it’s still one of my favorite memories.',trap:'신호어 없이 이야기 한가운데 나오면 오류로 들립니다. 현재형은 문장 단위로, 신호어와 함께.'}
+  ];
+  const kt=$('kitTabs'),kp=$('kitPanel');
+  KIT.forEach((k,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.style.setProperty('--tc',TN[k.t][1]);b.textContent=TN[k.t][0];b.addEventListener('click',()=>kit(i));kt.appendChild(b)});
+  function kit(i){const k=KIT[i];kt.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',j===i));kp.innerHTML=`<h4 style="color:${TN[k.t][1]}">${TN[k.t][0]}</h4><div class="form en">${esc(k.f)}</div><p style="margin:0">${k.r}</p><dl><dt>신호어</dt><dd class="en">${esc(k.sig)}</dd><dt>OPIc 예시</dt><dd class="en">${esc(k.ex)}</dd><dt>함정</dt><dd>${esc(k.trap)}</dd></dl>`}
+  kit(2);
+
+  /* ---------- generic drill ---------- */
+  function drill(key,data,qEl,oEl,fbEl,pipsEl,nextEl,resetEl,enOpts){
+    let st=LS.get(key,{i:0,res:[]});
+    function render(){const it=data[st.i];$(pipsEl).innerHTML=data.map((_,j)=>`<i class="${st.res[j]===true?'ok':st.res[j]===false?'ng':''} ${j===st.i?'cur':''}"></i>`).join('');$(qEl).innerHTML=it.q;$(oEl).innerHTML=it.o.map((o,j)=>`<button type="button" class="${enOpts?'en':''}" data-j="${j}">${esc(o)}</button>`).join('');$(fbEl).classList.remove('on');
+      $(oEl).querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const j=+b.dataset.j;$(oEl).querySelectorAll('button').forEach(x=>{x.disabled=true;if(+x.dataset.j===it.a)x.classList.add('right')});if(j!==it.a)b.classList.add('wrong');st.res[st.i]=j===it.a;LS.set(key,st);if(it.fill)$(qEl).innerHTML=it.q.replace(/<span class="blank">[^<]*<\/span>/,`<span class="blank">${esc(it.o[it.a])}</span>`);$(fbEl).innerHTML=`<b style="color:${j===it.a?'var(--teal)':'var(--rose)'}">${j===it.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b> ${it.e}`;$(fbEl).classList.add('on');$(pipsEl).children[st.i].className=(j===it.a?'ok':'ng')+' cur'}))}
+    $(nextEl).addEventListener('click',()=>{st.i=(st.i+1)%data.length;LS.set(key,st);render()});
+    $(resetEl).addEventListener('click',()=>{st={i:0,res:[]};LS.set(key,st);render()});render()}
+  const B='<span class="blank">?</span>';
+  drill('opic-l5-a',[
+    {q:`I ${B} to Jeju three times so far.`,o:['went','have been'],a:1,fill:1,e:'so far는 ‘지금까지’. 말하는 지금까지 이어진 경험의 횟수라 현재완료입니다.'},
+    {q:`I ${B} to Jeju last spring with my family.`,o:['went','have gone'],a:0,fill:1,e:'last spring은 끝난 과거의 시점입니다. 현재완료와 함께 쓸 수 없습니다.'},
+    {q:`I ${B} him since we graduated.`,o:['didn’t see','haven’t seen'],a:1,fill:1,e:'since + 과거 시점 = 그때부터 지금까지. 현재완료입니다.'},
+    {q:`When I was a kid, I ${B} near a big park.`,o:['lived','have lived'],a:0,fill:1,e:'when I was a kid는 끝난 과거 기간입니다. 단순 과거, 또는 used to live.'},
+    {q:`This is the best concert I ${B}.`,o:['ever saw','have ever seen'],a:1,fill:1,e:'최상급 + ever는 ‘지금까지 본 것 중’이라는 뜻이라 현재완료가 자연스럽습니다.'},
+    {q:`We ${B} at a music festival in 2019.`,o:['met','have met'],a:0,fill:1,e:'in 2019라는 구체적 과거 시점이 있으므로 단순 과거입니다.'},
+    {q:`The park near my house ${B} a lot over the past few years.`,o:['changed','has changed'],a:1,fill:1,e:'over the past few years는 지금까지 이어지는 기간입니다. 14번 변화 요약의 전형적 현재완료.'},
+    {q:`Back then, I ${B} any idea how expensive it would be.`,o:['didn’t have','haven’t had'],a:0,fill:1,e:'back then은 과거로 돌아가는 신호어입니다. 단순 과거.'}
+  ],'aQ','aO','aFb','aPips','aNext','aReset',true);
+  drill('opic-l5-b',[
+    {q:'<span class="en">I realized I <b>had left</b> my phone at the café.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:0,e:'깨달은 시점보다 두고 온 일이 먼저입니다. 과거완료가 시간 순서를 분명히 해 줍니다.'},
+    {q:'<span class="en">After I <b>had finished</b> dinner, I went out for a walk.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:1,e:'after가 이미 순서를 알려 주므로 After I finished dinner로 충분합니다. 틀린 것은 아니지만 말하기에서는 단순 과거가 더 자연스럽습니다.'},
+    {q:'<span class="en">I <b>had visited</b> Jeju last year with my family.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:2,e:'기준이 되는 ‘이야기 속 지금’이 없습니다. ‘~했었다’를 직역한 남용입니다. I visited Jeju last year.'},
+    {q:'<span class="en">By the time we got there, the show <b>had</b> already <b>started</b>.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:0,e:'by the time의 전형적인 짝입니다. 도착보다 시작이 먼저입니다.'},
+    {q:'<span class="en">We<b>’d been waiting</b> for an hour when the bus finally came.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:0,e:'버스가 온 시점까지 계속된 기다림입니다. 과거완료 진행형이 정확합니다.'},
+    {q:'<span class="en">Yesterday I <b>had met</b> my friend and we <b>had watched</b> a movie.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:2,e:'이야기의 뼈대 사건들입니다. 기준점이 없으므로 단순 과거 met, watched.'},
+    {q:'<span class="en">She told me she <b>had</b> already <b>bought</b> the tickets.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:0,e:'말한 시점보다 산 시점이 먼저입니다. 남의 말을 전할 때의 과거완료.'},
+    {q:'<span class="en">When I was young, I <b>had lived</b> in Busan for ten years.</span>',o:['필요해서 맞음','없어도 되지만 가능','틀림'],a:2,e:'when I was young이 이미 과거 기간입니다. I lived 또는 I used to live.'}
+  ],'bQ','bO','bFb','bPips','bNext','bReset',false);
+
+  /* ---------- hunt ---------- */
+  const HUNT=[['Last winter I ',0],['went',1,null],[' skiing with some coworkers. We ',0],['are planning',1,'had been planning','여행 전부터 이어진 계획 → 과거완료 진행'],[' it for weeks, so everyone ',0],['is',1,'was','이야기 속 지금은 과거'],[' really excited. On the first day, the weather ',0],['was',1,null],[' perfect, but on the second day it suddenly ',0],['start',1,'started','이야기를 움직이는 사건 → 단순 과거'],[' snowing really hard. We ',0],['was going to',1,'were going to','과거 속 미래는 맞지만 we에는 were'],[' ski all afternoon, but the slopes ',0],['closed',1,null],[' at noon. So we ',0],['go',1,'went','문제 직후의 대응 → 단순 과거 (가장 흔한 붕괴 지점)'],[' back to the lodge and ',0],['played',1,null],[' board games all day. I ',0],['never play',1,'had never played','그날 이전까지의 경험 → 과거완료'],[' that game before, but it ',0],['was',1,null],[' so much fun. Since then, we ',0],['play',1,'have played','since then → 지금까지 이어짐 → 현재완료'],[' it every time we ',0],['get',1,null,'지금의 습관이라 현재형이 맞음'],[' together.',0]];
+  let hsel=new Set(LS.get('opic-l5-hunt',[]));
+  function huntRender(check){const ht=$('huntText');ht.innerHTML=HUNT.map((h,i)=>{if(!h[1])return esc(h[0]);let cls='vb';const wrong=!!h[2];const sel=hsel.has(i);if(check){if(wrong&&sel)cls+=' tp';else if(wrong&&!sel)cls+=' miss';else if(!wrong&&sel)cls+=' fa'}return `<button type="button" class="${cls}" data-i="${i}" aria-pressed="${sel&&!check}">${esc(h[0])}</button>${check&&wrong?`<span class="fx">→ ${esc(h[2])}</span>`:''}`}).join('');
+    ht.querySelectorAll('.vb').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;hsel.has(i)?hsel.delete(i):hsel.add(i);LS.set('opic-l5-hunt',[...hsel]);huntRender(false);$('huntRes').innerHTML=''}));
+    if(check){let tp=0,miss=0,fa=0;const notes=[];HUNT.forEach((h,i)=>{if(!h[1])return;const wrong=!!h[2],sel=hsel.has(i);if(wrong&&sel)tp++;if(wrong&&!sel)miss++;if(!wrong&&sel)fa++;if(wrong)notes.push(`<li><span class="en">${esc(h[0])} → <b>${esc(h[2])}</b></span>: ${h[3]}</li>`);else if(h[3]&&sel)notes.push(`<li><span class="en">${esc(h[0])}</span>: ${h[3]}</li>`)});
+      $('huntRes').innerHTML=`<p><b>찾은 오류 ${tp} / ${tp+miss}</b>, 놓친 오류 ${miss}, 잘못 고른 동사 ${fa}</p><ul>${notes.join('')}</ul>`}}
+  $('huntCheck').addEventListener('click',()=>huntRender(true));
+  $('huntReset').addEventListener('click',()=>{hsel=new Set();LS.set('opic-l5-hunt',[]);huntRender(false);$('huntRes').innerHTML=''});
+  huntRender(false);
+
+  /* ---------- tense palette analyzer ---------- */
+  const PP='been gone done seen taken made had bought brought thought told left met eaten written forgotten known heard found lost spent sent kept felt got gotten given begun come become run sat stood won worn broken chosen spoken driven ridden flown grown thrown drawn sung swum understood paid put read set cut hurt let'.split(' ');
+  const IRR='was were had did went came saw got took made said thought felt knew bought found told gave became began left met ran sat stood brought caught taught sent spent built lost won wore woke wrote rode drove ate drank slept kept paid heard held put read let set cut hit hurt chose spoke broke forgot fell flew grew threw drew sang swam understood'.split(' ');
+  const PRES='go goes come comes eat eats is are am have has do does see sees get gets take takes make makes say says tell tells give gives buy buys find finds start starts stop stops decide decides try tries look looks walk walks watch watches play plays visit visits stay stays enjoy enjoys ride rides talk talks wait waits drive drives arrive arrives call calls ask asks turn turns happen happens realize realizes forget forgets lose loses spend spends bring brings catch catches don\'t doesn\'t'.split(' ');
+  const BLOCK=new Set(['to','can','could','will','would','should','must','might','may','did','didn\'t','does','do','don\'t','doesn\'t','let\'s','i\'ll','we\'ll','usually','always','often','sometimes','still','every','now']);
+  const STANCE=new Set(['want','think','guess','mean','remember','believe','know','hope','feel']);
+  const isPP=w=>PP.includes(w)||(/ed$/.test(w)&&w.length>3);
+  function palette(text){const low=' '+text.toLowerCase().replace(/’/g,"'")+' ';const tok=low.match(/[a-z']+/g)||[];const c={ps:0,pp:0,pg:0,pf:0,ph:0,prf:0,pr:0};const marks=[];
+    for(let i=0;i<tok.length;i++){const w=tok[i],n1=tok[i+1]||'',n2=tok[i+2]||'',p=tok[i-1]||'';
+      if((w==='had'||/'d$/.test(w))&&w!=="i'd"&&w!=="you'd"||((w==="i'd"||w==="we'd"||w==="she'd"||w==="he'd"||w==="they'd"||w==="you'd")&&(isPP(n1)||n1==='never'||n1==='already'||n1==='just'))){let j=i+1;while(['not','never','already','just','ever','been'].includes(tok[j])&&tok[j]!=='been')j++;if(tok[j]==='been'){c.pp++;marks.push(['pp',tok.slice(i,j+2).join(' ')]);i=j+1;continue}if(isPP(tok[j])&&!(w.endsWith("'d")&&['like','love','rather','better'].includes(tok[j]))){c.pp++;marks.push(['pp',tok.slice(i,j+1).join(' ')]);i=j;continue}}
+      if((w==='was'||w==='were')&&(n1==='going'||n1==='supposed'||n1==='about')&&n2==='to'){c.pf++;marks.push(['pf',[w,n1,n2].join(' ')]);i+=2;continue}
+      if((w==='was'||w==='were')&&(/ing$/.test(n1)||(/ing$/.test(n2)&&['just','still','really','already','always'].includes(n1)))){c.pg++;const k=/ing$/.test(n1)?i+1:i+2;marks.push(['pg',tok.slice(i,k+1).join(' ')]);i=k;continue}
+      if(w==='used'&&n1==='to'){c.ph++;marks.push(['ph','used to '+n2]);i+=2;continue}
+      if((w==='would'||/^(we|i|they|he|she)'d$/.test(w))&&['usually','always','often','sometimes','just'].includes(n1)){c.ph++;marks.push(['ph',w+' '+n1+' '+n2]);i+=2;continue}
+      if((w==='have'||w==='has'||/'ve$/.test(w))&&(isPP(n1)||(['never','already','just','ever','been'].includes(n1)&&(isPP(n2)||n1==='been')))){c.prf++;const k=isPP(n1)?i+1:i+2;marks.push(['prf',tok.slice(i,k+1).join(' ')]);i=k;continue}
+      if(IRR.includes(w)||(/ed$/.test(w)&&w.length>3&&!['need','bed','red','speed','indeed','hundred'].includes(w))){if(!['had','was','were'].includes(w)||!(isPP(n1)||/ing$/.test(n1))){c.ps++;marks.push(['ps',w])}continue}
+      if(PRES.includes(w)&&!BLOCK.has(p)&&!(p==='i'&&STANCE.has(w))){c.pr++;marks.push(['pr',w])}}
+    return {c,marks}}
+  function hlText(text,marks){let h=esc(text);const used=new Set();marks.forEach(([t,phrase])=>{if(used.has(t+phrase)&&t!=='pr'&&t!=='ps')return;used.add(t+phrase);const words=phrase.split(' ').map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/'/g,"['’]")).join('\\s+');const re=new RegExp('(^|[^A-Za-z’\'>])('+words+')(?![A-Za-z’\'])','i');h=h.replace(re,(m,a,b)=>`${a}<mark style="--t:${TN[t][1]}">${b}</mark>`)});return h}
+  const convT=$('convT');convT.value=LS.get('opic-l5-conv','');convT.addEventListener('input',()=>LS.set('opic-l5-conv',convT.value));
+  $('convC').addEventListener('click',()=>{const t=convT.value.trim();const o=$('convOut');if(!t){o.innerHTML='<p class="small" style="color:var(--rose)">먼저 입력하세요.</p>';return}const {c,marks}=palette(t);
+    const sents=t.split(/[.!?]+/).map(s=>s.trim()).filter(Boolean);const last=(sents[sents.length-1]||'').toLowerCase();const endNow=/\b(have|has|'ve|’ve|still|now|these days|looking back|i'm|i’m|is|am|are)\b/.test(last);
+    const goals=[[c.pp>=1,`과거완료 ${c.pp}개 (목표 1개 이상)`],[c.pg>=1,`과거진행 ${c.pg}개 (목표 1개 이상)`],[endNow,'마지막 문장이 말하는 지금(현재·현재완료)으로 나옴'],[c.pr<=1,`이야기 중 현재형 확인 필요 ${c.pr}개 (목표 1개 이하)`]];
+    o.innerHTML=`<div class="palrow">${['ps','pg','pp','pf','ph','prf','pr'].map(k=>`<div style="--t:${TN[k][1]}"><small>${k==='pr'?'현재(확인 필요)':TN[k][0]}</small><b>${c[k]}</b></div>`).join('')}</div><ul class="goals">${goals.map(g=>`<li class="${g[0]?'y':'n'}">${g[0]?'✓':'✗'} <span style="color:var(--text)">${g[1]}</span></li>`).join('')}</ul><div class="hlv">${hlText(t,marks)}</div><p class="small muted" style="margin:8px 0 0">${Object.keys(c).filter(k=>c[k]>0).length}가지 형태를 썼습니다. ‘현재(확인 필요)’에는 Looking back 뒤처럼 의도된 현재형도 포함되니 직접 확인하세요.</p>`});
+  $('convM').addEventListener('click',()=>$('convModel').classList.toggle('on'));
+
+  /* ---------- cards ---------- */
+  const CARDS=[
+    {p:'Tell me about a time you were late for something important.',r:[['was/were -ing when …','진행 중 끼어든 사건'],['had already …','도착 전에 이미 일어난 일'],['Looking back, …','지금의 평가로 마무리']]},
+    {p:'Describe a trip where the weather ruined your plans.',r:[['were going to / were supposed to','틀어진 계획'],['had been planning','배경 이야기'],['ended up -ing','예상 밖의 결과']]},
+    {p:'Talk about a hobby you used to have but gave up.',r:[['used to / would','예전 습관'],['stopped -ing because …','그만둔 이유'],['haven’t … since','지금까지의 상태']]},
+    {p:'Tell me about the first time you met a close friend.',r:[['was/were -ing when …','만난 장면의 배경'],['had heard about / had never …','그 이전의 일'],['have been friends since','지금까지 이어진 관계']]},
+    {p:'Describe a time you lost something important.',r:[['realized I had left / had lost','깨달음의 과거완료'],['was looking for','찾는 동안의 진행'],['Since then, I always …','지금의 습관']]},
+    {p:'How has your neighborhood changed since you moved there?',r:[['Back then, there used to be …','과거 상태'],['These days, …','현재'],['has changed / has become','변화의 요약']]},
+    {p:'Tell me about a memorable meal you had.',r:[['had been looking forward to','기대의 배경'],['was supposed to … but','예상과 다른 전개'],['I still …','지금까지 남은 것']]},
+    {p:'Talk about a problem you had with something you bought.',r:[['had ordered','문제 이전의 주문'],['was supposed to arrive','예정과 어긋남'],['ended up -ing / Now I always …','결과와 교훈']]}
+  ];
+  let cs=LS.get('opic-l5-cards',{i:0,done:{},chk:{}});
+  function cardRender(){const c=CARDS[cs.i];const ck=cs.chk[cs.i]||[];$('card').innerHTML=`<div class="no">카드 ${cs.i+1} / ${CARDS.length}</div><div class="prompt">${esc(c.p)}</div><div class="small muted" style="margin-bottom:6px">꼭 넣을 것 (말한 뒤 체크)</div><ul class="req">${c.r.map((r,j)=>`<li><label><input type="checkbox" data-j="${j}" ${ck[j]?'checked':''}><span><span class="en">${esc(r[0])}</span><br><span class="small muted">${r[1]}</span></span></label></li>`).join('')}</ul>`;
+    $('card').querySelectorAll('input').forEach(x=>x.addEventListener('change',()=>{const a=cs.chk[cs.i]||[];a[+x.dataset.j]=x.checked;cs.chk[cs.i]=a;cs.done[cs.i]=c.r.every((_,j)=>a[j]);LS.set('opic-l5-cards',cs);dots()}));dots()}
+  function dots(){$('cDots').innerHTML=CARDS.map((_,j)=>`<i class="${cs.done[j]?'d':''}" title="카드 ${j+1}"></i>`).join('')}
+  $('cPrev').addEventListener('click',()=>{cs.i=(cs.i+CARDS.length-1)%CARDS.length;LS.set('opic-l5-cards',cs);resetT();cardRender()});
+  $('cNext').addEventListener('click',()=>{cs.i=(cs.i+1)%CARDS.length;LS.set('opic-l5-cards',cs);resetT();cardRender()});
+  let left=90,tid=null;const HINT={90:'배경: 언제, 어디서, 누구와. 과거 시제로 닻을 내리세요.',60:'사건과 문제: 진행형 배경 + 끼어든 사건, 틀어진 계획.',30:'대응과 결과: 무엇을 했고 어떻게 끝났는지.',10:'신호어와 함께 말하는 지금으로 나오세요.'};
+  function resetT(){clearInterval(tid);tid=null;left=90;$('cClock').textContent='1:30';$('cBar').style.width='0';$('cStart').textContent='시작';$('cHint').textContent='시작하면 30초마다 안내가 바뀝니다.'}
+  $('cStart').addEventListener('click',()=>{if(tid){clearInterval(tid);tid=null;$('cStart').textContent='계속';return}if(left<=0)resetT();$('cStart').textContent='일시정지';$('cHint').textContent=HINT[90];tid=setInterval(()=>{left--;$('cClock').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');$('cBar').style.width=((90-left)/90*100)+'%';if(HINT[left])$('cHint').textContent=HINT[left];if(left<=0){clearInterval(tid);tid=null;$('cStart').textContent='다시';$('cHint').textContent='끝. 넣은 시제 형태를 체크하세요.'}},1000)});
+  $('cReset').addEventListener('click',resetT);
+  cardRender();
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'과거 이야기에서 ‘이야기를 앞으로 움직이는’ 유일한 시제는?',o:['과거완료','과거진행','단순 과거','현재완료'],a:2,e:'나머지는 배경, 이전 사건, 지금과의 연결을 칠하는 시제입니다. 사건의 순서는 단순 과거가 만듭니다.'},
+    {q:'“Looking back, it’s one of my best memories.”의 현재형은?',o:['시제 오류','신호어와 함께한 의도된 전환','과거완료로 바꿔야 함','습관 현재'],a:1,e:'이야기 밖으로 나와 말하는 지금 서서 평가하는 문장입니다. 신호어 덕분에 실수와 구분됩니다.'},
+    {q:'다음 중 올바른 문장은?',o:['I have been to Busan last year.','I went to Busan three times so far.','I’ve been to Busan three times.','I have went to Busan.'],a:2,e:'횟수와 ‘지금까지’는 현재완료, last year는 단순 과거와 씁니다.'},
+    {q:'과거완료가 꼭 필요한 문장은?',o:['After I finished work, I went home.','I visited Jeju last year.','I realized I had forgotten my passport.','Yesterday I met my friend.'],a:2,e:'깨달은 시점보다 잊은 일이 먼저입니다. 첫 문장은 after가 순서를 이미 알려 줍니다.'},
+    {q:'“When I was young, I would live in Busan.”의 문제는?',o:['would는 반복 동작에만 쓰고 상태에는 used to를 쓴다','when 뒤에 현재형을 써야 한다','문제없다','had lived로 바꿔야 한다'],a:0,e:'live는 상태입니다. I used to live in Busan 또는 I lived in Busan.'},
+    {q:'1강 IH 답변에서 시제가 무너진 원인과 가장 관련 깊은 것은?',o:['관형절 현재형','장면이 생생해질 때의 현재형','~했었다 직역','would의 오용'],a:1,e:'문제가 생기고 감정이 올라가는 대목에서 현재형으로 미끄러졌습니다. OPIc에서 가장 치명적인 유형입니다.'},
+    {q:'“We were going to hike, but…”의 과거 속 미래가 OPIc에서 특히 유용한 이유는?',o:['문법적으로 어려워 보여서','계획이 틀어졌다는 신호로 복잡한 상황을 연다','과거완료보다 쉬워서','현재형과 같은 뜻이라서'],a:1,e:'하려던 일이 틀어졌다는 것을 한 번에 알려, Advanced 과제인 복잡한 상황 처리로 자연스럽게 이어집니다.'},
+    {q:'14번 비교 문항에서 변화를 요약할 때 가장 자연스러운 시제는?',o:['The way people shop changed a lot.','The way people shop has changed a lot.','The way people shop had changed a lot.','The way people shop is changing yesterday.'],a:1,e:'과거부터 지금까지 이어진 변화를 지금 시점에서 요약하므로 현재완료입니다.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${esc(item.q)}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'5강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['시제','tense','동사의 형태로 사건이 시간 축의 어디에 있는지 나타내는 문법 범주.'],['상','aspect','같은 시간대 안에서 동작의 진행, 완료, 반복을 나타내는 범주. 진행형과 완료형.'],['시간 프레임','time frame','과거, 현재, 미래의 큰 시간대. ACTFL Advanced의 핵심 과제.'],['말하는 지금','speech time','화자가 실제로 말하고 있는 시점. 현재와 현재완료의 기준.'],['이야기 속 지금','reference time','과거 이야기가 펼쳐지는 시점. 과거완료와 과거진행의 기준.'],['단순 과거','past simple','이야기를 앞으로 움직이는 사건의 시제.'],['과거진행','past progressive','was/were + -ing. 사건이 끼어드는 배경.'],['과거완료','past perfect','had + p.p. 이야기 속 지금보다 앞선 일.'],['과거완료 진행','past perfect progressive','had been + -ing. 이야기 속 지금까지 계속되던 일.'],['과거 습관','past habitual','used to, would. 예전에 반복하던 일.'],['과거 속 미래','future in the past','was going to, was supposed to. 과거 시점에서의 계획이나 예정.'],['현재완료','present perfect','have/has + p.p. 과거와 말하는 지금을 잇는 시제.'],['상태 동사','stative verb','know, like, want처럼 상태를 나타내 진행형으로 잘 쓰지 않는 동사.'],['역사적 현재','historical present','과거 이야기를 생생하게 하려고 현재형으로 말하는 기법. 원어민도 쓰지만, 섞이면 오류로 들리므로 시험에서는 피합니다.'],['시제 전환 신호어','tense-shift signal','Looking back, Back then처럼 시제가 바뀌는 지점을 알려 주는 표현.'],['기준점 없는 과거완료','unanchored past perfect','앞선 사건의 기준이 되는 과거 시점 없이 쓴 과거완료. ‘~했었다’ 직역에서 자주 생김.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 22강 · 실전 모의고사 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.btn.rec{background:var(--rose);border-color:var(--rose);color:#1b0a10;font-weight:600}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* hero map */
+.qmap{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin-top:6px}
+.qmap div{height:56px;border-radius:6px;display:flex;align-items:flex-end;justify-content:center;font-size:11px;font-weight:700;color:#14112a;padding-bottom:3px;background:var(--tc)}
+:root[data-theme="light"] .qmap div{color:#fff}
+.qleg{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin-top:8px}
+.qleg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
+.hsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
+.hsteps div{background:var(--surface2);border-radius:10px;padding:10px;font-size:13px}
+.hsteps b{display:block;font-size:14px;margin-bottom:2px}
+
+/* setup */
+.setup{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin:18px 0}
+.setup-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.setup-grid>div{background:var(--surface2);border-radius:14px;padding:12px 14px}
+.setup-grid b{display:block;font-size:14px;margin-bottom:6px}
+.setup-grid .v{font-family:var(--serif);font-size:15px}
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+.paper{margin-top:12px;border:1px dashed var(--line);border-radius:14px;padding:12px 14px;display:none}
+.paper.on{display:block}
+.paper ol{margin:0;padding-left:22px;font-size:14px}
+.paper li{padding:3px 0}
+.paper li small{color:var(--muted);margin-left:6px}
+
+/* runner */
+.runner{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:880px){.runner{grid-template-columns:1fr}}
+.rcard{background:linear-gradient(135deg,var(--violet-soft),var(--sky-soft));border:1px solid var(--line);border-radius:22px;padding:22px 24px;min-height:300px}
+.rcard .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.rcard .no{font-family:var(--serif);font-size:30px}
+.rcard .sec{font-size:13px;border-radius:999px;padding:3px 10px;background:var(--surface)}
+.rcard .qt{font-family:var(--serif);font-size:19px;line-height:1.55;margin:14px 0;padding:12px 14px;border-radius:12px;background:var(--surface);min-height:3.2em}
+.rcard .qt.hide{color:transparent;text-shadow:0 0 9px var(--muted);user-select:none}
+.rcard .st{font-size:14px;margin:6px 0}
+.rprog{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin-top:14px}
+.rprog i{height:8px;border-radius:3px;background:var(--line)}
+.rprog i.d{background:var(--teal)}.rprog i.c{background:var(--amber)}
+.adj{display:none;margin-top:14px;padding:14px;border-radius:14px;background:var(--surface);border:2px solid var(--amber)}
+.adj.on{display:block}
+.adj p{margin:0 0 8px;font-size:15px}
+.rside{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.rside .total{font-family:var(--serif);font-size:44px;font-variant-numeric:tabular-nums;line-height:1}
+.rside .qclock{font-family:var(--serif);font-size:26px;font-variant-numeric:tabular-nums}
+.recdot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--rose);margin-right:6px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.dl{display:grid;gap:4px;font-size:13.5px;max-height:220px;overflow:auto}
+.dl a{color:var(--sky)}
+
+/* analyzer */
+.an{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.an-tabs{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin-bottom:12px}
+.an-tabs button{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:6px 0;cursor:pointer;font-size:13px}
+.an-tabs button.f{border-color:var(--teal)}
+.an-tabs button[aria-selected="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:700}
+.an-q{font-family:var(--serif);font-size:16.5px;background:var(--surface2);border-radius:12px;padding:10px 14px;margin-bottom:10px}
+.an-q small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-bottom:2px}
+.an textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:16px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+.an input[type=number]{width:90px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:inherit}
+.self{display:flex;gap:6px;flex-wrap:wrap}
+.self button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer}
+.self button[aria-pressed="true"]{font-weight:700;border-color:var(--sc);background:color-mix(in srgb,var(--sc) 20%,var(--surface2))}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin:12px 0}
+.metrics div{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:3px solid var(--lc,var(--line))}
+.metrics small{display:block;font-size:12.5px;color:var(--muted)}
+.metrics b{display:block;font-family:var(--serif);font-size:20px;line-height:1.2;font-weight:600}
+.metrics span{font-size:11.5px;color:var(--faint)}
+.tchk{display:grid;gap:4px;margin-top:6px}
+.tchk div{display:flex;gap:8px;font-size:14.5px;padding:6px 10px;border-radius:8px;background:var(--surface2)}
+.tchk div b{min-width:18px}
+.score{display:flex;align-items:center;gap:12px;margin-top:10px;font-size:15px}
+.score .big{font-family:var(--serif);font-size:34px;line-height:1}
+
+/* map */
+.map{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+#mapSvg{width:100%;height:auto;display:block;background:var(--surface2);border-radius:12px}
+.verdict{margin-top:14px;border-radius:14px;padding:14px 18px;background:var(--surface2);border-left:5px solid var(--vc)}
+.verdict h4{margin:0 0 4px;font-family:var(--serif);font-size:22px}
+.rx{display:grid;gap:8px;margin-top:14px}
+.rx div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface);border-left:4px solid var(--rc)}
+.rx b{display:block;font-size:15px;margin-bottom:2px}
+.rx span{font-size:14px;color:var(--muted)}
+.cmp3{margin-top:14px}
+#cmpSvg{width:100%;height:auto;display:block;background:var(--surface2);border-radius:12px}
+
+/* checklist */
+.look{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:18px 0}
+.look div{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface);border-top:4px solid var(--cc)}
+.look h4{margin:0 0 6px;font-size:15.5px}
+.look ul{margin:0;padding-left:18px;font-size:14px}
+.look li{margin-bottom:3px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;8주차 22강&nbsp;&nbsp;실전 모의고사 1</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#rules">실전 규칙</a></li>
+      <li><a href="#look">문항별 평가자 시선</a></li>
+      <li><a href="#setup">시험지 만들기</a></li>
+      <li><a href="#runner">40분 모의고사</a></li>
+      <li><a href="#analyzer">받아 적기와 정밀 분석</a></li>
+      <li><a href="#map">유지력 지도와 처방전</a></li>
+      <li><a href="#myths">모의고사의 함정</a></li>
+      <li><a href="#homework">과제와 다음 강</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">8주차 실전 모의고사 · 22강</p>
+      <h1>7주 동안 만든 것을, 40분 동안 한 번에</h1>
+      <p class="lede">3강에서 첫 기준선을 녹음했습니다. 그 뒤 7주 동안 복문, 시제, 표지어, 묘사, 루틴, 서사, 비교, 돌발, 롤플레이, 의견을 하나씩 쌓았습니다. 22강은 그 모든 것을 실제 시험과 같은 조건에서 한 번에 확인하는 날입니다. 내 서베이로 시험지를 만들고, 40분 동안 쉬지 않고 녹음한 뒤, 문항 유형마다 각 강의의 기준으로 정밀하게 분석합니다.</p>
+      <div class="meta-row"><span>소요 시간 약 2시간 (응시 40분 + 분석)</span><span>선수 강의: 1~21강</span><span>결과물: 유지력 지도와 처방전</span></div>
+    </div>
+    <div class="wave-card" aria-label="15문항 구성">
+      <div class="small muted">이번 모의고사의 15문항 구성</div>
+      <div class="qmap" id="qmap"></div>
+      <div class="qleg" id="qleg"></div>
+      <div class="hsteps"><div><b>1. 만들기</b>2강 서베이로 시험지 생성</div><div><b>2. 응시</b>40분, 녹음, 다시 찍지 않기</div><div><b>3. 분석</b>문항 유형별 정밀 점검</div></div>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>22강은 새로운 기술을 배우는 강의가 아닙니다. 배운 것이 시험 조건에서도 나오는지 확인하는 강의입니다. 이 강의를 마치면 다음을 갖게 됩니다.</p>
+    <ul class="prose">
+      <li>내 서베이와 실제 시험 구조에 맞춘 15문항 녹음 한 세트.</li>
+      <li>문항마다 해당 강의의 기준(7강 묘사, 10강 서사, 17강 롤플레이, 19강 의견 등)으로 점검한 결과.</li>
+      <li>15문항 전체의 유지력 지도와, 3강 기준선과의 비교.</li>
+      <li>23강에서 집중할 약점 처방전.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="rules">
+    <p class="sec-no">1</p>
+    <h2>실전 규칙</h2>
+    <p>3강에서 기준선은 다시 찍지 않는다고 했습니다. 오늘도 같습니다. 모의고사의 가치는 실전과 같은 조건에서만 생깁니다.</p>
+    <ul class="prose">
+      <li><strong>40분, 쉬지 않기</strong>. 문항 사이에 녹음을 다시 듣거나 메모를 보지 않습니다. 피로까지 포함해서 측정해야 유지력이 보입니다.</li>
+      <li><strong>질문은 소리로만</strong>. 실제 시험처럼 질문 텍스트는 가려 둡니다. 다시 듣기는 질문이 끝난 뒤 5초 안에 한 번만 가능합니다.</li>
+      <li><strong>다시 찍지 않기</strong>. 실수해도 그대로 이어 갑니다. 무너진 지점이 바로 23강에서 고칠 지점입니다.</li>
+      <li><strong>7번 뒤 난이도 재조정</strong>. 2강에서 정한 원칙대로 고릅니다. 대부분 ‘비슷하게’ 또는 ‘어렵게’를 권합니다.</li>
+      <li><strong>시간 배분</strong>. 2강의 원칙대로 앞부분에서 시간을 다 쓰지 말고, 14~15번에 최소 4분을 남깁니다.</li>
+    </ul>
+    <div class="callout">
+      <strong>준비물</strong>
+      <p>조용한 방, 이어폰, 마이크. 이 페이지는 브라우저 녹음(마이크 권한 필요)과 음성 읽기를 씁니다. 녹음이 안 되는 환경이면 휴대폰 녹음기를 켜 두고 ‘외부 녹음기’ 모드로 진행하세요. 녹음 파일은 이 페이지를 닫으면 사라지므로, 끝난 뒤 바로 내려받으세요.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="look">
+    <p class="sec-no">2</p>
+    <h2>문항별 평가자 시선</h2>
+    <p>응시 전에 한 번 훑어보세요. 7주 동안 배운 것을 문항 위치별로 한 장에 모은 것입니다. 응시 중에는 보지 않습니다.</p>
+    <div class="look">
+      <div style="--cc:var(--faint)"><h4>1번 자기소개</h4><ul><li>외운 티 없이 60초 안팎</li><li>현재형 + 현재완료(I’ve been…)</li><li>평가에 거의 반영되지 않는다고 알려져 있으니 힘 빼기</li></ul></div>
+      <div style="--cc:var(--sky)"><h4>콤보 첫 문항: 묘사</h4><ul><li>7강 5단 구조, 공간 순서</li><li>감각 2개 이상, 막연한 형용사 줄이기</li></ul></div>
+      <div style="--cc:var(--teal)"><h4>콤보 둘째: 루틴·변화</h4><ul><li>8강 4층: 순서, 빈도, 이유, 변주</li><li>변화면 13강 6고리</li></ul></div>
+      <div style="--cc:var(--rose)"><h4>콤보 셋째: 경험</h4><ul><li>10강 5단, 30초 안에 전환</li><li>11강 인용·감정·디테일, 과거 시제 유지</li></ul></div>
+      <div style="--cc:var(--violet)"><h4>11~13번 롤플레이</h4><ul><li>11: 의문문 정확성 (16강)</li><li>12: 짧은 사과, 대안 2~3개 (17강)</li><li>13: 첫 문장 시제 리셋 (18강)</li></ul></div>
+      <div style="--cc:var(--amber)"><h4>14~15번</h4><ul><li>14: 13강 변화 사슬 또는 14강 기준별 비교</li><li>15: 19강 5단계 + 21강 엘리베이터</li><li>각 2분, 무너지지 않기</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="setup">
+    <p class="sec-no">3</p>
+    <h2>시험지 만들기</h2>
+    <p>2강 시뮬레이터에서 고른 서베이 항목이 이 브라우저에 있으면 그 주제로 2~7번을 구성합니다. 돌발, 롤플레이, 14~15번은 무작위로 뽑습니다. 녹음 방식을 고른 뒤 ‘새 시험지 만들기’를 누르세요. 시험지 내용은 응시 전에는 보지 않는 것을 권합니다.</p>
+    <div class="setup">
+      <div class="setup-grid">
+        <div><b>서베이 주제</b><div class="v" id="svInfo"></div></div>
+        <div><b>녹음 방식</b><div class="seg" id="recMode"><button type="button" data-m="mic" aria-pressed="true">브라우저 녹음</button><button type="button" data-m="ext" aria-pressed="false">외부 녹음기</button></div><div class="small muted" id="micInfo" style="margin-top:6px"></div></div>
+        <div><b>음성 읽기</b><div class="v" id="ttsInfo"></div><div class="ctrl" style="margin-top:6px"><button type="button" class="btn" id="ttsTest">음성 테스트</button></div></div>
+      </div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn primary" id="newPaper">새 시험지 만들기</button><button type="button" class="btn" id="peek">시험지 보기 (응시 후 권장)</button><span class="small muted" id="paperInfo"></span></div>
+      <div class="paper" id="paper"></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="runner">
+    <p class="sec-no">4</p>
+    <h2>40분 모의고사</h2>
+    <p>‘응시 시작’을 누르면 1번 질문이 읽힙니다. 질문이 끝나면 녹음을 시작하고, 답이 끝나면 ‘녹음 종료 · 다음 문항’을 누르세요. 7번이 끝나면 난이도 재조정 창이 나옵니다. 15번까지 끝나면 녹음 파일을 내려받을 수 있습니다.</p>
+    <div class="runner">
+      <div class="rcard">
+        <div class="top"><span class="no" id="rNo">준비</span><span class="sec" id="rSec">시험지를 만들고 시작하세요</span></div>
+        <div class="qt hide" id="rQ">질문은 소리로만 들립니다.</div>
+        <div class="ctrl"><button type="button" class="btn" id="rReplay" disabled>다시 듣기 (5초 내 1회)</button><button type="button" class="btn" id="rShow">질문 텍스트 보기</button></div>
+        <div class="st" id="rSt"></div>
+        <div class="adj" id="adj"><p><b>난이도 재조정</b> 지금까지의 질문과 비교해 앞으로의 질문을 어떻게 할까요?</p><div class="ctrl"><button type="button" class="btn" data-a="easy">쉽게</button><button type="button" class="btn" data-a="same">비슷하게</button><button type="button" class="btn primary" data-a="hard">어렵게</button></div></div>
+        <div class="rprog" id="rProg"></div>
+      </div>
+      <div class="rside">
+        <div class="small muted">남은 시간</div>
+        <div class="total" id="tClock">40:00</div>
+        <div class="small muted">이 문항</div>
+        <div class="qclock" id="qClock">0:00</div>
+        <div class="ctrl"><button type="button" class="btn primary" id="rStart">응시 시작</button><button type="button" class="btn rec" id="rRec" disabled>녹음 시작</button></div>
+        <div class="ctrl"><button type="button" class="reset" id="rReset">처음부터 다시</button></div>
+        <div class="small muted">녹음 파일</div>
+        <div class="dl" id="dl"><span class="small muted">응시 후 여기에 나타납니다.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="analyzer">
+    <p class="sec-no">5</p>
+    <h2>받아 적기와 정밀 분석</h2>
+    <p>3강의 받아 적기 규칙(um, …, /)대로 문항마다 받아 적으세요. 길게 멈춘 곳은 …, 단어를 고쳐 말한 곳은 /로 표시합니다. 시간은 녹음에서 자동으로 들어오고, 외부 녹음기라면 직접 입력합니다. 문항 유형에 맞춰 해당 강의의 기준으로 점검하고, 마지막에 자기 평가(유지 / 간신히 / 붕괴)를 고르세요. 모든 내용은 이 브라우저에 저장됩니다.</p>
+    <div class="an">
+      <div class="an-tabs" id="anTabs" role="tablist"></div>
+      <div id="anBody"></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="map">
+    <p class="sec-no">6</p>
+    <h2>유지력 지도와 처방전</h2>
+    <p>분석한 문항이 늘어날수록 지도가 채워집니다. 막대 높이는 각 문항의 종합 점수(공통 지표 + 유형별 기준 + 자기 평가)입니다. 1강에서 본 세 가지 프로필과 비교해 보세요. 핵심은 평균이 아니라 <strong>후반(8~15번)과 판별 문항(4, 7, 10, 12, 13, 15번)이 버티는가</strong>입니다.</p>
+    <div class="map">
+      <div class="ctrl" style="margin-bottom:10px"><button type="button" class="btn primary" id="mapRun">지도 그리기</button><button type="button" class="btn" id="export">결과 내보내기 (.txt)</button><button type="button" class="btn" id="copy">결과 복사</button><span class="small muted" id="mapMsg"></span></div>
+      <svg id="mapSvg" viewBox="0 0 640 220" role="img" aria-label="15문항 유지력 지도"></svg>
+      <div id="verdict"></div>
+      <div class="rx" id="rx"></div>
+      <div class="cmp3" id="cmp3"></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="myths">
+    <p class="sec-no">7</p>
+    <h2>모의고사의 함정</h2>
+    <p>카드를 눌러 뒤집어 보세요.</p>
+    <div class="myths" id="mythGrid"></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">8</p>
+    <h2>과제와 다음 강</h2>
+    <div class="assign">
+      <h3 style="margin-top:0">22강 과제</h3>
+      <ol>
+        <li>40분 모의고사를 실전 규칙대로 한 번 응시하고, 녹음 파일 15개를 내려받아 보관합니다.</li>
+        <li>최소한 판별 문항(4, 7, 10, 12, 13, 15번)은 받아 적어 5절 분석기에 넣습니다. 가능하면 15문항 모두.</li>
+        <li>6절 지도를 그리고 처방전 상위 세 개를 메모합니다. 결과를 내보내 23강에 가져옵니다.</li>
+        <li>3강 기준선 녹음 하나와 같은 유형의 오늘 녹음 하나를 나란히 들어 봅니다. 7주 동안 무엇이 달라졌는지 세 가지 적어 두세요.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>23강. 약점 집중 교정: 처방전 기반 재훈련과 실전 모의고사 2</h4></div>
+      <span class="pill">8주차</span>
+    </div>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 22강. 모의고사 질문은 학습용으로 새로 작성했으며 실제 시험 문항이 아닙니다. 15문항 구성과 7번 뒤 재조정은 실제 시험의 일반적인 형태를 따른 것이고, 점수와 프로필 판정은 이 과정의 연습용 기준으로 실제 등급을 예측하지 않습니다. 녹음은 이 브라우저 안에서만 처리되며 페이지를 닫으면 사라집니다. 받아 적은 내용과 분석 결과는 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const cssv=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>{setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');drawMap()});
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  const wc=t=>(String(t).match(/[A-Za-z’']+/g)||[]).length;
+
+  /* ---------- types ---------- */
+  const TY={intro:['자기소개','var(--faint)','2강'],desc:['묘사','var(--sky)','7강'],routine:['루틴','var(--teal)','8강'],exp:['경험','var(--rose)','10~12강'],change:['변화','var(--lime)','13강'],compare:['비교','var(--orchid)','14강'],rp11:['롤플레이 질문','var(--violet)','16강'],rp12:['롤플레이 해결','var(--violet)','17강'],rp13:['유사 경험','var(--rose)','18강'],opinion:['의견','var(--amber)','19~21강']};
+  const LAYOUT=['intro','desc','routine','exp','desc','change','exp','desc','change','exp','rp11','rp12','rp13','X14','opinion'];
+  const SECN=['자기소개','서베이 콤보 A','서베이 콤보 A','서베이 콤보 A','서베이 콤보 B','서베이 콤보 B','서베이 콤보 B','돌발 콤보','돌발 콤보','돌발 콤보','롤플레이','롤플레이','롤플레이','고난도 14번','고난도 15번'];
+  const PROBE=[3,6,9,11,12,14];
+
+  /* ---------- question banks ---------- */
+  const CAT={
+    outdoor:{k:'공원·야외',d:'You indicated that you go to parks. Describe a park you often go to. Where is it, and what does it look like?',r:'What do you usually do when you go to the park? Tell me about a typical visit from beginning to end.',e:'Tell me about a memorable experience you had at a park. What happened, and why was it so memorable?',c:'How have parks in your city changed over the years? What do you think caused those changes?'},
+    watch:{k:'영화 관람',d:'You indicated that you like going to the movies. Describe the movie theater you usually go to. What is it like inside?',r:'What do you usually do before and after you watch a movie? Tell me about it in detail.',e:'Tell me about a movie-going experience you’ll never forget. What happened?',c:'How has the way people watch movies changed compared to the past?'},
+    travel:{k:'국내 여행',d:'You indicated that you travel in your country. Describe a place in your country that you like to visit.',r:'How do you usually prepare for a trip? Walk me through the whole process.',e:'Tell me about a trip that didn’t go as planned. What happened, and how did you deal with it?',c:'How has the way people travel changed over the years?'},
+    home:{k:'집에서 보내는 휴가',d:'Tell me about your home. What does it look like, and which room do you like the most?',r:'What do you usually do when you spend a vacation at home? Describe a typical day.',e:'Tell me about a memorable vacation you spent at home. What made it special?',c:'How have homes in your country changed compared to when you were young?'},
+    city:{k:'카페',d:'You indicated that you go to cafés. Describe a café you often go to. What does it look like?',r:'What do you usually do when you go to a café? Tell me about a typical visit.',e:'Tell me about something unexpected that happened at a café. How did it turn out?',c:'How have cafés in your country changed over the years?'},
+    fitness:{k:'헬스·운동',d:'You indicated that you go to a gym. Describe the gym you go to.',r:'Tell me about your workout routine. What do you do from start to finish?',e:'Tell me about a memorable experience you had while working out.',c:'How have people’s exercise habits changed in recent years?'}
+  };
+  const MAP={'공원 가기':'outdoor','해변 가기':'outdoor','캠핑하기':'outdoor','걷기':'outdoor','조깅':'outdoor','하이킹·트레킹':'outdoor','자전거':'outdoor','낚시':'outdoor','영화 보기':'watch','공연 보기':'watch','콘서트 보기':'watch','박물관 가기':'watch','음악 감상하기':'watch','국내 여행':'travel','해외 여행':'travel','차로 드라이브하기':'travel','집에서 보내는 휴가':'home','TV 시청하기':'home','리얼리티 쇼 시청하기':'home','요리하기':'home','독서':'home','카페·커피전문점 가기':'city','쇼핑하기':'city','술집·바에 가기':'city','헬스':'fitness','요가':'fitness','수영':'fitness'};
+  const DOL={recycling:['재활용','Tell me about how recycling works in your country. Describe the whole system.','How has recycling changed in your country over the years?','Tell me about a time you had a problem with recycling or throwing something away.'],weather:['날씨','Describe the weather and the seasons in your country.','How has the weather in your country changed compared to when you were young?','Tell me about a memorable experience you had because of the weather.'],bank:['은행','Describe the bank you usually use. What is it like?','How has banking changed in your country over the years?','Tell me about a time you had a problem at a bank.'],transport:['교통','Describe public transportation in your city.','How has transportation in your city changed over the years?','Tell me about a memorable experience you had on public transportation.'],holidays:['명절','Tell me about the major holidays in your country.','How have holidays in your country changed compared to the past?','Tell me about a memorable holiday you spent with your family.'],tech:['기술','Tell me about the technology you use every day.','How has technology changed the way people live in your country?','Tell me about a time you had a problem with your phone or the internet.']};
+  const DSUF={hard:[' Please describe it in as much detail as possible.',' What do you think caused these changes, and how have they affected people?',' How did you handle it, and what did you learn from it?'],same:['','',''],easy:['','','']};
+  const RP={concert:['공연 표','I’d like to give you a situation and ask you to act it out. You want to buy tickets for a concert. Call the ticket office and ask three or four questions.','I’m sorry, but there is a problem I need you to resolve. When you arrive at the concert hall, you find out your tickets are for the wrong date. Call your friend, explain the situation, and offer two or three alternatives.','That’s the end of the situation. Have you ever had a problem with tickets or a reservation? What happened, and how did you deal with it?'],gym:['헬스장','I’d like to give you a situation and ask you to act it out. You want to join a new gym. Call the gym and ask three or four questions.','I’m sorry, but there is a problem I need you to resolve. You signed up for a year, but now you have to move to another city. Call the gym, explain, and offer two or three alternatives.','That’s the end of the situation. Have you ever had to cancel a membership or subscription? What happened?'],hotel:['호텔','I’d like to give you a situation and ask you to act it out. You want to book a hotel for your vacation. Call the hotel and ask three or four questions.','I’m sorry, but there is a problem I need you to resolve. When you arrive, the hotel can’t find your reservation. Explain the situation and offer two or three solutions.','That’s the end of the situation. Have you ever had a problem with a place you stayed while traveling? What happened?'],furniture:['가구점','I’d like to give you a situation and ask you to act it out. You want to buy a new sofa. Call the furniture store and ask three or four questions.','I’m sorry, but there is a problem I need you to resolve. Your new sofa was delivered, but it’s damaged. Call the store, explain, and offer two or three solutions.','That’s the end of the situation. Have you ever had a problem with something you bought? How did you solve it?']};
+  const Q14=[['compare','Compare shopping online with shopping in a store. What are the pros and cons of each, and which do you prefer?'],['change','How has the way people keep in touch with friends changed compared to the past? What caused these changes?'],['compare','Compare living in a big city with living in the countryside. Where would you rather live, and why?'],['change','How have people’s eating habits changed in your country? How have these changes affected people?']];
+  const Q15=['Many companies now let people work from home. Do you think this is a good thing? Why or why not?','Do you think people depend too much on their smartphones? Explain your opinion.','Who should be more responsible for protecting the environment, individuals or the government? Why?','Do you think people today are healthier than people in the past?','Do you think the education system in your country is too competitive?'];
+  const HARD15=' Please explain both sides of the issue and give your own opinion with examples.';const HARD14=' Explain the main differences and give specific examples.';
+
+  /* ---------- paper ---------- */
+  const sv2=LS.get('opic-l2-survey',null);let cats=[];if(sv2&&Array.isArray(sv2.i))sv2.i.forEach(n=>{const c=MAP[n];if(c&&!cats.includes(c))cats.push(c)});
+  const fromSurvey=cats.length>=2;if(cats.length<2)cats=(cats.concat(['outdoor','watch','travel'])).filter((v,i,a)=>a.indexOf(v)===i).slice(0,2);
+  $('svInfo').innerHTML=fromSurvey?`2강 서베이에서 불러옴: <b>${CAT[cats[0]].k}</b>, <b>${CAT[cats[1]].k}</b>`:`2강 서베이 기록이 없어 기본 주제 사용: <b>${CAT[cats[0]].k}</b>, <b>${CAT[cats[1]].k}</b>`;
+  let paper=LS.get('opic-l22-paper',null);
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  function newPaper(){paper={cats:cats.slice(0,2),dol:pick(Object.keys(DOL)),rp:pick(Object.keys(RP)),q14:Math.floor(Math.random()*Q14.length),q15:Math.floor(Math.random()*Q15.length),adj:'same',made:Date.now()};LS.set('opic-l22-paper',paper);renderPaperInfo();buildMap()}
+  function qList(){if(!paper)return [];const A=CAT[paper.cats[0]],B=CAT[paper.cats[1]],D=DOL[paper.dol],R=RP[paper.rp];const suf=DSUF[paper.adj||'same'];const q14=Q14[paper.q14];const hard=paper.adj==='hard';
+    return [['intro','Let’s start the interview now. Tell me a little bit about yourself.'],['desc',A.d],['routine',A.r],['exp',A.e],['desc',B.d],['change',B.c],['exp',B.e],['desc',D[1]+suf[0]],['change',D[2]+suf[1]],['exp',D[3]+suf[2]],['rp11',R[1]],['rp12',R[2]],['rp13',R[3]+(hard?' What did you learn from that experience?':'')],[q14[0],q14[1]+(hard?HARD14:'')],['opinion',Q15[paper.q15]+(hard?HARD15:'')]]}
+  function renderPaperInfo(){$('paperInfo').textContent=paper?`시험지 준비됨 · 서베이 ${CAT[paper.cats[0]].k}·${CAT[paper.cats[1]].k} · 돌발 ${DOL[paper.dol][0]} · 롤플레이 ${RP[paper.rp][0]}${paper.adj!=='same'?' · 재조정: '+({easy:'쉽게',hard:'어렵게'})[paper.adj]:''}`:'시험지가 없습니다.';$('paper').innerHTML=paper?`<ol>${qList().map((q,i)=>`<li>${esc(q[1])}<small>${TY[q[0]][0]}</small></li>`).join('')}</ol>`:''}
+  $('newPaper').addEventListener('click',()=>{if(paper&&!confirm('새 시험지를 만들면 응시 진행 상황이 초기화됩니다. 계속할까요?'))return;newPaper();runReset()});
+  $('peek').addEventListener('click',()=>$('paper').classList.toggle('on'));
+  function buildMap(){const L=paper?qList().map(q=>q[0]):LAYOUT.map(t=>t==='X14'?'compare':t);$('qmap').innerHTML=L.map((t,i)=>`<div style="--tc:${TY[t][1]};height:${PROBE.includes(i)?56:40}px">${i+1}</div>`).join('');const used=[...new Set(L)];$('qleg').innerHTML=used.map(t=>`<span><i style="background:${TY[t][1]}"></i>${TY[t][0]}</span>`).join('')+'<span>높은 막대 = 판별 문항</span>'}
+  if(!paper)newPaper();else{renderPaperInfo();buildMap()}
+
+  /* ---------- tts / mic ---------- */
+  const hasTTS='speechSynthesis' in window;$('ttsInfo').textContent=hasTTS?'사용 가능 (영어 음성)':'이 브라우저에서는 음성 읽기를 쓸 수 없습니다. 질문 텍스트를 보고 진행하세요.';if(!hasTTS)$('ttsTest').disabled=true;
+  function speak(t,onend){if(!hasTTS){onend&&onend();return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.95;const vs=speechSynthesis.getVoices().filter(v=>/en[-_](US|GB)/i.test(v.lang));if(vs.length)u.voice=vs[0];u.onend=()=>onend&&onend();speechSynthesis.speak(u)}
+  $('ttsTest').addEventListener('click',()=>speak('This is a test. Can you hear me clearly?'));
+  const hasMic=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);let mode=hasMic?'mic':'ext';
+  function modeR(){$('recMode').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===mode));$('micInfo').textContent=mode==='mic'?(hasMic?'시작할 때 마이크 권한을 요청합니다.':'이 브라우저는 녹음을 지원하지 않습니다.'):'휴대폰 녹음기를 켜 두세요. 이 페이지는 시간만 잽니다.'}
+  $('recMode').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.m==='mic'&&!hasMic)return;mode=b.dataset.m;modeR()}));modeR();
+
+  /* ---------- runner ---------- */
+  let R={i:-1,running:false,recOn:false,total:2400,q0:0,qt:0,tid:null,replay:false,replayOK:false,stream:null,mr:null,chunks:[],recs:[],durs:LS.get('opic-l22-dur',{})};
+  function fmt(s){s=Math.max(0,Math.floor(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+  function progR(){$('rProg').innerHTML=Array.from({length:15},(_,k)=>`<i class="${k<R.i?'d':k===R.i?'c':''}"></i>`).join('')}
+  function runReset(){clearInterval(R.tid);if(R.mr&&R.mr.state==='recording')try{R.mr.stop()}catch(e){}if(hasTTS)speechSynthesis.cancel();R.i=-1;R.running=false;R.recOn=false;R.total=2400;R.recs=[];$('rNo').textContent='준비';$('rSec').textContent='시험지를 만들고 시작하세요';$('rQ').textContent='질문은 소리로만 들립니다.';$('rQ').classList.add('hide');$('rSt').textContent='';$('tClock').textContent='40:00';$('qClock').textContent='0:00';$('rStart').disabled=false;$('rRec').disabled=true;$('rRec').textContent='녹음 시작';$('rRec').className='btn rec';$('rReplay').disabled=true;$('adj').classList.remove('on');$('dl').innerHTML='<span class="small muted">응시 후 여기에 나타납니다.</span>';progR()}
+  $('rReset').addEventListener('click',()=>{if(R.running&&!confirm('진행 중인 모의고사를 처음부터 다시 할까요?'))return;runReset()});
+  function tick(){R.total--;$('tClock').textContent=fmt(R.total);if(R.recOn){R.qt++;$('qClock').textContent=fmt(R.qt)}if(R.total<=0){clearInterval(R.tid);$('rSt').innerHTML='<b style="color:var(--rose)">40분이 지났습니다.</b> 실제 시험이라면 여기서 끝납니다. 남은 문항은 연습으로 이어 가도 됩니다.'}}
+  async function ensureStream(){if(mode!=='mic')return true;if(R.stream)return true;try{R.stream=await navigator.mediaDevices.getUserMedia({audio:true});return true}catch(e){mode='ext';modeR();$('rSt').innerHTML='<span style="color:var(--rose)">마이크 권한을 얻지 못해 외부 녹음기 모드로 바꿨습니다.</span>';return false}}
+  function askQ(){const q=qList()[R.i];$('rNo').textContent=`${R.i+1} / 15`;$('rSec').textContent=SECN[R.i];$('rQ').textContent=q[1];$('rQ').classList.add('hide');$('rShow').textContent='질문 텍스트 보기';$('qClock').textContent='0:00';$('rRec').disabled=true;$('rReplay').disabled=true;R.replay=false;$('rSt').textContent='질문을 듣는 중…';progR();
+    speak(q[1],()=>{$('rRec').disabled=false;$('rSt').textContent='질문이 끝났습니다. 녹음을 시작하세요. 다시 듣기는 5초 안에 한 번만.';if(hasTTS){$('rReplay').disabled=false;R.replayOK=true;setTimeout(()=>{R.replayOK=false;if(!R.replay)$('rReplay').disabled=true},5000)}});if(!hasTTS){$('rQ').classList.remove('hide')}}
+  $('rReplay').addEventListener('click',()=>{if(!R.replayOK||R.replay)return;R.replay=true;$('rReplay').disabled=true;$('rRec').disabled=true;speak(qList()[R.i][1],()=>{$('rRec').disabled=false;$('rSt').textContent='다시 듣기 끝. 녹음을 시작하세요.'})});
+  $('rShow').addEventListener('click',()=>{const h=$('rQ').classList.toggle('hide');$('rShow').textContent=h?'질문 텍스트 보기':'질문 텍스트 가리기'});
+  $('rStart').addEventListener('click',async()=>{if(!paper)newPaper();await ensureStream();R.running=true;R.i=0;$('rStart').disabled=true;clearInterval(R.tid);R.tid=setInterval(tick,1000);askQ()});
+  $('rRec').addEventListener('click',()=>{if(!R.recOn){R.recOn=true;R.qt=0;$('rRec').textContent='녹음 종료 · 다음 문항';$('rRec').className='btn primary';$('rReplay').disabled=true;$('rSt').innerHTML='<span class="recdot"></span>답변 중';if(mode==='mic'&&R.stream){R.chunks=[];try{R.mr=new MediaRecorder(R.stream);R.mr.ondataavailable=e=>{if(e.data.size)R.chunks.push(e.data)};const idx=R.i;R.mr.onstop=()=>{const blob=new Blob(R.chunks,{type:R.mr.mimeType||'audio/webm'});R.recs[idx]={url:URL.createObjectURL(blob),type:blob.type};dlR()};R.mr.start()}catch(e){}}}
+    else{R.recOn=false;R.durs[R.i]=R.qt;LS.set('opic-l22-dur',R.durs);if(R.mr&&R.mr.state==='recording')R.mr.stop();$('rRec').textContent='녹음 시작';$('rRec').className='btn rec';
+      if(R.i===6){$('adj').classList.add('on');$('rRec').disabled=true;$('rSt').textContent='7번 끝. 난이도를 다시 고르세요.';return}
+      next()}});
+  $('adj').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{paper.adj=b.dataset.a;LS.set('opic-l22-paper',paper);renderPaperInfo();$('adj').classList.remove('on');next()}));
+  function next(){if(R.i>=14){clearInterval(R.tid);R.running=false;R.i=15;progR();$('rNo').textContent='끝';$('rSec').textContent='수고했습니다';$('rQ').classList.remove('hide');$('rQ').textContent=`총 ${fmt(2400-R.total)} 동안 15문항을 마쳤습니다. 녹음 파일을 내려받고, 5절에서 받아 적어 분석하세요.`;$('rRec').disabled=true;$('rSt').textContent='';dlR();anTabs();return}R.i++;askQ()}
+  function dlR(){const l=R.recs.map((r,i)=>r?`<a href="${r.url}" download="opic-mock1-q${String(i+1).padStart(2,'0')}.webm">${i+1}번 녹음 내려받기 (${fmt(R.durs[i]||0)})</a>`:'').filter(Boolean);$('dl').innerHTML=l.length?l.join(''):(mode==='ext'?'<span class="small muted">외부 녹음기 모드: 문항별 시간만 기록되었습니다.</span>':'<span class="small muted">응시 후 여기에 나타납니다.</span>')}
+  runReset();
+
+  /* ---------- analyzer ---------- */
+  let AN=LS.get('opic-l22-an',{});let ai=0;
+  const SUBS=['because','when','while','which','who','where','although','though','since','after','before','until','unless','if','whenever','whereas','once','so that','that'];
+  const PRES='go goes come comes eat eats is are am get gets take takes make makes say says tell tells give gives buy buys find finds start starts stop stops try tries look looks walk walks talk talks wait waits arrive arrives call calls ask asks happen happens lose loses book books explain explains'.split(' ');
+  const BLK=new Set(['to','can','could','will','would','should','must','might','may','did','didn\'t','couldn\'t','can\'t','was','were','be','does','do','don\'t','doesn\'t','usually','always','often','still','every','now','i\'ll','we\'ll']);
+  const R_=re=>t=>((t.match(re)||[]).length);
+  const TC={
+    intro:[['80단어 이상',t=>wc(t)>=80],['현재완료 (I’ve been, I’ve worked…)',t=>/\b(i've|i have) (been|worked|lived|studied)\b/i.test(t)],['일·관심사 둘 이상 언급',t=>(t.match(/\b(work|job|company|hobby|hobbies|like to|enjoy|weekend|free time)\b/gi)||[]).length>=2]],
+    desc:[['공간 표현 3개 이상 (7강)',t=>R_(/\b(on the (left|right)|in front of|next to|across from|at the far end|in the (corner|middle)|along the|as soon as you walk in|surrounded by|lined with|overlooks?|upstairs|downstairs|behind)\b/gi)(t)>=3],['감각 표현 2개 이상',t=>R_(/\b(smell|smells|sound|hear|quiet|loud|music|breeze|warm|cool|bright|dim|light|fresh|cozy|calm)\b/gi)(t)>=2],['막연한 형용사 3개 이하',t=>R_(/\b(very|good|nice|beautiful|big|clean)\b/gi)(t)<=3],['나와의 관계로 마무리',t=>/\b(love|favorite|that's why|what i like|recharge|switch off|my go-to)\b/i.test(t.replace(/’/g,"'"))]],
+    routine:[['빈도 표현 3개 이상 (8강)',t=>R_(/\b(usually|always|often|sometimes|normally|every|once a|twice a|never|rarely|most of the time)\b/gi)(t)>=3],['이유 표현 3개 이상',t=>R_(/\b(because|since|so that|otherwise|that way|which (makes|means|helps))\b/gi)(t)>=3],['변주(조건·예외) 1개 이상',t=>/\b(if |unless|whereas|depends|though|instead|when i'm|on weekends)/i.test(t.replace(/’/g,"'"))],['Then 2회 이하',t=>R_(/\bthen\b/gi)(t)<=2]],
+    exp:[['과거 시점 (10강)',t=>/\b(ago|last (year|month|summer|winter|week)|back in|when i was|a couple of)\b/i.test(t)],['전환 신호',t=>/\b(but then|suddenly|all of a sudden|out of nowhere|that's when|realized|turned out|the thing is)\b/i.test(t.replace(/’/g,"'"))],['결과 신호',t=>/\b(ended up|in the end|so i|so we|finally|luckily|managed to|eventually)\b/i.test(t)],['느낀 점',t=>/\b(looking back|ever since|since then|i learned|still)\b/i.test(t)],['인용·감정 (11강)',t=>/[“"][^”"]{3,}[”"]|\b(panic|panicked|relieved|embarrassed|frustrated|nervous|shocked|thrilled|scared|excited|my (heart|stomach))\b/i.test(t)]],
+    change:[['과거 고리 (13강)',t=>/\b(back then|in the past|used to|when i was|years ago)\b/i.test(t)],['현재 고리',t=>/\b(these days|nowadays|now|more and more)\b/i.test(t)],['원인',t=>/\b(because|due to|thanks to|the reason|mainly)\b/i.test(t)],['영향 (양면)',t=>/\b(as a result|which means|has made|the downside|on the other hand|upside)\b/i.test(t)],['내 생각',t=>/\b(personally|i think|in my opinion)\b/i.test(t)]],
+    compare:[['기준 세우기 (14강)',t=>/\b(when it comes to|in terms of)\b/i.test(t)],['대조 표현 2개 이상',t=>R_(/\b(whereas|while|on the other hand|unlike|nothing beats|wins)\b/gi)(t)>=2],['선호 표현',t=>/\b(i prefer|i'd rather|i'd go with|i'd pick|personally)\b/i.test(t.replace(/’/g,"'"))],['조건부 정리',t=>/\b(it depends|if it's|but if)\b/i.test(t.replace(/’/g,"'"))],['비교 문법 오류 없음',t=>!/\b(more (better|cheaper|easier)|prefer [^.]{1,30} than|same with|different with)\b/i.test(t)]],
+    rp11:[['질문 3~5개 (16강)',t=>{const n=(t.match(/\?/g)||[]).length;return n>=3&&n<=6}],['인사·용건',t=>/\b(hi|hello)\b/i.test(t)&&/\b(calling|interested|thinking about|i'd like)\b/i.test(t.replace(/’/g,"'"))],['조동사 누락 오류 없음',t=>!/(^|[.?!]\s*)(what time|where|when|how much)\s+(the|it|you|they)\b(?!\s+(do|does|is|are|can))[^?]*\?/i.test(t)&&!/\bwhere you are\b/i.test(t)],['간접 의문문 또는 예고',t=>/\b(could you tell me|i was wondering|do you know if)\b/i.test(t)],['반응·마무리',t=>/\b(perfect|great|okay|thank you|thanks)\b/i.test(t)]],
+    rp12:[['대안 2개 이상 (17강)',t=>R_(/\b(one option|another option|or,? if|what if|how about|if not|i could|we could|would it be possible)\b/gi)(t)>=2],['사과 3회 이하',t=>R_(/\b(sorry|apologi[sz]e)\b/gi)(t)<=3],['문제 설명',t=>/\b(the thing is|problem|turns out|found out|just told me|i'm afraid)\b/i.test(t.replace(/’/g,"'"))],['의견 묻기',t=>/\b(what do you think|which one|would that work|works best)\b/i.test(t)],['could·would 사용',t=>R_(/\b(could|would)\b/gi)(t)>=2]],
+    rp13:[['연결 문장 (18강)',t=>/\b(similar|same|reminds me|happened to me)\b/i.test(t)],['과거 시점',t=>/\b(ago|last (year|month|summer|winter|week)|back in|when i was|a couple of)\b/i.test(t)],['롤플레이 잔재 없음',t=>!/\b(one option|what do you think|which one works|would it be possible)\b/i.test(t)],['대처 과정',t=>R_(/\b(explained|called|asked|went to|ended up|managed to|in the end|finally|turned out)\b/gi)(t)>=2],['느낀 점',t=>/\b(looking back|ever since|since then|i learned)\b/i.test(t)]],
+    opinion:[['앞부분 입장 (19강)',t=>/\b(i think|i believe|i'd say|in my opinion|overall)\b/i.test((t.match(/[^.?!]+[.?!]?/g)||[]).slice(0,2).join(' ').replace(/’/g,"'"))],['근거 2개',t=>/\b(the (first|main) reason|first of all)\b/i.test(t)&&/\b(another reason|on top of that|second|what's more)\b/i.test(t.replace(/’/g,"'"))],['구체적인 예 (21강)',t=>R_(/\b(for example|for instance|in my case|my (friend|mom|dad|cousin|sister|brother)|last (year|month|week)|when i was)\b/gi)(t)>=1],['반론 인정 → 반박',t=>/\b(some people|of course|to be fair)\b/i.test(t)&&/\b(but i think|still,|that said|however)/i.test(t)],['재강조',t=>/\b(all in all|so overall|at the end of the day|that's why|so i'd say)\b/i.test(t.replace(/’/g,"'"))]]
+  };
+  function analyze(i){const q=qList()[i];if(!q)return null;const a=AN[i]||{};const t=(a.t||'').trim();if(!t)return null;const dur=+a.d||+R.durs[i]||0;const type=q[0];
+    const clean=t.replace(/[\/…]|\.\.\./g,' ');const words=wc(clean);const sents=clean.split(/[.!?]+/).map(s=>s.trim()).filter(s=>/[a-z]/i.test(s));let sub=0;sents.forEach(s=>{const low=' '+s.toLowerCase().replace(/’/g,"'")+' ';if(SUBS.some(x=>new RegExp('(^|[^a-z])'+x+'(?![a-z])').test(low)))sub++});
+    const msl=sents.length?Math.round(words/sents.length*10)/10:0;const subR=sents.length?Math.round(sub/sents.length*100):0;const fil=(t.match(/\b(um+|uh+|er+|ah+)\b/gi)||[]).length;const pauses=(t.match(/…|\.\.\./g)||[]).length;const mins=dur?dur/60:words/130;const wpm=dur?Math.round(words/mins):null;const fpm=Math.round(fil/(mins||1)*10)/10;
+    let flags=0;if(['exp','rp13'].includes(type)){const low=t.toLowerCase().replace(/’/g,"'");const qs=[];let m;const qre=/[“"][^”"]{2,}[”"]/g;while((m=qre.exec(low)))qs.push([m.index,m.index+m[0].length]);const ref=(()=>{const r=low.search(/looking back|ever since|since then|i learned/);return r<0?low.length:r})();const tok=[];const re=/[a-z']+/g;while((m=re.exec(low)))tok.push([m[0],m.index]);tok.forEach((x,k)=>{const prev=k?tok[k-1][0]:'';if(x[1]<ref&&!qs.some(qq=>x[1]>=qq[0]&&x[1]<qq[1])&&PRES.includes(x[0])&&!BLK.has(prev))flags++})}
+    const tchk=(TC[type]||[]).map(c=>[c[0],!!c[1](t)]);const tOK=tchk.filter(c=>c[1]).length;
+    const minW={intro:80,desc:120,routine:120,exp:150,change:150,compare:150,rp11:70,rp12:120,rp13:140,opinion:170}[type]||120;
+    let u=0;u+=words>=minW?10:words>=minW*.6?5:0;u+=msl>=12?8:msl>=9?4:0;u+=subR>=40?8:subR>=25?4:0;u+=fpm<=3?7:fpm<=6?3:0;u+=flags<=1?7:flags<=3?3:0;
+    const tScore=tchk.length?Math.round(tOK/tchk.length*40):20;const selfS={hold:20,barely:10,break:0}[a.s]??10;const score=Math.min(100,u+tScore+selfS);
+    return {i,type,words,dur,wpm,msl,subR,fil,fpm,pauses,flags,tchk,tOK,score,self:a.s,minW}}
+  function anTabs(){$('anTabs').innerHTML=Array.from({length:15},(_,k)=>`<button type="button" role="tab" data-i="${k}" class="${(AN[k]||{}).t?'f':''}" aria-selected="${k===ai}">${k+1}</button>`).join('');$('anTabs').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ai=+b.dataset.i;anTabs();anBody()}))}
+  function anBody(){const q=qList()[ai];const a=AN[ai]||{};const d=a.d||R.durs[ai]||'';
+    $('anBody').innerHTML=`<div class="an-q"><small>${ai+1}번 · ${TY[q[0]][0]} · 기준 ${TY[q[0]][2]}</small>${esc(q[1])}</div><div class="ctrl" style="margin-bottom:8px"><label class="small" for="anDur">답변 시간(초)</label><input type="number" id="anDur" min="0" max="400" value="${d}"><span class="small muted">${R.durs[ai]?'녹음에서 자동 입력':'외부 녹음기라면 직접 입력'}</span></div><textarea id="anT" placeholder="받아 적은 답변. 멈춘 곳 …, 고쳐 말한 곳 /, 필러 um/uh는 그대로.">${esc(a.t||'')}</textarea><div class="ctrl" style="margin-top:8px"><span class="small">자기 평가</span><div class="self" id="anSelf"><button type="button" data-s="hold" style="--sc:var(--teal)" aria-pressed="${a.s==='hold'}">유지</button><button type="button" data-s="barely" style="--sc:var(--amber)" aria-pressed="${a.s==='barely'}">간신히</button><button type="button" data-s="break" style="--sc:var(--rose)" aria-pressed="${a.s==='break'}">붕괴</button></div><button type="button" class="btn primary" id="anRun">분석</button></div><div id="anOut"></div>`;
+    const save=()=>{AN[ai]=AN[ai]||{};AN[ai].t=$('anT').value;AN[ai].d=$('anDur').value;LS.set('opic-l22-an',AN);$('anTabs').children[ai].classList.toggle('f',!!AN[ai].t.trim())};
+    $('anT').addEventListener('input',save);$('anDur').addEventListener('input',save);
+    $('anSelf').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{AN[ai]=AN[ai]||{};AN[ai].s=b.dataset.s;LS.set('opic-l22-an',AN);$('anSelf').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b))}));
+    $('anRun').addEventListener('click',()=>{save();const r=analyze(ai);if(!r){$('anOut').innerHTML='<p class="small" style="color:var(--rose)">먼저 받아 적은 내용을 넣으세요.</p>';return}const LC={g:'var(--teal)',a:'var(--amber)',r:'var(--rose)'};
+      const rows=[['단어 수',r.words,r.minW+' 이상',r.words>=r.minW?'g':r.words>=r.minW*.6?'a':'r'],['말 속도',r.wpm?r.wpm+' wpm':'-','100~150',!r.wpm?'a':r.wpm>=100&&r.wpm<=160?'g':r.wpm>=80?'a':'r'],['평균 문장 길이',r.msl,'12 이상',r.msl>=12?'g':r.msl>=9?'a':'r'],['복문 비율',r.subR+'%','40% 이상',r.subR>=40?'g':r.subR>=25?'a':'r'],['필러/분',r.fpm,'3 이하',r.fpm<=3?'g':r.fpm<=6?'a':'r'],['긴 멈춤',r.pauses,'2 이하',r.pauses<=2?'g':r.pauses<=4?'a':'r']];if(['exp','rp13'].includes(r.type))rows.push(['현재형 확인 필요',r.flags,'1 이하',r.flags<=1?'g':r.flags<=3?'a':'r']);
+      $('anOut').innerHTML=`<div class="metrics">${rows.map(x=>`<div style="--lc:${LC[x[3]]}"><small>${x[0]}</small><b>${x[1]}</b><span>목표 ${x[2]}</span></div>`).join('')}</div><div class="small muted">${TY[r.type][0]} 유형 기준 (${TY[r.type][2]})</div><div class="tchk">${r.tchk.map(c=>`<div><b style="color:${c[1]?'var(--teal)':'var(--rose)'}">${c[1]?'✓':'✗'}</b>${c[0]}</div>`).join('')}</div><div class="score"><span class="big" style="color:${r.score>=70?'var(--teal)':r.score>=50?'var(--amber)':'var(--rose)'}">${r.score}</span><span>종합 점수 (공통 40 + 유형 40 + 자기 평가 20)</span></div>`})}
+  anTabs();anBody();
+
+  /* ---------- map & prescription ---------- */
+  let RES=[];
+  function drawMap(){const s=$('mapSvg');const L=qList();const W=640,H=220,bw=34,gap=(W-40-bw*15)/14;let h=`<line x1="20" y1="${H-30-0.7*160}" x2="${W-10}" y2="${H-30-0.7*160}" stroke="${cssv('--teal')}" stroke-dasharray="5 4"/><text x="${W-12}" y="${H-30-0.7*160-4}" text-anchor="end" font-size="10" fill="${cssv('--teal')}">70 유지선</text><line x1="20" y1="${H-30-0.5*160}" x2="${W-10}" y2="${H-30-0.5*160}" stroke="${cssv('--rose')}" stroke-dasharray="3 5" opacity=".7"/><text x="${W-12}" y="${H-30-0.5*160-4}" text-anchor="end" font-size="10" fill="${cssv('--rose')}">50</text>`;
+    for(let k=0;k<15;k++){const x=20+k*(bw+gap);const r=RES[k];const ty=L[k]?L[k][0]:'intro';const col=cssv(TY[ty][1].slice(4,-1));if(r){const hh=r.score/100*160;h+=`<rect x="${x}" y="${H-30-hh}" width="${bw}" height="${hh}" rx="4" fill="${col}" opacity="${r.score>=70?1:r.score>=50?.75:.5}"/><text x="${x+bw/2}" y="${H-34-hh}" text-anchor="middle" font-size="10.5" fill="${cssv('--text')}">${r.score}</text>`}else h+=`<rect x="${x}" y="${H-30-6}" width="${bw}" height="6" rx="3" fill="${cssv('--line')}"/>`;h+=`<text x="${x+bw/2}" y="${H-14}" text-anchor="middle" font-size="11" font-weight="${PROBE.includes(k)?700:400}" fill="${PROBE.includes(k)?cssv('--amber'):cssv('--muted')}">${k+1}</text>`}
+    h+=`<text x="20" y="${H-1}" font-size="10" fill="${cssv('--muted')}">주황 번호 = 판별 문항 (4, 7, 10, 12, 13, 15)</text>`;s.innerHTML=h}
+  const RXL={desc:['묘사 문항이 약합니다','7강 5단 구조와 공간 순서, 감각 팔레트를 다시 보세요.'],routine:['루틴 문항이 약합니다','8강 4층(순서·빈도·이유·변주)을 다시 쌓으세요.'],exp:['경험 서사가 무너집니다','10강 5단과 30초 전환, 11강 생생함, 12강 템플릿. 23강의 최우선 과제입니다.'],change:['변화 사슬이 끊깁니다','13강 6고리, 특히 원인과 영향.'],compare:['비교 구조가 약합니다','14강 기준별 비교와 조건부 선호.'],rp11:['11번 의문문','16강 의문문 오류 8유형과 질문 조립 훈련.'],rp12:['12번 문제 해결','17강: 사과는 짧게, 대안 2~3개, could·would.'],rp13:['13번 모드 전환','18강: 첫 문장 시제 리셋과 롤플레이 잔재 제거.'],opinion:['15번 의견','19강 5단계, 20강 긴장축, 21강 엘리베이터.'],intro:['자기소개','2강: 힘을 빼고 60초.']};
+  function runMap(){const L=qList();RES=Array.from({length:15},(_,k)=>analyze(k));const done=RES.filter(Boolean);drawMap();if(!done.length){$('mapMsg').textContent='분석한 문항이 없습니다. 5절에서 받아 적어 주세요.';$('verdict').innerHTML='';$('rx').innerHTML='';return}$('mapMsg').textContent=`${done.length} / 15문항 분석됨`;
+    const avg=a=>{const v=a.filter(Boolean);return v.length?Math.round(v.reduce((s,r)=>s+r.score,0)/v.length):null};const front=avg(RES.slice(1,7)),back=avg(RES.slice(7,15));const probes=PROBE.map(k=>RES[k]).filter(Boolean);const pMin=probes.length?Math.min(...probes.map(r=>r.score)):null;const hold=done.filter(r=>r.score>=65).length;
+    let v;if(done.length<6)v=['판정 보류','var(--faint)','최소 6문항(판별 문항 포함)을 분석하면 프로필을 판정합니다.'];else if(pMin!==null&&pMin>=60&&back!==null&&back>=65&&hold>=Math.ceil(done.length*.75))v=['AL형 프로필','var(--teal)','후반과 판별 문항까지 유지했습니다. 23강에서는 가장 낮은 두 문항만 다듬고, 24강의 실전 전략으로 넘어가세요.'];else if(front!==null&&back!==null&&front-back>=10)v=['IH형 프로필','var(--amber)',`앞부분(평균 ${front})은 버티지만 후반(평균 ${back})에서 떨어집니다. 1강에서 본 전형적인 IH 지도입니다. 23강에서 후반 판별 문항을 집중 교정합니다.`];else if(back!==null&&back>=55)v=['IH 상단 프로필','var(--amber)','전반적으로 버티지만 판별 문항 중 무너지는 곳이 있습니다. 처방전의 상위 항목을 23강에서 교정하세요.'];else v=['IM형 프로필','var(--rose)','여러 문항에서 구조가 유지되지 않습니다. 처방전의 기초 항목(4~6강, 10강)부터 다시 쌓으세요.'];
+    $('verdict').innerHTML=`<div class="verdict" style="--vc:${v[1]}"><h4 style="color:${v[1]}">${v[0]}</h4><p style="margin:0">${v[2]}</p><p class="small muted" style="margin:6px 0 0">앞부분(2~7번) 평균 ${front??'-'} · 후반(8~15번) 평균 ${back??'-'} · 판별 문항 최저 ${pMin??'-'} · 65점 이상 ${hold} / ${done.length}문항</p></div>`;
+    const rx=[];const byType={};done.forEach(r=>{(byType[r.type]=byType[r.type]||[]).push(r.score)});Object.entries(byType).forEach(([t,a])=>{const m=Math.round(a.reduce((x,y)=>x+y,0)/a.length);if(m<65&&RXL[t])rx.push([m,RXL[t][0]+` (평균 ${m})`,RXL[t][1],TY[t][1]])});
+    const g=k=>done.reduce((s,r)=>s+r[k],0)/done.length;if(g('subR')<35)rx.push([30,'복문 비율이 낮습니다',`평균 ${Math.round(g('subR'))}%. 4강의 덧붙이기형 도구(because, which, when)부터.`,'var(--violet)']);if(g('fpm')>4)rx.push([35,'필러가 많습니다',`분당 평균 ${g('fpm').toFixed(1)}회. 6강의 담화 표지어로 바꾸세요.`,'var(--violet)']);const fl=done.filter(r=>['exp','rp13'].includes(r.type));if(fl.length&&fl.reduce((s,r)=>s+r.flags,0)/fl.length>1.5)rx.push([25,'과거 이야기에서 현재형으로 미끄러집니다','5강의 시간 축과 신호어, 특히 전환 직후 세 동사.','var(--rose)']);if(g('msl')<10)rx.push([40,'문장이 짧습니다',`평균 ${g('msl').toFixed(1)}단어. 4강 오른쪽 가지치기.`,'var(--violet)']);const late=done.filter(r=>r.i>=7);if(late.length&&late.some(r=>r.words<r.minW*.6))rx.push([20,'후반 답변이 짧아집니다','2강 시간 배분과 체력. 23강 모의고사 2에서 후반 시간을 확인하세요.','var(--amber)']);
+    rx.sort((a,b)=>a[0]-b[0]);$('rx').innerHTML=rx.length?`<div class="small muted">처방전 (우선순위 순)</div>`+rx.slice(0,6).map((x,i)=>`<div style="--rc:${x[3]}"><b>${i+1}. ${x[1]}</b><span>${x[2]}</span></div>`).join(''):'<div style="--rc:var(--teal)"><b>뚜렷한 약점이 없습니다</b><span>가장 낮은 두 문항을 골라 23강에서 다듬으세요.</span></div>';
+    const d3=LS.get('opic-l3-dur',null);let arr3=null;if(d3){if(Array.isArray(d3))arr3=d3.map(x=>+x||0);else if(typeof d3==='object')arr3=Array.from({length:15},(_,k)=>+(d3[k]??d3[k+1]??d3['q'+(k+1)]??0)||0)}
+    if(arr3&&arr3.some(x=>x>0)){const s=`<svg id="cmpSvg" viewBox="0 0 640 150"></svg>`;$('cmp3').innerHTML=`<div class="small muted" style="margin:10px 0 4px">3강 기준선과 답변 시간 비교 (회색: 3강, 색: 오늘)</div>${s}`;const sv=$('cmpSvg');const mx=Math.max(120,...arr3,...Array.from({length:15},(_,k)=>+(RES[k]&&RES[k].dur||R.durs[k]||0)));let h='';for(let k=0;k<15;k++){const x=20+k*41;const a=arr3[k]||0,b=+(RES[k]&&RES[k].dur||R.durs[k]||0);h+=`<rect x="${x}" y="${120-a/mx*100}" width="15" height="${a/mx*100}" fill="${cssv('--faint')}" rx="2"/><rect x="${x+17}" y="${120-b/mx*100}" width="15" height="${b/mx*100}" fill="${cssv('--teal')}" rx="2"/><text x="${x+16}" y="138" text-anchor="middle" font-size="10" fill="${cssv('--muted')}">${k+1}</text>`}sv.innerHTML=h}else $('cmp3').innerHTML='<p class="small muted" style="margin-top:10px">3강 기준선 기록이 이 브라우저에 없어 시간 비교는 생략합니다.</p>'}
+  $('mapRun').addEventListener('click',runMap);drawMap();
+  function report(){const L=qList();if(!RES.length)runMap();const lines=['OPIc AL 8주 과정 · 22강 실전 모의고사 1 결과',new Date().toLocaleString(),'',`시험지: 서베이 ${CAT[paper.cats[0]].k}/${CAT[paper.cats[1]].k}, 돌발 ${DOL[paper.dol][0]}, 롤플레이 ${RP[paper.rp][0]}, 재조정 ${paper.adj}`,''];RES.forEach((r,k)=>{lines.push(`${k+1}. [${TY[L[k][0]][0]}] ${r?`점수 ${r.score} | ${r.words}단어 | ${r.dur||'-'}초 | 복문 ${r.subR}% | 필러/분 ${r.fpm} | 유형 기준 ${r.tOK}/${r.tchk.length}`:'미분석'}`)});lines.push('');lines.push($('verdict').innerText||'');lines.push('');lines.push($('rx').innerText||'');return lines.join('\n')}
+  $('export').addEventListener('click',()=>{const b=new Blob([report()],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='opic-al-mock1-report.txt';a.click()});
+  $('copy').addEventListener('click',()=>{const t=report();if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>{$('mapMsg').textContent='결과를 복사했습니다.'});else $('mapMsg').textContent='이 브라우저에서는 복사를 지원하지 않습니다. 내보내기를 쓰세요.'});
+
+  /* ---------- myths ---------- */
+  const myths=[['잘 안 된 문항은 다시 녹음하면 된다','다시 찍은 녹음은 실전이 아닙니다. 무너진 지점과 피로까지 그대로 남겨야 23강에서 고칠 곳이 보입니다.'],['점수가 높게 나오면 AL이다','이 페이지의 점수는 연습용 지표입니다. 중요한 것은 숫자보다 지도의 모양, 즉 후반과 판별 문항이 버티는가입니다.'],['받아 적기는 생략해도 된다','듣기만 하면 내가 말한 것보다 말하려던 것이 들립니다. 받아 적어야 짧은 문장, 현재형 미끄러짐, 필러가 보입니다.'],['모의고사는 많이 볼수록 좋다','분석 없는 모의고사는 같은 실수를 반복하는 연습이 됩니다. 한 번 보고, 분석하고, 고치고, 다시 보는 것이 22~23강의 흐름입니다.'],['7번 뒤엔 쉽게 고르는 게 안전하다','2강에서 봤듯 AL을 목표로 한다면 비슷하게나 어렵게가 기본입니다. 쉬운 질문으로는 Advanced 과제를 보여 줄 기회가 줄어듭니다.']];
+  const my=$('mythGrid');myths.forEach(m=>{const b=document.createElement('button');b.type='button';b.className='myth';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="inner"><div class="face front"><div class="tag">함정</div><p>${m[0]}</p><div class="hint">눌러서 이유 보기</div></div><div class="face back"><div class="tag">이렇게 하세요</div><p>${m[1]}</p></div></div>`;b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));my.appendChild(b)});
+})();
+</script>
+</body>
+</html>

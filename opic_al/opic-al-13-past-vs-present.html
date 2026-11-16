@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 13강 · 과거와 현재 비교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.k1{--k:var(--violet)}.k2{--k:var(--sky)}.k3{--k:var(--teal)}.k4{--k:var(--amber)}.k5{--k:var(--rose)}.k6{--k:var(--lime)}
+.c1,.c2,.c3,.c4,.c5,.c6{border-radius:3px}
+.c1{background:var(--violet-soft);box-shadow:inset 0 -2px 0 var(--violet)}.c2{background:var(--sky-soft);box-shadow:inset 0 -2px 0 var(--sky)}.c3{background:var(--teal-soft);box-shadow:inset 0 -2px 0 var(--teal)}.c4{background:var(--amber-soft);box-shadow:inset 0 -2px 0 var(--amber)}.c5{background:var(--rose-soft);box-shadow:inset 0 -2px 0 var(--rose)}.c6{background:color-mix(in srgb,var(--lime) 18%,transparent);box-shadow:inset 0 -2px 0 var(--lime)}
+
+/* hero chain */
+.chain{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative}
+.chain button{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:10px 12px;text-align:left;cursor:pointer;border-left:5px solid var(--k);transition:opacity .25s,transform .25s}
+.chain button b{display:block;font-size:13.5px}
+.chain button span{font-size:12px;color:var(--muted)}
+.chain button.dim{opacity:.25}
+.chain button[aria-pressed="true"]{background:color-mix(in srgb,var(--k) 18%,var(--surface2))}
+.chain .full{grid-column:1/-1}
+.hsay{font-family:var(--serif);font-size:15.5px;line-height:1.65;margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--surface2);min-height:5em}
+.hsay small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-bottom:2px}
+
+/* links overview */
+.links6{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+@media (max-width:760px){.links6{grid-template-columns:1fr 1fr}}
+.links6 div{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface);border-top:4px solid var(--k)}
+.links6 .n{font-family:var(--serif);font-size:24px;color:var(--k);line-height:1}
+.links6 h4{margin:4px 0 2px;font-size:16px}
+.links6 p{font-size:13.5px;margin:0 0 6px;color:var(--muted)}
+.links6 .ex{font-family:var(--serif);font-size:14.5px;background:var(--surface2);border-radius:8px;padding:6px 10px;color:var(--text)}
+.ttab{width:100%;border-collapse:collapse;font-size:15px;min-width:640px}
+.ttab th,.ttab td{border-top:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.ttab th{color:var(--muted);font-weight:500;font-size:13.5px}
+.ttab td:first-child{font-weight:600;white-space:nowrap}
+
+/* answers compare */
+.ans{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:20px 24px}
+.ans .txt{font-family:var(--serif);font-size:18px;line-height:1.9;margin:0}
+.ans-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:14px}
+.ans-strip div{font-size:11.5px;text-align:center;padding:5px 2px;border-radius:6px;background:var(--bg);color:var(--faint);border-top:3px solid var(--line)}
+.ans-strip div.on{color:var(--text);border-top-color:var(--k);background:color-mix(in srgb,var(--k) 12%,var(--bg))}
+.ans .v{font-size:15px;margin:12px 0 0}
+
+/* causes */
+.cause{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin:18px 0}
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.topics button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer}
+.topics button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.cgrid div{border-radius:12px;padding:12px 14px;background:var(--surface2);border-left:4px solid var(--cc)}
+.cgrid b{display:block;font-size:13px;color:var(--cc);margin-bottom:4px}
+.cgrid span{font-family:var(--serif);font-size:15.5px}
+.ctn{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:640px){.ctn{grid-template-columns:1fr}}
+.ctn div{border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.ctn b{font-size:13px;display:block;margin-bottom:4px}
+.ctn span{font-family:var(--serif);font-size:15.5px}
+
+/* phrases */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin:12px 0}
+.pgrid div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:var(--serif);font-size:15.5px;border-left:4px solid var(--k)}
+.pgrid small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+
+/* drills */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:18px 0}
+.drill-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dq{font-family:var(--serif);font-size:19px;line-height:1.55;margin:4px 0 14px}
+.dq .blank{display:inline-block;min-width:90px;border-bottom:2px solid var(--amber);text-align:center;color:var(--amber);font-style:italic}
+.dopts{display:flex;flex-wrap:wrap;gap:8px}
+.dopts button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:9px 16px;cursor:pointer;font-size:15.5px;border-left:4px solid var(--k,var(--line))}
+.dopts button.en{font-family:var(--serif);font-size:16.5px}
+.dopts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.dopts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.dopts button:disabled{cursor:default}
+.dfb{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15.5px;display:none}
+.dfb.on{display:block}
+.pips{display:flex;gap:4px}
+.pips i{width:10px;height:10px;border-radius:3px;background:var(--line)}
+.pips i.ok{background:var(--teal)}.pips i.ng{background:var(--rose)}.pips i.cur{outline:2px solid var(--amber);outline-offset:1px}
+.og-pool{display:grid;gap:8px;margin:12px 0}
+.og-pool button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:10px 14px;cursor:pointer;font-family:var(--serif);font-size:16px}
+.og-pool button:disabled{opacity:.3;cursor:default}
+.og-seq{list-style:none;padding:0;margin:10px 0;counter-reset:o}
+.og-seq li{counter-increment:o;display:grid;grid-template-columns:30px 1fr;gap:8px;padding:9px 12px;border-radius:10px;background:var(--surface2);margin-bottom:6px;font-family:var(--serif);font-size:16px;border-left:4px solid var(--k,var(--line))}
+.og-seq li::before{content:counter(o);width:24px;height:24px;border-radius:50%;background:var(--k,var(--faint));color:#14112a;font:700 12.5px var(--sans);display:grid;place-items:center}
+.og-seq li.bad{outline:2px solid var(--rose)}
+.og-seq li small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted)}
+
+/* builder */
+.bld{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:12px}
+.bgrid>div{border-left:4px solid var(--k);padding-left:10px}
+.bgrid label{display:block;font-size:13.5px;font-weight:600;margin-bottom:4px}
+.bgrid label small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.bgrid textarea{width:100%;min-height:58px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:15.5px/1.55 var(--serif);padding:8px 10px;resize:vertical}
+.bout{margin-top:14px;font-family:var(--serif);font-size:17px;line-height:1.85;background:var(--amber-soft);border-radius:12px;padding:14px 16px}
+.bout .cn{color:var(--amber);font-weight:600}
+.bmeta{font-size:13.5px;color:var(--muted);margin-top:8px}
+
+/* timer */
+.stimer{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:820px){.stimer{grid-template-columns:1fr}}
+.st-card{background:linear-gradient(135deg,var(--violet-soft),var(--amber-soft));border:1px solid var(--line);border-radius:22px;padding:22px 24px}
+.st-card .q{font-family:var(--serif);font-size:20px;line-height:1.5;margin:6px 0 12px}
+.st-links{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.st-links div{height:10px;border-radius:5px;background:var(--line);transition:background .3s}
+.st-links div.on{background:var(--k)}.st-links div.done{background:color-mix(in srgb,var(--k) 45%,var(--line))}
+.st-lab{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;font-size:11px;color:var(--faint);text-align:center;margin-top:4px}
+.st-side{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.st-side .clock{font-family:var(--serif);font-size:48px;font-variant-numeric:tabular-nums;line-height:1}
+.st-stage{font-size:16px;font-weight:600;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--k) 18%,transparent);border-left:4px solid var(--k)}
+.st-stage small{display:block;font-weight:400;font-size:13.5px;color:var(--muted);margin-top:2px}
+
+/* checker */
+.chk{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.chk textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:16.5px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin:14px 0}
+.metrics div{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:3px solid var(--lc,var(--line))}
+.metrics small{display:block;font-size:12.5px;color:var(--muted)}
+.metrics b{display:block;font-family:var(--serif);font-size:21px;line-height:1.2;font-weight:600}
+.metrics span{font-size:12px;color:var(--faint)}
+.hlv{font-family:var(--serif);font-size:17px;line-height:1.9;background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:10px}
+.leg{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);margin:8px 0}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;background:var(--k)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;5주차 13강&nbsp;&nbsp;과거와 현재 비교</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">변화 문항이 AL을 가르는 이유</a></li>
+      <li><a href="#chain">변화의 6고리 사슬</a></li>
+      <li><a href="#tense">변화를 말하는 시제 지도</a></li>
+      <li><a href="#lang">비교와 추세의 언어</a></li>
+      <li><a href="#cause">원인 찾기: 다섯 개의 렌즈</a></li>
+      <li><a href="#effect">영향: 양면을 보는 법</a></li>
+      <li><a href="#compare">IM, IH, AL 답변 비교</a></li>
+      <li><a href="#drills">훈련: 고리 판별과 순서</a></li>
+      <li><a href="#compdrill">훈련: 비교 표현</a></li>
+      <li><a href="#builder">변화 사슬 빌더</a></li>
+      <li><a href="#timer">2분 사슬 타이머</a></li>
+      <li><a href="#checker">변화 답변 점검기</a></li>
+      <li><a href="#myths">변화 문항의 함정</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">과제와 다음 강</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">5주차 비교와 변화 · 13강</p>
+      <h1>“예전엔 A, 지금은 B”에서 멈추면 IM, “왜, 그래서 어떻게”까지 가면 AL</h1>
+      <p class="lede">변화를 묻는 문항에 대부분의 수험자는 과거와 현재를 나란히 놓고 끝냅니다. 하지만 변화는 사실일 뿐이고, 평가자가 듣고 싶은 것은 그 다음입니다. 왜 바뀌었는지, 그 변화가 무엇을 바꿨는지, 그리고 나는 어떻게 생각하는지. 이번 강의는 변화를 여섯 개의 고리로 이어 말하는 법을 훈련합니다.</p>
+      <div class="meta-row"><span>학습 시간 약 100분</span><span>대상 문항: 6·9번 변형, 14번</span><span>목표: 2분 변화 답변</span></div>
+    </div>
+    <div class="wave-card" aria-label="변화의 사슬">
+      <div class="wave-switch" role="group" aria-label="버전 선택">
+        <button type="button" data-m="im" aria-pressed="false">IM: 두 고리</button>
+        <button type="button" data-m="al" aria-pressed="true">AL: 여섯 고리</button>
+      </div>
+      <div class="chain" id="heroChain"></div>
+      <div class="hsay" id="hsay"></div>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>5주차는 1강에서 말한 ‘AL 판별 구간’의 문을 엽니다. 콤보 안에서 루틴 대신 나오는 변화 문항(6, 9번 변형)과, 시험 후반의 14번 비교·변화 문항이 대상입니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>변화를 요약 → 과거 → 현재 → 원인 → 영향 → 내 생각의 6고리로 이어 말할 수 있다.</li>
+      <li>과거(used to, would), 현재(현재형, 추세의 현재진행), 변화 요약(현재완료)을 정확히 오갈 수 있다.</li>
+      <li>비교급과 추세 동사로 변화의 크기와 방향을 구체적으로 말할 수 있다.</li>
+      <li>기술, 경제, 생활 방식, 가치관, 사회·제도의 다섯 렌즈로 원인을 찾을 수 있다.</li>
+      <li>변화의 긍정적 영향과 부정적 영향을 모두 말하고, 내 입장으로 정리할 수 있다.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>변화 문항이 AL을 가르는 이유</h2>
+    <p>변화 문항은 세 가지를 동시에 확인합니다. 첫째, 5강의 시간 프레임 전환입니다. 과거 습관과 현재 모습, 그리고 그 사이의 변화를 시제로 구분해야 합니다. 둘째, 4강의 논리 연결입니다. 원인(because, due to)과 결과(as a result, which means)를 말하지 않으면 변화는 목록이 됩니다. 셋째, <strong>추상화의 첫 단계</strong>입니다. 1강에서 15번 같은 사회 이슈 문항은 Superior 쪽 과제에 가깝다고 했습니다. 변화 문항은 ‘나의 경험’에서 ‘사람들 일반’으로 시야를 넓히는 연습장이자, 7주차 의견 문항으로 가는 다리입니다.</p>
+    <div class="callout">
+      <strong>변화는 사실, 원인은 설명, 영향은 분석</strong>
+      <p>IM 답변은 사실에서 멈춥니다. <span class="en">In the past, people went to markets. Now people shop online.</span> IH 답변은 설명을 한두 문장 붙입니다. AL 답변은 설명과 분석까지, 그리고 양면을 봅니다. 같은 변화를 말해도 몇 개의 고리를 잇느냐가 텍스트 유형을 바꿉니다.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="chain">
+    <p class="sec-no">2</p>
+    <h2>변화의 6고리 사슬</h2>
+    <div class="links6">
+      <div class="k1"><div class="n">1</div><h4>변화 요약</h4><p>무엇이 얼마나 바뀌었는지 한 문장으로 먼저.</p><div class="ex">The way people shop has changed a lot.</div></div>
+      <div class="k2"><div class="n">2</div><h4>과거</h4><p>예전 모습. 구체적인 예나 내 경험 하나.</p><div class="ex">Back then, my mom would spend a whole Saturday at the supermarket.</div></div>
+      <div class="k3"><div class="n">3</div><h4>현재</h4><p>지금 모습. 과거와 대비되도록.</p><div class="ex">These days, almost everything is ordered on an app.</div></div>
+      <div class="k4"><div class="n">4</div><h4>원인</h4><p>왜 바뀌었는지. 하나 이상의 이유.</p><div class="ex">The biggest reason is technology, but people are also busier.</div></div>
+      <div class="k5"><div class="n">5</div><h4>영향</h4><p>그 변화가 무엇을 바꿨는지. 좋은 점과 나쁜 점.</p><div class="ex">It’s way more convenient, but a lot of small shops have disappeared.</div></div>
+      <div class="k6"><div class="n">6</div><h4>내 생각</h4><p>나는 어떻게 보는지, 나는 어떻게 하는지.</p><div class="ex">Personally, I love the convenience, but I still try to…</div></div>
+    </div>
+    <p>9강의 변화 틀(Back then → These days → mainly because → Personally)은 이 사슬의 축약판이었습니다. 13강에서는 맨 앞에 요약을, 원인 뒤에 영향을 추가해 여섯 고리로 확장합니다. 고리 4와 5가 IH와 AL을 가르는 구간입니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="tense">
+    <p class="sec-no">3</p>
+    <h2>변화를 말하는 시제 지도</h2>
+    <p>변화 답변은 한 답변 안에서 시간 프레임을 세 번 바꿉니다. 5강의 신호어 원칙대로, 시제를 바꿀 때는 신호어와 함께 문장 단위로 바꾸세요.</p>
+    <div class="tbl-wrap">
+    <table class="ttab">
+      <tr><th>고리</th><th>시제</th><th>신호어</th><th>예시</th></tr>
+      <tr><td>요약</td><td>현재완료</td><td>a lot, over the past ten years, since</td><td class="en">It’s changed a lot over the past decade.</td></tr>
+      <tr><td>과거</td><td>used to, would, 과거형</td><td>back then, in the past, when I was a kid</td><td class="en">People used to pay in cash, and they’d keep receipts in a drawer.</td></tr>
+      <tr><td>현재</td><td>현재형, 추세는 현재진행</td><td>these days, nowadays, now</td><td class="en">More and more people are paying with their phones.</td></tr>
+      <tr><td>원인</td><td>현재완료, 과거형</td><td>because, mainly due to, thanks to</td><td class="en">It’s mainly because smartphones have made everything instant.</td></tr>
+      <tr><td>영향</td><td>현재완료, 현재형</td><td>as a result, which means, the downside is</td><td class="en">As a result, cash has almost disappeared.</td></tr>
+      <tr><td>내 생각</td><td>현재형</td><td>personally, I think, honestly</td><td class="en">Personally, I think it’s mostly a good thing.</td></tr>
+    </table>
+    </div>
+    <div class="callout violet">
+      <strong>추세를 말하는 현재진행</strong>
+      <p>지금 진행 중인 변화의 흐름은 현재진행으로 말합니다. <span class="en">More and more people are working from home. Prices are going up every year.</span> 정적인 현재형(<span class="en">People work from home</span>)보다 ‘변하고 있는 중’이라는 느낌이 살아 변화 문항에 잘 어울립니다.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="lang">
+    <p class="sec-no">4</p>
+    <h2>비교와 추세의 언어</h2>
+    <p>변화의 크기와 방향을 구체적으로 말할수록 답변이 선명해집니다. “많이 바뀌었다”를 반복하는 대신 아래 표현들로 정도를 조절하세요.</p>
+    <h3>비교급과 강도</h3>
+    <div class="pgrid">
+      <div class="k3">way more / much more convenient<small>훨씬 더 (way는 구어)</small></div>
+      <div class="k3">far less common than before<small>훨씬 덜</small></div>
+      <div class="k3">not nearly as popular as it used to be<small>예전만큼 전혀 ~하지 않은</small></div>
+      <div class="k3">twice as many people<small>배수 비교</small></div>
+      <div class="k3">a lot cheaper compared to ten years ago<small>시점 비교</small></div>
+      <div class="k3">the biggest difference is …<small>최상급으로 초점</small></div>
+    </div>
+    <h3>추세 동사</h3>
+    <div class="pgrid">
+      <div class="k4">go up / increase / rise<small>오르다·늘다</small></div>
+      <div class="k4">go down / drop / decrease<small>내리다·줄다</small></div>
+      <div class="k4">replace / take over<small>대체하다·장악하다</small></div>
+      <div class="k4">disappear / die out<small>사라지다</small></div>
+      <div class="k4">become more common<small>흔해지다</small></div>
+      <div class="k4">shift from A to B<small>A에서 B로 옮겨 가다</small></div>
+    </div>
+    <h3>시간 표지</h3>
+    <div class="pgrid">
+      <div class="k2">back then / in the past / when I was a kid<small>과거로</small></div>
+      <div class="k3">these days / nowadays / now<small>현재로</small></div>
+      <div class="k1">over the past decade / in recent years<small>변화 기간</small></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="cause">
+    <p class="sec-no">5</p>
+    <h2>원인 찾기: 다섯 개의 렌즈</h2>
+    <p>“왜 바뀌었을까?”에서 막히는 이유는 원인을 한 번에 떠올리려 하기 때문입니다. 다섯 개의 렌즈를 차례로 대 보면 거의 모든 변화에서 원인 두세 개를 찾을 수 있습니다. 주제를 고르면 렌즈별 원인 후보와 영향이 나옵니다.</p>
+    <div class="cause">
+      <div class="topics" id="topics"></div>
+      <div class="cgrid" id="cgrid"></div>
+      <div class="ctn" id="ctn"></div>
+    </div>
+    <div class="callout teal">
+      <strong>원인은 두 개가 적당합니다</strong>
+      <p>원인을 하나만 말하면 단순하고, 다섯 개를 다 말하면 나열이 됩니다. 가장 큰 원인 하나와 덜 뻔한 원인 하나를 고르세요. <span class="en">The obvious reason is technology, but I think it’s also because…</span> 이 구조는 ‘뻔한 답을 넘어선다’는 인상을 주어 7주차 의견 문항에서도 그대로 쓰입니다.</p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="effect">
+    <p class="sec-no">6</p>
+    <h2>영향: 양면을 보는 법</h2>
+    <p>영향 고리에서 좋은 점만 말하면 광고처럼, 나쁜 점만 말하면 불평처럼 들립니다. AL 답변은 양면을 보고, 가능하면 <strong>누구에게</strong> 좋은지 나쁜지까지 구분합니다. 이 균형이 다음 고리인 ‘내 생각’을 설득력 있게 만듭니다.</p>
+    <div class="pgrid">
+      <div class="k5">As a result, …<small>결과</small></div>
+      <div class="k5">This has made … much easier for …<small>긍정적 영향 + 대상</small></div>
+      <div class="k5">The upside is that …<small>장점</small></div>
+      <div class="k5">The downside, though, is that …<small>단점</small></div>
+      <div class="k5">On the other hand, …<small>반대 측면</small></div>
+      <div class="k5">It’s great for …, but not so much for …<small>대상별 차이</small></div>
+      <div class="k5">One thing that worries me is …<small>우려</small></div>
+      <div class="k6">Personally, I think it’s mostly a good thing, but …<small>내 생각으로 연결</small></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="compare">
+    <p class="sec-no">7</p>
+    <h2>IM, IH, AL 답변 비교</h2>
+    <p>같은 질문 <span class="en">How has the way people shop changed in your country?</span>에 대한 세 수준의 답변입니다. 위쪽 막대는 여섯 고리 중 어느 것이 들어갔는지 보여 줍니다.</p>
+    <div class="tabs" role="tablist" id="aTabs"></div>
+    <div class="ans" id="aBox" role="tabpanel"></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="drills">
+    <p class="sec-no">8</p>
+    <h2>훈련: 고리 판별과 순서</h2>
+    <div class="drill">
+      <div class="drill-head"><strong>이 문장은 어느 고리?</strong><div class="pips" id="lPips"></div></div>
+      <div class="dq" id="lQ"></div><div class="dopts" id="lO"></div><div class="dfb" id="lFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="lNext">다음 문제</button><button type="button" class="reset" id="lReset">처음부터</button></div>
+    </div>
+    <div class="drill">
+      <div class="drill-head"><strong id="ogTitle">순서 맞추기</strong><button type="button" class="btn" id="ogSwitch">다른 주제</button></div>
+      <p class="small muted" style="margin:0">여섯 문장을 사슬 순서대로 누르세요.</p>
+      <div class="og-pool" id="ogPool"></div>
+      <ol class="og-seq" id="ogSeq"></ol>
+      <div class="ctrl"><button type="button" class="reset" id="ogReset">다시 하기</button><span class="small" id="ogMsg"></span></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="compdrill">
+    <p class="sec-no">9</p>
+    <h2>훈련: 비교 표현</h2>
+    <div class="drill">
+      <div class="drill-head"><strong>빈칸에 가장 알맞은 표현</strong><div class="pips" id="cPips"></div></div>
+      <div class="dq" id="cQ"></div><div class="dopts" id="cO"></div><div class="dfb" id="cFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="cNext">다음 문제</button><button type="button" class="reset" id="cReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="builder">
+    <p class="sec-no">10</p>
+    <h2>변화 사슬 빌더</h2>
+    <p>주제를 고르고 여섯 고리를 채우세요. 영향은 긍정과 부정을 따로 적습니다. 9강 매트릭스의 변화 열에 쓸 답변을 클러스터마다 하나씩 만들어 두면 됩니다. 입력 내용은 이 브라우저에 저장됩니다.</p>
+    <div class="bld">
+      <div class="topics" id="bTopics"></div>
+      <div class="bgrid" id="bGrid"></div>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn" id="bEx">예시 채우기</button><button type="button" class="reset" id="bClr">이 주제 지우기</button></div>
+      <div class="bout" id="bOut"></div>
+      <div class="bmeta" id="bMeta"></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="timer">
+    <p class="sec-no">11</p>
+    <h2>2분 사슬 타이머</h2>
+    <p>14번 수준의 변화 문항은 2분 안팎이 적당합니다. 시작하면 여섯 고리에 맞춰 안내가 바뀝니다. 요약 8초, 과거 22초, 현재 20초, 원인 22초, 영향 25초, 내 생각 18초입니다. 녹음해서 원인과 영향에 충분한 시간을 썼는지 들어 보세요.</p>
+    <div class="stimer">
+      <div class="st-card">
+        <div class="small muted" id="stNo"></div>
+        <div class="q" id="stQ"></div>
+        <div class="st-links" id="stLinks"></div>
+        <div class="st-lab"><span>요약</span><span>과거</span><span>현재</span><span>원인</span><span>영향</span><span>생각</span></div>
+        <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="stPrev">이전 질문</button><button type="button" class="btn" id="stNextQ">다음 질문</button></div>
+      </div>
+      <div class="st-side">
+        <div class="clock" id="stClock">1:55</div>
+        <div class="st-stage k1" id="stStage">시작 전<small>시작을 누르고 바로 말하세요.</small></div>
+        <div class="ctrl"><button type="button" class="btn primary" id="stStart">시작</button><button type="button" class="btn" id="stReset">초기화</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="checker">
+    <p class="sec-no">12</p>
+    <h2>변화 답변 점검기</h2>
+    <p>받아 적은 변화 답변을 넣으면 여섯 고리의 신호, 시제 균형(과거 표현과 현재 표현), 비교 표현, 영향의 양면성을 점검합니다.</p>
+    <div class="chk">
+      <div class="ctrl" style="margin-bottom:8px"><button type="button" class="btn" id="kAL">AL 답변 넣기</button><button type="button" class="btn" id="kIH">IH 답변 넣기</button><button type="button" class="btn" id="kIM">IM 답변 넣기</button></div>
+      <textarea id="kText" placeholder="받아 적은 변화 답변을 붙여 넣으세요."></textarea>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn primary" id="kRun">점검</button></div>
+      <div id="kOut"></div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="myths">
+    <p class="sec-no">13</p>
+    <h2>변화 문항의 함정</h2>
+    <p>카드를 눌러 뒤집어 보세요.</p>
+    <div class="myths" id="mythGrid"></div>
+  </section>
+
+  <!-- 14 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">14</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 15 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">15</p>
+    <h2>과제와 다음 강</h2>
+    <div class="assign">
+      <h3 style="margin-top:0">13강 과제: 변화 사슬 세트</h3>
+      <ol>
+        <li>8절 고리 판별과 순서 맞추기 두 주제, 9절 비교 표현 훈련을 모두 마칩니다.</li>
+        <li>5절 원인 렌즈로 내 서베이 클러스터 주제마다 원인 두 개(뻔한 것 하나, 덜 뻔한 것 하나)를 적어 둡니다.</li>
+        <li>10절 빌더로 클러스터마다 변화 답변 하나씩을 만들어 9강 매트릭스의 변화 열을 채웁니다.</li>
+        <li>11절 타이머로 여섯 질문을 모두 말합니다. 그중 두 개를 녹음해 받아 적고 12절 점검기에 넣습니다.</li>
+        <li>3강 기준선의 14번 답변을 다시 듣고, 여섯 고리 중 몇 개가 있었는지 세어 봅니다.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>14강. 두 대상 비교: 장단점, 개인 선호, 근거</h4></div>
+      <span class="pill">5주차</span>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">16</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 나온 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: 원인, 영향, 추세">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 13강. 모범 답안과 질문은 학습용으로 새로 작성했습니다. 원인과 영향 예시는 일반적인 경향을 바탕으로 한 말하기 소재이며 통계적 사실을 주장하는 것이 아닙니다. 점검기는 단어 패턴 기반 추정이고, 입력한 내용은 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  const wc=t=>(String(t).match(/[A-Za-z’']+/g)||[]).length;
+  const LN=['요약','과거','현재','원인','영향','내 생각'];const LE=['Summary','Then','Now','Cause','Effect','My view'];
+
+  /* ---------- AL model ---------- */
+  const AL=[
+    [1,'Wow, the way people shop in Korea has changed a lot, especially over the past ten years. '],
+    [2,'Back then, most people went to big supermarkets on the weekend, and my mom would spend a whole Saturday morning pushing a cart up and down the aisles. If you wanted clothes, you had to go to a department store and actually try things on. '],
+    [3,'These days, though, almost everything is ordered on an app. My parents, who used to hate online shopping, now get their groceries delivered before seven in the morning, which is honestly faster than driving to the store. '],
+    [4,'The obvious reason is technology, but I think it’s also because people are so much busier now, and delivery companies have made it ridiculously fast and cheap. '],
+    [5,'As a result, shopping has become way more convenient, especially for working people. The downside, though, is that a lot of small local shops have disappeared, and there’s so much packaging waste. '],
+    [6,'Personally, I love the convenience, but I still try to buy from the market near my place every once in a while, just so it doesn’t disappear too.']
+  ];
+  const IH='Shopping has changed a lot. In the past, people usually went to supermarkets or department stores. They bought a lot of things at once. But now, people use shopping apps. It is very fast and convenient. Delivery comes the next day. So many people use online shopping. I think it’s good, but sometimes it’s not good because of trash.';
+  const IM='In the past, people go to the market. Now people shop online. Online shopping is very convenient. I like online shopping. It is good.';
+
+  /* ---------- hero ---------- */
+  let hm='al',hs=3;
+  function hero(){const c=$('heroChain');c.innerHTML=LN.map((l,i)=>`<button type="button" class="k${i+1} ${i===0||i===5?'full':''} ${hm==='im'&&!(i===1||i===2)?'dim':''}" data-i="${i}" aria-pressed="${i===hs}"><b>${i+1}. ${l}</b><span>${LE[i]}</span></button>`).join('');
+    c.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{hs=+b.dataset.i;hero()}));
+    if(hm==='im'){const s=hs===1?'In the past, people go to the market.':hs===2?'Now people shop online. Online shopping is very convenient.':'';$('hsay').innerHTML=s?`<small>${LN[hs]}</small>${esc(s)}`:`<small>${LN[hs]}</small><span style="color:var(--rose)">IM 답변에는 이 고리가 없습니다.</span> 과거와 현재를 나란히 놓고 I like it, It is good으로 끝납니다.`}
+    else $('hsay').innerHTML=`<small>${LN[hs]} · ${LE[hs]}</small>${esc(AL[hs][1])}`}
+  document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.addEventListener('click',()=>{hm=b.dataset.m;hs=hm==='im'?3:3;document.querySelectorAll('.hero .wave-switch button').forEach(x=>x.setAttribute('aria-pressed',x===b));hero()}));
+  hero();
+
+  /* ---------- causes ---------- */
+  const LENS=[['기술','var(--sky)'],['경제','var(--amber)'],['생활 방식','var(--teal)'],['가치관·인식','var(--violet)'],['사회·제도','var(--rose)']];
+  const CT={
+    '쇼핑':[['smartphones and shopping apps','cheaper prices online, free delivery','people are busier, fewer weekend trips','convenience matters more than the experience','fast delivery networks, the pandemic'],'way more convenient, especially for busy people','small shops disappearing, packaging waste'],
+    '음악 감상':[['streaming apps, wireless earbuds','monthly subscriptions instead of buying albums','listening on the go, while commuting','people want variety, not one album','social media making songs go viral'],'endless music for almost nothing','people skip songs, artists earn less'],
+    '여행':[['booking apps, reviews, maps','budget airlines, cheaper flights','more people take short trips more often','experiences matter more than things','travel trends on social media'],'easier to plan, more spontaneous trips','overcrowded tourist spots, everyone goes to the same places'],
+    '공원·여가':[['fitness apps, smartwatches','free activities when prices are high','work-life balance, shorter work weeks','more interest in health and nature','cities building bike lanes and trails'],'healthier lifestyles, better public spaces','some parks get way too crowded'],
+    '영화관':[['streaming services, big TVs at home','ticket prices going up','people prefer watching at home','special experiences like IMAX matter more','the pandemic changed habits'],'theaters got way more comfortable and high-tech','fewer people go, tickets are expensive'],
+    '은행':[['mobile banking apps','fewer branches to cut costs','people do everything on their phones','convenience over face-to-face service','digital payments becoming standard'],'banking anytime, anywhere','older people struggle, branches closing'],
+    '연락 방식':[['messaging apps, video calls','free calls instead of expensive phone bills','people text instead of calling','people expect instant replies','group chats replacing gatherings'],'easy to stay in touch with anyone','fewer real conversations, always being reachable'],
+    '식습관':[['delivery apps','eating out is expensive, so people cook or order','single-person households, busy schedules','health and diet trends','more convenience stores and meal kits'],'more choices, easy meals','more takeout waste, less family dinners']
+  };
+  const tps=Object.keys(CT);let ct='쇼핑';
+  function causes(){$('topics').innerHTML=tps.map(t=>`<button type="button" data-t="${t}" aria-pressed="${t===ct}">${t}</button>`).join('');$('topics').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ct=b.dataset.t;causes()}));const d=CT[ct];$('cgrid').innerHTML=LENS.map((l,i)=>`<div style="--cc:${l[1]}"><b>${l[0]}</b><span>${esc(d[0][i])}</span></div>`).join('');$('ctn').innerHTML=`<div style="border-left:4px solid var(--teal)"><b style="color:var(--teal)">긍정적 영향</b><span>${esc(d[1])}</span></div><div style="border-left:4px solid var(--rose)"><b style="color:var(--rose)">부정적 영향</b><span>${esc(d[2])}</span></div>`}
+  causes();
+
+  /* ---------- answers compare ---------- */
+  const ANS=[
+    {k:'IM',c:'var(--rose)',links:[2,3],html:`<span class="c2">In the past, people go to the market.</span> <span class="c3">Now people shop online. Online shopping is very convenient.</span> I like online shopping. It is good.`,v:'과거와 현재 두 고리뿐이고, 과거를 현재형(go)으로 말했습니다. 원인과 영향이 없고, 내 생각은 I like it으로 끝납니다.'},
+    {k:'IH',c:'var(--amber)',links:[1,2,3,5,6],html:`<span class="c1">Shopping has changed a lot.</span> <span class="c2">In the past, people usually went to supermarkets or department stores. They bought a lot of things at once.</span> <span class="c3">But now, people use shopping apps. It is very fast and convenient. Delivery comes the next day.</span> <span class="c5">So many people use online shopping.</span> <span class="c6">I think it’s good, but sometimes it’s not good because of trash.</span>`,v:'고리는 다섯 개지만 원인이 빠졌고, 영향은 ‘그래서 많이 쓴다’ 한 줄입니다. 쓰레기 문제가 내 생각 안에 짧게 섞여 양면성이 드러나지 않습니다. 과거 고리에 구체적인 예가 없습니다.'},
+    {k:'AL',c:'var(--teal)',links:[1,2,3,4,5,6],html:AL.map(a=>`<span class="c${a[0]}">${esc(a[1])}</span>`).join(''),v:'여섯 고리가 모두 있고, 과거 고리에 엄마의 토요일이라는 구체적 장면이 있습니다. 원인은 뻔한 것(기술)과 덜 뻔한 것(바쁜 생활) 두 개. 영향은 누구에게 좋은지와 단점까지. 내 생각은 실제 행동(시장에서 사기)으로 마무리합니다.'}
+  ];
+  const at=$('aTabs'),ab=$('aBox');
+  ANS.forEach((a,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.style.setProperty('--tc',a.c);b.textContent=a.k+' 답변';b.addEventListener('click',()=>ans(i));at.appendChild(b)});
+  function ans(i){const a=ANS[i];at.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',j===i));const plain=a.html.replace(/<[^>]+>/g,'');ab.innerHTML=`<div class="ans-strip">${LN.map((l,j)=>`<div class="k${j+1} ${a.links.includes(j+1)?'on':''}">${l}</div>`).join('')}</div><p class="txt">${a.html}</p><p class="v"><b style="color:${a.c}">${a.links.length} / 6 고리 · ${wc(plain)}단어</b> ${a.v}</p>`}
+  ans(2);
+
+  /* ---------- drills ---------- */
+  function drill(key,data,qE,oE,fE,pE,nE,rE,opts){let st=LS.get(key,{i:0,res:[]});
+    function r(){const it=data[st.i];$(pE).innerHTML=data.map((_,j)=>`<i class="${st.res[j]===true?'ok':st.res[j]===false?'ng':''} ${j===st.i?'cur':''}"></i>`).join('');$(qE).innerHTML=it.q;const o=opts||it.o;$(oE).innerHTML=o.map((x,k)=>`<button type="button" class="${opts?'k'+(k+1):'en'}" data-k="${k}">${esc(x)}</button>`).join('');$(fE).classList.remove('on');
+      $(oE).querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const k=+b.dataset.k;$(oE).querySelectorAll('button').forEach(x=>{x.disabled=true;if(+x.dataset.k===it.a)x.classList.add('right')});if(k!==it.a)b.classList.add('wrong');st.res[st.i]=k===it.a;LS.set(key,st);$(pE).children[st.i].className=(k===it.a?'ok':'ng')+' cur';if(it.fill)$(qE).innerHTML=it.q.replace(/<span class="blank">[^<]*<\/span>/,`<span class="blank">${esc(o[it.a])}</span>`);$(fE).innerHTML=`<b style="color:${k===it.a?'var(--teal)':'var(--rose)'}">${k===it.a?'정확합니다.':'다시 보세요.'}</b> ${it.e}`;$(fE).classList.add('on')}))}
+    $(nE).addEventListener('click',()=>{st.i=(st.i+1)%data.length;LS.set(key,st);r()});$(rE).addEventListener('click',()=>{st={i:0,res:[]};LS.set(key,st);r()});r()}
+  drill('opic-l13-link',[
+    ['Back then, we used to rent DVDs from a little shop down the street.',1,'back then + used to: 과거 고리입니다.'],
+    ['The way people watch movies has completely changed over the past decade.',0,'변화 전체를 한 문장으로 요약합니다. 현재완료가 신호입니다.'],
+    ['These days, most people just stream everything on their phones.',2,'these days + 현재형: 현재 고리입니다.'],
+    ['I think it’s mainly because internet speeds have gotten so much faster.',3,'mainly because: 원인 고리입니다.'],
+    ['The downside is that a lot of small theaters have closed down.',4,'the downside: 영향 고리(부정)입니다.'],
+    ['Personally, I still prefer watching big movies in a theater.',5,'personally: 내 생각 고리입니다.'],
+    ['More and more people are paying with their phones.',2,'현재진행으로 지금 진행 중인 추세를 말하는 현재 고리입니다.'],
+    ['As a result, it’s become way easier for older people to stay in touch with their grandkids.',4,'as a result + 누구에게 좋은지: 영향 고리입니다.'],
+    ['Another reason is that people simply don’t have as much free time as they used to.',3,'another reason: 두 번째 원인입니다.'],
+    ['When I was a kid, my grandmother would write letters to us every month.',1,'when I was a kid + would: 과거 고리입니다.']
+  ].map(x=>({q:esc(x[0]),a:x[1],e:x[2]})),'lQ','lO','lFb','lPips','lNext','lReset',LN);
+  const B='<span class="blank">?</span>';
+  drill('opic-l13-comp',[
+    {q:`Online shopping is ${B} convenient than going to the mall.`,o:['way more','very more','more and more'],a:0,e:'비교급을 강조할 때는 much, far, way(구어). very는 비교급을 꾸미지 못합니다.',fill:1},
+    {q:`Cash isn’t ${B} common as it used to be.`,o:['nearly as','nearly so much','as nearly'],a:0,e:'not nearly as … as: ‘예전만큼 전혀 ~하지 않다’.',fill:1},
+    {q:`${B} people are working from home these days.`,o:['More and more','Much and much','The more'],a:0,e:'More and more + 현재진행: 진행 중인 추세의 대표 표현입니다.',fill:1},
+    {q:`Ticket prices have ${B} a lot over the past few years.`,o:['gone up','grew up','raised'],a:0,e:'가격이 ‘오르다’는 go up / rise / increase. raise는 무언가를 올리는 타동사, grow up은 사람이 자라다.',fill:1},
+    {q:`Streaming services have pretty much ${B} DVDs.`,o:['replaced','changed to','instead'],a:0,e:'A가 B를 대체하다: A has replaced B.',fill:1},
+    {q:`There are ${B} as many tourists now as there were ten years ago.`,o:['twice','two times more','double more'],a:0,e:'배수 비교는 twice as many as / three times as many as.',fill:1},
+    {q:`It’s a lot cheaper ${B} ten years ago.`,o:['compared to','compare with','than compared'],a:0,e:'시점 비교: compared to ten years ago / than it was ten years ago.',fill:1},
+    {q:`People ${B} write letters, but now everyone just texts.`,o:['used to','are used to','use to'],a:0,e:'과거의 습관은 used to + 동사원형. be used to -ing는 ‘~에 익숙하다’로 뜻이 다릅니다.',fill:1}
+  ],'cQ','cO','cFb','cPips','cNext','cReset',null);
+
+  /* ---------- order game ---------- */
+  const OG=[{t:'음악 감상의 변화',s:['The way people listen to music has changed so much since I was a kid.','Back then, I used to save up my allowance to buy one CD, and I’d listen to it over and over.','Now, I pay a few dollars a month and have pretty much every song in the world on my phone.','It’s mainly because of streaming apps, but also because people want variety instead of one album.','As a result, it’s way easier to discover new music, but the downside is that people skip songs after ten seconds.','Personally, I love it, but I kind of miss that feeling of really knowing an album from start to finish.']},{t:'은행의 변화',s:['Banking in Korea has changed a lot over the past ten years.','In the past, you had to go to a branch and wait in line, sometimes for half an hour, just to transfer money.','These days, I do everything on an app, and I honestly can’t remember the last time I went inside a bank.','The obvious reason is mobile technology, but banks have also been closing branches to cut costs.','This has made banking super convenient for people like me, but it’s really hard for older people who aren’t comfortable with apps.','Personally, I think it’s a good change overall, but banks should keep at least some branches for people who need them.']}];
+  let og={g:0,seq:[]};
+  function ogR(){const g=OG[og.g];$('ogTitle').textContent='순서 맞추기: '+g.t;const ord=[0,1,2,3,4,5].sort((a,b)=>((a*5+og.g+2)%6)-((b*5+og.g+2)%6));$('ogPool').innerHTML=ord.map(i=>`<button type="button" data-i="${i}" ${og.seq.includes(i)?'disabled':''}>${esc(g.s[i])}</button>`).join('');const done=og.seq.length===6,right=og.seq.every((v,k)=>v===k);
+    $('ogSeq').innerHTML=og.seq.map((i,k)=>`<li class="${done&&right?'k'+(i+1):''} ${i!==k?'bad':''}"><span>${esc(g.s[i])}${done&&right?`<small>${LN[i]}</small>`:''}</span></li>`).join('');
+    $('ogPool').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{og.seq.push(+b.dataset.i);ogR()}));
+    $('ogMsg').innerHTML=done?(right?'<b style="color:var(--teal)">완벽합니다.</b> 시제 흐름도 보세요: 현재완료 → used to·would → 현재 → 원인 → 영향 → 현재형 의견.':'<b style="color:var(--rose)">빨간 테두리의 순서를 다시 생각해 보세요.</b>'):''}
+  $('ogReset').addEventListener('click',()=>{og.seq=[];ogR()});$('ogSwitch').addEventListener('click',()=>{og={g:(og.g+1)%OG.length,seq:[]};ogR()});ogR();
+
+  /* ---------- builder ---------- */
+  const BS=[['sum',1,'변화 요약','무엇이 얼마나 바뀌었나 (현재완료)'],['then',2,'과거','예전 모습 + 구체적인 예 하나 (used to / would)'],['now',3,'현재','지금 모습 (현재형, 추세는 현재진행)'],['cause',4,'원인','뻔한 원인 하나 + 덜 뻔한 원인 하나'],['pos',5,'영향 (긍정)','누구에게 어떻게 좋아졌나'],['neg',5,'영향 (부정)','무엇이 문제인가'],['view',6,'내 생각','나는 어떻게 보고, 어떻게 하나']];
+  const BEX={'쇼핑':{sum:'the way people shop has changed a lot over the past ten years',then:'my mom would spend a whole Saturday at the supermarket, and you had to go to a department store to try on clothes',now:'almost everything is ordered on an app, and even my parents get groceries delivered before seven',cause:'technology, obviously, but also because people are so much busier and delivery has become ridiculously fast',pos:'it’s way more convenient, especially for working people',neg:'a lot of small local shops have disappeared, and there’s so much packaging waste',view:'I love the convenience, but I still try to shop at the market near my place sometimes'}};
+  let bs=LS.get('opic-l13-builder',{t:'쇼핑',v:{}});
+  function bTopics(){$('bTopics').innerHTML=tps.map(t=>`<button type="button" data-t="${t}" aria-pressed="${t===bs.t}">${t}</button>`).join('');$('bTopics').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{bs.t=b.dataset.t;LS.set('opic-l13-builder',bs);bTopics();bGrid()}))}
+  function bGrid(){const v=bs.v[bs.t]||{};const d=CT[bs.t];$('bGrid').innerHTML=BS.map(s=>`<div class="k${s[1]}"><label for="bf_${s[0]}">${s[2]}<small>${s[3]}</small></label><textarea id="bf_${s[0]}" data-k="${s[0]}" placeholder="${s[0]==='cause'?esc(d[0][0]+' / '+d[0][2]):s[0]==='pos'?esc(d[1]):s[0]==='neg'?esc(d[2]):''}">${esc(v[s[0]]||'')}</textarea></div>`).join('');$('bGrid').querySelectorAll('textarea').forEach(t=>t.addEventListener('input',()=>{bs.v[bs.t]=bs.v[bs.t]||{};bs.v[bs.t][t.dataset.k]=t.value;LS.set('opic-l13-builder',bs);bOut()}));bOut()}
+  function bOut(){const v=bs.v[bs.t]||{};const C=t=>`<span class="cn">${t}</span>`;const s=(k,lab,c)=>(v[k]||'').trim()?`<span class="c${c}">${esc(v[k].trim())}</span>`:`<span class="muted">[${lab}]</span>`;
+    $('bOut').innerHTML=`${C('Wow,')} ${s('sum','요약',1)}. ${C('Back then,')} ${s('then','과거',2)}. ${C('These days, though,')} ${s('now','현재',3)}. ${C('I think the biggest reason is')} ${s('cause','원인',4)}. ${C('As a result,')} ${s('pos','긍정 영향',5)}. ${C('The downside, though, is that')} ${s('neg','부정 영향',5)}. ${C('Personally,')} ${s('view','내 생각',6)}.`;const w=wc($('bOut').textContent.replace(/\[[^\]]+\]/g,''));$('bMeta').innerHTML=`약 ${w}단어 · 예상 ${Math.round(w/130*60)}초 · 14번 수준이라면 80~115초(약 170~250단어)가 적당합니다. 과거와 원인 고리에 구체적인 예를 하나씩 더하면 길이가 맞춰집니다.`}
+  const TEN={'쇼핑':'the way people shop','음악 감상':'the way people listen to music','여행':'the way people travel','공원·여가':'the way people spend their free time outdoors','영화관':'movie theaters','은행':'banking','연락 방식':'the way people keep in touch','식습관':'the way people eat'};
+  $('bEx').addEventListener('click',()=>{const ex=BEX[bs.t]||{sum:`${TEN[bs.t]} ${/^the way|banking/.test(TEN[bs.t])?'has':'have'} changed a lot over the past ten years`,then:'',now:'',cause:CT[bs.t][0][0]+', and also '+CT[bs.t][0][2],pos:CT[bs.t][1],neg:CT[bs.t][2],view:''};bs.v[bs.t]=Object.assign({},ex);LS.set('opic-l13-builder',bs);bGrid()});
+  $('bClr').addEventListener('click',()=>{bs.v[bs.t]={};LS.set('opic-l13-builder',bs);bGrid()});
+  bTopics();bGrid();
+
+  /* ---------- timer ---------- */
+  const SQ=['How has the way people listen to music changed compared to when you were younger? What do you think caused those changes?','Compare how people kept in touch with friends in the past with how they do it now. How has this affected relationships?','How have parks or public spaces in your city changed over the years? Why do you think they changed?','How has the way people travel changed in your country? What are the good and bad sides of these changes?','How have movie theaters changed over the past decade? Why do you think people go less often, or more often?','How has banking changed in your country? How have these changes affected different groups of people?'];
+  const SEG=[[0,8],[8,30],[30,50],[50,72],[72,97],[97,115]];const SH=['무엇이 얼마나 바뀌었는지 한 문장.','Back then… used to / would. 구체적인 예 하나.','These days… 과거와 대비되게. 추세는 현재진행.','The obvious reason is…, but also…','As a result… The downside, though…','Personally… 나의 행동으로 마무리.'];
+  let sq=0,st=0,sid=null;const TOT=115;
+  function stR(){const stg=st===0?-1:st>=TOT?6:SEG.findIndex(g=>st>=g[0]&&st<g[1]);$('stLinks').innerHTML=LN.map((_,i)=>`<div class="k${i+1} ${i===stg?'on':i<stg?'done':''}"></div>`).join('');const el=$('stStage');if(stg<0){el.className='st-stage k1';el.innerHTML='시작 전<small>시작을 누르고 바로 말하세요.</small>'}else if(stg>=6){el.className='st-stage k6';el.innerHTML='시간 종료<small>내 생각 문장까지 마무리하세요.</small>'}else{el.className='st-stage k'+(stg+1);el.innerHTML=`${stg+1}. ${LN[stg]}<small>${SH[stg]}</small>`}const l=Math.max(0,TOT-st);$('stClock').textContent=Math.floor(l/60)+':'+String(l%60).padStart(2,'0')}
+  function stQ(){$('stNo').textContent=`질문 ${sq+1} / ${SQ.length}`;$('stQ').textContent=SQ[sq]}
+  function stReset(){clearInterval(sid);sid=null;st=0;$('stStart').textContent='시작';stR()}
+  $('stStart').addEventListener('click',()=>{if(sid){clearInterval(sid);sid=null;$('stStart').textContent='계속';return}if(st>=TOT)stReset();$('stStart').textContent='일시정지';if(st===0){st=0;}sid=setInterval(()=>{st++;stR();if(st>=TOT){clearInterval(sid);sid=null;$('stStart').textContent='다시'}},1000);st=Math.max(st,0.01);stR()});
+  $('stReset').addEventListener('click',stReset);$('stNextQ').addEventListener('click',()=>{sq=(sq+1)%SQ.length;stQ();stReset()});$('stPrev').addEventListener('click',()=>{sq=(sq+SQ.length-1)%SQ.length;stQ();stReset()});
+  stQ();stReset();
+
+  /* ---------- checker ---------- */
+  const SIG=[['has changed','have changed','changed a lot','a lot different','huge difference','the biggest difference','completely changed','has become','have become'],['back then','in the past','used to','when i was','years ago','would spend','would go','would write','would listen','would keep','at that time'],['these days','nowadays','now,','now ','today','more and more','currently','at the moment'],['because','due to','thanks to','the reason','the obvious reason','another reason','that\'s why people','since people','mainly'],['as a result','this means','which means','has made','the downside','the upside','on the other hand','one thing that worries','is great for','not so much for','because of this'],['personally','i think','in my opinion','honestly','overall','i feel','for me']];
+  const COMP=['more','less','fewer','than','as much as','as many as','compared to','way more','much more','far more','not as','twice as','cheaper','easier','faster','harder','better','worse','busier','bigger','smaller','longer','shorter','higher','lower','larger'];
+  const POS=['convenient','easier','cheaper','faster','better','great','upside','benefit','good thing','love'];
+  const NEG=['downside','disappeared','problem','worse','hard for','struggle','waste','worries','expensive','lonely','not so much'];
+  const kt=$('kText');kt.value=LS.get('opic-l13-check','');kt.addEventListener('input',()=>LS.set('opic-l13-check',kt.value));
+  $('kAL').addEventListener('click',()=>{kt.value=AL.map(a=>a[1]).join('').trim();kRun()});$('kIH').addEventListener('click',()=>{kt.value=IH;kRun()});$('kIM').addEventListener('click',()=>{kt.value=IM;kRun()});$('kRun').addEventListener('click',kRun);
+  function kRun(){const t=kt.value.trim();const o=$('kOut');if(!t){o.innerHTML='<p class="small" style="color:var(--rose)">먼저 붙여 넣으세요.</p>';return}const low=' '+t.toLowerCase().replace(/’/g,"'")+' ';
+    const find=(list)=>{const out=[];list.forEach(w=>{const re=new RegExp('(^|[^a-z])'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+(w.endsWith(' ')||w.endsWith(',')?'':'(?![a-z])'),'g');let x;while((x=re.exec(low))){out.push([x.index+x[1].length-1,w.trim().length])}});return out};
+    const hits=SIG.map(s=>find(s));const cRaw=find(COMP).sort((a,b)=>a[0]-b[0]);let comp=0,lastEnd=-1;cRaw.forEach(([p,l])=>{if(p>=lastEnd){comp++;lastEnd=p+l}else lastEnd=Math.max(lastEnd,p+l)});const pos=find(POS).length,neg=find(NEG).length;
+    const pastForms=(low.match(/\b(used to|would|went|had to|was|were|did|bought|wrote|paid)\b/g)||[]).length;const presForms=(low.match(/\b(these days|nowadays|now|is|are|do|does|get|gets|use|uses)\b/g)||[]).length;
+    const presentPast=(low.match(/\b(in the past|back then|when i was[^.]*?),?\s+(people|we|i|they)\s+(go|buy|use|write|pay|watch|listen|talk)\b/g)||[]).length;
+    const words=wc(t);const links=hits.filter(h=>h.length).length;
+    const LC={g:'var(--teal)',a:'var(--amber)',r:'var(--rose)'};
+    const rows=[['단어 수',words+'개','170~250',words>=170?'g':words>=110?'a':'r'],['6고리 신호',links+' / 6','6 / 6',links===6?'g':links>=4?'a':'r'],['원인 신호',hits[3].length+'개','2개 이상',hits[3].length>=2?'g':hits[3].length?'a':'r'],['영향 신호',hits[4].length+'개','2개 이상',hits[4].length>=2?'g':hits[4].length?'a':'r'],['영향의 양면',`긍정 ${pos} · 부정 ${neg}`,'둘 다 1 이상',pos&&neg?'g':pos||neg?'a':'r'],['비교 표현',comp+'개','3개 이상',comp>=3?'g':comp?'a':'r'],['과거 고리 시제',presentPast?'현재형 의심 '+presentPast:'양호','과거 고리는 과거형',presentPast?'r':'g']];
+    const marks=[];hits.forEach((h,i)=>h.forEach(([p,l])=>marks.push([p,l,'c'+(i+1)])));marks.sort((a,b)=>b[0]-a[0]);const used=[];let cursor=t.length;const pieces=[];marks.forEach(([s,len,c])=>{if(s<0)s=0;if(used.some(u=>s<u[1]&&s+len>u[0]))return;used.push([s,s+len]);pieces.unshift(esc(t.slice(s+len,cursor)));pieces.unshift(`<span class="${c}">${esc(t.slice(s,s+len))}</span>`);cursor=s});pieces.unshift(esc(t.slice(0,cursor)));
+    o.innerHTML=`<div class="metrics">${rows.map(r=>`<div style="--lc:${LC[r[3]]}"><small>${r[0]}</small><b>${r[1]}</b><span>목표 ${r[2]}</span></div>`).join('')}</div><div class="leg">${LN.map((l,i)=>`<span class="k${i+1}"><i></i>${l}</span>`).join('')}</div><div class="hlv">${pieces.join('')}</div><p class="small muted" style="margin:8px 0 0">신호 표현 목록 기반 추정입니다. 과거 고리 시제 점검은 ‘in the past / back then + people go’ 같은 단순 패턴만 잡습니다.</p>`}
+
+  /* ---------- myths ---------- */
+  const myths=[['과거와 현재의 차이를 많이 나열할수록 좋다','차이를 다섯 개 나열하는 것보다 하나의 차이를 원인과 영향까지 끌고 가는 것이 훨씬 AL답습니다. 변화의 개수가 아니라 고리의 개수가 중요합니다.'],['원인은 기술이라고만 하면 된다','기술은 거의 모든 변화의 뻔한 원인입니다. 덜 뻔한 원인 하나(생활 방식, 가치관, 경제)를 더하면 ‘생각하는 답변’이 됩니다.'],['영향은 좋은 점만 말해야 긍정적으로 들린다','양면을 보는 것이 분석입니다. 좋은 점만 말하면 광고, 나쁜 점만 말하면 불평처럼 들립니다.'],['내 생각은 “좋다” 한마디면 된다','내 생각 고리는 양면을 본 뒤의 결론입니다. 그리고 가능하면 나의 행동(I still try to…)으로 닫으면 추상적인 말이 구체적으로 마무리됩니다.'],['과거 이야기니까 전부 과거형으로','변화 답변은 과거, 현재, 변화 요약을 오갑니다. 과거 고리만 과거형이고, 현재 고리는 현재형, 요약과 영향은 현재완료가 자연스럽습니다.'],['사회 이야기를 해야 하니 내 경험은 빼야 한다','과거 고리와 내 생각 고리에 내 경험을 넣으면 오히려 구체적이고 설득력 있는 답이 됩니다. 일반론과 내 경험을 오가는 것이 AL 화자의 특징입니다.']];
+  const my=$('mythGrid');myths.forEach(m=>{const b=document.createElement('button');b.type='button';b.className='myth';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="inner"><div class="face front"><div class="tag">함정</div><p>${m[0]}</p><div class="hint">눌러서 이유 보기</div></div><div class="face back"><div class="tag">이렇게 하세요</div><p>${m[1]}</p></div></div>`;b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));my.appendChild(b)});
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'IH와 AL을 가르는 변화 사슬의 고리는?',o:['요약과 과거','과거와 현재','원인과 영향','현재와 내 생각'],a:2,e:'과거와 현재는 IM도 말합니다. 원인과 영향까지 이어 가는지가 갈림길입니다.'},
+    {q:'변화 요약 문장에 가장 자연스러운 시제는?',o:['과거형','현재완료','미래형','과거완료'],a:1,e:'The way people shop has changed a lot. 과거부터 지금까지의 변화를 요약합니다.'},
+    {q:'“More and more people ___ from home these days.”',o:['work','are working','worked','had worked'],a:1,e:'진행 중인 추세는 현재진행이 잘 어울립니다.'},
+    {q:'비교급을 강조할 수 없는 단어는?',o:['much','way','far','very'],a:3,e:'very more는 틀립니다. much/far/way more.'},
+    {q:'원인을 말할 때 이 강의가 권하는 방식은?',o:['기술 하나만','다섯 개 모두 나열','뻔한 원인 하나 + 덜 뻔한 원인 하나','원인은 생략'],a:2,e:'두 개가 적당하고, 덜 뻔한 원인이 ‘생각하는 답변’이라는 인상을 줍니다.'},
+    {q:'영향 고리를 AL답게 만드는 것은?',o:['좋은 점만 강조','양면과 대상(누구에게 좋고 나쁜지)','통계 수치 암기','과거형 사용'],a:1,e:'It’s great for…, but not so much for…처럼 대상을 나누면 분석이 됩니다.'},
+    {q:'“People ___ write letters, but now they text.”에 알맞은 것은?',o:['are used to','used to','use to','were using to'],a:1,e:'과거 습관은 used to + 동사원형.'},
+    {q:'변화 문항이 7주차 의견 문항으로 가는 다리인 이유는?',o:['같은 어휘를 써서','나의 경험에서 사람들 일반으로 시야를 넓히는 연습이라서','길이가 같아서','시제가 같아서'],a:1,e:'원인과 영향을 말하는 순간 개인을 넘어 사회를 이야기하게 됩니다. 추상화의 첫 단계입니다.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${esc(item.q)}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'13강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['변화 문항','change question','과거와 현재를 비교하고 변화를 설명하는 문항. 콤보 둘째의 변형과 14번.'],['6고리 사슬','change chain','요약 → 과거 → 현재 → 원인 → 영향 → 내 생각.'],['변화 요약','summary sentence','무엇이 얼마나 바뀌었는지 첫 문장으로. 현재완료.'],['추세의 현재진행','trend progressive','More and more people are -ing처럼 진행 중인 변화를 말하는 현재진행.'],['비교급 강조','comparative intensifier','much, far, way, a lot + 비교급. very는 불가.'],['추세 동사','trend verbs','go up, drop, replace, disappear, become more common.'],['원인 렌즈','cause lenses','기술, 경제, 생활 방식, 가치관·인식, 사회·제도.'],['양면 영향','two-sided effects','긍정적 영향과 부정적 영향, 그리고 대상별 차이.'],['추상화','abstraction','개인 경험에서 사람들 일반이나 사회로 시야를 넓히는 것. Superior로 가는 단계.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>

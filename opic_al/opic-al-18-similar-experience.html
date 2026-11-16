@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 18강 · 유사 경험 말하기 (13번)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.rp{background:var(--violet-soft);box-shadow:inset 0 -2px 0 var(--violet);border-radius:3px}
+.pa{background:var(--teal-soft);box-shadow:inset 0 -2px 0 var(--teal);border-radius:3px}
+.er{background:var(--rose-soft);outline:1px dashed var(--rose);border-radius:3px}
+.cn2{background:var(--amber-soft);box-shadow:inset 0 -2px 0 var(--amber);border-radius:3px}
+
+/* hero */
+.hblock{border-radius:12px;padding:10px 12px;font-family:var(--serif);font-size:15px;line-height:1.65;margin-bottom:8px}
+.hblock small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-bottom:2px;font-weight:600}
+.h12{background:var(--surface2);border-left:4px solid var(--violet)}
+.h13{background:var(--surface2);border-left:4px solid var(--tc)}
+.switch{display:flex;align-items:center;gap:8px;justify-content:center;font-size:13px;color:var(--muted);margin:4px 0 8px}
+.switch i{display:inline-block;width:40px;height:2px;background:var(--line)}
+.hcap{font-size:13.5px;color:var(--muted);min-height:2.6em;margin:6px 0 0}
+
+/* set strip */
+.set3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+@media (max-width:760px){.set3{grid-template-columns:1fr}}
+.set3 div{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--surface);border-top:4px solid var(--cc);position:relative}
+.set3 .n{font-family:var(--serif);font-size:28px;color:var(--cc);line-height:1}
+.set3 h4{margin:6px 0 4px;font-size:16.5px}
+.set3 .m{font-size:12.5px;font-weight:600;color:var(--cc);margin-bottom:6px}
+.set3 p{font-size:14px;margin:0;color:var(--muted)}
+
+/* structure */
+.str6{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:16px 0}
+@media (max-width:860px){.str6{grid-template-columns:repeat(3,1fr)}}
+.str6 div{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--surface);border-top:4px solid var(--cc)}
+.str6 b{display:block;font-size:14.5px}
+.str6 span{font-size:12.5px;color:var(--muted)}
+.str6 em{display:block;font-style:normal;font-family:var(--serif);font-size:13.5px;margin-top:6px;color:var(--text)}
+
+/* openers */
+.op3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+@media (max-width:760px){.op3{grid-template-columns:1fr}}
+.op3 div{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface);border-left:4px solid var(--cc)}
+.op3 h4{margin:0 0 6px;font-size:15.5px}
+.op3 ul{list-style:none;padding:0;margin:0}
+.op3 li{font-family:var(--serif);font-size:15px;padding:5px 0;border-top:1px solid var(--line)}
+
+/* map */
+.mapx{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin:18px 0}
+.tps{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tps button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer}
+.tps button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+.chain3{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;gap:6px;align-items:stretch}
+@media (max-width:760px){.chain3{grid-template-columns:1fr}.chain3 .ar{display:none}}
+.chain3 .c{border-radius:12px;padding:12px;background:var(--surface2);border-top:3px solid var(--cc)}
+.chain3 .c small{display:block;font-size:12px;font-weight:600;color:var(--cc);margin-bottom:4px}
+.chain3 .c p{font-family:var(--serif);font-size:15px;margin:0}
+.chain3 .ar{display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:18px}
+.seeds{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+@media (max-width:640px){.seeds{grid-template-columns:1fr}}
+.seeds div{border:1px dashed var(--teal);border-radius:12px;padding:10px 12px;background:var(--teal-soft)}
+.seeds b{font-size:13.5px;display:block;margin-bottom:4px}
+.seeds span{font-family:var(--serif);font-size:15px}
+
+/* answers */
+.ans{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:20px 24px}
+.ans .txt{font-family:var(--serif);font-size:18px;line-height:1.9;margin:0}
+
+/* drills */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:18px 0}
+.drill-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dq{font-family:var(--serif);font-size:18.5px;line-height:1.55;margin:4px 0 14px}
+.dq small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted);margin-bottom:4px}
+.dopts{display:grid;gap:8px}
+.dopts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-family:var(--serif);font-size:16.5px}
+.dopts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.dopts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.dopts button:disabled{cursor:default}
+.dfb{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15.5px;display:none}
+.dfb.on{display:block}
+.pips{display:flex;gap:4px}
+.pips i{width:10px;height:10px;border-radius:3px;background:var(--line)}
+.pips i.ok{background:var(--teal)}.pips i.ng{background:var(--rose)}.pips i.cur{outline:2px solid var(--amber);outline-offset:1px}
+
+/* full set */
+.fset{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:860px){.fset{grid-template-columns:1fr}}
+.fs-card{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:22px 24px}
+.fs-steps{display:flex;gap:6px;margin-bottom:10px}
+.fs-steps span{flex:1;text-align:center;font-size:12.5px;padding:5px;border-radius:8px;background:var(--surface);color:var(--muted);border-top:3px solid var(--line)}
+.fs-steps span.on{border-top-color:var(--amber);color:var(--text);font-weight:600}
+.fs-steps span.done{border-top-color:var(--teal)}
+.fs-card .q{font-family:var(--serif);font-size:19px;line-height:1.55;margin:6px 0 12px}
+.fs-card .hint{font-size:14px;background:var(--surface);border-radius:10px;padding:10px 12px}
+.fs-card label{display:flex;gap:10px;align-items:flex-start;padding:5px 0;font-size:14.5px;cursor:pointer}
+.fs-card input{width:17px;height:17px;margin-top:3px;accent-color:var(--teal)}
+.fs-side{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.fs-side .clock{font-family:var(--serif);font-size:48px;font-variant-numeric:tabular-nums;line-height:1}
+.fs-side .bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.fs-side .bar i{display:block;height:100%;width:0;background:var(--amber);transition:width 1s linear}
+.tsel{display:flex;flex-wrap:wrap;gap:6px}
+.tsel button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer}
+.tsel button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+.tsel button.done::after{content:" ✓";color:var(--teal)}
+
+/* checker */
+.chk{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.chk textarea{width:100%;min-height:140px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:16.5px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin:14px 0}
+.metrics div{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:3px solid var(--lc,var(--line))}
+.metrics small{display:block;font-size:12.5px;color:var(--muted)}
+.metrics b{display:block;font-family:var(--serif);font-size:21px;line-height:1.2;font-weight:600}
+.metrics span{font-size:12px;color:var(--faint)}
+.hlv{font-family:var(--serif);font-size:17px;line-height:1.9;background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:10px}
+.leg{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);margin:8px 0}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;6주차 18강&nbsp;&nbsp;유사 경험 말하기 (13번)</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">13번이 까다로운 세 가지 이유</a></li>
+      <li><a href="#set">롤플레이 세트: 11 → 12 → 13</a></li>
+      <li><a href="#reset">모드 전환: 시제 리셋</a></li>
+      <li><a href="#open">“Have you ever…?” 첫 문장</a></li>
+      <li><a href="#structure">13번 답변 구조</a></li>
+      <li><a href="#map">주제별 세트 지도와 이야기 씨앗</a></li>
+      <li><a href="#compare">IM, IH, AL 답변 비교</a></li>
+      <li><a href="#drills">훈련: 시제 리셋과 첫 문장</a></li>
+      <li><a href="#fullset">11–13번 세트 리허설</a></li>
+      <li><a href="#checker">13번 점검기</a></li>
+      <li><a href="#myths">13번의 함정</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">6주차 정리와 과제</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">6주차 롤플레이 · 18강</p>
+      <h1>연기를 멈추고, 이야기를 시작하세요</h1>
+      <p class="lede">12번에서 could와 would로 상대와 협상하던 사람이, 13번에서는 갑자기 자신의 과거 경험을 이야기해야 합니다. 같은 주제인데 말하는 방식이 완전히 바뀝니다. 롤플레이의 현재·가정 모드에서 서사의 과거 모드로. 이 전환을 놓치면 시제가 무너지고, 시험 후반의 피로까지 겹쳐 3강 진단에서 가장 많이 무너진 자리가 됩니다.</p>
+      <div class="meta-row"><span>학습 시간 약 90분</span><span>대상 문항: 13번</span><span>6주차 마지막</span></div>
+    </div>
+    <div class="wave-card" aria-label="12번에서 13번으로의 모드 전환">
+      <div class="wave-switch" role="group" aria-label="전환 결과">
+        <button type="button" data-v="f" aria-pressed="false">전환 실패</button>
+        <button type="button" data-v="s" aria-pressed="true">전환 성공</button>
+      </div>
+      <div class="hblock h12"><small>12번 마지막 (롤플레이 모드)</small><span class="rp">Or, if neither of those works, I could sell the tickets</span> and take you out to dinner instead. <span class="rp">What do you think?</span> Again, I’m so sorry.</div>
+      <div class="switch"><i></i>That’s the end of the situation. Have you ever had a similar problem?<i></i></div>
+      <div class="hblock h13" id="h13"></div>
+      <p class="hcap" id="hcap"></p>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>6주차의 마지막 강의입니다. 16강(11번)과 17강(12번)에 이어 13번을 다루고, 세 문항을 하나의 세트로 연결해 리허설합니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>11~13번이 같은 주제로 이어진다는 것을 알고, 13번 질문을 미리 예상할 수 있다.</li>
+      <li>12번의 롤플레이 모드(현재, could, would)에서 13번의 서사 모드(과거)로 첫 문장부터 전환할 수 있다.</li>
+      <li>“Have you ever…?”에 Yes, Not exactly, No 세 가지 상황별로 자연스럽게 시작할 수 있다.</li>
+      <li>12강의 문제 상황 템플릿으로 13번을 말하며, 특히 ‘어떻게 대처했는지’를 구체적으로 말할 수 있다.</li>
+      <li>11→12→13번을 쉬지 않고 이어서 말할 수 있다.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>13번이 까다로운 세 가지 이유</h2>
+    <p>13번은 1강 15문항 지도에서 ‘롤플레이 상황을 과거 서사로 전환할 수 있는가’를 보는 문항이었습니다. 문항 자체는 4주차에 연습한 경험 문항과 같은데, 실제로는 훨씬 많이 무너집니다. 이유는 세 가지입니다.</p>
+    <ul class="prose">
+      <li><strong>모드 전환</strong>: 바로 앞 12번에서 현재형과 could, would로 협상하던 입이 그대로 13번에 넘어갑니다. 첫 문장에서 과거로 리셋하지 않으면 이야기 전체가 현재형이 됩니다.</li>
+      <li><strong>피로</strong>: 13번은 시험 30분쯤, 롤플레이 두 문항을 막 끝낸 뒤 나옵니다. 1강에서 본 IH 프로필의 후반 붕괴가 바로 여기서 일어납니다.</li>
+      <li><strong>준비 부족</strong>: 많은 수험자가 롤플레이 11, 12번은 연습하지만 13번은 “그때 생각하면 되겠지” 하고 넘깁니다. 하지만 13번 질문은 12번 상황에서 거의 예측할 수 있습니다.</li>
+    </ul>
+    <div class="callout">
+      <strong>13번은 예측 가능한 경험 문항입니다</strong>
+      <p>12번이 표 날짜 착오였다면 13번은 “예약이나 표 때문에 문제를 겪은 적이 있나요?”, 12번이 배송 오류였다면 “구매한 물건에 문제가 있었던 적이 있나요?”. 그래서 13번 대비는 12강의 문제 상황 템플릿 두세 개를 단단하게 준비해 두는 것으로 대부분 끝납니다. 이번 강의의 핵심은 그 이야기를 <em>12번 직후에, 지친 상태에서, 시제를 리셋하며</em> 꺼내는 연습입니다.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="set">
+    <p class="sec-no">2</p>
+    <h2>롤플레이 세트: 11 → 12 → 13</h2>
+    <p>롤플레이 세 문항은 보통 하나의 주제로 이어집니다. 각 문항이 요구하는 말하기 모드가 다르다는 것이 핵심입니다.</p>
+    <div class="set3">
+      <div style="--cc:var(--sky)"><div class="n">11</div><h4>정보 요청</h4><div class="m">질문 모드 · 16강</div><p>현재형 의문문. 상대에게 묻는다. 정확성과 다양성.</p></div>
+      <div style="--cc:var(--violet)"><div class="n">12</div><h4>문제 해결</h4><div class="m">협상 모드 · 17강</div><p>현재·가정(could, would). 상대와 해결한다. 대안 2~3개.</p></div>
+      <div style="--cc:var(--teal)"><div class="n">13</div><h4>유사 경험</h4><div class="m">서사 모드 · 10~12강</div><p>과거형. 나의 이야기를 한다. 5단 구조와 해결 과정.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="reset">
+    <p class="sec-no">3</p>
+    <h2>모드 전환: 시제 리셋</h2>
+    <p>13번의 첫 문장은 ‘시제 리셋 버튼’입니다. 5강에서 배운 대로 과거 이야기는 시간의 닻을 내리는 데서 시작합니다. 13번의 첫 문장에 반드시 세 가지를 넣으세요.</p>
+    <ul class="prose">
+      <li><strong>연결</strong>: 질문에 답하며 12번과의 공통점을 짚기. <span class="en">Actually, yes. Something really similar happened to me…</span></li>
+      <li><strong>시점</strong>: 구체적인 과거 시점. <span class="en">…a couple of years ago, …last summer, …back when I was in college.</span></li>
+      <li><strong>과거 동사</strong>: 첫 문장의 동사를 과거형으로. <span class="en">happened, had, was</span></li>
+    </ul>
+    <p>이 세 가지가 들어간 첫 문장을 말하면 입이 서사 모드로 바뀝니다. 그다음부터는 10강의 5단 구조를 따라가면 됩니다. 반대로 첫 문장을 <span class="en">Yes, I have a similar problem.</span>처럼 현재형으로 시작하면, 이어지는 문장도 현재형으로 미끄러지기 쉽습니다.</p>
+    <div class="callout rose">
+      <strong>롤플레이 표현이 남아 있는지 확인</strong>
+      <p>13번에서 <span class="en">One option is…, What do you think?, I could…</span>가 나온다면 아직 협상 모드입니다. 13번의 could는 과거 이야기 속에서 “할 수 있었다”는 뜻일 때만 자연스럽습니다. 11절 점검기는 13번 답변 앞부분에 롤플레이 표현이 남아 있는지 따로 표시합니다.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="open">
+    <p class="sec-no">4</p>
+    <h2>“Have you ever…?” 첫 문장</h2>
+    <p>13번 질문은 대개 Have you ever…?로 시작합니다. 비슷한 경험이 있는지에 따라 세 가지로 시작할 수 있습니다. 어떤 경우든 결국은 과거 이야기 하나를 해야 한다는 점은 같습니다.</p>
+    <div class="op3">
+      <div style="--cc:var(--teal)"><h4>Yes: 비슷한 경험이 있을 때</h4><ul><li>Actually, yes. Something really similar happened to me last year.</li><li>Oh, definitely. I had almost the exact same problem a few years ago.</li><li>That reminds me of a time when…</li></ul></div>
+      <div style="--cc:var(--amber)"><h4>Not exactly: 조금 다를 때</h4><ul><li>Not exactly the same, but I did have a problem with a reservation once.</li><li>It wasn’t a concert, but I had a really similar thing happen with a train ticket.</li></ul></div>
+      <div style="--cc:var(--violet)"><h4>No: 없을 때 (9강 연결 다리)</h4><ul><li>I’ve been pretty lucky, so I’ve never had that exact problem, but my friend did, and I was right there.</li><li>I haven’t, but I did have a different kind of problem once, when…</li></ul></div>
+    </div>
+    <div class="callout violet">
+      <strong>“No, I haven’t.”로 끝내지 마세요</strong>
+      <p>없다고 말하고 끝내면 경험 문항 하나를 통째로 버리는 셈입니다. 9강의 연결 다리처럼 친구의 경험, 조금 다른 종류의 문제로 다리를 놓고 반드시 과거 이야기 하나를 하세요. 평가자가 듣고 싶은 것은 경험의 유무가 아니라 과거 서사를 끌고 가는 능력입니다.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="structure">
+    <p class="sec-no">5</p>
+    <h2>13번 답변 구조</h2>
+    <p>13번은 12강의 문제 상황 템플릿에 연결 문장을 앞뒤로 붙인 모양입니다. 질문의 <span class="en">how did you deal with it?</span>에 답하는 4단계(대응·결과)가 가장 중요합니다.</p>
+    <div class="str6">
+      <div style="--cc:var(--amber)"><b>0. 연결</b><span>Yes + 공통점 + 시점</span><em>Actually, yes. Something really similar happened…</em></div>
+      <div style="--cc:var(--sky)"><b>1. 배경</b><span>무엇을 하려고 했나</span><em>I was going to visit my grandparents…</em></div>
+      <div style="--cc:var(--violet)"><b>2. 전개</b><span>순조로워 보이던 상황</span><em>I’d booked a ticket a month in advance…</em></div>
+      <div style="--cc:var(--rose)"><b>3. 문제</b><span>무엇이 잘못됐나</span><em>It turned out I’d booked it for the next day.</em></div>
+      <div style="--cc:var(--teal)"><b>4. 대응·결과</b><span>어떻게 대처했고 어떻게 끝났나</span><em>So I went straight to the counter and explained…</em></div>
+      <div style="--cc:var(--lime)"><b>5. 느낀 점·연결</b><span>교훈 + 12번과 잇기</span><em>Ever since then, I always double-check…</em></div>
+    </div>
+    <p>마지막 문장에서 12번 상황과 가볍게 연결하면 세트가 하나의 흐름으로 마무리됩니다. <span class="en">…so I guess I should have remembered that before booking those concert tickets!</span> 이런 한 줄은 대화의 맥락을 끝까지 쥐고 있다는 인상을 줍니다. 단, 억지로 붙이지 말고 자연스러울 때만 쓰세요.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="map">
+    <p class="sec-no">6</p>
+    <h2>주제별 세트 지도와 이야기 씨앗</h2>
+    <p>16강과 17강의 여섯 주제로 11→12→13번 세트가 어떻게 이어지는지, 그리고 13번에 쓸 수 있는 이야기 씨앗을 정리했습니다. 이야기 씨앗은 12강의 문제 상황 템플릿으로 키우면 됩니다. 내 실제 경험 중 비슷한 것으로 바꿔 두세요.</p>
+    <div class="mapx">
+      <div class="tps" id="tps"></div>
+      <div class="chain3" id="chain"></div>
+      <div class="seeds" id="seeds"></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="compare">
+    <p class="sec-no">7</p>
+    <h2>IM, IH, AL 답변 비교</h2>
+    <p>12번(공연 표 날짜 착오) 직후의 13번 질문: <span class="en">That’s the end of the situation. Have you ever had a problem with tickets or a reservation? Tell me what happened and how you dealt with it.</span> 초록은 과거 서사, 빨간 점선은 시제·모드 오류, 주황은 연결 문장입니다.</p>
+    <div class="tabs" role="tablist" id="aTabs"></div>
+    <div class="ans" id="aBox" role="tabpanel"></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="drills">
+    <p class="sec-no">8</p>
+    <h2>훈련: 시제 리셋과 첫 문장</h2>
+    <div class="drill">
+      <div class="drill-head"><strong>13번에 맞는 문장은?</strong><div class="pips" id="tPips"></div></div>
+      <div class="dq" id="tQ"></div><div class="dopts" id="tO"></div><div class="dfb" id="tFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="tNext">다음 문제</button><button type="button" class="reset" id="tReset">처음부터</button></div>
+    </div>
+    <div class="drill">
+      <div class="drill-head"><strong>가장 좋은 첫 문장은?</strong><div class="pips" id="oPips"></div></div>
+      <div class="dq" id="oQ"></div><div class="dopts" id="oO"></div><div class="dfb" id="oFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="oNext">다음 문제</button><button type="button" class="reset" id="oReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="fullset">
+    <p class="sec-no">9</p>
+    <h2>11–13번 세트 리허설</h2>
+    <p>6주차의 통합 훈련입니다. 주제를 고르고 시작하면 11번(60초) → 12번(90초) → 13번(90초)이 이어집니다. 실제 시험처럼 문항 사이에 쉬지 말고 ‘다음 문항’을 누르세요. 문항마다 체크리스트 세 개가 있습니다. 녹음해 두면 13번의 첫 문장에서 모드가 잘 바뀌었는지 들어 볼 수 있습니다.</p>
+    <div class="fset">
+      <div class="fs-card" id="fsCard"></div>
+      <div class="fs-side">
+        <div class="small muted">주제</div>
+        <div class="tsel" id="fsTopics"></div>
+        <div class="clock" id="fsClock">1:00</div>
+        <div class="bar"><i id="fsBar"></i></div>
+        <div class="small" id="fsHint">주제를 고르고 시작하세요.</div>
+        <div class="ctrl"><button type="button" class="btn primary" id="fsStart">시작</button><button type="button" class="btn" id="fsNext">다음 문항</button><button type="button" class="btn" id="fsSpeak">질문 듣기</button></div>
+        <div class="ctrl"><button type="button" class="reset" id="fsReset">세트 처음부터</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="checker">
+    <p class="sec-no">10</p>
+    <h2>13번 점검기</h2>
+    <p>받아 적은 13번 답변을 넣으면 연결 문장, 과거 시점, 과거 동사와 현재형 미끄러짐, 롤플레이 표현의 잔재, 대응·결과 신호, 느낀 점을 점검합니다.</p>
+    <div class="chk">
+      <div class="ctrl" style="margin-bottom:8px"><button type="button" class="btn" id="kAL">AL 답변 넣기</button><button type="button" class="btn" id="kIH">IH 답변 넣기</button><button type="button" class="btn" id="kFail">모드 전환 실패 넣기</button></div>
+      <textarea id="kText" placeholder="받아 적은 13번 답변을 붙여 넣으세요."></textarea>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn primary" id="kRun">점검</button></div>
+      <div id="kOut"></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="myths">
+    <p class="sec-no">11</p>
+    <h2>13번의 함정</h2>
+    <p>카드를 눌러 뒤집어 보세요.</p>
+    <div class="myths" id="mythGrid"></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">12</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">13</p>
+    <h2>6주차 정리와 과제</h2>
+    <p>6주차에 롤플레이 세 문항을 모두 다뤘습니다. 11번은 질문 모드(정확하고 다양한 의문문), 12번은 협상 모드(짧은 사과, 대안 두세 개, could와 would), 13번은 서사 모드(시제 리셋, 문제 상황 템플릿)였습니다. 세 모드를 오가는 능력 자체가 1강에서 말한 ‘다양한 과제에 걸친 유지력’입니다. 7주차에는 시험의 마지막, AL 판별의 정점인 14~15번 의견 전개로 넘어갑니다.</p>
+    <div class="assign">
+      <h3 style="margin-top:0">18강 과제와 6주차 통합 점검</h3>
+      <ol>
+        <li>8절 두 훈련을 모두 맞힐 때까지 반복합니다.</li>
+        <li>6절 지도의 여섯 주제마다 13번용 이야기 씨앗을 내 실제 경험으로 바꿔 한 줄씩 적습니다. 12강 문제 상황 템플릿 빌더로 그중 두 개를 완성합니다.</li>
+        <li>4절의 세 가지 첫 문장(Yes, Not exactly, No)을 내 이야기에 맞게 하나씩 만들어 둡니다.</li>
+        <li><strong>6주차 통합 녹음</strong>: 9절 세트 리허설을 여섯 주제 모두 한 번씩 합니다. 그중 두 세트를 녹음해 13번을 받아 적고 10절 점검기에 넣습니다. 롤플레이 잔재 0개, 현재형 확인 필요 1개 이하가 목표입니다.</li>
+        <li>3강 기준선의 11~13번을 다시 듣고, 지금의 세트 녹음과 비교해 가장 크게 달라진 점 세 가지를 적어 둡니다.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>19강. 의견 제시 구조: 입장 → 근거 2개 → 반론 인정 → 재강조</h4></div>
+      <span class="pill">7주차 시작</span>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">14</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 나온 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: 시제 리셋, 모드, 세트">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 18강. 롤플레이 세트의 주제 연결과 13번 질문은 학습용으로 새로 작성한 예시이며 실제 시험 문항이 아닙니다. 11~13번이 같은 주제로 이어지는 구성은 수험자들 사이에서 일반적으로 보고되는 형태입니다. 점검기는 단어 패턴 기반 추정이고, 입력한 내용은 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  const wc=t=>(String(t).match(/[A-Za-z’']+/g)||[]).length;
+
+  /* ---------- hero ---------- */
+  const H13={f:{c:'var(--rose)',html:'<small style="color:var(--rose)">13번 첫머리: 전환 실패</small><span class="er">Yes, I have a similar problem.</span> I <span class="er">book</span> a train ticket, and the date <span class="er">is</span> wrong. <span class="er">I could go to the counter</span>, and they <span class="er">would help me</span>. <span class="er">What do you think?</span>',cap:'12번의 현재형과 could·would, What do you think?가 그대로 남았습니다. 과거 경험을 말하는데 시제가 없습니다.'},s:{c:'var(--teal)',html:'<small style="color:var(--teal)">13번 첫머리: 전환 성공</small><span class="cn2">Actually, yes. Something really similar happened to me a couple of years ago</span>, but with a train ticket. I <span class="pa">was going to</span> visit my grandparents in Busan for Chuseok, and I<span class="pa">’d booked</span> a KTX ticket online about a month in advance.',cap:'연결 + 과거 시점 + 과거 동사로 시작했습니다. 첫 문장이 시제 리셋 버튼 역할을 합니다.'}};
+  function hero(v){const h=H13[v];$('h13').style.setProperty('--tc',h.c);$('h13').innerHTML=h.html;$('hcap').textContent=h.cap;document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}
+  document.querySelectorAll('.hero .wave-switch button').forEach(b=>b.addEventListener('click',()=>hero(b.dataset.v)));hero('s');
+
+  /* ---------- set map ---------- */
+  const TP=[
+    {k:'공연 표',q11:'You want to buy tickets for a concert. Call the ticket office and ask three or four questions.',q12:'Your tickets turn out to be for the wrong date. Call your friend, explain, and offer two or three alternatives.',q13:'Have you ever had a problem with tickets or a reservation? What happened, and how did you deal with it?',s11:'시간, 가격, 좌석, 수령 방법 묻기',s12:'날짜 착오 → 내일 오기 / 교환 / 팔고 저녁 대접',s13:'표·예약 문제 경험',seeds:[['KTX 날짜 착오','I’d booked the ticket for the next day, so I had to wait on a waiting list for two hours.'],['영화 예매 착오 (9강)','I realized I had booked tickets for the wrong day, so we ended up watching a random comedy.']]},
+    {k:'헬스장',q11:'You want to join a new gym. Call the gym and ask three or four questions.',q12:'You signed up, but now you have to move to another city. Call the gym, explain, and offer two or three alternatives.',q13:'Have you ever had to cancel a membership or subscription? What happened?',s11:'시간, 가격, 수업, 주차 묻기',s12:'해지 요청 → 환불 / 양도 / 일시 정지',s13:'회원권·구독 해지 경험',seeds:[['앱 구독 해지','The app made it almost impossible to cancel, so I ended up emailing customer service three times.'],['요가원 환불','I hurt my back, so I asked to pause my membership, and they gave me two extra months.']]},
+    {k:'새 카페',q11:'A new café opened near your home. Visit and ask the staff three or four questions.',q12:'You reserved a table for six, but when you arrive, there’s no record of it. Explain and offer some solutions.',q13:'Have you ever had a problem at a restaurant or café? What happened?',s11:'영업시간, 추천 메뉴, 작업 공간, 예약 묻기',s12:'예약 누락 → 다른 자리 / 대기 / 할인',s13:'식당·카페 문제 경험',seeds:[['주문 누락','Our food never came, and it turned out the order had never gone through.'],['노트북에 커피','I knocked my coffee over onto my laptop, and the staff helped me dry it off.']]},
+    {k:'호텔',q11:'You want to book a hotel for your vacation. Call the hotel and ask three or four questions.',q12:'When you arrive, the hotel can’t find your reservation. Explain and offer some solutions.',q13:'Have you ever had a problem with a place you stayed while traveling? What happened?',s11:'체크인, 조식, 시설, 위치 묻기',s12:'예약 누락 → 다른 방 / 다른 호텔 / 보상',s13:'숙소 문제 경험',seeds:[['사진과 다른 숙소','The room looked nothing like the photos, so I asked to switch, and they moved us to a bigger one.'],['한밤중 체크인','We arrived at midnight and the front desk was closed, so we had to call the owner.']]},
+    {k:'가구점',q11:'You want to buy a new sofa. Call the furniture store and ask three or four questions.',q12:'Your new sofa was delivered, but it’s damaged. Call the store, explain, and offer some solutions.',q13:'Have you ever had a problem with something you bought? How did you solve it?',s11:'옵션, 배송, 조립, 반품 묻기',s12:'파손 → 교환 / 환불 / 할인',s13:'구매 물건 문제 경험',seeds:[['노트북 대신 키보드 (12강)','There was a keyboard inside instead of a laptop, so I asked for a manager, and they sent a new one the next day.'],['사이즈 착오','The jacket didn’t fit at all, and the store first refused to exchange it.']]},
+    {k:'어학원',q11:'You want to sign up for a language class. Call the school and ask three or four questions.',q12:'You registered, but now your work schedule has changed. Call the school, explain, and offer some solutions.',q13:'Have you ever had to change your plans because of work or school? What happened?',s11:'일정, 레벨, 가격, 인원 묻기',s12:'일정 충돌 → 반 변경 / 온라인 / 연기',s13:'일·학업 때문에 계획을 바꾼 경험',seeds:[['출장으로 여행 취소','I had to cancel a trip with friends because of a last-minute business trip.'],['시험 때문에 결혼식 불참','I missed my cousin’s wedding because my final exam was on the same day.']]}
+  ];
+  let mt=0;
+  function map(){$('tps').innerHTML=TP.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===mt}">${t.k}</button>`).join('');$('tps').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{mt=+b.dataset.i;map()}));const t=TP[mt];
+    $('chain').innerHTML=`<div class="c" style="--cc:var(--sky)"><small>11번 · 질문</small><p>${esc(t.s11)}</p></div><div class="ar">→</div><div class="c" style="--cc:var(--violet)"><small>12번 · 해결</small><p>${esc(t.s12)}</p></div><div class="ar">→</div><div class="c" style="--cc:var(--teal)"><small>13번 · 경험</small><p>${esc(t.s13)}</p><p class="en" style="font-size:13.5px;color:var(--muted);margin-top:6px">${esc(t.q13)}</p></div>`;
+    $('seeds').innerHTML=t.seeds.map(s=>`<div><b>이야기 씨앗: ${s[0]}</b><span>${esc(s[1])}</span></div>`).join('')}
+  map();
+
+  /* ---------- answers ---------- */
+  const AL='Actually, yes. Something really similar happened to me a couple of years ago, but with a train ticket. I was going to visit my grandparents in Busan for Chuseok, and I’d booked a KTX ticket online about a month in advance. When I got to Seoul Station, though, I couldn’t find my train anywhere on the board. It turned out I’d booked the ticket for the next day. Everything was sold out because of the holiday, and I honestly started to panic. So I went straight to the ticket counter and explained what happened. The staff member was really patient. She said she couldn’t change it to that day, but she put me on a waiting list and told me to check back every half hour. I sat there for almost two hours, and finally, someone canceled, and I got a seat. Looking back, it was stressful, but I learned my lesson. Ever since then, I always double-check the date before I pay, so I guess I should have remembered that before booking those concert tickets!';
+  const IH='Yes, I had a similar problem. Last year, I booked a train ticket to Busan. But when I went to the station, the ticket was for the next day. I was very surprised. So I talk to the staff, and they put me on the waiting list. I waited two hours, and finally I got a seat. It was a good experience.';
+  const IM='Yes. I have similar problem. Last year I buy train ticket. The date is wrong. I go to station. I wait. I get ticket. It was bad.';
+  const ANS=[{k:'IM',c:'var(--rose)',html:'<span class="er">Yes. I have similar problem.</span> Last year I <span class="er">buy</span> train ticket. The date <span class="er">is</span> wrong. I <span class="er">go</span> to station. I <span class="er">wait</span>. I <span class="er">get</span> ticket. It was bad.',v:'연결 문장이 현재형이고, 과거 시점(last year)을 말했는데도 동사가 모두 현재형입니다. 대처 과정이 “기다렸다” 한 단어라 how did you deal with it에 답하지 못했습니다.'},{k:'IH',c:'var(--amber)',html:'<span class="cn2">Yes, I had a similar problem.</span> Last year, I <span class="pa">booked</span> a train ticket to Busan. But when I <span class="pa">went</span> to the station, the ticket <span class="pa">was</span> for the next day. I was very surprised. So I <span class="er">talk</span> to the staff, and they <span class="pa">put</span> me on the waiting list. I <span class="pa">waited</span> two hours, and finally I <span class="pa">got</span> a seat. It was a good experience.',v:'시제 리셋은 됐지만 대처 과정의 첫 동사(talk)에서 미끄러졌습니다. 1강에서 본 ‘문제 직후의 붕괴’입니다. 대처 과정이 짧고, 느낀 점이 막연합니다(a good experience).'},{k:'AL',c:'var(--teal)',html:'<span class="cn2">Actually, yes. Something really similar happened to me a couple of years ago</span>, but with a train ticket. I <span class="pa">was going to</span> visit my grandparents in Busan for Chuseok, and I<span class="pa">’d booked</span> a KTX ticket online about a month in advance. When I <span class="pa">got</span> to Seoul Station, though, I <span class="pa">couldn’t find</span> my train anywhere on the board. It <span class="pa">turned out</span> I<span class="pa">’d booked</span> the ticket for the next day. Everything <span class="pa">was</span> sold out because of the holiday, and I honestly <span class="pa">started</span> to panic. So I <span class="pa">went</span> straight to the ticket counter and <span class="pa">explained</span> what happened. The staff member <span class="pa">was</span> really patient. She <span class="pa">said</span> she couldn’t change it to that day, but she <span class="pa">put</span> me on a waiting list and <span class="pa">told</span> me to check back every half hour. I <span class="pa">sat</span> there for almost two hours, and finally, someone <span class="pa">canceled</span>, and I <span class="pa">got</span> a seat. Looking back, it was stressful, but I learned my lesson. Ever since then, I always double-check the date before I pay, <span class="cn2">so I guess I should have remembered that before booking those concert tickets!</span>',v:'연결 + 시점으로 시제를 리셋하고, was going to(과거 속 미래)와 ’d booked(과거완료)로 배경을 깔았습니다. 대처 과정이 구체적이고(창구 → 설명 → 대기자 명단 → 두 시간), 마지막 문장에서 12번 상황과 재치 있게 연결합니다.'}];
+  const at=$('aTabs'),ab=$('aBox');
+  ANS.forEach((a,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.style.setProperty('--tc',a.c);b.textContent=a.k+' 답변';b.addEventListener('click',()=>ans(i));at.appendChild(b)});
+  function ans(i){const a=ANS[i];at.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',j===i));const plain=a.html.replace(/<[^>]+>/g,'');ab.innerHTML=`<p class="txt">${a.html}</p><p style="font-size:15px;margin:12px 0 0"><b style="color:${a.c}">${a.k} · ${wc(plain)}단어 · 약 ${Math.round(wc(plain)/130*60)}초</b> ${a.v}</p>`}
+  ans(2);
+
+  /* ---------- drills ---------- */
+  function drill(key,data,qE,oE,fE,pE,nE,rE){let st=LS.get(key,{i:0,res:[]});
+    function r(){const it=data[st.i];$(pE).innerHTML=data.map((_,j)=>`<i class="${st.res[j]===true?'ok':st.res[j]===false?'ng':''} ${j===st.i?'cur':''}"></i>`).join('');$(qE).innerHTML=it.q;const ord=it.o.map((_,k)=>k).sort((a,b)=>((a*3+st.i)%it.o.length)-((b*3+st.i)%it.o.length));$(oE).innerHTML=ord.map(k=>`<button type="button" data-k="${k}">${esc(it.o[k])}</button>`).join('');$(fE).classList.remove('on');
+      $(oE).querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const k=+b.dataset.k;$(oE).querySelectorAll('button').forEach(x=>{x.disabled=true;if(+x.dataset.k===it.a)x.classList.add('right')});if(k!==it.a)b.classList.add('wrong');st.res[st.i]=k===it.a;LS.set(key,st);$(pE).children[st.i].className=(k===it.a?'ok':'ng')+' cur';$(fE).innerHTML=`<b style="color:${k===it.a?'var(--teal)':'var(--rose)'}">${k===it.a?'정확합니다.':'다시 보세요.'}</b> ${it.e}`;$(fE).classList.add('on')}))}
+    $(nE).addEventListener('click',()=>{st.i=(st.i+1)%data.length;LS.set(key,st);r()});$(rE).addEventListener('click',()=>{st={i:0,res:[]};LS.set(key,st);r()});r()}
+  drill('opic-l18-tense',[
+    ['13번에서 문제를 발견한 장면',['When I got to the counter, they told me my reservation was gone.','When I get to the counter, they tell me my reservation is gone.','When I could get to the counter, they would tell me my reservation is gone.'],'과거 경험이니 과거형. could, would는 12번 협상 모드의 잔재입니다.'],
+    ['13번에서 대처한 장면',['So I asked to speak to the manager and explained everything.','So I ask to speak to the manager and explain everything.','So one option is that I speak to the manager.'],'One option is…는 12번 표현입니다. 13번은 실제로 무엇을 했는지 과거형으로.'],
+    ['13번에서 배경을 까는 장면',['I’d booked the hotel about two months before the trip.','I book the hotel about two months before the trip.','I would book the hotel two months before.'],'이야기 속 지금보다 앞선 일이라 과거완료(5강).'],
+    ['13번의 마무리',['Looking back, it taught me to always keep a copy of my booking.','What do you think? Which one works for you?','So it will teach me to keep a copy.'],'What do you think?는 12번의 의견 묻기. 13번은 Looking back으로 말하는 지금에 서서 교훈을.'],
+    ['13번에서 계획이 틀어진 장면',['We were supposed to leave at six, but the flight got canceled.','We are supposed to leave at six, but the flight gets canceled.','We could leave at six, but the flight would be canceled.'],'과거 속 미래(was/were supposed to) + 과거형 사건(5강).'],
+    ['13번에서 직원이 한 말 (직접 인용, 11강)',['She just smiled and said, “Don’t worry, we’ll fix it.”','She just smiles and says, “Don’t worry, we’ll fix it.”','She would say, “Don’t worry, we fixed it.”'],'인용 밖은 과거형, 인용 안은 그 사람의 그 순간 그대로.'],
+    ['13번에서 결과를 말하는 장면',['In the end, they gave me a full refund and a coupon.','In the end, they give me a full refund and a coupon.','In the end, would it be possible to get a refund?'],'Would it be possible…?은 12번 B형 요청입니다.'],
+    ['13번에서 감정을 말하는 장면',['I was so frustrated that I almost cried.','I am so frustrated that I almost cry.','I could be frustrated.'],'감정도 과거형으로. so … that 구조(11강).']
+  ].map(x=>({q:`<small>${esc(x[0])}</small>`,o:x[1],a:0,e:x[2]})),'tQ','tO','tFb','tPips','tNext','tReset');
+  drill('opic-l18-open',[
+    {q:'<small>12번: 호텔 예약 누락 / 13번: Have you ever had a problem with a place you stayed?</small>비슷한 경험이 있다',o:['Actually, yes. Something really similar happened to me on a trip to Jeju a few years ago.','Yes, I have a similar problem.','Yes.'],a:0,e:'Yes + 연결 + 구체적 시점으로 시제를 리셋합니다.'},
+    {q:'<small>12번: 공연 표 날짜 착오 / 13번: Have you ever had a problem with tickets?</small>공연은 아니지만 기차표 문제가 있었다',o:['It wasn’t a concert, but I had a really similar thing happen with a train ticket a couple of years ago.','No, I haven’t had a problem with concert tickets.','I don’t go to concerts much.'],a:0,e:'Not exactly 유형. 다른 점을 인정하고 바로 비슷한 이야기로.'},
+    {q:'<small>12번: 배송된 소파 파손 / 13번: Have you ever had a problem with something you bought?</small>그런 경험이 전혀 없다',o:['I’ve been pretty lucky, so I’ve never had that exact problem, but my sister did last year, and I was right there with her.','No, I haven’t. That’s all.','No. Everything I bought was good.'],a:0,e:'No 유형도 9강 연결 다리로 과거 이야기 하나를 꼭 합니다.'},
+    {q:'<small>12번: 생일 저녁 불참 / 13번: Have you ever had to cancel plans at the last minute?</small>비슷한 경험이 있다',o:['Oh, definitely. I had to cancel a trip with my friends last summer because of a last-minute business trip.','Yes, I cancel plans sometimes.','I could cancel the plans.'],a:0,e:'구체적 시점과 이유까지 첫 문장에.'},
+    {q:'<small>12번: 헬스장 해지 요청 / 13번: Have you ever had to cancel a membership?</small>요가원 경험이 있다',o:['That reminds me of a time when I hurt my back and had to pause my yoga membership.','What do you think about memberships?','One option would be to cancel.'],a:0,e:'That reminds me of a time when…은 자연스러운 연결 문장입니다.'},
+    {q:'<small>12번: 카페 예약 누락 / 13번: Have you ever had a problem at a restaurant?</small>주문이 누락된 경험',o:['Actually, yes. Our food once never came, and it turned out the order had never gone through.','Yes, food is sometimes slow.','Restaurants have many problems.'],a:0,e:'첫 문장에 이미 전환(order had never gone through)을 예고했습니다.'}
+  ],'oQ','oO','oFb','oPips','oNext','oReset');
+
+  /* ---------- full set rehearsal ---------- */
+  const STEP=[['11번','질문 모드',60,'인사·용건 → 질문 4개(형태 섞기) → 반응 → 마무리',['질문 4개, 의문문 오류 없이','형태 3종 이상 섞기','상상한 답에 짧게 반응']],['12번','협상 모드',90,'문제 설명 → 짧은 사과 → 대안 2~3개(이유 포함) → 의견 묻기',['사과는 1~2번','대안 2개 이상, 이유 포함','What do you think?로 선택 넘기기']],['13번','서사 모드',90,'Actually, yes… + 시점 → 배경 → 문제 → 대처·결과 → 교훈',['첫 문장에서 과거 시점과 과거 동사로 리셋','롤플레이 표현(could, What do you think) 없음','대처 과정을 구체적으로']]];
+  let fs=LS.get('opic-l18-set',{t:0,step:0,chk:{},done:{}});let left=STEP[fs.step][2],tid=null;
+  function fsTopics(){$('fsTopics').innerHTML=TP.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===fs.t}" class="${fs.done[i]?'done':''}">${t.k}</button>`).join('');$('fsTopics').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{fs.t=+b.dataset.i;fs.step=0;LS.set('opic-l18-set',fs);stopT();fsCard();fsTopics()}))}
+  function qOf(){const t=TP[fs.t];return [t.q11,t.q12,t.q13][fs.step]}
+  function fsCard(){const s=STEP[fs.step];const key=fs.t+'-'+fs.step;const ck=fs.chk[key]||[];$('fsCard').innerHTML=`<div class="fs-steps">${STEP.map((x,i)=>`<span class="${i<fs.step?'done':i===fs.step?'on':''}">${x[0]} · ${x[1]}</span>`).join('')}</div><div class="small muted">${TP[fs.t].k} 세트 · ${s[0]}</div><div class="q">${esc(qOf())}</div><div class="hint"><b>${s[3]}</b></div><div style="margin-top:10px">${s[4].map((c,j)=>`<label><input type="checkbox" data-j="${j}" ${ck[j]?'checked':''}><span>${c}</span></label>`).join('')}</div>`;
+    $('fsCard').querySelectorAll('input').forEach(x=>x.addEventListener('change',()=>{const a=fs.chk[key]||[];a[+x.dataset.j]=x.checked;fs.chk[key]=a;fs.done[fs.t]=[0,1,2].every(st=>(fs.chk[fs.t+'-'+st]||[]).filter(Boolean).length===3);LS.set('opic-l18-set',fs);fsTopics()}));
+    left=s[2];$('fsClock').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');$('fsBar').style.width='0';$('fsNext').textContent=fs.step===2?'세트 마치기':'다음 문항';$('fsHint').textContent=fs.step===2?'13번: 첫 문장에서 시제를 리셋하세요.':'시작을 누르고 바로 말하세요.'}
+  function stopT(){clearInterval(tid);tid=null;$('fsStart').textContent='시작'}
+  $('fsStart').addEventListener('click',()=>{if(tid){clearInterval(tid);tid=null;$('fsStart').textContent='계속';return}const tot=STEP[fs.step][2];if(left<=0)left=tot;$('fsStart').textContent='일시정지';tid=setInterval(()=>{left--;$('fsClock').textContent=Math.floor(Math.max(0,left)/60)+':'+String(Math.max(0,left)%60).padStart(2,'0');$('fsBar').style.width=Math.min(100,(tot-left)/tot*100)+'%';if(left<=0){clearInterval(tid);tid=null;$('fsStart').textContent='다시';$('fsHint').textContent='시간 종료. 체크하고 바로 다음 문항으로.'}},1000)});
+  $('fsNext').addEventListener('click',()=>{stopT();if(fs.step<2){fs.step++;LS.set('opic-l18-set',fs);fsCard()}else{fs.step=0;LS.set('opic-l18-set',fs);fsCard();$('fsHint').textContent='세트 완료! 녹음을 들으며 13번의 첫 문장을 확인하세요.'}});
+  $('fsReset').addEventListener('click',()=>{stopT();fs.step=0;LS.set('opic-l18-set',fs);fsCard()});
+  const hasTTS='speechSynthesis' in window;if(!hasTTS)$('fsSpeak').disabled=true;
+  $('fsSpeak').addEventListener('click',()=>{if(!hasTTS)return;speechSynthesis.cancel();const pre=['I would like to give you a situation and ask you to act it out. ','I am sorry, but there is a problem I need you to resolve. ','That is the end of the situation. '][fs.step];const u=new SpeechSynthesisUtterance(pre+qOf());u.lang='en-US';u.rate=.95;speechSynthesis.speak(u)});
+  fsTopics();fsCard();
+
+  /* ---------- checker ---------- */
+  const PRES='go goes come comes eat eats is are am get gets take takes make makes say says tell tells give gives buy buys find finds start starts stop stops try tries look looks walk walks talk talks wait waits arrive arrives call calls ask asks happen happens lose loses book books explain explains puts'.split(' ');
+  const BLK=new Set(['to','can','could','will','would','should','must','might','may','did','didn\'t','couldn\'t','can\'t','won\'t','wouldn\'t','does','do','don\'t','doesn\'t','usually','always','often','still','every','now','i\'ll','we\'ll']);
+  const RP=/\b(one option|another option|what do you think|which one works|works best for you|would it be possible|i'd really appreciate|let me know|how about|what if we)\b/gi;
+  const RPC=/\b(i|we) (could|would) (?!have\b)(\w+)/gi;
+  const kt=$('kText');kt.value=LS.get('opic-l18-check','');kt.addEventListener('input',()=>LS.set('opic-l18-check',kt.value));
+  $('kAL').addEventListener('click',()=>{kt.value=AL;kRun()});$('kIH').addEventListener('click',()=>{kt.value=IH;kRun()});
+  $('kFail').addEventListener('click',()=>{kt.value='Yes, I have a similar problem. I book a train ticket, and the date is wrong. I could go to the counter, and they would help me. One option is to wait on the waiting list. What do you think? So I wait two hours and get a ticket. It is a good experience.';kRun()});
+  $('kRun').addEventListener('click',kRun);
+  function kRun(){const t=kt.value.trim();const o=$('kOut');if(!t){o.innerHTML='<p class="small" style="color:var(--rose)">먼저 붙여 넣으세요.</p>';return}const low=t.toLowerCase().replace(/’/g,"'");const L=low.length;
+    const first=((t.match(/[^.?!]+[.?!]?/g)||['']).slice(0,2).join(' ')).toLowerCase().replace(/’/g,"'");
+    const connect=/\b(similar|same|reminds me|happened to me|exact)\b/.test(first)||/\b(similar|same thing|reminds me)\b/.test(low.slice(0,200));
+    const anchor=/\b(ago|last (year|month|summer|winter|spring|fall|week)|back in|back when|when i was|a few years|a couple of)\b/.test(low.slice(0,Math.min(L,250)));
+    const firstPast=/\b(happened|had|was|were|did|went|got|booked|bought)\b/.test(first);
+    const refIdx=(()=>{const r=low.search(/looking back|ever since|since then|i learned/);return r<0?L:r})();
+    const tok=[];const re=/[a-z']+/g;let m;while((m=re.exec(low)))tok.push([m[0],m.index]);
+    const flags=[];tok.forEach((x,i)=>{const prev=i?tok[i-1][0]:'';if(x[1]<refIdx&&PRES.includes(x[0])&&!BLK.has(prev)&&!(prev==='i'&&['want','think','mean','guess'].includes(x[0])))flags.push([x[1],x[0].length])});
+    const rp=[];let r1;RP.lastIndex=0;while((r1=RP.exec(low)))rp.push([r1.index,r1[0].length]);RPC.lastIndex=0;while((r1=RPC.exec(low))){const before=low.slice(Math.max(0,r1.index-40),r1.index);if(!/\bif\b|\bsaid\b|\bthought\b|\bknew\b/.test(before)&&!['not','have','barely','hardly','still','only','finally','see','hear','tell','feel','find'].includes(r1[3]))rp.push([r1.index,r1[0].length])}
+    const deal=(low.match(/\b(explained|called|asked|went (straight )?to|talked to|ended up|managed to|in the end|finally|turned out|put me|told me|gave me|waited)\b/g)||[]).length;
+    const refl=/\b(looking back|ever since|since then|i learned|taught me|now i always)\b/.test(low);
+    const words=wc(t);const LC={g:'var(--teal)',a:'var(--amber)',r:'var(--rose)'};
+    const rows=[['단어 수',words+'개','150~230',words>=150?'g':words>=90?'a':'r'],['연결 문장',connect?'있음':'없음','첫 문장에',connect?'g':'a'],['과거 시점',anchor?'있음':'없음','앞부분에',anchor?'g':'r'],['앞 두 문장 과거 동사',firstPast?'있음':'없음','시제 리셋',firstPast?'g':'r'],['롤플레이 잔재',rp.length+'개','0개',rp.length?'r':'g'],['현재형 확인 필요',flags.length+'개','1개 이하',flags.length<=1?'g':flags.length<=3?'a':'r'],['대처·결과 신호',deal+'개','3개 이상',deal>=3?'g':deal?'a':'r'],['느낀 점',refl?'있음':'없음','교훈·지금',refl?'g':'a']];
+    const marks=flags.map(f=>[f[0],f[1],'er']).concat(rp.map(r=>[r[0],r[1],'rp'])).sort((a,b)=>b[0]-a[0]);const used=[];let cursor=t.length;const pieces=[];marks.forEach(([s,len,c])=>{if(used.some(u=>s<u[1]&&s+len>u[0]))return;used.push([s,s+len]);pieces.unshift(esc(t.slice(s+len,cursor)));pieces.unshift(`<span class="${c}">${esc(t.slice(s,s+len))}</span>`);cursor=s});pieces.unshift(esc(t.slice(0,cursor)));
+    const ok=rows.filter(r=>r[3]==='g').length;
+    o.innerHTML=`<div class="metrics">${rows.map(r=>`<div style="--lc:${LC[r[3]]}"><small>${r[0]}</small><b>${r[1]}</b><span>목표 ${r[2]}</span></div>`).join('')}</div><div class="leg"><span><i style="background:var(--violet)"></i>롤플레이 모드 잔재</span><span><i style="background:var(--rose)"></i>현재형 확인 필요</span></div><div class="hlv">${pieces.join('')}</div><p style="margin:10px 0 0"><b>${ok} / 8</b> ${rp.length||!firstPast?'<span style="color:var(--rose)">모드 전환이 완전하지 않습니다. 첫 문장을 Actually, yes. Something similar happened to me + 시점으로 다시 시작해 보세요.</span>':ok>=7?'<span style="color:var(--teal)">서사 모드로 잘 전환했습니다.</span>':'노란·빨간 지표를 보완하세요.'}</p><p class="small muted" style="margin:6px 0 0">단어 패턴 기반 추정입니다. 과거 이야기 속 could(할 수 있었다)는 자연스러운 경우가 있으니 직접 확인하세요.</p>`}
+
+  /* ---------- myths ---------- */
+  const myths=[['13번은 그때 생각하면 된다','13번 질문은 12번 상황에서 거의 예측됩니다. 12강의 문제 상황 이야기 두세 개를 미리 단단하게 준비해 두면, 지친 상태에서도 꺼낼 수 있습니다.'],['경험이 없으면 없다고 하면 된다','No, I haven’t.로 끝내면 경험 문항 하나를 버리는 셈입니다. 친구의 경험이나 조금 다른 문제로 다리를 놓고 반드시 과거 이야기 하나를 하세요.'],['12번 상황을 그대로 과거형으로 말하면 된다','방금 연기한 상황을 실제 경험처럼 다시 말하면 디테일이 얕고 반복처럼 들립니다. 비슷하지만 다른 실제 이야기가 훨씬 자연스럽습니다.'],['13번도 롤플레이니까 대화체로','13번은 That’s the end of the situation. 뒤에 나옵니다. 롤플레이는 끝났고, 이제 나의 과거 이야기입니다. What do you think?, One option is…는 쓰지 않습니다.'],['후반이라 짧게 끝내도 괜찮다','1강에서 IH 프로필은 후반 경험 문항에서 무너졌습니다. 13번을 90초로 버티는 것이 유지력의 증거입니다.'],['대처 과정은 한 줄이면 된다','질문이 how did you deal with it?입니다. 누구에게 무엇을 말했고, 상대가 어떻게 했고, 결국 어떻게 됐는지. 대처 과정이 13번의 핵심 조건입니다.']];
+  const my=$('mythGrid');myths.forEach(m=>{const b=document.createElement('button');b.type='button';b.className='myth';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="inner"><div class="face front"><div class="tag">함정</div><p>${m[0]}</p><div class="hint">눌러서 이유 보기</div></div><div class="face back"><div class="tag">이렇게 하세요</div><p>${m[1]}</p></div></div>`;b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));my.appendChild(b)});
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'11, 12, 13번의 말하기 모드를 바르게 짝지은 것은?',o:['질문 → 협상 → 서사','서사 → 질문 → 협상','협상 → 서사 → 질문','질문 → 서사 → 협상'],a:0,e:'11번 질문(현재 의문문), 12번 협상(could, would), 13번 서사(과거형).'},
+    {q:'13번 첫 문장에 꼭 넣어야 할 세 가지가 아닌 것은?',o:['연결','과거 시점','과거 동사','대안 제시'],a:3,e:'대안 제시는 12번의 일입니다.'},
+    {q:'가장 좋은 13번 첫 문장은?',o:['Yes, I have a similar problem.','Actually, yes. Something really similar happened to me a couple of years ago.','What do you think?','One option is to tell you a story.'],a:1,e:'연결 + 시점 + 과거 동사.'},
+    {q:'비슷한 경험이 전혀 없을 때 가장 좋은 대응은?',o:['No, I haven’t. That’s all.','I don’t know.','I’ve never had that exact problem, but my friend did, and I was right there.','다음 문항으로 넘어간다'],a:2,e:'9강 연결 다리로 과거 이야기 하나를 합니다.'},
+    {q:'13번 답변에 “What do you think?”가 나왔다면?',o:['좋은 마무리다','롤플레이 모드의 잔재다','시제가 정확하다','필수 표현이다'],a:1,e:'13번은 롤플레이가 끝난 뒤의 경험 문항입니다.'},
+    {q:'13번 질문 “how did you deal with it?”이 요구하는 핵심은?',o:['느낀 점','대처 과정과 결과','배경','현재의 습관'],a:1,e:'누구에게 무엇을 했고, 어떻게 끝났는지. 12강 문제 상황 템플릿의 대응·결과 단계.'},
+    {q:'13번이 많이 무너지는 이유가 아닌 것은?',o:['12번에서의 모드가 남아 있어서','시험 후반이라 지쳐서','13번은 채점되지 않아서','준비 없이 즉흥으로 하려 해서'],a:2,e:'13번도 똑같이 채점되며, 후반 유지력을 보여 주는 중요한 문항입니다.'},
+    {q:'“I’d booked the ticket a month in advance.”에서 ’d booked의 역할은?',o:['현재완료','과거완료로 이야기 속 지금보다 앞선 일','미래','가정'],a:1,e:'5강의 과거완료. 13번 배경에서 자주 쓰입니다.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${esc(item.q)}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'18강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['롤플레이 13번','role-play: similar experience','롤플레이 상황 뒤에 비슷한 실제 경험을 묻는 경험 문항.'],['롤플레이 세트','role-play set','같은 주제로 이어지는 11(질문), 12(해결), 13(경험)번.'],['말하기 모드','speaking mode','질문 모드, 협상 모드, 서사 모드처럼 문항마다 요구되는 말하기 방식.'],['시제 리셋','tense reset','13번 첫 문장에서 연결 + 과거 시점 + 과거 동사로 서사 모드로 바꾸는 것.'],['롤플레이 잔재','role-play residue','13번에 남은 12번 표현(One option, What do you think, I could).'],['연결 문장','link sentence','Actually, yes. Something similar happened to me…처럼 질문과 내 이야기를 잇는 첫 문장.'],['이야기 씨앗','story seed','13번으로 키울 수 있는 짧은 실제 경험 메모.'],['should have p.p.','past regret','과거에 했어야 했는데 하지 않은 일. I should have remembered that.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>

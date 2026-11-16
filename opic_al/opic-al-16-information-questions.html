@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPIc AL 16강 · 정보 요청 질문 만들기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  color-scheme: dark;
+  --bg:#15132b; --surface:#1d1a38; --surface2:#262249; --line:#363163;
+  --text:#ece9ff; --muted:#a9a4cc; --faint:#6f6a99;
+  --amber:#ffb547; --teal:#2ed3b7; --rose:#ff6b8b; --violet:#a493ff; --sky:#5ab8ff;
+  --amber-soft:rgba(255,181,71,.14); --teal-soft:rgba(46,211,183,.14); --rose-soft:rgba(255,107,139,.14); --violet-soft:rgba(164,147,255,.16); --sky-soft:rgba(90,184,255,.14);
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --serif:"Newsreader","Georgia","Times New Roman",serif;
+  --radius-lg:18px; --radius-sm:8px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+  --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+  --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  --amber-soft:rgba(184,110,0,.10); --teal-soft:rgba(11,140,119,.10); --rose-soft:rgba(207,47,85,.10); --violet-soft:rgba(91,69,214,.10); --sky-soft:rgba(26,114,194,.10);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --bg:#f4f5fb; --surface:#ffffff; --surface2:#eceaf8; --line:#d9d6ec;
+    --text:#1c1936; --muted:#57527d; --faint:#8a86aa;
+    --amber:#b86e00; --teal:#0b8c77; --rose:#cf2f55; --violet:#5b45d6; --sky:#1a72c2;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.en{font-family:var(--serif);font-size:1.08em}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+.crumb{font-size:14px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb b{color:var(--text);font-weight:600}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.progress{height:3px;background:transparent}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--violet),var(--amber))}
+
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px;font-size:14px;max-height:calc(100vh - 110px);overflow:auto}
+nav.toc p{margin:0 0 10px;color:var(--faint);font-size:13px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;line-height:1.45}
+nav.toc li a:hover{color:var(--text)}
+nav.toc li a.on{color:var(--text);border-left-color:var(--amber);background:var(--amber-soft)}
+main{min-width:0;padding-bottom:120px}
+@media (max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.kicker{font-size:15px;color:var(--teal);font-weight:600;margin:0 0 14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.18;letter-spacing:-.02em;margin:0 0 18px;font-weight:700}
+.lede{font-size:19px;color:var(--muted);margin:0 0 22px;max-width:36em}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;font-size:14px}
+.meta-row span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+.wave-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 22px 18px}
+.wave-switch{display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:999px;width:max-content;margin-bottom:14px}
+.wave-switch button{border:0;background:transparent;padding:6px 16px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.wave-switch button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+#wave{width:100%;height:150px;display:block}
+.wave-cap{font-size:14.5px;color:var(--muted);margin:10px 0 0;min-height:3.4em}
+.wave-legend{display:flex;gap:16px;font-size:13px;color:var(--faint);margin-top:8px;flex-wrap:wrap}
+.wave-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* sections */
+section.lesson{padding:56px 0 8px;border-top:1px solid var(--line)}
+.sec-no{font-family:var(--serif);font-style:italic;color:var(--amber);font-size:22px;margin:0 0 4px}
+h2{font-size:clamp(25px,3vw,33px);line-height:1.3;margin:0 0 18px;letter-spacing:-.01em}
+h3{font-size:20px;margin:34px 0 10px;line-height:1.4}
+p{margin:0 0 16px;max-width:44em}
+.prose li{margin-bottom:8px;max-width:42em}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.term{border-bottom:1px dashed var(--violet);cursor:help;position:relative}
+.callout{border-left:3px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:20px 0;max-width:46em}
+.callout.teal{border-color:var(--teal);background:var(--teal-soft)}
+.callout.rose{border-color:var(--rose);background:var(--rose-soft)}
+.callout.violet{border-color:var(--violet);background:var(--violet-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{display:block;margin-bottom:4px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;margin:22px 0}
+.facts div{background:var(--surface);padding:18px 18px 16px}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-size:19px;font-weight:600;line-height:1.4}
+.facts dd small{display:block;font-size:13.5px;font-weight:400;color:var(--faint);margin-top:4px;line-height:1.5}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);margin:22px 0}
+@media (max-width:720px){.stepper{grid-template-columns:1fr}}
+.step-list{list-style:none;margin:0;padding:10px;background:var(--surface2);counter-reset:s}
+.step-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);line-height:1.45;font-size:15px}
+.step-list button .n{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--faint);display:grid;place-items:center;font-size:13px;font-weight:600}
+.step-list button[aria-selected="true"]{background:var(--bg);color:var(--text)}
+.step-list button[aria-selected="true"] .n{background:var(--amber);border-color:var(--amber);color:#1b1500}
+.step-list .phase{font-size:12.5px;color:var(--faint);padding:10px 12px 2px}
+.step-body{padding:24px 28px}
+.step-body h4{font-size:21px;margin:0 0 4px}
+.step-body .when{font-size:14px;color:var(--teal);margin-bottom:14px}
+.step-body ul{padding-left:20px;margin:0 0 14px}
+.step-body li{margin-bottom:6px}
+.step-body .tip{background:var(--amber-soft);border-radius:10px;padding:12px 16px;font-size:15.5px}
+.step-body .tip b{color:var(--amber)}
+
+/* question map */
+.qmap{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;margin:22px 0 6px}
+@media (max-width:760px){.qmap{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.qmap button{aspect-ratio:1/1.25;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:8px 6px;font-size:12px;color:var(--muted);position:relative}
+.qmap button b{font-size:20px;color:var(--text);font-family:var(--serif);font-weight:600;line-height:1}
+.qmap button::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:4px;border-radius:2px;background:var(--c)}
+.qmap button[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.qmap .gap{display:none}
+.qrail{display:flex;gap:6px;font-size:12.5px;color:var(--faint);margin-bottom:6px;flex-wrap:wrap}
+.qrail span{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.qrail i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.qdetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:22px 26px;margin-top:14px}
+.qdetail h4{margin:0 0 4px;font-size:20px}
+.qdetail .type{font-size:14px;font-weight:600;margin-bottom:12px}
+.qdetail .ex{font-family:var(--serif);font-style:italic;font-size:17.5px;border-left:2px solid var(--line);padding-left:14px;margin:10px 0 14px;color:var(--text)}
+.qdetail dl{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;margin:0}
+.qdetail dt{color:var(--muted);font-size:14.5px}
+.qdetail dd{margin:0}
+@media (max-width:560px){.qdetail dl{grid-template-columns:1fr}.qdetail dt{margin-top:6px}}
+.readjust{font-size:13.5px;color:var(--amber);margin:6px 0 0}
+
+/* level ladder */
+.ladder{display:flex;align-items:flex-end;gap:6px;height:230px;margin:26px 0 8px;padding:0 4px}
+.ladder button{flex:1;border:0;border-radius:8px 8px 3px 3px;cursor:pointer;background:var(--lc);opacity:.55;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:8px 2px;color:#120f24;font-weight:700;font-size:14px;transition:opacity .2s}
+.ladder button[aria-pressed="true"],.ladder button:hover{opacity:1}
+.ladder button span{font-size:11px;font-weight:500;opacity:.8}
+.ladder-axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);padding:0 4px;margin-bottom:12px}
+.ldetail{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:20px 24px}
+.ldetail h4{margin:0 0 6px;font-size:20px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:8px 16px;border-radius:10px 10px 0 0;border-bottom:0;cursor:pointer;color:var(--muted);font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:inset 0 3px 0 var(--tc)}
+.tabpanel{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:24px 26px}
+.tabpanel h4{margin:0 0 4px;font-size:21px}
+.tabpanel .en-name{font-family:var(--serif);font-style:italic;color:var(--muted);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:15.5px}
+.cmp th,.cmp td{border-top:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp th{color:var(--muted);font-weight:500;width:70px;white-space:nowrap}
+.cmp tr.al th{color:var(--amber);font-weight:700}
+.cmp tr.al td{color:var(--text)}
+.tbl-wrap{overflow-x:auto}
+
+/* simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 24px;margin:22px 0}
+.sim-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--text);font-weight:600}
+.bars{position:relative;display:grid;grid-template-columns:repeat(15,1fr);gap:6px;height:220px;align-items:end;padding-top:10px}
+.bars .ref{position:absolute;left:0;right:0;border-top:1.5px dashed var(--faint);pointer-events:none}
+.bars .ref span{position:absolute;right:0;top:-20px;font-size:12px;color:var(--faint);background:var(--surface);padding:0 4px}
+.bars button{border:0;border-radius:6px 6px 2px 2px;cursor:pointer;background:var(--teal);transition:height .45s ease,background .3s;min-height:6px;padding:0}
+.bars button.down{background:var(--rose)}
+.bars button.edge{background:var(--amber)}
+.bars button[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+.bars-x{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;font-size:12px;color:var(--faint);text-align:center;margin-top:6px}
+.sim-note{margin-top:14px;font-size:15.5px;min-height:3.2em;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.sim-verdict{margin-top:10px;font-size:15.5px}
+
+/* advanced tasks */
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.task{border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 20px 16px;background:var(--surface);border-top:4px solid var(--tc)}
+.task h4{margin:0 0 6px;font-size:18.5px}
+.task .en{color:var(--muted);font-style:italic;font-size:15px;display:block;margin-bottom:10px}
+.task p{font-size:15.5px}
+.task .mini{font-family:var(--serif);font-size:15.5px;background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:6px}
+
+/* sample answers */
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px;margin:20px 0 14px}
+.qprompt .lbl{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.qprompt .en{font-style:italic;font-size:18px;line-height:1.6}
+.hl-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.hl-controls button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.hl-controls button i{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--hc)}
+.hl-controls button[aria-pressed="true"]{border-color:var(--hc);background:color-mix(in srgb,var(--hc) 15%,var(--surface))}
+.answer{background:var(--surface2);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:22px 26px;border:1px solid var(--line)}
+.answer .script{font-family:var(--serif);font-size:19px;line-height:1.85;margin:0 0 16px}
+.answer .script span{border-radius:3px;transition:background .2s,box-shadow .2s}
+.answer.show-t .t{box-shadow:inset 0 -2px 0 var(--teal);background:var(--teal-soft)}
+.answer.show-e .e{box-shadow:inset 0 -2px 0 var(--rose);background:var(--rose-soft)}
+.answer.show-c .c{box-shadow:inset 0 -2px 0 var(--violet);background:var(--violet-soft)}
+.answer.show-x .x{box-shadow:inset 0 -2px 0 var(--amber);background:var(--amber-soft)}
+.verdict{border-top:1px solid var(--line);padding-top:14px}
+.verdict h5{font-size:16px;margin:0 0 6px}
+.verdict ul{margin:0;padding-left:20px;font-size:15.5px}
+.verdict li{margin-bottom:6px}
+.score-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+@media (max-width:600px){.score-strip{grid-template-columns:repeat(2,1fr)}}
+.score-strip div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted)}
+.score-strip b{display:block;color:var(--text);font-size:14.5px;margin-top:2px}
+.meter{height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--mc)}
+
+/* breakdown list */
+.breaks{counter-reset:b;list-style:none;padding:0;margin:20px 0}
+.breaks li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line)}
+.breaks li::before{content:counter(b);font-family:var(--serif);font-size:28px;color:var(--rose);line-height:1;grid-row:span 2}
+.breaks h4{margin:0;font-size:18px}
+.breaks p{margin:0;font-size:15.5px;color:var(--muted)}
+.breaks .fix{color:var(--text)}
+.breaks .fix b{color:var(--teal)}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0}
+.myth{perspective:1000px;min-height:230px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}
+.myth .inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.myth[aria-pressed="true"] .inner{transform:rotateY(180deg)}
+.myth .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column}
+.myth .front{background:var(--surface)}
+.myth .back{background:var(--surface2);transform:rotateY(180deg);border-color:var(--teal);overflow:auto}
+.myth .tag{font-size:13px;font-weight:600;margin-bottom:8px}
+.myth .front .tag{color:var(--rose)}
+.myth .back .tag{color:var(--teal)}
+.myth .front p{font-size:19px;font-weight:600;line-height:1.5}
+.myth .back p{font-size:15px;line-height:1.65;margin:0}
+.myth .hint{margin-top:auto;font-size:13px;color:var(--faint)}
+@media (prefers-reduced-motion: reduce){.myth[aria-pressed="true"] .front{visibility:hidden}.myth .back{transform:none}.myth[aria-pressed="false"] .back{visibility:hidden}}
+
+/* checklist */
+.check{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px 22px 20px;margin:20px 0}
+.check label{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px}
+.check label:last-of-type{border-bottom:0}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.check label small{display:block;color:var(--muted);font-size:14px}
+.check-result{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface2)}
+.check-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 10px}
+.check-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--amber),var(--teal));transition:width .3s}
+.reset{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 12px;font-size:13.5px;cursor:pointer;color:var(--muted)}
+
+/* quiz */
+.quiz{counter-reset:q}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:14px 0}
+.qcard h4{margin:0 0 12px;font-size:17.5px;line-height:1.5}
+.qcard h4::before{counter-increment:q;content:"Q" counter(q) ". ";color:var(--violet)}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15.5px;line-height:1.5}
+.opts button:hover:not(:disabled){border-color:var(--violet)}
+.opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.opts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.opts button:disabled{cursor:default}
+.qfb{display:none;margin-top:12px;font-size:15.5px;padding:12px 14px;border-radius:10px;background:var(--surface2)}
+.qfb.on{display:block}
+.qfb b{display:block;margin-bottom:2px}
+.quiz-score{font-size:16px;margin-top:10px;color:var(--muted)}
+
+/* assignment */
+.assign{background:linear-gradient(135deg,var(--violet-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:26px 28px;margin:22px 0}
+.assign ol{padding-left:22px;margin:10px 0 16px}
+.assign li{margin-bottom:8px}
+.pq{display:grid;gap:10px;margin-top:12px}
+.pq div{background:var(--surface);border-radius:12px;padding:12px 16px;border:1px solid var(--line)}
+.pq .en{font-style:italic}
+.pq small{display:block;color:var(--muted);font-size:13.5px;margin-bottom:2px}
+.timer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.timer .clock{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;min-width:4ch}
+.timer button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 16px;cursor:pointer}
+.timer .phase-l{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+
+.next{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface);margin-top:28px}
+.next .lbl{font-size:13.5px;color:var(--muted)}
+.next h4{margin:2px 0 0;font-size:19px}
+.next .pill{font-size:13.5px;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:4px 12px}
+
+/* glossary */
+.gsearch{width:100%;max-width:420px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;margin:10px 0 16px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.gloss div{background:var(--surface);padding:16px 18px}
+.gloss dt{font-weight:700;font-size:16px}
+.gloss dt .en{font-weight:400;font-style:italic;color:var(--muted);font-size:15px;margin-left:6px}
+.gloss dd{margin:6px 0 0;font-size:15px;color:var(--muted);line-height:1.65}
+.gloss .hidden{display:none}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--faint);font-size:13.5px}
+
+/* tooltip */
+.tip-pop{position:absolute;z-index:40;max-width:300px;background:var(--text);color:var(--bg);font-size:14px;line-height:1.55;padding:10px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.on{opacity:1}
+
+:root{--lime:#8fd86a;--orchid:#e48bd8}
+:root[data-theme="light"]{--lime:#3f8f1c;--orchid:#a93a9b}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:9px 16px;cursor:pointer;font-size:15px}
+.btn.primary{background:var(--amber);color:#1b1500;border-color:var(--amber);font-weight:600}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* hero tiles */
+.tiles{display:flex;flex-wrap:wrap;gap:6px;min-height:46px;align-items:center;padding:10px;border-radius:12px;background:var(--surface2)}
+.tile{font-family:var(--serif);font-size:17px;padding:5px 11px;border-radius:9px;background:var(--surface);border:1px solid var(--line);transition:transform .35s,background .3s}
+.tile.bad{background:var(--rose-soft);border-color:var(--rose)}
+.tile.add{background:var(--teal-soft);border-color:var(--teal);font-weight:700;animation:pop .45s}
+.tile.mv{background:var(--amber-soft);border-color:var(--amber);font-weight:700;animation:pop .45s}
+@keyframes pop{0%{transform:translateY(-10px) scale(.8);opacity:0}100%{transform:none;opacity:1}}
+.hlab{font-size:12.5px;color:var(--muted);margin:10px 0 4px}
+.hexp{font-size:14.5px;margin:10px 0 0;min-height:3em}
+.hnav{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.hnav button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:3px 11px;font-size:12.5px;cursor:pointer}
+.hnav button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+
+/* structure */
+.flow5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:18px 0}
+@media (max-width:760px){.flow5{grid-template-columns:1fr 1fr}}
+.flow5 div{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface);border-top:4px solid var(--cc)}
+.flow5 .n{font-family:var(--serif);font-size:22px;color:var(--cc);line-height:1}
+.flow5 h4{margin:4px 0 4px;font-size:15.5px}
+.flow5 p{font-size:13px;margin:0 0 6px;color:var(--muted)}
+.flow5 .ex{font-family:var(--serif);font-size:14px;background:var(--surface2);border-radius:8px;padding:6px 8px;color:var(--text)}
+
+/* toolbox */
+.qt{width:100%;border-collapse:collapse;font-size:15px;min-width:640px}
+.qt th,.qt td{border-top:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.qt th{color:var(--muted);font-weight:500;font-size:13.5px}
+.qt td:first-child{font-weight:600;white-space:nowrap}
+.qt .en{font-size:15.5px}
+.formula{font-family:var(--sans);font-size:13px;color:var(--teal);display:block;margin-bottom:2px}
+
+/* politeness */
+.pol{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;margin:18px 0}
+.pol input[type=range]{width:100%;accent-color:var(--violet)}
+.pol .scale{display:flex;justify-content:space-between;font-size:12px;color:var(--faint)}
+.pol .say{font-family:var(--serif);font-size:22px;line-height:1.5;margin:12px 0 6px}
+.pol .note{font-size:14.5px;color:var(--muted)}
+
+/* drills */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 22px;margin:18px 0}
+.drill-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dq{font-family:var(--serif);font-size:19px;line-height:1.55;margin:4px 0 14px}
+.dq small{display:block;font-family:var(--sans);font-size:13px;color:var(--muted);margin-bottom:4px}
+.dq s{color:var(--rose);text-decoration-thickness:2px}
+.dopts{display:grid;gap:8px}
+.dopts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;cursor:pointer;font-family:var(--serif);font-size:16.5px}
+.dopts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.dopts button.wrong{border-color:var(--rose);background:var(--rose-soft)}
+.dopts button:disabled{cursor:default}
+.dfb{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15.5px;display:none}
+.dfb.on{display:block}
+.pips{display:flex;gap:4px}
+.pips i{width:10px;height:10px;border-radius:3px;background:var(--line)}
+.pips i.ok{background:var(--teal)}.pips i.ng{background:var(--rose)}.pips i.cur{outline:2px solid var(--amber);outline-offset:1px}
+.tb-ko{font-size:22px;font-weight:700;margin:4px 0 10px}
+.tb-pool{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tb-pool button{font-family:var(--serif);font-size:17px;padding:6px 12px;border-radius:9px;background:var(--surface2);border:1px solid var(--line);cursor:pointer}
+.tb-pool button:disabled{opacity:.25;cursor:default}
+.tb-ans{display:flex;flex-wrap:wrap;gap:6px;min-height:46px;padding:8px;border:1px dashed var(--line);border-radius:12px}
+.tb-ans span{font-family:var(--serif);font-size:17px;padding:6px 12px;border-radius:9px;background:var(--violet-soft);border:1px solid var(--violet)}
+.tb-ans.ok span{background:var(--teal-soft);border-color:var(--teal)}
+.tb-ans.ng span{background:var(--rose-soft);border-color:var(--rose)}
+
+/* planner */
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.sit{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.sit button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer}
+.sit button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#1b1500;font-weight:600}
+.sitq{font-family:var(--serif);font-size:17px;background:var(--surface2);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.cands{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.cands button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:10px 12px;cursor:pointer;border-left:4px solid var(--cc)}
+.cands button small{display:block;font-size:12px;color:var(--cc);font-weight:600;margin-bottom:2px}
+.cands button span{font-family:var(--serif);font-size:15.5px}
+.cands button[aria-pressed="true"]{background:color-mix(in srgb,var(--cc) 18%,var(--surface2));border-color:var(--cc)}
+.plan-out{margin-top:14px;font-family:var(--serif);font-size:17px;line-height:1.85;background:var(--amber-soft);border-radius:12px;padding:14px 16px}
+.plan-out .cn{color:var(--amber);font-weight:600}
+.plan-meta{font-size:13.5px;color:var(--muted);margin-top:8px}
+
+/* answers */
+.ans{background:var(--surface2);border:1px solid var(--line);border-radius:0 var(--radius-lg) var(--radius-lg) var(--radius-lg);padding:20px 24px}
+.ans .txt{font-family:var(--serif);font-size:18px;line-height:1.9;margin:0}
+.ans .q{background:var(--sky-soft);box-shadow:inset 0 -2px 0 var(--sky);border-radius:3px}
+.ans .e{background:var(--rose-soft);outline:1px dashed var(--rose);border-radius:3px}
+.ans .f{background:var(--violet-soft);box-shadow:inset 0 -2px 0 var(--violet);border-radius:3px}
+.ans .r{background:var(--teal-soft);box-shadow:inset 0 -2px 0 var(--teal);border-radius:3px}
+
+/* timer */
+.stimer{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;margin:20px 0}
+@media (max-width:820px){.stimer{grid-template-columns:1fr}}
+.st-card{background:linear-gradient(135deg,var(--sky-soft),var(--teal-soft));border:1px solid var(--line);border-radius:22px;padding:22px 24px}
+.st-card .q{font-family:var(--serif);font-size:19px;line-height:1.5;margin:6px 0 12px}
+.st-side{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.st-side .clock{font-family:var(--serif);font-size:48px;font-variant-numeric:tabular-nums;line-height:1}
+.st-stage{font-size:16px;font-weight:600;padding:8px 12px;border-radius:10px;background:var(--amber-soft);border-left:4px solid var(--amber)}
+.st-stage small{display:block;font-weight:400;font-size:13.5px;color:var(--muted);margin-top:2px}
+.qcount{display:flex;gap:6px}
+.qcount button{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);font-family:var(--serif);font-size:18px;cursor:pointer}
+.qcount button.on{background:var(--teal);border-color:var(--teal);color:#0d2621;font-weight:700}
+
+/* checker */
+.chk{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:20px 0}
+.chk textarea{width:100%;min-height:140px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:16.5px/1.65 var(--serif);padding:12px 14px;resize:vertical}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin:14px 0}
+.metrics div{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:3px solid var(--lc,var(--line))}
+.metrics small{display:block;font-size:12.5px;color:var(--muted)}
+.metrics b{display:block;font-family:var(--serif);font-size:21px;line-height:1.2;font-weight:600}
+.metrics span{font-size:12px;color:var(--faint)}
+.qlist{list-style:none;padding:0;margin:10px 0 0}
+.qlist li{display:grid;grid-template-columns:90px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px;align-items:start}
+.qlist li .tag{font-size:12px;border-radius:999px;padding:2px 8px;text-align:center;background:var(--sky-soft);color:var(--sky);font-weight:600}
+.qlist li .tag.err{background:var(--rose-soft);color:var(--rose)}
+.qlist li .en{font-size:16px}
+.qlist li small{display:block;color:var(--rose);font-size:13px;font-family:var(--sans)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="crumb"><b>OPIc AL 8주 과정</b>&nbsp;&nbsp;6주차 16강&nbsp;&nbsp;정보 요청 질문 만들기</div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">라이트 테마</button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="강의 목차">
+    <p>이 강의의 순서</p>
+    <ol id="tocList">
+      <li><a href="#goal">이 강의의 목표</a></li>
+      <li><a href="#why">11번이 확인하는 것</a></li>
+      <li><a href="#flow">11번 답변의 5단 흐름</a></li>
+      <li><a href="#toolbox">의문문 도구 상자</a></li>
+      <li><a href="#errors">한국어 화자의 의문문 오류</a></li>
+      <li><a href="#tiles">훈련: 단어 카드로 질문 조립</a></li>
+      <li><a href="#fix">훈련: 틀린 질문 고치기</a></li>
+      <li><a href="#indirect">간접 의문문과 공손함</a></li>
+      <li><a href="#planner">상황별 질문 설계기</a></li>
+      <li><a href="#compare">IM, IH, AL 답변 비교</a></li>
+      <li><a href="#timer">11번 60초 타이머</a></li>
+      <li><a href="#checker">질문 점검기</a></li>
+      <li><a href="#myths">11번의 함정</a></li>
+      <li><a href="#quiz">확인 퀴즈</a></li>
+      <li><a href="#homework">과제와 다음 강</a></li>
+      <li><a href="#glossary">용어 사전</a></li>
+    </ol>
+  </nav>
+
+<main>
+  <div class="hero">
+    <div>
+      <p class="kicker">6주차 롤플레이 · 16강</p>
+      <h1>질문 네 개, 그런데 한 개도 틀리면 안 되는 이유</h1>
+      <p class="lede">롤플레이 11번은 “전화해서 질문 서너 개를 하라”는 문항입니다. 쉬워 보이지만 1강에서 본 것처럼 의문문 어순 오류가 반복되면 상위 등급 판정에 불리합니다. 서술문은 잘 만들던 사람도 의문문에서는 What time the gym opens?처럼 무너지기 쉽습니다. 이번 강의는 의문문을 정확하게, 다양하게, 공손하게 만드는 훈련입니다.</p>
+      <div class="meta-row"><span>학습 시간 약 90분</span><span>대상 문항: 11번</span><span>목표: 질문 4개, 오류 0</span></div>
+    </div>
+    <div class="wave-card" aria-label="의문문 수리">
+      <div class="hnav" id="hnav"></div>
+      <div class="hlab">한국어 어순대로 만든 질문</div>
+      <div class="tiles" id="hBad"></div>
+      <div class="hlab">고친 질문</div>
+      <div class="tiles" id="hGood"></div>
+      <p class="hexp" id="hExp"></p>
+      <div class="ctrl"><button type="button" class="btn primary" id="hFix">고치기</button></div>
+    </div>
+  </div>
+
+  <!-- 0 -->
+  <section class="lesson" id="goal">
+    <p class="sec-no">0</p>
+    <h2>이 강의의 목표</h2>
+    <p>6주차는 롤플레이 세 문항(11, 12, 13번)을 다룹니다. 16강은 11번, 정보를 얻기 위해 질문하는 상황입니다. 이 강의를 마치면 다음을 할 수 있어야 합니다.</p>
+    <ul class="prose">
+      <li>11번 답변을 인사·용건 → 질문 3~4개 → 반응 → 마무리의 흐름으로 말할 수 있다.</li>
+      <li>Yes/No, Wh-, 선택, 간접, 확인 의문문을 구분해 섞어 쓸 수 있다.</li>
+      <li>조동사(do, does, did)와 어순을 정확하게 지켜 의문문을 만들 수 있다.</li>
+      <li>간접 의문문의 어순(where the station is)을 지킬 수 있다.</li>
+      <li>상황에 맞게 시간, 장소, 가격, 조건 등 서로 다른 정보를 묻는 질문을 설계할 수 있다.</li>
+    </ul>
+  </section>
+
+  <!-- 1 -->
+  <section class="lesson" id="why">
+    <p class="sec-no">1</p>
+    <h2>11번이 확인하는 것</h2>
+    <p>11번의 지시는 대개 이렇습니다. <span class="en">I’d like to give you a situation and ask you to act it out. You want to join a new gym. Call the gym and ask three or four questions to get the information you need.</span> 평가자는 세 가지를 봅니다.</p>
+    <ul class="prose">
+      <li><strong>의문문의 정확성</strong>: 조동사와 어순. 1강 15문항 지도에서 말했듯 의문문 어순 오류가 반복되면 상위 등급 판정에 불리합니다.</li>
+      <li><strong>의문문의 다양성</strong>: 네 개가 모두 Do you…?나 What…?로만 이어지면 단조롭습니다.</li>
+      <li><strong>상황 수행</strong>: 실제 전화처럼 인사하고, 용건을 밝히고, 상대 답에 반응하고, 마무리하는가. 질문만 네 개 던지고 끝내면 롤플레이가 아니라 질문 목록입니다.</li>
+    </ul>
+    <div class="callout">
+      <strong>상대가 대답하지 않는 전화</strong>
+      <p>컴퓨터 시험이라 상대는 대답하지 않습니다. 그래서 질문 사이에 상대가 답했다고 가정하고 짧게 반응하는 방법이 흔히 권장됩니다. <span class="en">Oh, you’re open until eleven? Perfect.</span> 이 반응이 대화를 자연스럽게 만들고, 질문과 질문 사이에 숨 쉴 틈을 줍니다. 다만 상상한 답이 길어지면 질문보다 반응이 많아지니 한 문장으로 짧게 하세요.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="lesson" id="flow">
+    <p class="sec-no">2</p>
+    <h2>11번 답변의 5단 흐름</h2>
+    <div class="flow5">
+      <div style="--cc:var(--violet)"><div class="n">1</div><h4>인사·용건</h4><p>누구이고 왜 전화했는지 한두 문장.</p><div class="ex">Hi, I’m calling because I just moved nearby, and I’m thinking about joining your gym.</div></div>
+      <div style="--cc:var(--sky)"><div class="n">2</div><h4>질문 예고</h4><p>몇 가지 묻겠다는 공손한 다리.</p><div class="ex">I was wondering if you could answer a few questions.</div></div>
+      <div style="--cc:var(--teal)"><div class="n">3</div><h4>질문 3~4개</h4><p>서로 다른 정보, 서로 다른 형태. 큰 것에서 작은 것으로.</p><div class="ex">First of all, what are your hours…?</div></div>
+      <div style="--cc:var(--amber)"><div class="n">4</div><h4>짧은 반응</h4><p>질문 사이에 상상한 답에 반응.</p><div class="ex">Oh, until eleven? Perfect.</div></div>
+      <div style="--cc:var(--rose)"><div class="n">5</div><h4>마무리</h4><p>감사와 다음 행동.</p><div class="ex">Thanks so much. I’ll stop by this weekend.</div></div>
+    </div>
+    <p>질문을 이어 주는 표지어도 미리 정해 두세요. <span class="en">First of all, … / Second, … / Also, … / And one last thing, …</span> 6강의 담화 표지어처럼 듣는 사람에게 구조를 알려 주고, 말하는 나에게는 다음 질문을 고를 시간을 줍니다.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="lesson" id="toolbox">
+    <p class="sec-no">3</p>
+    <h2>의문문 도구 상자</h2>
+    <p>질문 네 개를 모두 다른 형태로 만들 필요는 없지만, 최소 세 가지 형태를 섞으면 단조로움을 피할 수 있습니다.</p>
+    <div class="tbl-wrap">
+    <table class="qt">
+      <tr><th>형태</th><th>공식</th><th>예시</th></tr>
+      <tr><td>Yes/No</td><td><span class="formula">Do/Does/Is/Are/Can + 주어 + 동사?</span></td><td class="en">Do you offer any group classes?</td></tr>
+      <tr><td>Wh-</td><td><span class="formula">Wh- + do/does/is + 주어 + 동사?</span></td><td class="en">What time does the gym open on Sundays?</td></tr>
+      <tr><td>How + 형용사</td><td><span class="formula">How much / long / often / far + …?</span></td><td class="en">How long does it take to get there from the station?</td></tr>
+      <tr><td>선택</td><td><span class="formula">… A, or … B?</span></td><td class="en">Is that a monthly fee, or do I pay for the whole year?</td></tr>
+      <tr><td>간접</td><td><span class="formula">Could you tell me / I was wondering if + 평서문 어순</span></td><td class="en">Could you tell me where the entrance is?</td></tr>
+      <tr><td>확인</td><td><span class="formula">평서문 + right? / 부가 의문문</span></td><td class="en">So the first class is free, right?</td></tr>
+      <tr><td>후속</td><td><span class="formula">And what about …? / Is that …?</span></td><td class="en">And what about weekends?</td></tr>
+    </table>
+    </div>
+    <div class="callout teal">
+      <strong>질문 순서: 큰 것에서 작은 것으로</strong>
+      <p>있는지 없는지(가능 여부) → 언제·어디서(기본 정보) → 얼마·조건(세부) → 어떻게 신청·결제(절차). 이 순서면 질문이 자연스럽게 이어지고, 앞 질문의 답에 반응하며 다음으로 넘어가기 쉽습니다.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="lesson" id="errors">
+    <p class="sec-no">4</p>
+    <h2>한국어 화자의 의문문 오류</h2>
+    <p>한국어는 평서문 끝에 ‘~요?’만 붙이면 의문문이 됩니다. 그래서 영어에서도 평서문 어순 그대로 말하는 실수가 가장 많습니다.</p>
+    <div class="tbl-wrap">
+    <table class="qt">
+      <tr><th>오류 유형</th><th>틀린 예</th><th>바른 예</th></tr>
+      <tr><td>조동사 빠짐</td><td class="en"><s>What time the class starts?</s></td><td class="en">What time does the class start?</td></tr>
+      <tr><td>be동사 위치</td><td class="en"><s>Where you are located?</s></td><td class="en">Where are you located?</td></tr>
+      <tr><td>does + 3인칭 s 중복</td><td class="en"><s>Does it includes breakfast?</s></td><td class="en">Does it include breakfast?</td></tr>
+      <tr><td>is와 does 혼합</td><td class="en"><s>How much is it cost?</s></td><td class="en">How much does it cost? / How much is it?</td></tr>
+      <tr><td>간접 의문문 도치</td><td class="en"><s>Could you tell me where is the station?</s></td><td class="en">Could you tell me where the station is?</td></tr>
+      <tr><td>there is + have</td><td class="en"><s>Is there have a parking lot?</s></td><td class="en">Is there a parking lot?</td></tr>
+      <tr><td>목적어 중복</td><td class="en"><s>What should I bring it?</s></td><td class="en">What should I bring?</td></tr>
+      <tr><td>직역 표현</td><td class="en"><s>Can I know the price?</s></td><td class="en">Could you tell me how much it is?</td></tr>
+    </table>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="lesson" id="tiles">
+    <p class="sec-no">5</p>
+    <h2>훈련: 단어 카드로 질문 조립</h2>
+    <p>한국어 뜻을 보고 단어 카드를 순서대로 눌러 질문을 만드세요. 조동사의 위치를 의식하는 것이 목표입니다. 잘못 눌렀다면 ‘하나 지우기’로 되돌릴 수 있습니다.</p>
+    <div class="drill">
+      <div class="drill-head"><strong>질문 조립</strong><div class="pips" id="tbPips"></div></div>
+      <div class="tb-ko" id="tbKo"></div>
+      <div class="tb-ans" id="tbAns"></div>
+      <div class="tb-pool" id="tbPool"></div>
+      <div class="ctrl"><button type="button" class="btn" id="tbUndo">하나 지우기</button><button type="button" class="btn primary" id="tbCheck">확인</button><button type="button" class="btn" id="tbNext">다음 문제</button><button type="button" class="reset" id="tbReset">처음부터</button></div>
+      <div class="dfb" id="tbFb"></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="lesson" id="fix">
+    <p class="sec-no">6</p>
+    <h2>훈련: 틀린 질문 고치기</h2>
+    <div class="drill">
+      <div class="drill-head"><strong>바르게 고친 질문은?</strong><div class="pips" id="fxPips"></div></div>
+      <div class="dq" id="fxQ"></div><div class="dopts" id="fxO"></div><div class="dfb" id="fxFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="fxNext">다음 문제</button><button type="button" class="reset" id="fxReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="lesson" id="indirect">
+    <p class="sec-no">7</p>
+    <h2>간접 의문문과 공손함</h2>
+    <p>처음 보는 사람에게 전화로 묻는 상황이라, 직접 의문문만 쓰면 다소 딱딱하게 들릴 수 있습니다. 간접 의문문을 한두 개 섞으면 공손하고 자연스러워집니다. 핵심 규칙은 하나, <strong>간접 의문문 안은 평서문 어순</strong>입니다.</p>
+    <div class="pol">
+      <label for="polR" class="small muted">공손함 단계</label>
+      <input type="range" id="polR" min="0" max="3" value="2">
+      <div class="scale"><span>직설</span><span>보통</span><span>공손</span><span>매우 공손</span></div>
+      <div class="say" id="polSay"></div>
+      <div class="note" id="polNote"></div>
+    </div>
+    <div class="drill">
+      <div class="drill-head"><strong>간접 의문문으로 바꾸면?</strong><div class="pips" id="inPips"></div></div>
+      <div class="dq" id="inQ"></div><div class="dopts" id="inO"></div><div class="dfb" id="inFb"></div>
+      <div class="ctrl" style="margin-top:12px"><button type="button" class="btn" id="inNext">다음 문제</button><button type="button" class="reset" id="inReset">처음부터</button></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="lesson" id="planner">
+    <p class="sec-no">8</p>
+    <h2>상황별 질문 설계기</h2>
+    <p>11번에 자주 나오는 상황을 고르고, 질문 후보 중 서로 다른 정보 칸에서 네 개를 고르세요. 고른 순서대로 인사, 예고, 반응, 마무리가 붙은 답변이 만들어집니다. 정보 칸이 겹치거나 형태가 한 가지뿐이면 알려 줍니다.</p>
+    <div class="plan">
+      <div class="sit" id="sit"></div>
+      <div class="sitq" id="sitQ"></div>
+      <div class="cands" id="cands"></div>
+      <div class="plan-out" id="planOut"></div>
+      <div class="plan-meta" id="planMeta"></div>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="reset" id="planClr">선택 초기화</button></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="lesson" id="compare">
+    <p class="sec-no">9</p>
+    <h2>IM, IH, AL 답변 비교</h2>
+    <p>같은 상황(새 헬스장에 전화해 질문 서너 개)에 대한 세 답변입니다. 파랑은 질문, 빨간 점선은 의문문 오류, 보라는 흐름 표지어, 초록은 반응입니다.</p>
+    <div class="tabs" role="tablist" id="aTabs"></div>
+    <div class="ans" id="aBox" role="tabpanel"></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="lesson" id="timer">
+    <p class="sec-no">10</p>
+    <h2>11번 60초 타이머</h2>
+    <p>상황을 보고 바로 시작하세요. 질문을 하나 할 때마다 오른쪽 숫자를 누르면, 몇 초에 몇 번째 질문을 했는지 기록됩니다. 목표는 60초 안에 인사부터 마무리까지, 질문 네 개입니다.</p>
+    <div class="stimer">
+      <div class="st-card">
+        <div class="small muted" id="stNo"></div>
+        <div class="q" id="stQ"></div>
+        <div class="ctrl"><button type="button" class="btn" id="stPrevQ">이전 상황</button><button type="button" class="btn" id="stNextQ">다음 상황</button><button type="button" class="btn" id="stSpeak">상황 듣기</button></div>
+      </div>
+      <div class="st-side">
+        <div class="clock" id="stClock">1:00</div>
+        <div class="st-stage" id="stStage">시작 전<small>시작을 누르고 인사부터.</small></div>
+        <div><div class="small muted" style="margin-bottom:4px">질문할 때마다 누르기</div><div class="qcount" id="qcount"></div></div>
+        <div class="small" id="qlog"></div>
+        <div class="ctrl"><button type="button" class="btn primary" id="stStart">시작</button><button type="button" class="btn" id="stReset">초기화</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="lesson" id="checker">
+    <p class="sec-no">11</p>
+    <h2>질문 점검기</h2>
+    <p>받아 적은 11번 답변을 넣으세요. 질문마다 형태를 분류하고, 한국어 화자의 대표적인 의문문 오류를 찾아 표시합니다. 질문 끝에는 물음표를 붙여 받아 적어 주세요.</p>
+    <div class="chk">
+      <div class="ctrl" style="margin-bottom:8px"><button type="button" class="btn" id="kAL">AL 답변 넣기</button><button type="button" class="btn" id="kIM">IM 답변 넣기</button><button type="button" class="btn" id="kErr">오류 섞인 답변 넣기</button></div>
+      <textarea id="kText" placeholder="받아 적은 답변을 붙여 넣으세요. 질문은 ?로 끝내 주세요."></textarea>
+      <div class="ctrl" style="margin-top:10px"><button type="button" class="btn primary" id="kRun">점검</button></div>
+      <div id="kOut"></div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="lesson" id="myths">
+    <p class="sec-no">12</p>
+    <h2>11번의 함정</h2>
+    <p>카드를 눌러 뒤집어 보세요.</p>
+    <div class="myths" id="mythGrid"></div>
+  </section>
+
+  <!-- 13 -->
+  <section class="lesson" id="quiz">
+    <p class="sec-no">13</p>
+    <h2>확인 퀴즈</h2>
+    <p>이번 강의의 핵심만 묻습니다. 선택하면 바로 해설이 나옵니다.</p>
+    <div class="quiz" id="quizBox"></div>
+    <p class="quiz-score" id="quizScore"></p>
+  </section>
+
+  <!-- 14 -->
+  <section class="lesson" id="homework">
+    <p class="sec-no">14</p>
+    <h2>과제와 다음 강</h2>
+    <div class="assign">
+      <h3 style="margin-top:0">16강 과제: 질문 근육 만들기</h3>
+      <ol>
+        <li>5절 질문 조립 8문제와 6절 고치기 10문제를 모두 맞힐 때까지 반복합니다. 소리 내어 읽으면서 하세요.</li>
+        <li>7절 간접 의문문 훈련을 마치고, Could you tell me …와 I was wondering if …로 시작하는 질문을 내 것으로 세 개씩 만듭니다.</li>
+        <li>8절 설계기로 여섯 상황 모두 질문 네 개씩을 설계하고 소리 내어 읽습니다.</li>
+        <li>10절 타이머로 여섯 상황을 설계 없이 바로 말합니다. 두 개를 녹음해 받아 적고 11절 점검기에 넣습니다. 오류 0개가 목표입니다.</li>
+        <li>3강 기준선 녹음의 11번을 다시 듣고, 오류가 있었다면 4절 표의 어느 유형인지 적어 둡니다.</li>
+      </ol>
+    </div>
+    <div class="next">
+      <div><div class="lbl">다음 강의</div><h4>17강. 문제 해결 롤플레이: 대안 제시 2개와 사과·협상 표현</h4></div>
+      <span class="pill">6주차</span>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="lesson" id="glossary">
+    <p class="sec-no">15</p>
+    <h2>용어 사전</h2>
+    <p>이 강의에서 나온 용어입니다.</p>
+    <label for="gq" class="small muted">용어 검색</label><br>
+    <input id="gq" class="gsearch" type="search" placeholder="예: 간접 의문문, 조동사">
+    <dl class="gloss" id="gloss"></dl>
+  </section>
+
+  <footer>
+    OPIc AL 8주 과정 16강. 롤플레이 상황과 모범 답안은 학습용으로 새로 작성했으며 실제 시험 문항이 아닙니다. 상대의 대답을 가정해 반응하는 방식은 흔히 권장되는 전략이며 공식 지침이 아닙니다. 점검기는 단어 패턴 기반 추정이고, 입력한 내용은 이 브라우저에만 저장됩니다.
+  </footer>
+</main>
+</div>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const root=document.documentElement,tb=$('themeBtn');
+  function setTheme(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'라이트 테마':'다크 테마';try{localStorage.setItem('opic-theme',t)}catch(e){}}
+  let sv=null;try{sv=localStorage.getItem('opic-theme')}catch(e){}
+  setTheme(sv||'dark');tb.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+  const prog=$('prog'),links=[...document.querySelectorAll('#tocList a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function onScroll(){const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100).toFixed(1)+'%';let cur=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<140)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  const wc=t=>(String(t).match(/[A-Za-z’']+/g)||[]).length;
+
+  /* ---------- hero ---------- */
+  const HP=[
+    {bad:[['What'],['time'],['the'],['gym'],['opens','b'],['?']],good:[['What'],['time'],['does','a'],['the'],['gym'],['open','m'],['?']],e:'Wh- 의문문에서 일반 동사는 조동사 does가 필요합니다. does가 3인칭을 표시하므로 opens의 s는 빠집니다.'},
+    {bad:[['Where'],['you'],['are','b'],['located'],['?']],good:[['Where'],['are','m'],['you'],['located'],['?']],e:'be동사 의문문은 be동사가 주어 앞으로 갑니다. 한국어 ‘어디에 위치해 있어요?’ 어순을 그대로 옮긴 오류입니다.'},
+    {bad:[['Could'],['you'],['tell'],['me'],['where'],['is','b'],['the'],['station'],['?']],good:[['Could'],['you'],['tell'],['me'],['where'],['the'],['station'],['is','m'],['?']],e:'간접 의문문 안은 평서문 어순입니다. 앞에서 이미 Could you로 질문을 만들었으니, where 뒤는 주어 + 동사.'},
+    {bad:[['Does'],['it'],['includes','b'],['towels'],['?']],good:[['Does'],['it'],['include','m'],['towels'],['?']],e:'Does가 이미 3인칭 단수를 표시합니다. 동사는 원형으로.'}
+  ];
+  let hi=0,hfixed=false;
+  function hero(){$('hnav').innerHTML=HP.map((_,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===hi}">예시 ${i+1}</button>`).join('');$('hnav').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{hi=+b.dataset.i;hfixed=false;hero()}));const p=HP[hi];$('hBad').innerHTML=p.bad.map(t=>`<span class="tile ${t[1]==='b'?'bad':''}">${esc(t[0])}</span>`).join('');$('hGood').innerHTML=hfixed?p.good.map(t=>`<span class="tile ${t[1]==='a'?'add':t[1]==='m'?'mv':''}">${esc(t[0])}</span>`).join(''):'<span class="small muted" style="padding:6px">‘고치기’를 누르세요.</span>';$('hExp').innerHTML=hfixed?`<span style="color:var(--teal)">●</span> 추가 <span style="color:var(--amber);margin-left:8px">●</span> 이동·변형 · ${p.e}`:'빨간 카드가 문제의 위치입니다.';$('hFix').textContent=hfixed?'다음 예시':'고치기'}
+  $('hFix').addEventListener('click',()=>{if(hfixed){hi=(hi+1)%HP.length;hfixed=false}else hfixed=true;hero()});hero();
+
+  /* ---------- tile builder ---------- */
+  const TB=[['체육관은 몇 시에 열어요?','What time does the gym open ?'],['한 달 회원권은 얼마예요?','How much is a monthly membership ?'],['주말에도 여나요?','Are you open on weekends ?'],['건물 근처에 주차할 데가 있나요?','Is there parking near the building ?'],['가격에 수건이 포함되나요?','Does the price include towels ?'],['배송은 얼마나 걸리나요?','How long does delivery take ?'],['표는 어디서 찾나요?','Where do I pick up the tickets ?'],['체육관이 어디 있는지 알려 주실 수 있나요?','Could you tell me where the gym is ?']];
+  let tbs=LS.get('opic-l16-tb',{i:0,res:[]}),tsel=[];
+  function tbR(){const it=TB[tbs.i];const words=it[1].split(' ');$('tbPips').innerHTML=TB.map((_,j)=>`<i class="${tbs.res[j]===true?'ok':tbs.res[j]===false?'ng':''} ${j===tbs.i?'cur':''}"></i>`).join('');$('tbKo').textContent=it[0];const ord=words.map((_,k)=>k).sort((a,b)=>((a*7+tbs.i*3)%words.length)-((b*7+tbs.i*3)%words.length));$('tbPool').innerHTML=ord.map(k=>`<button type="button" data-k="${k}" ${tsel.includes(k)?'disabled':''}>${esc(words[k])}</button>`).join('');$('tbAns').className='tb-ans';$('tbAns').innerHTML=tsel.map(k=>`<span>${esc(words[k])}</span>`).join('')||'<span style="background:none;border:0;color:var(--faint);font-family:var(--sans);font-size:13px">카드를 순서대로 누르세요</span>';$('tbPool').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{tsel.push(+b.dataset.k);tbR()}))}
+  $('tbUndo').addEventListener('click',()=>{tsel.pop();$('tbFb').classList.remove('on');tbR()});
+  $('tbCheck').addEventListener('click',()=>{const it=TB[tbs.i];const words=it[1].split(' ');const got=tsel.map(k=>words[k]).join(' ');const ok=got===it[1];tbs.res[tbs.i]=ok;LS.set('opic-l16-tb',tbs);tbR();$('tbAns').className='tb-ans '+(ok?'ok':'ng');$('tbFb').innerHTML=ok?'<b style="color:var(--teal)">정확합니다.</b> 소리 내어 두 번 읽어 보세요.':`<b style="color:var(--rose)">다시 보세요.</b> 정답: <span class="en">${esc(it[1].replace(' ?','?'))}</span>`;$('tbFb').classList.add('on')});
+  $('tbNext').addEventListener('click',()=>{tbs.i=(tbs.i+1)%TB.length;tsel=[];LS.set('opic-l16-tb',tbs);$('tbFb').classList.remove('on');tbR()});
+  $('tbReset').addEventListener('click',()=>{tbs={i:0,res:[]};tsel=[];LS.set('opic-l16-tb',tbs);$('tbFb').classList.remove('on');tbR()});
+  tbR();
+
+  /* ---------- generic drill ---------- */
+  function drill(key,data,qE,oE,fE,pE,nE,rE){let st=LS.get(key,{i:0,res:[]});
+    function r(){const it=data[st.i];$(pE).innerHTML=data.map((_,j)=>`<i class="${st.res[j]===true?'ok':st.res[j]===false?'ng':''} ${j===st.i?'cur':''}"></i>`).join('');$(qE).innerHTML=it.q;const ord=it.o.map((_,k)=>k).sort((a,b)=>((a*3+st.i)%it.o.length)-((b*3+st.i)%it.o.length));$(oE).innerHTML=ord.map(k=>`<button type="button" data-k="${k}">${esc(it.o[k])}</button>`).join('');$(fE).classList.remove('on');
+      $(oE).querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const k=+b.dataset.k;$(oE).querySelectorAll('button').forEach(x=>{x.disabled=true;if(+x.dataset.k===it.a)x.classList.add('right')});if(k!==it.a)b.classList.add('wrong');st.res[st.i]=k===it.a;LS.set(key,st);$(pE).children[st.i].className=(k===it.a?'ok':'ng')+' cur';$(fE).innerHTML=`<b style="color:${k===it.a?'var(--teal)':'var(--rose)'}">${k===it.a?'정확합니다.':'다시 보세요.'}</b> ${it.e}`;$(fE).classList.add('on')}))}
+    $(nE).addEventListener('click',()=>{st.i=(st.i+1)%data.length;LS.set(key,st);r()});$(rE).addEventListener('click',()=>{st={i:0,res:[]};LS.set(key,st);r()});r()}
+  drill('opic-l16-fix',[
+    ['Where you are located?',['Where are you located?','Where you located are?','Where do you are located?'],'be동사가 주어 앞으로.'],
+    ['What time the class starts?',['What time does the class start?','What time does the class starts?','What time is the class start?'],'일반 동사는 does + 동사원형.'],
+    ['Does it includes breakfast?',['Does it include breakfast?','Is it includes breakfast?','Does it including breakfast?'],'Does 뒤 동사원형.'],
+    ['Can I know the price?',['Could you tell me how much it is?','Can I know how much is it?','Can I knowing the price?'],'Can I know는 한국어 ‘알 수 있을까요’의 직역이라 어색합니다. Could you tell me + 간접 의문문.'],
+    ['How much is it cost?',['How much does it cost?','How much is it costs?','How much it costs?'],'cost는 일반 동사라 does. 또는 How much is it?'],
+    ['Could you tell me where is the station?',['Could you tell me where the station is?','Could you tell me where does the station is?','Could you tell me the station where is?'],'간접 의문문 안은 평서문 어순.'],
+    ['Is there have a parking lot?',['Is there a parking lot?','Is there has a parking lot?','Does there have a parking lot?'],'there is 구문에는 have가 필요 없습니다.'],
+    ['You have any discounts?',['Do you have any discounts?','Are you have any discounts?','Have you any discount?'],'구어에서 억양만 올려 묻기도 하지만, 시험에서는 조동사를 갖춘 정확한 의문문이 안전합니다.'],
+    ['What should I bring it?',['What should I bring?','What should I bring them?','What I should bring?'],'What이 이미 목적어입니다. it을 또 쓰지 않습니다.'],
+    ['How long it takes to get there?',['How long does it take to get there?','How long is it take to get there?','How long it does take to get there?'],'How long + does + 주어 + 동사원형.']
+  ].map(x=>({q:`<small>틀린 질문</small><s>${esc(x[0])}</s>`,o:x[1],a:0,e:x[2]})),'fxQ','fxO','fxFb','fxPips','fxNext','fxReset');
+  drill('opic-l16-ind',[
+    ['Where is the entrance?',['Could you tell me where the entrance is?','Could you tell me where is the entrance?','Could you tell me the entrance where?'],'where + 주어 + 동사.'],
+    ['Do you have parking?',['I was wondering if you have parking.','I was wondering do you have parking.','I was wondering if do you have parking.'],'Yes/No 질문은 if(또는 whether) + 평서문.'],
+    ['When does the sale end?',['Do you know when the sale ends?','Do you know when does the sale end?','Do you know when the sale end?'],'does가 사라지는 대신 동사에 3인칭 s가 붙습니다.'],
+    ['How much does it cost?',['Could you tell me how much it costs?','Could you tell me how much does it cost?','Could you tell me how much it cost does?'],'how much + 주어 + 동사(3인칭 s).'],
+    ['Is breakfast included?',['Do you know if breakfast is included?','Do you know is breakfast included?','Do you know if is breakfast included?'],'if + 주어 + be동사.']
+  ].map(x=>({q:`<small>직접 의문문</small>${esc(x[0])}`,o:x[1],a:0,e:x[2]})),'inQ','inO','inFb','inPips','inNext','inReset');
+
+  /* ---------- politeness ---------- */
+  const POL=[['Tell me the price.','명령문입니다. 전화로 처음 묻는 상황에서는 무례하게 들립니다.'],['How much is it?','기본 의문문. 정확하고 문제없습니다. 네 질문 중 두세 개는 이 수준이면 충분합니다.'],['Could you tell me how much it is?','간접 의문문. 공손하고 자연스럽습니다. 첫 질문이나 중요한 질문에 쓰기 좋습니다.'],['I was wondering if you could tell me how much it would be.','매우 공손합니다. 질문 예고(I was wondering if you could answer a few questions)로 한 번 쓰면 좋지만, 모든 질문을 이렇게 하면 장황합니다.']];
+  function pol(){const v=+$('polR').value;$('polSay').textContent=POL[v][0];$('polNote').textContent=POL[v][1]}
+  $('polR').addEventListener('input',pol);pol();
+
+  /* ---------- planner ---------- */
+  const CAT={시간:'var(--sky)',장소:'var(--teal)',가격:'var(--amber)',옵션:'var(--violet)',조건:'var(--lime)',절차:'var(--rose)'};
+  const SIT=[
+    {k:'헬스장',d:'You want to join a new gym in your neighborhood. Call the gym and ask three or four questions.',ctx:'I just moved into the neighborhood, and I’m thinking about joining your gym',q:[['시간','What are your hours on weekdays?','Oh, until eleven? Perfect.'],['가격','How much is a monthly membership?','Okay, that’s not bad.'],['옵션','Do you offer any group classes, like yoga or spin?','Oh, nice.'],['장소','Is there parking near the building?','Great.'],['조건','Do I need to bring my own towel?','Got it.'],['절차','Could you tell me if I can try it out before I sign up?','That sounds good.']],close:'I think I’ll stop by this weekend to sign up'},
+    {k:'공연 표',d:'You want to buy tickets for a concert. Call the ticket office and ask three or four questions.',ctx:'I’m interested in the concert on the twentieth',q:[['시간','What time do the doors open?','Okay, six thirty.'],['가격','How much are the tickets, and are there any student discounts?','Oh, that helps a lot.'],['옵션','Are there any seats left near the stage?','Oh, really? Great.'],['절차','How do I pick up the tickets?','Okay, at the box office.'],['조건','Is there an age limit?','Good to know.'],['장소','What’s the best way to get there by subway?','Perfect, that’s easy.']],close:'I’ll book two tickets online tonight'},
+    {k:'새 카페',d:'A new café opened near your home. Visit and ask the staff three or four questions.',ctx:'I live just down the street, and this is my first time here',q:[['시간','Are you open on Sundays?','Oh, nice.'],['옵션','What would you recommend for someone who doesn’t like coffee that much?','That sounds good.'],['장소','Do you have a quiet area where I can work on my laptop?','Oh, upstairs? Great.'],['가격','Do you have any kind of loyalty program?','Oh, a stamp card. Perfect.'],['조건','Is there a time limit if I stay for a while?','Okay, that’s fair.'],['절차','Can I reserve a table for a group of six?','Great.']],close:'I’ll definitely be back this weekend'},
+    {k:'호텔',d:'You want to book a hotel for your vacation. Call the hotel and ask three or four questions.',ctx:'I’m planning a trip next month, and I’m thinking about staying at your hotel',q:[['시간','What time is check-in?','Okay, three o’clock.'],['가격','Is breakfast included in the price?','Oh, great.'],['옵션','Do you have a pool or a gym?','Nice.'],['장소','How far is it from the train station?','Oh, just a ten-minute walk? Perfect.'],['절차','Can I cancel for free if my plans change?','That’s good to know.'],['조건','Is parking available, and does it cost extra?','Okay, got it.']],close:'I’ll go ahead and book online tonight'},
+    {k:'가구점',d:'You want to buy a new sofa. Call the furniture store and ask three or four questions.',ctx:'I saw a sofa on your website, and I had a few questions before I order',q:[['옵션','Do you have the gray sofa in a bigger size?','Oh, great.'],['시간','How long does delivery usually take?','About a week? That works.'],['가격','Is delivery free, or is there an extra charge?','Okay.'],['절차','Do you put it together for me, or do I have to assemble it myself?','Oh, that’s a relief.'],['조건','What’s your return policy if it doesn’t fit?','Good to know.'],['장소','Do you have a showroom where I can try it out?','Perfect.']],close:'I’ll come by the showroom on Saturday'},
+    {k:'어학원',d:'You want to sign up for a language class. Call the school and ask three or four questions.',ctx:'I’m interested in your evening Spanish classes',q:[['시간','How often do the classes meet?','Twice a week, okay.'],['조건','Is there a level test before I start?','Got it.'],['가격','How much is the course for three months?','Okay, that’s reasonable.'],['옵션','How many students are in each class?','Oh, that’s small. Nice.'],['절차','Could you tell me how I can sign up?','Okay, online.'],['장소','Is it possible to take the class online instead?','Oh, good.']],close:'I’ll sign up for the level test this week'}
+  ];
+  let ps=LS.get('opic-l16-plan',{s:0,pick:{}});
+  const FL=['First of all,','Second,','Also,','And one last thing,'];
+  function sit(){$('sit').innerHTML=SIT.map((s,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===ps.s}">${s.k}</button>`).join('');$('sit').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ps.s=+b.dataset.i;LS.set('opic-l16-plan',ps);sit()}));const s=SIT[ps.s];$('sitQ').textContent=s.d;const pk=ps.pick[ps.s]||[];
+    $('cands').innerHTML=s.q.map((q,i)=>`<button type="button" data-i="${i}" style="--cc:${CAT[q[0]]}" aria-pressed="${pk.includes(i)}"><small>${q[0]}${pk.includes(i)?' · '+(pk.indexOf(i)+1)+'번':''}</small><span>${esc(q[1])}</span></button>`).join('');
+    $('cands').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;let a=ps.pick[ps.s]||[];if(a.includes(i))a=a.filter(x=>x!==i);else if(a.length<4)a.push(i);ps.pick[ps.s]=a;LS.set('opic-l16-plan',ps);sit()}));
+    const C=t=>`<span class="cn">${t}</span>`;let out=`${C('Hi, I’m calling because')} ${esc(s.ctx)}. ${C('I was wondering if you could answer a few questions.')} `;pk.forEach((i,j)=>{const q=s.q[i];const qq=/^I\b/.test(q[1])?q[1]:q[1].charAt(0).toLowerCase()+q[1].slice(1);out+=`${C(FL[j])} ${esc(qq)} ${C(esc(q[2]))} `});out+=pk.length?`${C('That’s really helpful. Thanks so much.')} ${esc(s.close)}.`:'<span class="muted">[질문을 고르세요]</span>';$('planOut').innerHTML=out;
+    const cats=new Set(pk.map(i=>s.q[i][0]));const forms=new Set(pk.map(i=>{const q=s.q[i][1];return /^(could you tell me|i was wondering|do you know if)/i.test(q)?'간접':/^(what|where|when|how|which|who)/i.test(q)?'Wh':/\bor\b/.test(q)?'선택':'Yes/No'}));const w=wc($('planOut').textContent);
+    $('planMeta').innerHTML=`${pk.length} / 4개 선택 · 정보 칸 ${cats.size}종 · 의문문 형태 ${forms.size}종(${[...forms].join(', ')||'-'}) · 약 ${w}단어, 약 ${Math.round(w/130*60)}초 ${pk.length===4&&forms.size>=3?'<b style="color:var(--teal)">좋은 조합입니다.</b>':pk.length===4?'<b style="color:var(--amber)">형태를 한 가지 더 섞어 보세요.</b>':''}`}
+  $('planClr').addEventListener('click',()=>{ps.pick[ps.s]=[];LS.set('opic-l16-plan',ps);sit()});sit();
+
+  /* ---------- answers ---------- */
+  const ALT='Hi, I’m calling because I just moved into the neighborhood, and I’m thinking about joining your gym. I was wondering if you could answer a few questions. First of all, what are your hours on weekdays? I usually work until seven, so I’d probably come pretty late. Oh, you’re open until eleven? Perfect. Second, how much is a monthly membership, and is there a discount if I sign up for three months or more? Okay, that’s not bad. Also, do you offer any group classes, like yoga or spin, or would I need to pay extra for those? And one last thing, is there parking near the building? I’ll probably drive on rainy days. Great, that’s really helpful. Thanks so much. I think I’ll stop by this weekend to sign up.';
+  const IMT='Hello. I want to join gym. What time open? How much is it? Is there yoga class? Thank you.';
+  const IHT='Hi, I’m calling about the gym. I want to know some information. What time do you open? And how much it costs for one month? Do you have a yoga class? Is there a parking lot? Okay, thank you. Bye.';
+  const ANS=[{k:'IM',c:'var(--rose)',html:'Hello. I want to join gym. <span class="e">What time open?</span> <span class="q">How much is it?</span> <span class="e">Is there yoga class?</span> Thank you.',v:'질문 세 개 중 두 개가 불완전합니다(조동사와 주어 누락, 관사 누락). 용건, 반응, 흐름 표지어가 없어 롤플레이가 아니라 질문 목록입니다.'},{k:'IH',c:'var(--amber)',html:'Hi, I’m calling about the gym. I want to know some information. <span class="q">What time do you open?</span> <span class="f">And</span> <span class="e">how much it costs for one month?</span> <span class="q">Do you have a yoga class?</span> <span class="q">Is there a parking lot?</span> Okay, thank you. Bye.',v:'질문 네 개를 했지만 두 번째에서 어순이 무너졌습니다(how much it costs → how much does it cost). 형태가 Wh-와 Yes/No뿐이고, 상대의 답에 대한 반응이 없어 대화처럼 들리지 않습니다.'},{k:'AL',c:'var(--teal)',html:'Hi, I’m calling because I just moved into the neighborhood, and I’m thinking about joining your gym. <span class="q">I was wondering if you could answer a few questions.</span> <span class="f">First of all,</span> <span class="q">what are your hours on weekdays?</span> I usually work until seven, so I’d probably come pretty late. <span class="r">Oh, you’re open until eleven? Perfect.</span> <span class="f">Second,</span> <span class="q">how much is a monthly membership, and is there a discount if I sign up for three months or more?</span> <span class="r">Okay, that’s not bad.</span> <span class="f">Also,</span> <span class="q">do you offer any group classes, like yoga or spin, or would I need to pay extra for those?</span> <span class="f">And one last thing,</span> <span class="q">is there parking near the building?</span> I’ll probably drive on rainy days. <span class="r">Great, that’s really helpful.</span> Thanks so much. I think I’ll stop by this weekend to sign up.',v:'용건이 구체적이고, 간접(예고), Wh-, Yes/No, 선택 의문문을 섞었습니다. 질문마다 이유(퇴근이 늦어서, 비 오는 날 차로)를 붙여 대화가 자연스럽고, 상상한 답에 짧게 반응합니다. 의문문 오류는 없습니다.'}];
+  const at=$('aTabs'),ab=$('aBox');
+  ANS.forEach((a,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.style.setProperty('--tc',a.c);b.textContent=a.k+' 답변';b.addEventListener('click',()=>ans(i));at.appendChild(b)});
+  function ans(i){const a=ANS[i];at.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',j===i));const plain=a.html.replace(/<[^>]+>/g,'');ab.innerHTML=`<p class="txt">${a.html}</p><p style="font-size:15px;margin:12px 0 0"><b style="color:${a.c}">${a.k} · ${wc(plain)}단어 · 약 ${Math.round(wc(plain)/130*60)}초</b> ${a.v}</p>`}
+  ans(2);
+
+  /* ---------- timer ---------- */
+  let si=0,st=0,sid=null,qmarks=[];
+  function stQ(){$('stNo').textContent=`상황 ${si+1} / ${SIT.length} · ${SIT[si].k}`;$('stQ').textContent=SIT[si].d}
+  function stR(){const l=Math.max(0,60-st);$('stClock').textContent=Math.floor(l/60)+':'+String(l%60).padStart(2,'0');const n=qmarks.length;const el=$('stStage');el.innerHTML=st===0?'시작 전<small>시작을 누르고 인사부터.</small>':st>=60?'시간 종료<small>마무리 인사까지 마치세요.</small>':n===0?'인사·용건<small>Hi, I’m calling because…</small>':n<4?`질문 ${n+1}<small>${FL[n]} …</small>`:'마무리<small>Thanks so much. I’ll …</small>';$('qcount').innerHTML=[1,2,3,4].map(i=>`<button type="button" class="${i<=n?'on':''}" data-i="${i}">${i}</button>`).join('');$('qcount').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(+b.dataset.i===qmarks.length+1&&st>0){qmarks.push(Math.floor(st));stR()}}));$('qlog').textContent=qmarks.length?'질문 시점: '+qmarks.map((t,i)=>`${i+1}번 ${t}초`).join(' · '):''}
+  function stReset(){clearInterval(sid);sid=null;st=0;qmarks=[];$('stStart').textContent='시작';stR()}
+  $('stStart').addEventListener('click',()=>{if(sid){clearInterval(sid);sid=null;$('stStart').textContent='계속';return}if(st>=60)stReset();$('stStart').textContent='일시정지';if(st===0)st=0.01;sid=setInterval(()=>{st=Math.floor(st)+1;stR();if(st>=60){clearInterval(sid);sid=null;$('stStart').textContent='다시'}},1000);stR()});
+  $('stReset').addEventListener('click',stReset);$('stNextQ').addEventListener('click',()=>{si=(si+1)%SIT.length;stQ();stReset()});$('stPrevQ').addEventListener('click',()=>{si=(si+SIT.length-1)%SIT.length;stQ();stReset()});
+  const hasTTS='speechSynthesis' in window;if(!hasTTS)$('stSpeak').disabled=true;
+  $('stSpeak').addEventListener('click',()=>{if(!hasTTS)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('I would like to give you a situation and ask you to act it out. '+SIT[si].d);u.lang='en-US';u.rate=.95;speechSynthesis.speak(u)});
+  stQ();stReset();
+
+  /* ---------- checker ---------- */
+  const ERR=[[/^(what time|when|where|how much)\s+(open|opens|close|closes|start|starts|end|ends|leave|leaves|cost|costs)\b/i,'주어와 조동사 누락 (What time open? → What time do you open?)'],[/^(what|where|when|how much|how long|how often|what time|which)\s+(the|it|you|they|this|your|we|i)\b(?!\s+(do|does|did|is|are|can|should|will|would))/i,'조동사·be동사 누락 (예: What time the gym opens? → What time does the gym open?)'],[/^(where|what|how)\s+(you|it|they|we)\s+(are|is)\b/i,'be동사 위치 (Where you are → Where are you)'],[/\b(does|did|do)\s+(it|he|she|the \w+|this|that|you|they|i|we)\s+\w+(s|ed)\b/i,'조동사 뒤 동사원형 아님 (Does it includes → Does it include)'],[/\bhow much is (it|this|that) cost/i,'is와 cost 혼합 (How much does it cost?)'],[/\b(could you tell me|do you know|can you tell me|i was wondering)\s+(where|what|when|how|how much|what time|why)\s+(is|are|does|do|did|can)\b/i,'간접 의문문 도치 (where is the station → where the station is)'],[/\bis there have\b/i,'Is there have → Is there'],[/\bcan i know\b/i,'Can I know (직역) → Could you tell me'],[/^what (should|can|do) (i|you) \w+ (it|them)\b/i,'목적어 중복 (What should I bring it?)']];
+  function qtype(q){if(/^(could you tell me|can you tell me|do you know|i was wondering|would you mind|i'd like to know)/i.test(q))return '간접';if(/\b(right|correct)\?$/i.test(q)||/,\s*(isn't it|aren't you|don't you|is it)\?$/i.test(q))return '확인';if(/\bor\b(?!\s+(more|less|so))/i.test(q)&&/^(is|are|do|does|can|would|should)/i.test(q))return '선택';if(/^(and )?(what|where|when|how|which|who|why)\b/i.test(q))return 'Wh';if(/^(and )?(do|does|did|is|are|can|could|will|would|should|have|has)\b/i.test(q))return 'Yes/No';return '기타'}
+  const kt=$('kText');kt.value=LS.get('opic-l16-check','');kt.addEventListener('input',()=>LS.set('opic-l16-check',kt.value));
+  $('kAL').addEventListener('click',()=>{kt.value=ALT;kRun()});$('kIM').addEventListener('click',()=>{kt.value=IMT;kRun()});
+  $('kErr').addEventListener('click',()=>{kt.value='Hi, I\'m calling about the hotel. Where you are located? What time the check-in starts? Does it includes breakfast? Could you tell me how much is it? Is there have a pool? Okay, thank you.';kRun()});
+  $('kRun').addEventListener('click',kRun);
+  function kRun(){const t=kt.value.trim().replace(/’/g,"'");const o=$('kOut');if(!t){o.innerHTML='<p class="small" style="color:var(--rose)">먼저 붙여 넣으세요.</p>';return}
+    const sents=t.match(/[^.?!]+[.?!]?/g)||[];const qs=[];sents.forEach(s=>{let x=s.trim();if(!x.endsWith('?'))return;if(/^(oh|okay|wow|really|so it's|so you're)\b/i.test(x))return;x=x.replace(/^(first of all|first|second|third|also|and one last thing|one last thing|plus|oh|okay|and)[,\s]+/i,'').trim();const parts=x.split(/,\s*and\s+(?=(is|are|do|does|can|what|how|where|when)\b)/i).filter(p=>p&&!/^(is|are|do|does|can|what|how|where|when)$/i.test(p));parts.forEach(p=>qs.push(p.trim().replace(/\?*$/,'?')))});
+    const res=qs.map(q=>{const errs=ERR.filter(([re])=>re.test(q)).map(e=>e[1]);return{q,type:qtype(q),errs}});
+    const ind=/i was wondering if you could|could you answer a few/i.test(t);const greet=/^(hi|hello)\b/i.test(t);const ctx=/\b(i'm calling|i am calling|i'm interested|i was thinking|i'm thinking|i just moved|i'd like to)\b/i.test(t);const react=(t.match(/\b(oh,|okay,|great|perfect|got it|that's (not bad|good|helpful|great|fair)|nice\.|good to know)/gi)||[]).length;const close=/(thanks|thank you)[^.?!]*[.!]\s*[^?]*$/i.test(t);const flow=(t.match(/\b(first of all|second,|also,|one last thing|and finally)/gi)||[]).length;
+    const forms=new Set(res.map(r=>r.type).filter(x=>x!=='기타'));const errN=res.reduce((a,r)=>a+r.errs.length,0);
+    const LC={g:'var(--teal)',a:'var(--amber)',r:'var(--rose)'};
+    const rows=[['질문 수',qs.length+'개','3~5개(복합 포함)',qs.length>=3&&qs.length<=5?'g':qs.length>=2?'a':'r'],['의문문 오류',errN+'개','0개',errN?'r':'g'],['형태 다양성',forms.size+'종','3종 이상',forms.size>=3?'g':forms.size===2?'a':'r'],['인사·용건',greet&&ctx?'있음':greet?'인사만':'없음','둘 다',greet&&ctx?'g':greet?'a':'r'],['흐름 표지어',flow+'개','2개 이상',flow>=2?'g':flow?'a':'r'],['반응',react+'회','2회 이상',react>=2?'g':react?'a':'r'],['마무리',close?'있음':'없음','감사 + 다음 행동',close?'g':'a']];
+    o.innerHTML=`<div class="metrics">${rows.map(r=>`<div style="--lc:${LC[r[3]]}"><small>${r[0]}</small><b>${r[1]}</b><span>목표 ${r[2]}</span></div>`).join('')}</div><ul class="qlist">${res.map(r=>`<li><span class="tag ${r.errs.length?'err':''}">${r.errs.length?'오류':r.type}</span><span class="en">${esc(r.q)}${r.errs.map(e=>`<small>${esc(e)}</small>`).join('')}</span></li>`).join('')||'<li>물음표로 끝나는 질문을 찾지 못했습니다.</li>'}</ul><p class="small muted" style="margin:8px 0 0">패턴 기반 추정입니다. 대표적인 오류 유형만 잡으며, 놓치거나 잘못 표시할 수 있습니다.${ind?' 질문 예고(I was wondering if…)를 썼습니다.':''}</p>`}
+
+  /* ---------- myths ---------- */
+  const myths=[['질문만 네 개 하면 된다','질문만 던지면 질문 목록입니다. 인사와 용건, 질문 사이의 짧은 반응, 마무리가 있어야 롤플레이가 됩니다.'],['간단한 질문이 안전하다','간단한 것은 좋지만 네 개가 모두 Do you…?면 단조롭습니다. Wh-, Yes/No, 간접, 선택 중 세 가지를 섞으세요.'],['모든 질문을 최대한 공손하게','I was wondering if you could tell me…를 네 번 반복하면 장황합니다. 공손한 표현은 예고나 첫 질문에 한 번, 나머지는 기본 의문문으로 충분합니다.'],['상대가 대답 안 하니 반응은 필요 없다','상상한 답에 한 문장으로 반응하면 대화가 자연스러워지고 다음 질문을 고를 시간도 생깁니다. 다만 반응이 질문보다 길어지면 안 됩니다.'],['의문문은 억양만 올리면 된다','You have any discounts?처럼 억양만 올리는 구어도 있지만, 11번은 의문문 정확성을 보는 자리입니다. 조동사를 갖춘 정확한 의문문을 쓰세요.'],['질문은 많을수록 좋다','지시는 서너 개입니다. 여섯 개를 해도 가산점은 없고 시간만 듭니다. 네 개를 정확하고 다양하게.']];
+  const my=$('mythGrid');myths.forEach(m=>{const b=document.createElement('button');b.type='button';b.className='myth';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="inner"><div class="face front"><div class="tag">함정</div><p>${m[0]}</p><div class="hint">눌러서 이유 보기</div></div><div class="face back"><div class="tag">이렇게 하세요</div><p>${m[1]}</p></div></div>`;b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));my.appendChild(b)});
+
+  /* ---------- quiz ---------- */
+  const quiz=[
+    {q:'11번에서 평가자가 보는 세 가지가 아닌 것은?',o:['의문문의 정확성','의문문의 다양성','상황 수행(인사, 반응, 마무리)','질문의 개수가 많을수록 가산점'],a:3,e:'지시는 서너 개입니다. 개수보다 정확성과 다양성, 상황 수행.'},
+    {q:'바른 질문은?',o:['What time the class starts?','What time does the class start?','What time does the class starts?','What time is the class start?'],a:1,e:'Wh- + does + 주어 + 동사원형.'},
+    {q:'간접 의문문으로 바른 것은?',o:['Could you tell me where is the station?','Could you tell me where the station is?','Could you tell me where does the station?','Could you tell me the station where is?'],a:1,e:'간접 의문문 안은 평서문 어순.'},
+    {q:'“Can I know the price?”를 자연스럽게 고친 것은?',o:['Can I know how much?','Could you tell me how much it is?','I can know the price?','Can I knowing the price?'],a:1,e:'Can I know는 한국어 직역이라 어색합니다.'},
+    {q:'질문 순서로 가장 자연스러운 것은?',o:['결제 방법 → 가능 여부 → 시간','가능 여부·기본 정보 → 세부 조건 → 절차','절차 → 가격 → 시간 → 인사','순서는 상관없다'],a:1,e:'큰 것에서 작은 것으로 가면 질문이 자연스럽게 이어집니다.'},
+    {q:'상대가 대답하지 않는 11번에서 질문 사이에 하면 좋은 것은?',o:['침묵','상상한 답에 한 문장으로 반응','같은 질문 반복','다음 문항으로 넘어가기'],a:1,e:'Oh, until eleven? Perfect. 같은 짧은 반응.'},
+    {q:'“Is there have a parking lot?”의 문제는?',o:['there is 구문에 have가 불필요','parking lot이 틀림','is가 틀림','문제없음'],a:0,e:'Is there a parking lot?'},
+    {q:'다음 중 선택 의문문은?',o:['Do you have parking?','Is that a monthly fee, or do I pay for the whole year?','What time do you open?','Could you tell me where it is?'],a:1,e:'or로 두 선택지를 제시합니다.'}
+  ];
+  const qb=$('quizBox');let correct=0,answered=0;
+  quiz.forEach(item=>{const d=document.createElement('div');d.className='qcard';d.innerHTML=`<h4>${esc(item.q)}</h4><div class="opts">${item.o.map((o,i)=>`<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="qfb"></div>`;const fb=d.querySelector('.qfb');d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i;d.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===item.a)x.classList.add('right')});if(i!==item.a)b.classList.add('wrong');else correct++;answered++;fb.innerHTML=`<b style="color:${i===item.a?'var(--teal)':'var(--rose)'}">${i===item.a?'정확합니다.':'다시 볼 부분이 있습니다.'}</b>${item.e}`;fb.classList.add('on');if(answered===quiz.length)$('quizScore').textContent=`${quiz.length}문제 중 ${correct}문제 정답. ${correct>=7?'16강의 핵심을 잘 잡았습니다.':'틀린 문제의 절을 다시 읽고 넘어가세요.'}`}));qb.appendChild(d)});
+
+  /* ---------- glossary ---------- */
+  const gl=[['롤플레이 11번','role-play: info request','전화나 방문으로 정보를 얻기 위해 질문 서너 개를 하는 문항.'],['조동사','auxiliary','do, does, did, can, will처럼 의문문과 부정문을 만드는 동사. 일반 동사 의문문에 필수.'],['Yes/No 의문문','yes/no question','조동사나 be동사로 시작해 예·아니오로 답하는 질문.'],['Wh- 의문문','wh-question','what, where, when, how 등으로 시작해 정보를 묻는 질문.'],['간접 의문문','indirect question','Could you tell me where the station is?처럼 다른 문장 안에 들어간 질문. 평서문 어순.'],['선택 의문문','alternative question','A or B 중 하나를 고르게 하는 질문.'],['확인 의문문','confirmation question','So the first class is free, right?처럼 확인하는 질문.'],['질문 예고','question preview','I was wondering if you could answer a few questions처럼 질문 전에 공손하게 알리는 문장.'],['반응','backchannel','Oh, until eleven? Perfect.처럼 상대의 답에 대한 짧은 반응.']];
+  const gd=$('gloss');gl.forEach(g=>{const d=document.createElement('div');d.dataset.s=g.join(' ').toLowerCase();d.innerHTML=`<dt>${g[0]}<span class="en">${g[1]}</span></dt><dd>${g[2]}</dd>`;gd.appendChild(d)});
+  $('gq').addEventListener('input',e=>{const v=e.target.value.trim().toLowerCase();gd.querySelectorAll('div').forEach(d=>d.classList.toggle('hidden',v&&!d.dataset.s.includes(v)))});
+})();
+</script>
+</body>
+</html>
